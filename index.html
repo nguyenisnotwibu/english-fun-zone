@@ -1674,14 +1674,16 @@ function survEnd(){
 
 /* ================= 🏰 TOWER DEFENSE (canvas, Blooket-style) ================= */
 const TT={
- frog:{em:'🐸',name:'Ếch',cost:50,range:95,dmg:7,rate:.55,color:'#22c55e'},
- cat:{em:'🐱',name:'Mèo',cost:80,range:92,dmg:14,rate:.85,color:'#f59e0b'},
- owl:{em:'🦉',name:'Cú',cost:120,range:140,dmg:20,rate:1.0,color:'#8b5cf6'},
- dragon:{em:'🐲',name:'Rồng',cost:180,range:82,dmg:44,rate:1.4,color:'#ef4444'}
+ frog:{em:'🐸',name:'Ếch',cost:50,range:95,dmg:7,rate:.55,color:'#22c55e',atk:'tongue',skill:'👅 Lè lưỡi tóm mồi',evo:['🐸','🐊','🐉']},
+ bee:{em:'🐝',name:'Ong',cost:70,range:90,dmg:6,rate:.3,color:'#eab308',atk:'sting',skill:'⚡ Chích nọc cực nhanh',evo:['🐝','🦂','🦂']},
+ cat:{em:'🐱',name:'Mèo',cost:80,range:92,dmg:14,rate:.8,color:'#f59e0b',atk:'claw',skill:'🐾 Vồ cào sắc lẹm',evo:['🐱','🐯','🦁']},
+ snake:{em:'🐍',name:'Rắn',cost:100,range:92,dmg:11,rate:.75,color:'#16a34a',atk:'venom',slow:true,skill:'☠️ Phun độc làm chậm',evo:['🐍','🐲','🐉']},
+ owl:{em:'🦉',name:'Cú',cost:120,range:145,dmg:20,rate:1.0,color:'#8b5cf6',atk:'dart',skill:'🪶 Phi lông tầm xa',evo:['🦉','🦅','🦅']},
+ dragon:{em:'🐲',name:'Rồng',cost:180,range:85,dmg:40,rate:1.3,color:'#ef4444',atk:'fire',splash:46,skill:'🔥 Phun lửa diện rộng',evo:['🐲','🐉','🐉']}
 };
 const TD_EN=['👾','🐛','🦗','🐀','🕷️','🦂'];
 function startTower(){
-  GM={type:'tower2',gold:150,lives:20,round:1,kills:0,towers:[],enemies:[],beams:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false,speed:1};
+  GM={type:'tower2',gold:150,lives:20,round:1,kills:0,towers:[],enemies:[],fx:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false,speed:1};
   const W=[[-30,80],[200,80],[200,200],[90,200],[90,320],[330,320],[330,200],[455,200],[520,200]];
   GM.path=[];GM.total=0;
   for(let i=0;i<W.length-1;i++){const x1=W[i][0],y1=W[i][1],x2=W[i+1][0],y2=W[i+1][1];const len=Math.hypot(x2-x1,y2-y1);GM.path.push({x1,y1,x2,y2,len});GM.total+=len;}
@@ -1724,16 +1726,16 @@ function td2Place(px,py){
   if(td2NearPath(gx,gy)<24){toast('Không đặt trên đường đi nhé!');return}
   if(Math.hypot(gx-GM.castle.x,gy-GM.castle.y)<40){toast('Quá gần thành!');return}
   if(GM.towers.some(o=>Math.hypot(o.x-gx,o.y-gy)<34)){toast('Đã có trụ ở đó!');return}
-  GM.gold-=T.cost;GM.towers.push({type:t,x:gx,y:gy,level:1,dmg:T.dmg,range:T.range,rate:T.rate,cd:0,color:T.color});
+  GM.gold-=T.cost;GM.towers.push({type:t,x:gx,y:gy,level:1,dmg:T.dmg,range:T.range,rate:T.rate,cd:0,color:T.color,atk:T.atk,em:T.evo?T.evo[0]:T.em,splash:T.splash||0,slow:!!T.slow});
   sndOK();GM.sel=GM.towers[GM.towers.length-1];GM.place=null;td2Side()
 }
-function td2Upgrade(){const t=GM.sel;if(!t)return;const cost=Math.round(TT[t.type].cost*.8*t.level);if(GM.gold<cost){toast('Chưa đủ vàng nâng cấp!');return}GM.gold-=cost;t.level++;t.dmg=Math.round(t.dmg*1.45);t.range+=10;t.rate=Math.max(.25,t.rate*.92);sndOK();td2Side()}
+function td2Upgrade(){const t=GM.sel;if(!t)return;const cost=Math.round(TT[t.type].cost*.8*t.level);if(GM.gold<cost){toast('Chưa đủ vàng nâng cấp!');return}GM.gold-=cost;t.level++;t.dmg=Math.round(t.dmg*1.5);t.range+=10;t.rate=Math.max(.2,t.rate*.88);const TU=TT[t.type];if(TU.evo)t.em=TU.evo[Math.min(t.level-1,TU.evo.length-1)];sndOK();toast('⬆️ '+TU.name+' tiến hoá → '+t.em+' Lv.'+t.level);td2Side()}
 function td2Sell(){const t=GM.sel;if(!t)return;const rf=Math.round(TT[t.type].cost*.5*t.level);GM.gold+=rf;GM.towers=GM.towers.filter(x=>x!==t);GM.sel=null;sndClick();toast('Đã bán +'+rf+'🪙');td2Side()}
 function td2Side(){
   const shop=Object.keys(TT).map(k=>{const T=TT[k],aff=GM.gold>=T.cost;return `<button class="td2-tower ${GM.place===k?'sel':''}" style="${aff?'':'opacity:.45'}" onclick="td2Pick('${k}')"><span class="ic">${T.em}</span>${T.name}<span class="pr">${T.cost}🪙</span></button>`}).join('');
   let info;
   if(GM.sel){const t=GM.sel,T=TT[t.type],uc=Math.round(T.cost*.8*t.level),rf=Math.round(T.cost*.5*t.level);
-    info=`<b>${T.em} ${T.name} · Lv.${t.level}</b><br>⚔️ ${t.dmg} · 🎯 ${Math.round(t.range)} · ⏱️ ${t.rate.toFixed(2)}s<div class="row" style="margin-top:5px"><button class="btn sun sm" onclick="td2Upgrade()">⬆️ Nâng ${uc}🪙</button><button class="btn ghost sm" onclick="td2Sell()">💲 Bán +${rf}</button></div>`;}
+    info=`<b>${t.em||T.em} ${T.name} · Lv.${t.level}</b><br><span style="color:var(--violet);font-weight:700;font-size:11px">${T.skill||''}</span><br>⚔️ ${t.dmg} · 🎯 ${Math.round(t.range)} · ⏱️ ${t.rate.toFixed(2)}s<div class="row" style="margin-top:5px"><button class="btn sun sm" onclick="td2Upgrade()">⬆️ Nâng ${uc}🪙</button><button class="btn ghost sm" onclick="td2Sell()">💲 Bán +${rf}</button></div>`;}
   else if(GM.place)info=`Đang chọn <b>${TT[GM.place].em} ${TT[GM.place].name}</b> — chạm chỗ trống trên bản đồ để đặt.`;
   else info='Chạm 1 trụ ở cửa hàng rồi chạm bản đồ để đặt. Chạm trụ đã đặt để nâng cấp / bán.';
   const sd=$('td2side');if(!sd)return;
@@ -1761,15 +1763,40 @@ function td2StartRound(){
 function td2RoundDone(){GM.gold+=25;GM.round++;gainXP(6);persist();sndWin();const wasLocked=GM.qLocked;GM.qLocked=false;toast('🎉 Qua đợt! +25 🪙'+(wasLocked?' — mở lại câu hỏi! 🔓':''));td2Q();td2Side()}
 function td2HUD(){const g=$('td2gold');if(!g)return;g.textContent=Math.floor(GM.gold);$('td2life').textContent=Math.max(0,GM.lives);$('td2round').textContent=GM.round;$('td2kills').textContent=GM.kills}
 function td2Speed(s){if(!GM||GM.type!=='tower2')return;GM.speed=s;sndClick();td2Side()}
+function td2Fire(t,tg){
+  tg.hp-=t.dmg;if(t.slow)tg.slowT=1.4;
+  if(t.splash){for(const e of GM.enemies){if(e===tg||e.dead)continue;if(Math.hypot(e.x-tg.x,e.y-tg.y)<=t.splash+t.level*5){e.hp-=t.dmg*.55;if(e.hp<=0){e.dead=true;e.killed=true}}}}
+  if(tg.hp<=0){tg.dead=true;tg.killed=true}
+  GM.fx.push(td2MakeFx(t,tg));
+}
+function td2MakeFx(t,tg){
+  const f={x1:t.x,y1:t.y,x2:tg.x,y2:tg.y,c:t.color,kind:t.atk,lv:t.level,t:0};
+  f.dur=t.atk==='fire'?.4:t.atk==='dart'?.24:t.atk==='venom'?.3:t.atk==='tongue'?.18:t.atk==='claw'?.22:t.atk==='sting'?.12:.14;
+  return f;
+}
+function td2DrawFx(x){
+  for(const f of GM.fx){
+    const p=Math.min(1,f.t/f.dur),a=Math.max(0,1-p);x.globalAlpha=a;x.lineCap='round';
+    if(f.kind==='tongue'){const ext=p<.45?p/.45:1-(p-.45)/.55,ex=f.x1+(f.x2-f.x1)*ext,ey=f.y1+(f.y2-f.y1)*ext;
+      x.strokeStyle='#e11d48';x.lineWidth=4+f.lv;x.beginPath();x.moveTo(f.x1,f.y1);x.lineTo(ex,ey);x.stroke();x.fillStyle='#e11d48';x.beginPath();x.arc(ex,ey,4,0,7);x.fill();}
+    else if(f.kind==='claw'){x.strokeStyle='#fafafa';x.lineWidth=2.5;for(let i=-1;i<=1;i++){x.beginPath();x.moveTo(f.x2-11+i*7,f.y2-11);x.lineTo(f.x2+9+i*7,f.y2+11);x.stroke()}}
+    else if(f.kind==='sting'){x.strokeStyle='#facc15';x.lineWidth=2.5;x.beginPath();x.moveTo(f.x1,f.y1);x.lineTo(f.x2,f.y2);x.stroke();x.fillStyle='#facc15';x.beginPath();x.arc(f.x2,f.y2,3,0,7);x.fill();}
+    else if(f.kind==='fire'){if(p<.6){const k=p/.6,px=f.x1+(f.x2-f.x1)*k,py=f.y1+(f.y2-f.y1)*k;x.fillStyle='#f97316';x.beginPath();x.arc(px,py,5+f.lv,0,7);x.fill();x.fillStyle='#fde047';x.beginPath();x.arc(px,py,2.5,0,7);x.fill();}else{const r=(10+f.lv*4)*(1-(p-.6)/.4);x.fillStyle='rgba(249,115,22,.75)';x.beginPath();x.arc(f.x2,f.y2,Math.max(0,r),0,7);x.fill();x.fillStyle='rgba(253,224,71,.7)';x.beginPath();x.arc(f.x2,f.y2,Math.max(0,r*.5),0,7);x.fill();}}
+    else if(f.kind==='dart'){const px=f.x1+(f.x2-f.x1)*p,py=f.y1+(f.y2-f.y1)*p;x.fillStyle=f.c;x.beginPath();x.arc(px,py,3.5,0,7);x.fill();}
+    else if(f.kind==='venom'){const px=f.x1+(f.x2-f.x1)*p,py=f.y1+(f.y2-f.y1)*p;x.fillStyle='#16a34a';x.beginPath();x.arc(px,py,4.5,0,7);x.fill();x.fillStyle='#86efac';x.beginPath();x.arc(px,py,2,0,7);x.fill();}
+    else{x.strokeStyle=f.c;x.lineWidth=3;x.beginPath();x.moveTo(f.x1,f.y1);x.lineTo(f.x2,f.y2);x.stroke();}
+  }
+  x.globalAlpha=1;
+}
 function td2Loop(ts){
   if(!GM||GM.type!=='tower2')return;
   if(!GM.last)GM.last=ts;let dt=(ts-GM.last)/1000;GM.last=ts;if(dt>.05)dt=.05;dt*=(GM.speed||1);
-  if(GM.running){GM.spawnT-=dt;if(GM.queue.length&&GM.spawnT<=0){GM.spawnT=GM.spawnGap;const s=GM.queue.shift(),p=td2Pos(0);GM.enemies.push({d:0,x:p.x,y:p.y,hp:s.hp,max:s.hp,speed:s.speed,em:s.em,reward:s.reward,boss:s.boss})}}
-  for(const e of GM.enemies){e.d+=e.speed*dt;if(e.d>=GM.total){e.dead=true;e.escaped=true}else{const p=td2Pos(e.d);e.x=p.x;e.y=p.y}}
-  for(const t of GM.towers){t.cd-=dt;if(t.cd<=0){let tg=null,best=-1;for(const e of GM.enemies){if(e.dead)continue;const dx=e.x-t.x,dy=e.y-t.y;if(dx*dx+dy*dy<=t.range*t.range&&e.d>best){best=e.d;tg=e}}if(tg){tg.hp-=t.dmg;t.cd=t.rate;GM.beams.push({x1:t.x,y1:t.y,x2:tg.x,y2:tg.y,life:.12,c:t.color});if(tg.hp<=0){tg.dead=true;tg.killed=true}}}}
+  if(GM.running){GM.spawnT-=dt;if(GM.queue.length&&GM.spawnT<=0){GM.spawnT=GM.spawnGap;const s=GM.queue.shift(),p=td2Pos(0);GM.enemies.push({d:0,x:p.x,y:p.y,hp:s.hp,max:s.hp,speed:s.speed,em:s.em,reward:s.reward,boss:s.boss,slowT:0})}}
+  for(const e of GM.enemies){if(e.slowT>0)e.slowT-=dt;e.d+=e.speed*(e.slowT>0?.5:1)*dt;if(e.d>=GM.total){e.dead=true;e.escaped=true}else{const p=td2Pos(e.d);e.x=p.x;e.y=p.y}}
+  for(const t of GM.towers){t.cd-=dt;if(t.cd<=0){let tg=null,best=-1;for(const e of GM.enemies){if(e.dead)continue;const dx=e.x-t.x,dy=e.y-t.y;if(dx*dx+dy*dy<=t.range*t.range&&e.d>best){best=e.d;tg=e}}if(tg){t.cd=t.rate;td2Fire(t,tg)}}}
   let esc=0;GM.enemies=GM.enemies.filter(e=>{if(!e.dead)return true;if(e.escaped)esc+=e.boss?3:1;if(e.killed){GM.gold+=e.reward;GM.kills++}return false});
   if(esc){GM.lives-=esc;sndNo()}
-  for(const b of GM.beams)b.life-=dt;GM.beams=GM.beams.filter(b=>b.life>0);
+  for(const f of GM.fx)f.t+=dt;GM.fx=GM.fx.filter(f=>f.t<f.dur);
   if(GM.running&&!GM.queue.length&&!GM.enemies.length){GM.running=false;td2RoundDone()}
   td2Draw();td2HUD();
   if(GM.lives<=0){td2GameOver();return}
@@ -1783,10 +1810,10 @@ function td2Draw(){
   x.strokeStyle='#c8a27a';x.lineWidth=20;x.stroke();
   x.textAlign='center';x.textBaseline='middle';
   x.font='32px serif';x.fillText('🏰',GM.castle.x,GM.castle.y);
-  for(const t of GM.towers){x.fillStyle='rgba(255,255,255,.65)';x.beginPath();x.arc(t.x,t.y,16,0,7);x.fill();x.font='22px serif';x.fillText(TT[t.type].em,t.x,t.y)}
+  for(const t of GM.towers){x.fillStyle='rgba(255,255,255,.72)';x.beginPath();x.arc(t.x,t.y,16,0,7);x.fill();if(t.level>=2){x.strokeStyle=t.level>=3?'#fbbf24':'#a78bfa';x.lineWidth=2.5;x.beginPath();x.arc(t.x,t.y,16.5,0,7);x.stroke()}x.font=(20+Math.min(t.level,4))+'px serif';x.fillText(t.em||TT[t.type].em,t.x,t.y);if(t.level>1){x.fillStyle='#7c3aed';x.beginPath();x.arc(t.x+12,t.y-12,7,0,7);x.fill();x.fillStyle='#fff';x.font='bold 10px sans-serif';x.fillText(String(t.level),t.x+12,t.y-11)}}
   if(GM.sel){x.strokeStyle='rgba(139,92,246,.55)';x.lineWidth=2;x.beginPath();x.arc(GM.sel.x,GM.sel.y,GM.sel.range,0,7);x.stroke()}
-  for(const b of GM.beams){x.globalAlpha=Math.max(0,b.life/.12);x.strokeStyle=b.c;x.lineWidth=3;x.beginPath();x.moveTo(b.x1,b.y1);x.lineTo(b.x2,b.y2);x.stroke()}x.globalAlpha=1;
-  for(const e of GM.enemies){const w=e.boss?34:22;x.fillStyle='rgba(0,0,0,.45)';x.fillRect(e.x-w/2,e.y-(e.boss?23:16),w,4);x.fillStyle='#22c55e';x.fillRect(e.x-w/2,e.y-(e.boss?23:16),w*Math.max(0,e.hp/e.max),4);x.font=(e.boss?'30px':'22px')+' serif';x.fillText(e.em,e.x,e.y)}
+  for(const e of GM.enemies){const w=e.boss?34:22;x.fillStyle='rgba(0,0,0,.45)';x.fillRect(e.x-w/2,e.y-(e.boss?23:16),w,4);x.fillStyle=e.slowT>0?'#38bdf8':'#22c55e';x.fillRect(e.x-w/2,e.y-(e.boss?23:16),w*Math.max(0,e.hp/e.max),4);x.font=(e.boss?'30px':'22px')+' serif';x.fillText(e.em,e.x,e.y)}
+  td2DrawFx(x);
 }
 function td2GameOver(){
   if(GM.raf)cancelAnimationFrame(GM.raf);
