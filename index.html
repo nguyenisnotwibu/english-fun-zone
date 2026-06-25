@@ -329,7 +329,7 @@ section.show{display:block}
 .td2-tower.sel{border-color:var(--violet);background:#ede9ff}
 .td2-tower .ic{font-size:24px;display:block}
 .td2-tower .pr{display:block;color:#d97706;font-weight:800}
-.td2-q{background:#fff;border:3px solid #e3e0ff;border-radius:14px;padding:10px;margin-top:10px}
+.td2-q{background:#f3f1ff;border:3px solid #d9d6ff;border-radius:14px;padding:10px 12px;margin:2px 0 12px;box-shadow:inset 0 0 0 2px #fff}
 
 /* ===== leaderboard ===== */
 .lb-row{display:flex;align-items:center;gap:12px;background:#faf9ff;border:2px solid #eceaff;border-radius:16px;padding:10px 14px;margin-bottom:8px}
@@ -1541,7 +1541,7 @@ function vGenQ(pool){
   else{prompt=`<div class="prompt-card"><b>${esc(right[0])}</b><div style="font-size:12px;color:var(--muted);font-weight:600">Chọn nghĩa tiếng Việt đúng</div></div>`;opts=[{t:right[1],ok:1},...others.map(o=>({t:o[1],ok:0}))];}
   return{prompt,opts:shuffle(opts),right};
 }
-function optButtons(opts,handler){return `<div class="opts mt">${opts.map((o,k)=>`<button class="opt pic-opt" onclick="${handler}(${k})"><span class="ab">${'ABCD'[k]}</span>${esc(o.t)}</button>`).join('')}</div>`}
+function optButtons(opts,handler){return `<div class="opts mt">${opts.map((o,k)=>`<button type="button" class="opt pic-opt" onclick="${handler}(${k})"><span class="ab">${'ABCD'[k]}</span>${esc(o.t)}</button>`).join('')}</div>`}
 
 /* ================= FLASHCARDS ================= */
 function startFlash(){const pool=poolVocab();GM={type:'flash',cards:shuffle(pool),i:0,flip:false};sndClick();renderFlash();}
@@ -1695,11 +1695,11 @@ function startTower(){
        <span class="td2-pill">🌊 Đợt <b id="td2round">1</b></span>
        <span class="td2-pill">💀 <b id="td2kills">0</b></span>
      </div>
+     <div class="td2-q" id="td2q"></div>
      <div class="td2-wrap">
        <canvas id="td2cv" width="480" height="400" class="td2-canvas"></canvas>
        <div class="td2-side" id="td2side"></div>
-     </div>
-     <div class="td2-q" id="td2q"></div>`;
+     </div>`;
   $('td2cv').onclick=td2Click;
   td2Side();td2Q();
   GM.raf=requestAnimationFrame(td2Loop);
@@ -1742,7 +1742,7 @@ function td2Side(){
     `<button class="btn ghost sm" style="width:100%;margin-top:6px" onclick="td2GameOver(1)">🏁 Kết thúc &amp; nhận XP</button>
      <div id="td2info" style="font-size:11.5px;color:var(--muted);margin-top:7px;min-height:36px">${info}</div>`;
 }
-function td2Q(){const q=vGenQ(poolVocab());GM.cur=q;const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ Trả lời đúng để kiếm vàng <b style="color:#d97706">+12🪙</b></div>${q.prompt}${optButtons(q.opts,'td2Ans')}<div class="feedback" id="td2qfb" style="margin-top:6px"></div>`}
+function td2Q(){const q=vGenQ(poolVocab());GM.cur=q;const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ Trả lời đúng để kiếm vàng <b style="color:#d97706">+12🪙</b> <span style="color:var(--muted);font-weight:600">— rồi kéo xuống ⬇️ mua trụ &amp; bắt đầu đợt</span></div>${q.prompt}${optButtons(q.opts,'td2Ans')}<div class="feedback" id="td2qfb" style="margin-top:6px"></div>`}
 function td2Ans(k){
   if(!GM||!GM.cur)return;const o=GM.cur.opts[k];
   document.querySelectorAll('#td2q .opt').forEach((b,j)=>{b.disabled=true;if(GM.cur.opts[j].ok)b.classList.add('right');else if(j===k)b.classList.add('wrong')});
