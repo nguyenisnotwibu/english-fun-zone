@@ -1681,7 +1681,7 @@ const TT={
 };
 const TD_EN=['👾','🐛','🦗','🐀','🕷️','🦂'];
 function startTower(){
-  GM={type:'tower2',gold:150,lives:20,round:1,kills:0,towers:[],enemies:[],beams:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0};
+  GM={type:'tower2',gold:150,lives:20,round:1,kills:0,towers:[],enemies:[],beams:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false};
   const W=[[-30,80],[200,80],[200,200],[90,200],[90,320],[330,320],[330,200],[455,200],[520,200]];
   GM.path=[];GM.total=0;
   for(let i=0;i<W.length-1;i++){const x1=W[i][0],y1=W[i][1],x2=W[i+1][0],y2=W[i+1][1];const len=Math.hypot(x2-x1,y2-y1);GM.path.push({x1,y1,x2,y2,len});GM.total+=len;}
@@ -1742,14 +1742,14 @@ function td2Side(){
     `<button class="btn ghost sm" style="width:100%;margin-top:6px" onclick="td2GameOver(1)">🏁 Kết thúc &amp; nhận XP</button>
      <div id="td2info" style="font-size:11.5px;color:var(--muted);margin-top:7px;min-height:36px">${info}</div>`;
 }
-function td2Q(){const q=vGenQ(poolVocab());GM.cur=q;const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ Trả lời đúng để kiếm vàng <b style="color:#d97706">+12🪙</b> <span style="color:var(--muted);font-weight:600">— rồi kéo xuống ⬇️ mua trụ &amp; bắt đầu đợt</span></div>${q.prompt}${optButtons(q.opts,'td2Ans')}<div class="feedback" id="td2qfb" style="margin-top:6px"></div>`}
+function td2Q(){if(GM&&GM.qLocked)return td2QLocked();const q=vGenQ(poolVocab());GM.cur=q;const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ Trả lời đúng để kiếm vàng <b style="color:#d97706">+12🪙</b> <span style="color:var(--muted);font-weight:600">— rồi kéo xuống ⬇️ mua trụ &amp; bắt đầu đợt</span></div>${q.prompt}${optButtons(q.opts,'td2Ans')}<div class="feedback" id="td2qfb" style="margin-top:6px"></div>`}
+function td2QLocked(){const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ Khu trả lời <span style="color:var(--red)">— đang khoá 🔒</span></div><div style="text-align:center;padding:16px 10px;color:var(--muted);font-weight:700;line-height:1.55">😵 Trả lời sai nên tạm khoá câu hỏi!<br>⬇️ Hãy <b>mua trụ</b> &amp; bấm <b>"Bắt đầu đợt"</b>. Đánh xong đợt này sẽ <b style="color:var(--violet)">mở lại câu hỏi</b> để kiếm vàng tiếp! 💪</div>`}
 function td2Ans(k){
   if(!GM||!GM.cur)return;const o=GM.cur.opts[k];
   document.querySelectorAll('#td2q .opt').forEach((b,j)=>{b.disabled=true;if(GM.cur.opts[j].ok)b.classList.add('right');else if(j===k)b.classList.add('wrong')});
   const fb=$('td2qfb');
-  if(o.ok){GM.gold+=12;P.correct++;gainXP(2);sndOK();if(fb){fb.className='feedback ok';fb.innerHTML='🎉 +12🪙 — '+esc(GM.cur.right[0]+' = '+GM.cur.right[1])}}
-  else{sndNo();if(fb){fb.className='feedback no';fb.innerHTML='😅 Đáp án: <b>'+esc(GM.cur.opts.find(x=>x.ok).t)+'</b>'}}
-  persist();td2HUD();td2Side();setTimeout(td2Q,800);
+  if(o.ok){GM.gold+=12;P.correct++;gainXP(2);sndOK();if(fb){fb.className='feedback ok';fb.innerHTML='🎉 +12🪙 — '+esc(GM.cur.right[0]+' = '+GM.cur.right[1])}persist();td2HUD();td2Side();setTimeout(td2Q,800);}
+  else{sndNo();GM.qLocked=true;if(fb){fb.className='feedback no';fb.innerHTML='😵 Sai rồi! Đáp án: <b>'+esc(GM.cur.opts.find(x=>x.ok).t)+'</b> — khoá trả lời tới khi hết đợt này!'}persist();td2HUD();td2Side();setTimeout(td2QLocked,1300);}
 }
 function td2StartRound(){
   if(!GM||GM.running)return;const r=GM.round,n=5+r*2,hp=16+r*9,sp=40+r*1.6,rew=2+Math.floor(r/3);
@@ -1757,7 +1757,7 @@ function td2StartRound(){
   if(r%5===0)GM.queue.push({hp:hp*6,speed:sp*.65,em:'👹',reward:rew*8,boss:true});
   GM.running=true;GM.spawnGap=Math.max(.34,.8-r*.02);GM.spawnT=0;sndClick();td2Side()
 }
-function td2RoundDone(){GM.gold+=25;GM.round++;gainXP(6);persist();sndWin();toast('🎉 Qua đợt! +25 🪙');td2Side()}
+function td2RoundDone(){GM.gold+=25;GM.round++;gainXP(6);persist();sndWin();const wasLocked=GM.qLocked;GM.qLocked=false;toast('🎉 Qua đợt! +25 🪙'+(wasLocked?' — mở lại câu hỏi! 🔓':''));td2Q();td2Side()}
 function td2HUD(){const g=$('td2gold');if(!g)return;g.textContent=Math.floor(GM.gold);$('td2life').textContent=Math.max(0,GM.lives);$('td2round').textContent=GM.round;$('td2kills').textContent=GM.kills}
 function td2Loop(ts){
   if(!GM||GM.type!=='tower2')return;
