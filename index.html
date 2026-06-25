@@ -478,7 +478,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
     </div>
   </section>
 
-  <footer>Made with 💜 for học trò của thầy Vũ — English Fun Zone 2026</footer>
+  <footer>Made with 💜 for học trò của thầy Vũ Nguyên — English Fun Zone 2026</footer>
 </div>
 
 <!-- name modal -->
@@ -1681,7 +1681,7 @@ const TT={
 };
 const TD_EN=['👾','🐛','🦗','🐀','🕷️','🦂'];
 function startTower(){
-  GM={type:'tower2',gold:150,lives:20,round:1,kills:0,towers:[],enemies:[],beams:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false};
+  GM={type:'tower2',gold:150,lives:20,round:1,kills:0,towers:[],enemies:[],beams:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false,speed:1};
   const W=[[-30,80],[200,80],[200,200],[90,200],[90,320],[330,320],[330,200],[455,200],[520,200]];
   GM.path=[];GM.total=0;
   for(let i=0;i<W.length-1;i++){const x1=W[i][0],y1=W[i][1],x2=W[i+1][0],y2=W[i+1][1];const len=Math.hypot(x2-x1,y2-y1);GM.path.push({x1,y1,x2,y2,len});GM.total+=len;}
@@ -1739,7 +1739,8 @@ function td2Side(){
   const sd=$('td2side');if(!sd)return;
   sd.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">🏪 Cửa hàng trụ</div><div class="td2-shop">${shop}</div>`+
     (GM.running?`<button class="btn ghost" style="width:100%" disabled>⚔️ Đang đánh đợt ${GM.round}...</button>`:`<button class="btn teal" style="width:100%" onclick="td2StartRound()">▶️ Bắt đầu đợt ${GM.round}</button>`)+
-    `<button class="btn ghost sm" style="width:100%;margin-top:6px" onclick="td2GameOver(1)">🏁 Kết thúc &amp; nhận XP</button>
+    `<div class="row" style="gap:6px;margin-top:6px;align-items:center"><span style="font-weight:800;font-size:12px;color:var(--muted)">⚡ Tốc độ</span>${[1,2,4].map(s=>`<button class="btn ${GM.speed===s?'teal':'ghost'} sm" style="flex:1;padding:6px 0" onclick="td2Speed(${s})">${s}×</button>`).join('')}</div>
+     <button class="btn ghost sm" style="width:100%;margin-top:6px" onclick="td2GameOver(1)">🏁 Kết thúc &amp; nhận XP</button>
      <div id="td2info" style="font-size:11.5px;color:var(--muted);margin-top:7px;min-height:36px">${info}</div>`;
 }
 function td2Q(){if(GM&&GM.qLocked)return td2QLocked();const q=vGenQ(poolVocab());GM.cur=q;const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ Trả lời đúng để kiếm vàng <b style="color:#d97706">+12🪙</b> <span style="color:var(--muted);font-weight:600">— rồi kéo xuống ⬇️ mua trụ &amp; bắt đầu đợt</span></div>${q.prompt}${optButtons(q.opts,'td2Ans')}<div class="feedback" id="td2qfb" style="margin-top:6px"></div>`}
@@ -1759,9 +1760,10 @@ function td2StartRound(){
 }
 function td2RoundDone(){GM.gold+=25;GM.round++;gainXP(6);persist();sndWin();const wasLocked=GM.qLocked;GM.qLocked=false;toast('🎉 Qua đợt! +25 🪙'+(wasLocked?' — mở lại câu hỏi! 🔓':''));td2Q();td2Side()}
 function td2HUD(){const g=$('td2gold');if(!g)return;g.textContent=Math.floor(GM.gold);$('td2life').textContent=Math.max(0,GM.lives);$('td2round').textContent=GM.round;$('td2kills').textContent=GM.kills}
+function td2Speed(s){if(!GM||GM.type!=='tower2')return;GM.speed=s;sndClick();td2Side()}
 function td2Loop(ts){
   if(!GM||GM.type!=='tower2')return;
-  if(!GM.last)GM.last=ts;let dt=(ts-GM.last)/1000;GM.last=ts;if(dt>.05)dt=.05;
+  if(!GM.last)GM.last=ts;let dt=(ts-GM.last)/1000;GM.last=ts;if(dt>.05)dt=.05;dt*=(GM.speed||1);
   if(GM.running){GM.spawnT-=dt;if(GM.queue.length&&GM.spawnT<=0){GM.spawnT=GM.spawnGap;const s=GM.queue.shift(),p=td2Pos(0);GM.enemies.push({d:0,x:p.x,y:p.y,hp:s.hp,max:s.hp,speed:s.speed,em:s.em,reward:s.reward,boss:s.boss})}}
   for(const e of GM.enemies){e.d+=e.speed*dt;if(e.d>=GM.total){e.dead=true;e.escaped=true}else{const p=td2Pos(e.d);e.x=p.x;e.y=p.y}}
   for(const t of GM.towers){t.cd-=dt;if(t.cd<=0){let tg=null,best=-1;for(const e of GM.enemies){if(e.dead)continue;const dx=e.x-t.x,dy=e.y-t.y;if(dx*dx+dy*dy<=t.range*t.range&&e.d>best){best=e.d;tg=e}}if(tg){tg.hp-=t.dmg;t.cd=t.rate;GM.beams.push({x1:t.x,y1:t.y,x2:tg.x,y2:tg.y,life:.12,c:t.color});if(tg.hp<=0){tg.dead=true;tg.killed=true}}}}
