@@ -1692,6 +1692,21 @@ const SURV_MAPS=[
   {id:5,name:'Thiên Hà',em:'🚀',boss:'👽',bossName:'Người Ngoài Hành Tinh',color:'#e0e7ff',atk:'⚡',timer:6,dmgBase:30},
 ];
 const SURV_Q_PER_MAP=20;
+const SURV_BOSSES=[
+  {boss:'👺',bossName:'Quỷ Goblin',atk:'🪓'},
+  {boss:'🧟',bossName:'Xác Sống',atk:'🦴'},
+  {boss:'🐺',bossName:'Sói Hoang',atk:'⚡'},
+  {boss:'🧙',bossName:'Phù Thủy',atk:'🔮'},
+  {boss:'🐙',bossName:'Quỷ Biển',atk:'💧'},
+  {boss:'🦇',bossName:'Dơi Ma',atk:'🌙'},
+  {boss:'🧛',bossName:'Ma Cà Rồng',atk:'🔥'},
+  {boss:'🐲',bossName:'Rồng Lửa',atk:'🔥'},
+  {boss:'🦑',bossName:'Quái Biển',atk:'🫧'},
+  {boss:'🤖',bossName:'Siêu Robot',atk:'💥'},
+  {boss:'👾',bossName:'Quái Vũ Trụ',atk:'☄️'},
+  {boss:'👽',bossName:'Ngoài Hành Tinh',atk:'🌟'},
+];
+function _survBoss(){return SURV_BOSSES[Math.floor(GM.totalQ/5)%SURV_BOSSES.length];}
 
 function startSurvival(){
   GM={type:'surv',hp:100,wave:0,mapQ:0,score:0,map:0,totalQ:0};
@@ -1715,9 +1730,9 @@ function _survRender(){
        <div class="map-prog-bar"><div class="map-prog-fill" id="survMapProg" style="width:${pct}%"></div></div>
      </div>
      <div class="surv-boss-area" id="survBossArea">
-       <span class="wave-monster" id="survMon">${md.boss}</span>
+       <span class="wave-monster" id="survMon">${_survBoss().boss}</span>
      </div>
-     <div class="surv-boss-name">${md.bossName} ${md.boss}</div>
+     <div class="surv-boss-name">${_survBoss().bossName} ${_survBoss().boss}</div>
      ${GM.cur.prompt}
      ${optButtons(GM.cur.opts,'survAnswer')}`;
 }
@@ -1754,7 +1769,7 @@ function survAnswer(k){
     const area=$('survBossArea');
     if(area){
       const proj=document.createElement('span');
-      proj.className='surv-proj';proj.textContent=md.atk;
+      proj.className='surv-proj';proj.textContent=_survBoss().atk;
       area.appendChild(proj);
       setTimeout(()=>{if(proj.parentNode)proj.remove();},420);
     }
