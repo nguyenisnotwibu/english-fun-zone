@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Fun Zone 🚀 Luyện Tiếng Anh 4-5-6-7</title>
+<title>English Fun Zone 🚀 Luyện Tiếng Anh 4-5-6-7-10</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -13,6 +13,7 @@
   --yellow:#ffd23f; --orange:#ff7a48; --pink:#ff5d8f; --violet:#8b5cf6;
   --teal:#22d3aa; --blue:#38bdf8; --red:#ff4d6d; --green:#2dd573;
   --g4a:#65a30d; --g4b:#a3e635;
+  --g10a:#1d4ed8; --g10b:#60a5fa;
   --g5a:#ff9f1c; --g5b:#ffd23f;
   --g6a:#16c79a; --g6b:#5eead4;
   --g7a:#8b5cf6; --g7b:#f472b6;
@@ -59,6 +60,7 @@ header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 0 4p
 .gpill{flex:1;min-width:150px;border-radius:var(--r);padding:14px 10px;text-align:center;color:#fff;font-family:'Baloo 2';font-size:19px;font-weight:800;border:3px solid rgba(255,255,255,.35);box-shadow:var(--shadow);transition:.18s;position:relative;overflow:hidden}
 .gpill small{display:block;font-family:'Be Vietnam Pro';font-weight:600;font-size:11px;opacity:.9;margin-top:2px}
 .gpill.g4{background:linear-gradient(135deg,var(--g4a),var(--g4b));color:#1a4700}
+.gpill.g10{background:linear-gradient(135deg,var(--g10a),var(--g10b));color:#fff}
 .gpill.g5{background:linear-gradient(135deg,var(--g5a),var(--g5b));color:#5b3500}
 .gpill.g6{background:linear-gradient(135deg,var(--g6a),var(--g6b));color:#03483a}
 .gpill.g7{background:linear-gradient(135deg,var(--g7a),var(--g7b))}
@@ -451,7 +453,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
       <span class="rocket">🚀</span>
       <div>
         <h1>English <span>Fun Zone</span></h1>
-        <p>Luyện tiếng Anh lớp 4 · 5 · 6 · 7 — học mà chơi, chơi mà giỏi!</p>
+        <p>Luyện tiếng Anh lớp 4 · 5 · 6 · 7 · 10 — học mà chơi, chơi mà giỏi!</p>
       </div>
     </div>
     <div class="player-chip" id="playerChip" style="cursor:pointer" title="Đổi tên / avatar">
@@ -469,6 +471,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
     <button class="gpill g5 on" data-g="5" onclick="setGrade(5)">🌟 Lớp 5<small>Global Success 5</small></button>
     <button class="gpill g6" data-g="6" onclick="setGrade(6)">🌊 Lớp 6<small>Global Success 6</small></button>
     <button class="gpill g7" data-g="7" onclick="setGrade(7)">🔮 Lớp 7<small>Global Success 7</small></button>
+    <button class="gpill g10" data-g="10" onclick="setGrade(10)">🎓 Lớp 10<small>Global S. / Friends G.</small></button>
     <button class="gpill gi" id="gpillIELTS" onclick="goIELTS()">📝 IELTS<small>Vocab · Paraphrase</small></button>
   </div>
 
@@ -741,6 +744,251 @@ function pickN(arr,n){return shuffle(arr).slice(0,n)}
 
 /* ================= DATA ================= */
 const DATA={
+/* ---------------- GRADE 10 ---------------- */
+10:{
+theory:[
+{em:'🔄',t:'Ôn tập các thì cơ bản (Present & Past Tenses Review)',h:`
+<div class="rule">4 thì hay gặp nhất — so sánh khi nào dùng thì nào.</div>
+<table><tr><th>Thì</th><th>Dấu hiệu</th><th>Ví dụ</th></tr>
+<tr><td>Present Simple</td><td>every day, usually, always, never</td><td>She <b>studies</b> hard every night.</td></tr>
+<tr><td>Present Continuous</td><td>now, at the moment, Look!</td><td>She <b>is studying</b> right now.</td></tr>
+<tr><td>Past Simple</td><td>yesterday, last week, in 2020, ago</td><td>She <b>studied</b> last night.</td></tr>
+<tr><td>Past Continuous</td><td>while, when, at 8pm last night</td><td>She <b>was studying</b> when I called.</td></tr></table>
+<div class="ex">While I <b>was walking</b> to school, I <b>met</b> an old friend. (quá khứ TT + quá khứ ĐƠN)</div>
+<div class="warn">⚠️ Một số động từ không dùng thì tiếp diễn: know, want, like, love, believe, have (sở hữu).</div>`},
+{em:'⭐',t:'Thì Hiện tại hoàn thành (Present Perfect)',h:`
+<div class="rule">Dùng cho: (1) việc đã làm nhưng KHÔNG NÓI khi nào; (2) kinh nghiệm trong đời; (3) vừa mới xảy ra.</div>
+<div class="rule">Cấu trúc: <b>S + have/has + V3/Ved</b></div>
+<table><tr><th>Dấu hiệu nhận biết</th><th></th></tr>
+<tr><td>just, already, yet, ever, never</td><td>recently, so far, up to now, since, for</td></tr></table>
+<div class="ex">I <b>have never been</b> to Japan. (kinh nghiệm)</div>
+<div class="ex">She <b>has just finished</b> her homework. (vừa xong)</div>
+<div class="ex">We <b>have lived</b> here <b>for</b> 5 years. (khoảng thời gian liên tục)</div>
+<div class="warn">⚠️ <b>since</b> + thời điểm (since 2020, since Monday) · <b>for</b> + khoảng thời gian (for 3 years, for a long time)</div>`},
+{em:'⏳',t:'Thì Quá khứ hoàn thành (Past Perfect)',h:`
+<div class="rule">Dùng cho việc xảy ra TRƯỚC một việc khác trong quá khứ.</div>
+<div class="rule">Cấu trúc: <b>S + had + V3/Ved</b></div>
+<div class="ex">By the time I arrived, the film <b>had already started</b>. (phim bắt đầu trước khi tôi đến)</div>
+<div class="ex">She <b>had studied</b> for 3 hours before she took the test.</div>
+<table><tr><th>Dấu hiệu</th><th>Ví dụ</th></tr>
+<tr><td>by the time, after, before, when, already, just</td><td>After he <b>had eaten</b>, he went to bed.</td></tr></table>
+<div class="warn">⚠️ Quá khứ hoàn thành = việc xảy ra TRƯỚC. Quá khứ đơn = việc xảy ra SAU.</div>`},
+{em:'🔁',t:'Câu bị động (Passive Voice)',h:`
+<div class="rule">Dùng khi: không biết / không cần nói ai làm; nhấn mạnh vào đối tượng bị tác động.</div>
+<table><tr><th>Thì</th><th>Công thức bị động</th></tr>
+<tr><td>Present Simple</td><td>is/am/are + V3/Ved</td></tr>
+<tr><td>Present Continuous</td><td>is/am/are + being + V3/Ved</td></tr>
+<tr><td>Past Simple</td><td>was/were + V3/Ved</td></tr>
+<tr><td>Present Perfect</td><td>have/has + been + V3/Ved</td></tr>
+<tr><td>Modal (will, can...)</td><td>modal + be + V3/Ved</td></tr></table>
+<div class="ex">Active: People <b>speak</b> English all over the world.</div>
+<div class="ex">Passive: English <b>is spoken</b> all over the world.</div>
+<div class="ex">Active: They <b>have built</b> a new bridge.</div>
+<div class="ex">Passive: A new bridge <b>has been built</b>.</div>
+<div class="warn">⚠️ Tác nhân (by + người/vật) chỉ đề cập khi cần thiết: The book was written <b>by Nguyen Du</b>.</div>`},
+{em:'💬',t:'Lời nói gián tiếp (Reported Speech)',h:`
+<div class="rule">Khi thuật lại lời người khác, động từ lùi về một thì và đổi đại từ.</div>
+<table><tr><th>Trực tiếp</th><th>Gián tiếp</th></tr>
+<tr><td>am/is → was · are → were</td><td>Present Simple → Past Simple</td></tr>
+<tr><td>Present Continuous → Past Continuous</td><td>will → would · can → could</td></tr>
+<tr><td>Past Simple → Past Perfect</td><td>have/has → had</td></tr></table>
+<div class="ex">"I <b>am</b> tired," she said. → She said (that) she <b>was</b> tired.</div>
+<div class="ex">"I <b>will help</b> you," he said. → He said (that) he <b>would help</b> me.</div>
+<div class="rule">Câu hỏi gián tiếp: <b>asked + if/whether</b> (câu hỏi Yes/No) · <b>asked + Wh</b> (câu hỏi Wh)</div>
+<div class="ex">"Do you like music?" → She asked if/whether I <b>liked</b> music.</div>
+<div class="ex">"Where do you live?" → He asked where I <b>lived</b>.</div>
+<div class="warn">⚠️ Đổi: here → there · today → that day · tomorrow → the next day · now → then · this → that</div>`},
+{em:'➡️',t:'To-infinitive vs Gerund (V-ing / to V)',h:`
+<div class="rule">Một số động từ đi với <b>to + V</b>, một số đi với <b>V-ing</b>, một số đi được với cả hai.</div>
+<table><tr><th>Chỉ + to V</th><th>Chỉ + V-ing</th><th>Cả hai (nghĩa khác)</th></tr>
+<tr><td>want, hope, decide, plan, promise, agree, afford, refuse</td><td>enjoy, finish, avoid, mind, suggest, keep, consider, admit</td><td>stop, remember, forget, try, regret</td></tr></table>
+<div class="ex">I <b>want to learn</b> Japanese. (want + to V)</div>
+<div class="ex">She <b>enjoys reading</b> novels. (enjoy + V-ing)</div>
+<div class="ex">He <b>stopped smoking</b>. (dừng hút thuốc — stop + V-ing)</div>
+<div class="ex">She <b>stopped to drink</b> water. (dừng lại ĐỂ uống — stop + to V)</div>
+<div class="warn">⚠️ Sau giới từ LUÔN dùng V-ing: interested <b>in learning</b>, good <b>at singing</b>.</div>`},
+{em:'🔮',t:'Tương lai: Will vs Going to vs Present Continuous',h:`
+<table><tr><th>Cấu trúc</th><th>Dùng khi</th><th>Ví dụ</th></tr>
+<tr><td>will + V</td><td>Quyết định ngay lúc nói, dự đoán không chắc, lời hứa</td><td>I <b>will help</b> you right now!</td></tr>
+<tr><td>be going to + V</td><td>Kế hoạch đã định trước, dự đoán dựa vào bằng chứng</td><td>I <b>am going to study</b> abroad next year. (đã quyết định)</td></tr>
+<tr><td>Present Continuous</td><td>Lịch hẹn cụ thể đã được sắp xếp</td><td>I <b>am meeting</b> my dentist at 3pm. (đã có lịch)</td></tr></table>
+<div class="ex">Look at those clouds! It <b>is going to rain</b>. (bằng chứng: mây đen)</div>
+<div class="ex">A: The phone is ringing. B: I <b>will get</b> it! (quyết định tức thời)</div>`},
+{em:'🎭',t:'Động từ khuyết thiếu (must / have to / should / ought to)',h:`
+<table><tr><th>Modal</th><th>Nghĩa</th><th>Ví dụ</th></tr>
+<tr><td>must</td><td>PHẢI (bắt buộc từ người nói / quy định)</td><td>You <b>must</b> wear a seatbelt.</td></tr>
+<tr><td>have to</td><td>PHẢI (bắt buộc từ bên ngoài)</td><td>I <b>have to</b> wake up at 6 for school.</td></tr>
+<tr><td>mustn't</td><td>KHÔNG ĐƯỢC (cấm)</td><td>You <b>mustn't</b> use your phone here.</td></tr>
+<tr><td>don't have to</td><td>Không cần thiết (không cấm)</td><td>You <b>don't have to</b> come if you're busy.</td></tr>
+<tr><td>should / ought to</td><td>NÊN (lời khuyên)</td><td>You <b>should</b> exercise more.</td></tr>
+<tr><td>shouldn't</td><td>KHÔNG NÊN</td><td>You <b>shouldn't</b> stay up too late.</td></tr></table>
+<div class="warn">⚠️ must (chủ quan, ngay lúc nói) vs have to (khách quan, quy định sẵn).</div>`},
+{em:'1️⃣',t:'Câu điều kiện loại 1 (First Conditional — Có thể xảy ra)',h:`
+<div class="rule">Dùng cho điều kiện <b>CÓ THỂ xảy ra</b> trong tương lai. Kết quả có khả năng thực.</div>
+<div class="rule">Cấu trúc: <b>If + Present Simple, will + V</b></div>
+<div class="ex">If it <b>rains</b> tomorrow, I <b>will stay</b> at home.</div>
+<div class="ex">If you <b>study</b> hard, you <b>will pass</b> the exam.</div>
+<div class="ex">She <b>will be</b> late if she <b>doesn't hurry</b>.</div>
+<div class="rule">Có thể thay <b>will</b> bằng <b>can/may/might/should</b>:</div>
+<div class="ex">If you call him, he <b>might</b> answer. (có thể trả lời)</div>
+<div class="warn">⚠️ Mệnh đề IF dùng thì HT đơn (không dùng will): If it <b>rains</b> (không phải: if it will rain).</div>`},
+{em:'2️⃣',t:'Câu điều kiện loại 2 (Second Conditional — Giả định, khó xảy ra)',h:`
+<div class="rule">Dùng cho điều kiện <b>KHÔNG THỰC</b> ở hiện tại / khó xảy ra. Thường là tưởng tượng, ước muốn.</div>
+<div class="rule">Cấu trúc: <b>If + Past Simple, would + V</b></div>
+<div class="ex">If I <b>had</b> a million dollars, I <b>would travel</b> the world. (không có tiền)</div>
+<div class="ex">If she <b>were</b> taller, she <b>would be</b> a model. (thực tế không cao)</div>
+<div class="ex">I <b>would study</b> medicine if I <b>were</b> cleverer.</div>
+<div class="rule">Chú ý: if I <b>were</b> (không phải "was" trong văn viết chuẩn)</div>
+<div class="warn">⚠️ Phân biệt: Type 1 = CÓ THỂ xảy ra · Type 2 = KHÔNG THỂ / khó xảy ra.</div>`},
+{em:'❓',t:'Câu hỏi đuôi (Question Tags)',h:`
+<div class="rule">Thêm vào cuối câu để hỏi xác nhận. Câu khẳng định → đuôi phủ định; phủ định → đuôi khẳng định.</div>
+<table><tr><th>Câu chính</th><th>Đuôi</th></tr>
+<tr><td>She is a teacher, ___</td><td>isn't she?</td></tr>
+<tr><td>They don't know, ___</td><td>do they?</td></tr>
+<tr><td>He can swim, ___</td><td>can't he?</td></tr>
+<tr><td>You haven't seen it, ___</td><td>have you?</td></tr>
+<tr><td>Let's go, ___</td><td>shall we?</td></tr>
+<tr><td>Don't be late, ___</td><td>will you?</td></tr></table>
+<div class="ex">It's a beautiful day, <b>isn't it</b>?</div>
+<div class="ex">You studied last night, <b>didn't you</b>?</div>
+<div class="warn">⚠️ I am → am I NOT: I'm right, <b>aren't I</b>? (không phải amn't I)</div>`},
+{em:'🔗',t:'Mệnh đề quan hệ (Relative Clauses — who / which / that / where)',h:`
+<div class="rule">Dùng để bổ sung thông tin cho danh từ đứng trước.</div>
+<table><tr><th>Đại từ</th><th>Thay cho</th><th>Ví dụ</th></tr>
+<tr><td>who</td><td>người</td><td>The man <b>who</b> called you is my uncle.</td></tr>
+<tr><td>which</td><td>vật / sự việc</td><td>The book <b>which</b> I borrowed is great.</td></tr>
+<tr><td>that</td><td>người / vật (không dùng trong mđ không hạn định)</td><td>The car <b>that</b> she drives is red.</td></tr>
+<tr><td>where</td><td>nơi chốn</td><td>The school <b>where</b> I studied is old.</td></tr>
+<tr><td>whose</td><td>sở hữu</td><td>The girl <b>whose</b> bag was stolen is crying.</td></tr></table>
+<div class="rule">Mđ <b>xác định</b> (Defining): không có dấu phẩy · Mđ <b>không xác định</b> (Non-defining): có dấu phẩy, dùng who/which (không dùng that)</div>
+<div class="ex">My brother, <b>who</b> lives in Hanoi, is a doctor. (non-defining — bổ sung thêm)</div>`},
+],
+quiz:[
+{q:'She ___ (watch) TV when I called her last night.',o:['watches','watched','was watching','has watched'],a:2,e:'"when I called" = quá khứ đơn + khi đó đang xem → quá khứ tiếp diễn: was watching.'},
+{q:'I ___ this movie before. It\'s amazing!',o:['see','saw','have seen','had seen'],a:2,e:'Kinh nghiệm, không nói khi nào → hiện tại hoàn thành: have seen.'},
+{q:'English ___ (speak) by millions of people worldwide.',o:['speaks','is spoken','has spoken','spoke'],a:1,e:'Câu bị động thì hiện tại đơn: is/am/are + V3 → is spoken.'},
+{q:'She said she ___ tired and wanted to go home.',o:['is','was','has been','will be'],a:1,e:'Lời nói gián tiếp: is → was (lùi thì).'},
+{q:'If you ___ hard, you will pass the exam.',o:['study','studied','will study','would study'],a:0,e:'Câu điều kiện loại 1: If + Present Simple, will + V.'},
+{q:'If I ___ a bird, I would fly to Paris.',o:['am','was','were','have been'],a:2,e:'Câu điều kiện loại 2: If + Past Simple (were cho to be), would + V.'},
+{q:'She enjoys ___ to music while studying.',o:['listen','listens','listened','listening'],a:3,e:'enjoy + V-ing: enjoys listening.'},
+{q:'You look tired. You ___ take a rest.',o:['must','should','mustn\'t','don\'t have to'],a:1,e:'Lời khuyên nhẹ nhàng → should.'},
+{q:'By the time we arrived, the train ___ already ___.',o:['has left','had left','left','was leaving'],a:1,e:'By the time + quá khứ đơn → quá khứ hoàn thành: had left.'},
+{q:'Look at those dark clouds! It ___ rain soon.',o:['will','is going to','is','would'],a:1,e:'Có bằng chứng (mây đen) → is going to.'},
+{q:'The boy ___ won the prize is my classmate.',o:['who','which','whose','where'],a:0,e:'Thay cho "người" (the boy) → who.'},
+{q:'You haven\'t done your homework, ___ you?',o:['have','haven\'t','did','didn\'t'],a:0,e:'Câu hỏi đuôi: phủ định → đuôi khẳng định → have you?'},
+{q:'She ___ (finish) her project before the deadline.',o:['finishes','is finishing','has finished','finished'],a:2,e:'Đã hoàn thành, không nói khi nào cụ thể → present perfect: has finished.'},
+{q:'This bridge ___ (build) in 1990.',o:['built','was built','has built','is building'],a:1,e:'Bị động quá khứ đơn: was/were + V3 → was built.'},
+{q:'"I will come tomorrow," she said. → She said she ___ come the next day.',o:['will','would','can','could'],a:1,e:'will → would (lùi thì trong reported speech).'},
+{q:'He stopped ___ when he got married.',o:['smoke','smokes','smoking','to smoke'],a:2,e:'stop + V-ing = dừng hẳn việc đó: stopped smoking.'},
+{q:'You ___ bring a gift. It\'s not necessary.',o:['must','mustn\'t','don\'t have to','shouldn\'t'],a:2,e:'Không cần thiết (không phải cấm) → don\'t have to.'},
+{q:'If I had more time, I ___ learn to play the piano.',o:['will','would','should','could'],a:1,e:'Câu điều kiện loại 2: would + V.'},
+{q:'The city ___ I was born has changed a lot.',o:['which','who','that','where'],a:3,e:'Thay cho nơi chốn (the city) → where.'},
+{q:'She is a doctor, ___ she?',o:['is','isn\'t','was','wasn\'t'],a:1,e:'Câu khẳng định → đuôi phủ định: isn\'t she?'},
+{q:'I ___ here since 2019.',o:['live','lived','have lived','had lived'],a:2,e:'"since 2019" → hiện tại hoàn thành: have lived.'},
+{q:'He promised ___ late.',o:['not to be','not being','to not be','don\'t be'],a:0,e:'promise + not to V (phủ định to-infinitive).'},
+{q:'A new hospital ___ (build) in our district next year.',o:['will build','is built','will be built','builds'],a:2,e:'Bị động tương lai với will: will + be + V3.'},
+{q:'___ you ever ___ to England?',o:['Have / been','Did / go','Were / going','Had / gone'],a:0,e:'Hỏi kinh nghiệm → present perfect: Have you ever been...?'},
+{q:'While she ___ dinner, the doorbell rang.',o:['cooks','cooked','was cooking','has cooked'],a:2,e:'"while" + hành động đang xảy ra → quá khứ tiếp diễn: was cooking.'},
+],
+readings:[
+{em:'🌍',title:'Social Media: Friend or Foe?',tags:['Technology','Opinion','B1'],
+text:`Social media has become an inseparable part of modern life. Billions of people use platforms like Facebook, Instagram, and TikTok every day to connect with friends, share information, and express themselves. However, the effects of social media on young people are increasingly debated.
+
+On the positive side, social media enables people to maintain friendships across great distances and helps shy individuals to express themselves more confidently online. Students can join study groups, access educational content, and collaborate on projects with classmates worldwide.
+
+Nevertheless, there are significant drawbacks. Research has shown that excessive use of social media is linked to anxiety, depression, and poor sleep quality among teenagers. The pressure to appear perfect online, combined with cyberbullying, can seriously damage a young person's self-esteem. Furthermore, social media platforms are deliberately designed to be addictive, making it difficult for users to put their phones down.
+
+Experts recommend setting daily time limits, avoiding phones before bedtime, and having face-to-face conversations instead of relying solely on digital communication. As with most tools, social media is neither entirely good nor bad — it all depends on how we choose to use it.`,
+vn:`Mạng xã hội đã trở thành một phần không thể tách rời của cuộc sống hiện đại. Hàng tỷ người dùng Facebook, Instagram, TikTok mỗi ngày để kết nối, chia sẻ và thể hiện bản thân. Tuy nhiên, tác động của mạng xã hội đối với giới trẻ ngày càng gây tranh cãi.\n\nMặt tích cực: giúp duy trì tình bạn qua khoảng cách, giúp người nhút nhát tự tin hơn, học sinh có thể tham gia nhóm học, tiếp cận nội dung giáo dục.\n\nMặt tiêu cực: nghiên cứu cho thấy dùng quá nhiều mạng xã hội gây lo âu, trầm cảm, mất ngủ ở thanh thiếu niên. Áp lực phải trông hoàn hảo và nạn bắt nạt mạng ảnh hưởng nghiêm trọng đến lòng tự trọng.\n\nChuyên gia khuyên: đặt giới hạn thời gian, không dùng điện thoại trước khi ngủ, ưu tiên giao tiếp trực tiếp.`,
+qs:[
+{q:'According to the text, what is ONE positive effect of social media?',o:['It cures depression','It helps people maintain long-distance friendships','It prevents cyberbullying','It improves sleep quality'],a:1},
+{q:'What does research say about excessive social media use among teenagers?',o:['It improves academic performance','It increases confidence','It is linked to anxiety and poor sleep','It has no negative effects'],a:2},
+{q:'The word "addictive" (paragraph 3) is closest in meaning to:',o:['educational','dangerous','difficult to stop using','expensive'],a:2},
+{q:'What do experts recommend regarding social media use?',o:['Avoid it completely','Set daily time limits and prioritise face-to-face communication','Use only educational platforms','Share more positive content'],a:1},
+]},
+{em:'🌱',title:'Ecotourism: Travel That Gives Back',tags:['Environment','B1-B2'],
+text:`Ecotourism is a rapidly growing form of travel that focuses on visiting natural environments while minimising damage to ecosystems and supporting local communities. Unlike mass tourism, which often leads to environmental degradation and cultural disruption, ecotourism aims to leave destinations better than it finds them.
+
+Vietnam is an ideal destination for ecotourism. The country boasts remarkable biodiversity, from the terraced rice fields of Sa Pa to the karst mountains of Ha Long Bay and the dense jungles of Phong Nha-Ke Bang National Park, which is home to the world's largest cave system.
+
+Responsible ecotourism benefits local people directly. When tourists hire local guides, eat at family-run restaurants, and purchase handmade crafts, money flows directly into the community rather than to large corporations. This economic incentive also motivates communities to protect — rather than exploit — their natural resources.
+
+However, ecotourism is not without challenges. Poorly managed eco-tours can still damage fragile environments. Visitors must follow strict guidelines: staying on designated trails, not disturbing wildlife, reducing single-use plastic, and leaving no trace. True ecotourism requires a commitment from both tourism operators and travellers alike.`,
+vn:`Du lịch sinh thái là loại hình du lịch tập trung vào việc khám phá thiên nhiên trong khi giảm thiểu tác động lên hệ sinh thái và hỗ trợ cộng đồng địa phương.\n\nViệt Nam là điểm đến lý tưởng: ruộng bậc thang Sa Pa, vịnh Hạ Long, rừng già Phong Nha-Kẻ Bàng (hang động lớn nhất thế giới).\n\nLợi ích: tiền du lịch chảy trực tiếp vào cộng đồng địa phương, tạo động lực bảo vệ tài nguyên thiên nhiên.\n\nThách thức: nếu quản lý kém vẫn gây hại. Du khách cần tuân thủ quy tắc: đi đúng đường mòn, không làm phiền động vật, giảm nhựa dùng một lần.`,
+qs:[
+{q:'What is the main purpose of ecotourism?',o:['To increase tourist numbers','To visit natural areas while minimising environmental damage','To replace traditional tourism','To make travel cheaper'],a:1},
+{q:'According to the text, how does ecotourism benefit local communities?',o:['By building luxury hotels','By attracting large corporations','By directing money to local people through guides and restaurants','By reducing the number of visitors'],a:2},
+{q:'What does the text say about Phong Nha-Ke Bang?',o:['It is the most popular beach in Vietnam','It has the world\'s largest cave system','It is famous for its rice terraces','It is home to rare tigers'],a:1},
+{q:'What challenge does the text mention about ecotourism?',o:['It is too expensive for most travellers','Poorly managed eco-tours can still damage the environment','Local communities do not benefit from it','There are not enough ecotourism destinations'],a:1},
+]},
+{em:'⚖️',title:'Gender Equality: Progress and Challenges',tags:['Society','Gender','B1-B2'],
+text:`Gender equality — the idea that all people, regardless of their gender, should have the same rights and opportunities — is widely recognised as both a moral imperative and a driver of social progress. Despite significant advances over the past century, true equality remains an unfinished project in most parts of the world.
+
+In Vietnam, women have made remarkable strides in education and the workforce. The female literacy rate is nearly equal to that of men, and women represent a significant proportion of the national workforce. Vietnamese women have also taken on prominent roles in politics and business, challenging traditional gender norms.
+
+However, challenges persist. Women are still more likely to be responsible for unpaid domestic work such as cooking, cleaning, and caring for children and elderly relatives. Gender pay gaps, though narrowing, continue to exist in many industries. Additionally, gender-based stereotypes about what boys and girls "should" study or pursue as careers limit individual potential.
+
+Addressing these challenges requires action at multiple levels: governments must enforce equal pay legislation, schools should encourage girls to study science and technology, and families need to share domestic responsibilities more equitably. Gender equality benefits everyone — when women thrive, societies thrive.`,
+vn:`Bình đẳng giới — mọi người dù giới tính nào đều có quyền và cơ hội như nhau — được công nhận là cả về mặt đạo đức lẫn động lực phát triển xã hội.\n\nViệt Nam: phụ nữ đã đạt nhiều tiến bộ về giáo dục, lực lượng lao động, chính trị và kinh doanh.\n\nThách thức: phụ nữ vẫn chủ yếu đảm nhiệm công việc nhà không lương, khoảng cách lương theo giới vẫn tồn tại, định kiến về nghề nghiệp theo giới.\n\nGiải pháp: chính phủ thực thi luật trả lương bình đẳng, trường học khuyến khích nữ học STEM, gia đình chia sẻ công việc nhà.`,
+qs:[
+{q:'According to the text, what does "gender equality" mean?',o:['Women should earn more than men','All genders should have the same rights and opportunities','Men should do more housework','Women should study the same subjects as men'],a:1},
+{q:'What progress have Vietnamese women made according to the text?',o:['They earn more than men','They no longer do housework','Their literacy rate nearly equals men\'s and they have roles in politics','They have completely closed the pay gap'],a:2},
+{q:'What is ONE challenge mentioned in the text?',o:['Women cannot find jobs','Girls are banned from studying science','Women still do most unpaid domestic work','Gender equality laws do not exist'],a:2},
+{q:'The word "equitably" in the last paragraph means:',o:['quickly','fairly and equally','traditionally','separately'],a:1},
+]},
+],
+listenings:[
+{em:'🎵',title:'Music and Identity',hint:'Nghe hai bạn Linh và Tom thảo luận về âm nhạc',
+script:[{text:'Hey Linh, what kind of music are you into these days?'},{text:'Mostly indie pop and some K-pop. I find music really helps me focus when I\'m studying.',pitch:1.2},{text:'Really? I\'m the opposite. I can\'t concentrate at all with music on. I need total silence.'},{text:'That\'s interesting. I read that it depends on the type of music. Instrumental music is better for studying than music with lyrics.',pitch:1.2},{text:'That makes sense. What about live music? Do you go to concerts?'},{text:'I used to go quite often, but not so much lately. Tickets have gotten really expensive. Have you ever been to a live concert?',pitch:1.2},{text:'Once, last year. It was a local band and it was incredible. There\'s nothing quite like hearing music performed live.'},{text:'Absolutely. The atmosphere is electric. I\'m saving up for a concert next month, actually.',pitch:1.2}],
+trans:['Tom: Hey Linh, what music are you into these days?','Linh: Mostly indie pop and K-pop. Music helps me focus when studying.','Tom: Really? I\'m the opposite — I need silence to concentrate.','Linh: I read that instrumental music is better for studying than music with lyrics.','Tom: Makes sense. Do you go to concerts?','Linh: I used to, but tickets are really expensive now. Have you been to a live concert?','Tom: Once, last year — a local band. It was incredible.','Linh: The atmosphere is electric. I\'m saving for a concert next month!'],
+qs:[
+{q:'Why does Linh like listening to music while studying?',o:['She finds it entertaining','It helps her focus','It blocks out noise','It makes studying faster'],a:1},
+{q:'According to Linh, which type of music is better for studying?',o:['K-pop','Loud rock music','Instrumental music','Music with strong lyrics'],a:2},
+{q:'Why doesn\'t Linh go to concerts as often now?',o:['She doesn\'t like concerts','She moved cities','Tickets have become very expensive','The bands she likes don\'t perform'],a:2},
+]},
+{em:'🤝',title:'Community Volunteering',hint:'Nghe bạn Nam kể về hoạt động tình nguyện',
+script:[{text:'Hi everyone. Today I want to talk about my volunteering experience at a local community centre last summer.'},{text:'For two weeks, I helped teach basic computer skills to elderly residents who had never used the internet before.'},{text:'At first, it was quite challenging. Some of them found it difficult to use a mouse, and others were worried about making mistakes.'},{text:'But by the end of the first week, most of them were able to browse websites and video-call their grandchildren.'},{text:'The experience taught me so much more than I expected. I had to be patient, creative, and clear in my explanations.'},{text:'More importantly, I realised that volunteering isn\'t just about helping others — it\'s about building connections between generations.'},{text:'If you have any free time, I strongly encourage you to volunteer. It will change your perspective in ways you can\'t imagine.'}],
+trans:['Nam volunteered at a community centre last summer for two weeks.','He taught elderly residents basic computer skills — many had never used the internet.','It was challenging at first: some struggled with the mouse, others feared making mistakes.','By end of week 1, most could browse websites and video-call grandchildren.','He learned to be patient, creative, and clear in explanations.','He realised volunteering builds connections between generations, not just helps people.','He strongly encourages others to volunteer — it changes your perspective.'],
+qs:[
+{q:'What did Nam do during his volunteering?',o:['Taught English to children','Built houses for poor families','Taught elderly people basic computer skills','Organised a charity fundraiser'],a:2},
+{q:'What challenge did Nam face at first?',o:['He didn\'t know enough about computers','Some elderly people struggled to use a mouse','The community centre was too far away','He wasn\'t allowed to use the internet'],a:1},
+{q:'What important lesson did Nam learn from volunteering?',o:['That elderly people cannot learn new skills','That volunteering is about building generational connections, not just helping','That computer skills are easy to teach','That two weeks is too short for volunteering'],a:1},
+]},
+{em:'🏭',title:'Inventions That Changed the World',hint:'Nghe bài giới thiệu về các phát minh quan trọng',
+script:[{text:'Throughout history, certain inventions have completely transformed how humans live, work, and communicate.'},{text:'The printing press, invented by Johannes Gutenberg in the 1440s, made books affordable and accessible for the first time, spreading knowledge and ideas across Europe.'},{text:'The steam engine, developed in the 18th century, powered the Industrial Revolution, moving people and goods faster than ever before.'},{text:'In the 20th century, no invention changed daily life more dramatically than the internet.'},{text:'Originally developed for military communication, it has become the backbone of the modern global economy and connects over five billion people today.'},{text:'Looking ahead, artificial intelligence is likely to be the defining invention of our era, with potential to transform medicine, education, and virtually every industry.'},{text:'Each of these inventions faced scepticism and resistance at first — proof that truly revolutionary ideas are rarely welcomed immediately.'}],
+trans:['Throughout history, inventions have transformed human life.','Gutenberg\'s printing press (1440s): made books affordable, spread knowledge across Europe.','Steam engine (18th century): powered the Industrial Revolution.','20th century: the internet — originally for military use, now connects 5 billion+ people.','Today: AI is likely the defining invention of our era — transforming medicine, education, every industry.','Every revolutionary invention faced resistance at first.'],
+qs:[
+{q:'What was the original purpose of the internet?',o:['Entertainment','Social networking','Military communication','Scientific research'],a:2},
+{q:'According to the speaker, what will likely be the defining invention of our era?',o:['The printing press','The steam engine','The smartphone','Artificial intelligence'],a:3},
+{q:'What point does the speaker make at the end?',o:['All inventions were immediately popular','Revolutionary ideas often face initial resistance','The steam engine was the most important invention','Modern inventions are better than old ones'],a:1},
+]},
+],
+writing:[
+{type:'order',words:['English','is','spoken','by','millions','of','people','worldwide','.'],vn:'Tiếng Anh được hàng triệu người nói trên toàn thế giới.'},
+{type:'order',words:['If','it','rains','tomorrow',',','I','will','stay','at','home','.'],vn:'Nếu ngày mai trời mưa, tôi sẽ ở nhà.'},
+{type:'order',words:['She','said','she','was','tired','and','wanted','to','go','home','.'],vn:'Cô ấy nói rằng cô ấy mệt và muốn về nhà.'},
+{type:'order',words:['By','the','time','we','arrived',',','the','film','had','already','started','.'],vn:'Khi chúng tôi đến, bộ phim đã bắt đầu rồi.'},
+{type:'order',words:['If','I','were','you',',','I','would','study','harder','.'],vn:'Nếu tôi là bạn, tôi sẽ học chăm chỉ hơn.'},
+{type:'gap',sent:'A new school ___ (build) in our town next year.',a:'will be built',hintvn:'Bị động tương lai với will: will + be + V3'},
+{type:'gap',sent:'She enjoys ___ (listen) to music when she does housework.',a:'listening',hintvn:'enjoy + V-ing'},
+{type:'gap',sent:'I ___ this city since I was a child.',a:'have known',hintvn:'"since" → hiện tại hoàn thành: have/has + V3'},
+{type:'gap',sent:'He ___ (study) all morning when I came.',a:'had been studying',hintvn:'Trước một thời điểm trong quá khứ → past perfect continuous'},
+{type:'gap',sent:'You look pale. You ___ see a doctor.',a:'should',hintvn:'Lời khuyên → should'},
+{type:'gap',sent:'The man ___ won the award is my neighbour.',a:'who',hintvn:'Thay cho người (the man) → who'},
+{type:'gap',sent:'If she ___ (study) harder, she would pass the exam.',a:'studied',hintvn:'Câu điều kiện loại 2: If + Past Simple, would + V'},
+{type:'write',prompt:'Viết lại câu dùng bị động: "People built this bridge in 1975."',check:['was built','were built'],sample:'This bridge was built in 1975.',vn:'Bị động quá khứ đơn: was/were + V3.'},
+{type:'write',prompt:'Thuật lại: "I am going to travel to Japan," Tom said.',check:['said','going','travel','japan','was'],sample:'Tom said (that) he was going to travel to Japan.',vn:'Lời nói gián tiếp: am → was, I → he.'},
+{type:'write',prompt:'Viết câu điều kiện loại 1: bạn học chăm → bạn sẽ đạt điểm cao.',check:['if','study','will'],sample:'If you study hard, you will get good grades.',vn:'If + Present Simple, will + V.'},
+],
+topics:[
+{id:'g10t1',em:'💻',name:'U1-2: Công nghệ & Mạng xã hội',vocab:[['social media','mạng xã hội'],['cyberbullying','bắt nạt trên mạng'],['addictive','gây nghiện'],['anxiety','lo âu'],['self-esteem','lòng tự trọng'],['artificial intelligence','trí tuệ nhân tạo'],['algorithm','thuật toán'],['innovation','sự đổi mới'],['virtual reality','thực tế ảo'],['digital literacy','hiểu biết kỹ thuật số'],['bandwidth','băng thông'],['hack','xâm nhập / hack']]},
+{id:'g10t2',em:'🌱',name:'U3-4: Môi trường & Du lịch sinh thái',vocab:[['ecosystem','hệ sinh thái'],['biodiversity','đa dạng sinh học'],['ecotourism','du lịch sinh thái'],['deforestation','phá rừng'],['carbon footprint','lượng khí thải carbon'],['renewable energy','năng lượng tái tạo'],['endangered species','loài có nguy cơ tuyệt chủng'],['sustainable','bền vững'],['pollution','ô nhiễm'],['conservation','bảo tồn'],['habitat','môi trường sống'],['recycle','tái chế']]},
+{id:'g10t3',em:'⚖️',name:'U5-6: Bình đẳng giới & Cộng đồng',vocab:[['gender equality','bình đẳng giới'],['stereotype','định kiến'],['volunteer','tình nguyện viên'],['empowerment','trao quyền'],['discrimination','phân biệt đối xử'],['domestic work','công việc nhà'],['pay gap','khoảng cách lương'],['community','cộng đồng'],['charity','tổ chức từ thiện'],['campaign','chiến dịch'],['advocate','vận động / ủng hộ'],['inclusion','sự hòa nhập']]},
+{id:'g10t4',em:'🎵',name:'U7-8: Âm nhạc & Nghệ thuật',vocab:[['genre','thể loại âm nhạc'],['lyrics','lời bài hát'],['instrument','nhạc cụ'],['folk music','nhạc dân gian'],['contemporary','đương đại'],['album','album nhạc'],['composer','nhà soạn nhạc'],['performance','biểu diễn'],['harmony','hòa âm'],['rhythm','nhịp điệu'],['melody','giai điệu'],['acoustics','âm thanh học']]},
+{id:'g10t5',em:'🏥',name:'U9-10: Sức khỏe & Lối sống',vocab:[['mental health','sức khỏe tâm thần'],['well-being','sức khỏe / phúc lợi'],['epidemic','dịch bệnh'],['nutrition','dinh dưỡng'],['sedentary','ít vận động'],['meditation','thiền định'],['insomnia','mất ngủ'],['prescription','đơn thuốc'],['symptom','triệu chứng'],['diagnosis','chẩn đoán'],['therapy','liệu pháp'],['immune system','hệ miễn dịch']]},
+{id:'g10t6',em:'🎓',name:'U11-12: Giáo dục & Nghề nghiệp',vocab:[['curriculum','chương trình học'],['scholarship','học bổng'],['internship','thực tập'],['career path','con đường sự nghiệp'],['qualification','bằng cấp'],['critical thinking','tư duy phản biện'],['collaboration','hợp tác'],['entrepreneurship','tinh thần khởi nghiệp'],['apprenticeship','học nghề'],['vocational','hướng nghiệp'],['graduate','tốt nghiệp'],['achievement','thành tích']]},
+],
+},
 /* ---------------- GRADE 4 ---------------- */
 4:{
 theory:[
@@ -1572,7 +1820,7 @@ writing:[
 };
 
 /* ================= MERGE EXTRA INTO DATA ================= */
-Object.keys(TLEVEL).forEach(id=>{[4,5,6,7].forEach(g=>{const t=DATA[g].topics.find(x=>x.id===id);if(t){t.lvl=TLEVEL[id][0];t.cefr=TLEVEL[id][1]}})});
+Object.keys(TLEVEL).forEach(id=>{[4,5,6,7,10].forEach(g=>{const t=DATA[g].topics.find(x=>x.id===id);if(t){t.lvl=TLEVEL[id][0];t.cefr=TLEVEL[id][1]}})});
 [5,6,7].forEach(g=>{const e=EXTRA[g];if(!e)return;
   (e.topics||[]).forEach(t=>DATA[g].topics.push(t));
   ['quiz','readings','listenings','writing'].forEach(k=>{if(e[k])DATA[g][k]=DATA[g][k].concat(e[k])});});
