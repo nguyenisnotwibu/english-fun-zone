@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Fun Zone 🚀 Luyện Tiếng Anh 5-6-7</title>
+<title>English Fun Zone 🚀 Luyện Tiếng Anh 4-5-6-7</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -12,6 +12,7 @@
   --card:#ffffff; --ink:#2d2a55; --muted:#7a77a8;
   --yellow:#ffd23f; --orange:#ff7a48; --pink:#ff5d8f; --violet:#8b5cf6;
   --teal:#22d3aa; --blue:#38bdf8; --red:#ff4d6d; --green:#2dd573;
+  --g4a:#65a30d; --g4b:#a3e635;
   --g5a:#ff9f1c; --g5b:#ffd23f;
   --g6a:#16c79a; --g6b:#5eead4;
   --g7a:#8b5cf6; --g7b:#f472b6;
@@ -57,6 +58,7 @@ header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 0 4p
 .grades{display:flex;gap:10px;margin:14px 0 6px;flex-wrap:wrap}
 .gpill{flex:1;min-width:150px;border-radius:var(--r);padding:14px 10px;text-align:center;color:#fff;font-family:'Baloo 2';font-size:19px;font-weight:800;border:3px solid rgba(255,255,255,.35);box-shadow:var(--shadow);transition:.18s;position:relative;overflow:hidden}
 .gpill small{display:block;font-family:'Be Vietnam Pro';font-weight:600;font-size:11px;opacity:.9;margin-top:2px}
+.gpill.g4{background:linear-gradient(135deg,var(--g4a),var(--g4b));color:#1a4700}
 .gpill.g5{background:linear-gradient(135deg,var(--g5a),var(--g5b));color:#5b3500}
 .gpill.g6{background:linear-gradient(135deg,var(--g6a),var(--g6b));color:#03483a}
 .gpill.g7{background:linear-gradient(135deg,var(--g7a),var(--g7b))}
@@ -449,7 +451,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
       <span class="rocket">🚀</span>
       <div>
         <h1>English <span>Fun Zone</span></h1>
-        <p>Luyện tiếng Anh lớp 5 · 6 · 7 — học mà chơi, chơi mà giỏi!</p>
+        <p>Luyện tiếng Anh lớp 4 · 5 · 6 · 7 — học mà chơi, chơi mà giỏi!</p>
       </div>
     </div>
     <div class="player-chip" id="playerChip" style="cursor:pointer" title="Đổi tên / avatar">
@@ -463,6 +465,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
   </header>
 
   <div class="grades">
+    <button class="gpill g4" data-g="4" onclick="setGrade(4)">🌿 Lớp 4<small>Global Success 4</small></button>
     <button class="gpill g5 on" data-g="5" onclick="setGrade(5)">🌟 Lớp 5<small>Global Success 5</small></button>
     <button class="gpill g6" data-g="6" onclick="setGrade(6)">🌊 Lớp 6<small>Global Success 6</small></button>
     <button class="gpill g7" data-g="7" onclick="setGrade(7)">🔮 Lớp 7<small>Global Success 7</small></button>
@@ -738,6 +741,220 @@ function pickN(arr,n){return shuffle(arr).slice(0,n)}
 
 /* ================= DATA ================= */
 const DATA={
+/* ---------------- GRADE 4 ---------------- */
+4:{
+theory:[
+{em:'👋',t:'Chào hỏi & giới thiệu (Hello! What\'s your name?)',h:`
+<div class="rule">Hỏi tên: <b>What's your name?</b> → Trả lời: <b>My name is ...</b> hoặc <b>I'm ...</b></div>
+<div class="rule">Hỏi tuổi: <b>How old are you?</b> → Trả lời: <b>I'm ... years old.</b></div>
+<div class="rule">Hỏi thăm: <b>How are you?</b> → <b>I'm fine, thank you. / I'm great!</b></div>
+<table><tr><th>Câu chào</th><th>Trả lời</th></tr>
+<tr><td>Hello! / Hi!</td><td>Hello! / Hi there!</td></tr>
+<tr><td>Good morning!</td><td>Good morning!</td></tr>
+<tr><td>Good afternoon!</td><td>Good afternoon!</td></tr>
+<tr><td>Goodbye! / Bye!</td><td>Goodbye! See you!</td></tr></table>
+<div class="ex">A: <b>What's your name?</b> — B: My name is <b>Lan</b>. I'm <b>nine</b> years old.</div>
+<div class="warn">⚠️ "I" luôn viết hoa. "I'm" = I am (rút gọn).</div>`},
+{em:'🌏',t:'Quốc gia & quốc tịch (Where are you from?)',h:`
+<div class="rule">Hỏi: <b>Where are you from?</b> — Bạn đến từ đâu?</div>
+<div class="rule">Trả lời: <b>I'm from + quốc gia.</b> / <b>I'm + quốc tịch.</b></div>
+<table><tr><th>Quốc gia</th><th>Quốc tịch</th></tr>
+<tr><td>Vietnam</td><td>Vietnamese</td></tr>
+<tr><td>England</td><td>English</td></tr>
+<tr><td>America (USA)</td><td>American</td></tr>
+<tr><td>Japan</td><td>Japanese</td></tr>
+<tr><td>Korea</td><td>Korean</td></tr>
+<tr><td>Australia</td><td>Australian</td></tr></table>
+<div class="ex">A: Where are you from? — B: <b>I'm from Vietnam.</b> I'm <b>Vietnamese</b>.</div>
+<div class="warn">⚠️ Quốc tịch luôn viết hoa chữ cái đầu: Vietnamese, American, English.</div>`},
+{em:'📅',t:'Ngày trong tuần (What day is it today?)',h:`
+<div class="rule">Hỏi: <b>What day is it today?</b> → Trả lời: <b>It's Monday / Tuesday...</b></div>
+<table><tr><th>Thứ</th><th>Viết tắt</th><th>Thứ</th><th>Viết tắt</th></tr>
+<tr><td>Monday</td><td>Mon</td><td>Friday</td><td>Fri</td></tr>
+<tr><td>Tuesday</td><td>Tue</td><td>Saturday</td><td>Sat</td></tr>
+<tr><td>Wednesday</td><td>Wed</td><td>Sunday</td><td>Sun</td></tr>
+<tr><td>Thursday</td><td>Thu</td><td></td><td></td></tr></table>
+<div class="ex">A: What day is it today? — B: <b>It's Wednesday.</b></div>
+<div class="ex">I have English on <b>Monday and Friday</b>.</div>
+<div class="warn">⚠️ Ngày trong tuần luôn viết hoa: Monday (không viết monday).</div>`},
+{em:'📚',t:'Môn học ở trường (What subjects do you have?)',h:`
+<div class="rule">Hỏi: <b>What subjects do you have today?</b></div>
+<div class="rule">Trả lời: <b>I have + môn học.</b> · Sở thích: <b>My favourite subject is ...</b></div>
+<table><tr><th>Môn học</th><th>Nghĩa</th></tr>
+<tr><td>English</td><td>Tiếng Anh</td></tr>
+<tr><td>Maths</td><td>Toán</td></tr>
+<tr><td>Science</td><td>Khoa học</td></tr>
+<tr><td>Vietnamese</td><td>Tiếng Việt</td></tr>
+<tr><td>Music</td><td>Âm nhạc</td></tr>
+<tr><td>Art</td><td>Mỹ thuật</td></tr>
+<tr><td>PE (Physical Education)</td><td>Thể dục</td></tr></table>
+<div class="ex">A: What's your favourite subject? — B: My favourite subject is <b>Art</b>.</div>
+<div class="ex">I have <b>English and Maths</b> today.</div>`},
+{em:'💪',t:'Can / Can\'t — Hỏi khả năng (Can you swim?)',h:`
+<div class="rule">Dùng <b>can</b> để nói KHẢ NĂNG — điều có thể / không thể làm được.</div>
+<table><tr><th>Loại câu</th><th>Cấu trúc</th></tr>
+<tr><td>Khẳng định</td><td>I/You/He/She + <b>can</b> + V</td></tr>
+<tr><td>Phủ định</td><td>I/You/He/She + <b>can't</b> + V</td></tr>
+<tr><td>Câu hỏi</td><td><b>Can</b> + S + V?</td></tr>
+<tr><td>Trả lời ngắn</td><td>Yes, I <b>can</b>. / No, I <b>can't</b>.</td></tr></table>
+<div class="ex">I <b>can swim</b>, but I <b>can't fly</b>. 🏊</div>
+<div class="ex">A: <b>Can you play the guitar?</b> — B: Yes, I <b>can</b>!</div>
+<div class="warn">⚠️ Sau can/can't LUÔN dùng V nguyên mẫu: can <b>swim</b> (không phải can swims).</div>`},
+{em:'📦',t:'Giới từ chỉ nơi chốn (Where is it? — in / on / under...)',h:`
+<div class="rule">Hỏi vị trí: <b>Where is the...?</b> → Trả lời: <b>It's + giới từ + danh từ.</b></div>
+<table><tr><th>Giới từ</th><th>Nghĩa</th><th>Ví dụ</th></tr>
+<tr><td>in</td><td>trong</td><td>The ball is <b>in</b> the bag.</td></tr>
+<tr><td>on</td><td>trên</td><td>The book is <b>on</b> the desk.</td></tr>
+<tr><td>under</td><td>dưới</td><td>The cat is <b>under</b> the chair.</td></tr>
+<tr><td>next to</td><td>bên cạnh</td><td>The pen is <b>next to</b> the ruler.</td></tr>
+<tr><td>behind</td><td>đằng sau</td><td>The tree is <b>behind</b> the house.</td></tr>
+<tr><td>in front of</td><td>trước mặt</td><td>The car is <b>in front of</b> the school.</td></tr></table>
+<div class="ex">A: Where's my pencil? — B: It's <b>on the table</b>!</div>`},
+{em:'🎨',t:'Sở thích — I like + V-ing (What do you like doing?)',h:`
+<div class="rule">Hỏi sở thích: <b>What do you like doing?</b></div>
+<div class="rule">Trả lời: <b>I like / love + V-ing.</b> · Không thích: <b>I don't like + V-ing.</b></div>
+<div class="ex">I <b>like swimming</b> and <b>reading</b> books. 🏊📖</div>
+<div class="ex">She <b>loves drawing</b> pictures. He <b>doesn't like</b> singing.</div>
+<table><tr><th>Sở thích phổ biến</th><th>Nghĩa</th></tr>
+<tr><td>swimming / drawing</td><td>bơi lội / vẽ tranh</td></tr>
+<tr><td>reading (books)</td><td>đọc sách</td></tr>
+<tr><td>playing football</td><td>chơi bóng đá</td></tr>
+<tr><td>dancing / singing</td><td>nhảy múa / hát</td></tr>
+<tr><td>cooking / cycling</td><td>nấu ăn / đạp xe</td></tr></table>
+<div class="warn">⚠️ Sau like/love/hate → V+ing: like swim<b>ming</b>, love draw<b>ing</b>.</div>`},
+{em:'🌈',t:'Màu sắc & hình dạng (Colours & Shapes)',h:`
+<div class="rule">Hỏi màu: <b>What colour is it?</b> → Trả lời: <b>It's + colour.</b></div>
+<table><tr><th>Màu</th><th>Nghĩa</th><th>Màu</th><th>Nghĩa</th></tr>
+<tr><td>red 🔴</td><td>đỏ</td><td>orange 🟠</td><td>cam</td></tr>
+<tr><td>yellow 🟡</td><td>vàng</td><td>green 🟢</td><td>xanh lá</td></tr>
+<tr><td>blue 🔵</td><td>xanh dương</td><td>purple 🟣</td><td>tím</td></tr>
+<tr><td>pink</td><td>hồng</td><td>brown 🟤</td><td>nâu</td></tr>
+<tr><td>white ⬜</td><td>trắng</td><td>black ⬛</td><td>đen</td></tr></table>
+<div class="rule">Hình dạng: <b>circle</b> (tròn) · <b>square</b> (vuông) · <b>triangle</b> (tam giác) · <b>rectangle</b> (chữ nhật)</div>
+<div class="ex">A: <b>What colour is the sky?</b> — B: It's <b>blue</b>.</div>`},
+{em:'🌤️',t:'Thời tiết & các mùa (What\'s the weather like?)',h:`
+<div class="rule">Hỏi thời tiết: <b>What's the weather like today?</b></div>
+<div class="rule">Trả lời: <b>It's + thời tiết.</b></div>
+<table><tr><th>Thời tiết</th><th>Nghĩa</th><th>Thời tiết</th><th>Nghĩa</th></tr>
+<tr><td>sunny ☀️</td><td>có nắng</td><td>rainy 🌧️</td><td>có mưa</td></tr>
+<tr><td>cloudy ☁️</td><td>có mây</td><td>windy 🌬️</td><td>có gió</td></tr>
+<tr><td>hot 🥵</td><td>nóng</td><td>cold 🥶</td><td>lạnh</td></tr>
+<tr><td>cool</td><td>mát mẻ</td><td>snowy ❄️</td><td>có tuyết</td></tr></table>
+<div class="rule">4 mùa: spring 🌸 · summer ☀️ · autumn 🍂 · winter ❄️</div>
+<div class="ex">A: What's the weather like? — B: <b>It's sunny and hot.</b></div>
+<div class="ex">In Vietnam, summer is <b>hot and rainy</b>.</div>`},
+{em:'🏃',t:'Đang làm gì? (What are you doing? — I\'m + V-ing)',h:`
+<div class="rule">Dùng để nói về việc đang diễn ra NGAY LÚC NÓI.</div>
+<div class="rule">Cấu trúc: <b>S + am/is/are + V-ing</b></div>
+<table><tr><th>Chủ ngữ</th><th>to be</th><th>Ví dụ</th></tr>
+<tr><td>I</td><td>am (I'm)</td><td>I'm reading.</td></tr>
+<tr><td>He / She</td><td>is</td><td>She's dancing.</td></tr>
+<tr><td>We / They</td><td>are</td><td>They're playing.</td></tr></table>
+<div class="ex">A: <b>What are you doing?</b> — B: <b>I'm doing my homework.</b></div>
+<div class="ex">A: <b>What is he doing?</b> — B: <b>He's listening to music.</b></div>
+<div class="warn">⚠️ Thêm -ing: swim → swim<b>ming</b>, run → run<b>ning</b>, dance → danc<b>ing</b>.</div>`},
+],
+quiz:[
+{q:'___ is your name? — My name is Lan.',o:['How','What','Where','Who'],a:1,e:'"What\'s your name?" = Tên bạn là gì?'},
+{q:'I\'m ___ Vietnam. I\'m Vietnamese.',o:['to','in','from','at'],a:2,e:'"I\'m from Vietnam." — from = đến từ.'},
+{q:'What day is it today? — It\'s ___.',o:['sunny','Monday','nine','English'],a:1,e:'Ngày trong tuần: Monday, Tuesday, Wednesday...'},
+{q:'My favourite ___ is English.',o:['colour','day','subject','name'],a:2,e:'Favourite subject = môn học yêu thích.'},
+{q:'___ you speak English? — Yes, I can!',o:['Do','Are','Can','Is'],a:2,e:'"Can you...?" = Bạn có thể...? Trả lời: Yes, I can.'},
+{q:'I can swim, but I ___ fly.',o:['can','can to','can\'t','cans'],a:2,e:'Phủ định của can: can\'t (cannot = không thể).'},
+{q:'Where is my book? — It\'s ___ the table.',o:['in','on','at','by'],a:1,e:'Sách TRÊN bàn → on the table.'},
+{q:'The pencil is ___ the bag.',o:['on','under','in front','in'],a:3,e:'Bút chì TRONG túi → in the bag.'},
+{q:'I like ___ in the summer.',o:['swim','swims','swimming','to swam'],a:2,e:'Sau like: V + ing → swimming.'},
+{q:'What colour is the sky? — It\'s ___.',o:['red','yellow','green','blue'],a:3,e:'Bầu trời màu xanh dương: blue.'},
+{q:'What\'s the weather like? — It\'s ___ today.',o:['Monday','swimming','sunny','English'],a:2,e:'Thời tiết: sunny, rainy, cloudy, windy...'},
+{q:'What ___ she doing? — She\'s reading.',o:['do','does','is','are'],a:2,e:'She → What IS she doing? (is + V-ing)'},
+{q:'They ___ playing football in the park now.',o:['am','is','are','be'],a:2,e:'They → are + V-ing.'},
+{q:'I\'m from Japan. I\'m ___.',o:['Japanese','Japan','Japanish','Japaner'],a:0,e:'Quốc tịch của người Nhật: Japanese.'},
+{q:'What day comes after Tuesday?',o:['Monday','Wednesday','Thursday','Sunday'],a:1,e:'Thứ Ba (Tuesday) → kế tiếp là Thứ Tư (Wednesday).'},
+{q:'Can a bird ___?',o:['swim','fly','read','drive'],a:1,e:'Chim có thể bay: fly.'},
+{q:'The cat is ___ the chair. (Mèo đứng TRƯỚC ghế)',o:['under','on','next to','in front of'],a:3,e:'Đứng trước → in front of.'},
+{q:'What do you like doing? — I like ___ pictures.',o:['draw','drew','drawing','draws'],a:2,e:'like + V-ing = like drawing.'},
+{q:'In winter, it is very ___.',o:['hot','sunny','cold','rainy'],a:2,e:'Mùa đông → lạnh (cold).'},
+{q:'A ___ has three sides.',o:['circle','square','triangle','rectangle'],a:2,e:'Hình có 3 cạnh = tam giác (triangle).'},
+],
+readings:[
+{em:'🏫',title:'My New School',tags:['Greetings','School','Subjects'],
+text:`Hi! My name is Tom. I am nine years old. I am from England, but I go to school in Vietnam now. My school is Nguyen Du Primary School. It is big and beautiful. I have English, Maths, Science and Art this week. My favourite subject is Art because I love drawing. My best friend is Minh. He is Vietnamese. We sit next to each other in class. After school, we like playing football in the playground.`,
+vn:`Xin chào! Mình tên là Tom, 9 tuổi. Mình đến từ nước Anh nhưng bây giờ học ở Việt Nam. Trường mình là Tiểu học Nguyễn Du — to và đẹp lắm! Tuần này mình có Tiếng Anh, Toán, Khoa học và Mỹ thuật. Môn yêu thích của mình là Mỹ thuật vì mình thích vẽ. Bạn thân của mình là Minh, người Việt Nam. Chúng mình ngồi cạnh nhau trong lớp. Sau giờ học, chúng mình thích chơi bóng đá ở sân trường.`,
+qs:[
+{q:'How old is Tom?',o:['Seven years old','Eight years old','Nine years old','Ten years old'],a:2},
+{q:'Where is Tom from?',o:['Vietnam','America','Australia','England'],a:3},
+{q:'What is Tom\'s favourite subject?',o:['Maths','English','Science','Art'],a:3},
+{q:'What do Tom and Minh like doing after school?',o:['Swimming','Playing football','Reading books','Dancing'],a:1},
+]},
+{em:'🐶',title:'My Favourite Animal',tags:['Animals','Can / Can\'t','Colours'],
+text:`My name is Linh. My favourite animal is the dog. I have a dog. His name is Biscuit. He is small and white with black spots on his back. Biscuit can run very fast and can jump over the fence. He can also swim in the lake near my house. But Biscuit can't fly. He can't climb trees either! He loves playing and eating. Every morning, I take Biscuit for a walk in the park. He is my best friend.`,
+vn:`Mình là Linh. Động vật yêu thích của mình là chó. Mình có một chú chó tên là Biscuit — nhỏ, màu trắng và có đốm đen trên lưng. Biscuit có thể chạy rất nhanh, nhảy qua hàng rào và bơi ở hồ gần nhà. Nhưng Biscuit không thể bay và không leo cây được! Biscuit thích chơi và ăn. Mỗi sáng, mình dắt Biscuit đi dạo ở công viên — bạn ấy là người bạn thân nhất của mình.`,
+qs:[
+{q:'What colour is Biscuit?',o:['Black and white','Brown and yellow','White with black spots','All white'],a:2},
+{q:'What CAN Biscuit do?',o:['Fly and climb trees','Run, jump and swim','Talk and read','Cook and clean'],a:1},
+{q:'Where does Biscuit swim?',o:['In the sea','In the pool','In the river','In the lake near Linh\'s house'],a:3},
+{q:'What do Linh and Biscuit do every morning?',o:['Swim in the lake','Go to school together','Walk in the park','Watch TV'],a:2},
+]},
+{em:'🌤️',title:'The Four Seasons',tags:['Weather','Seasons'],
+text:`Vietnam has two main seasons: the hot season and the cool season. But in some countries, there are four seasons. Spring comes first. The weather is warm and flowers bloom everywhere. Summer is hot and sunny. Children love summer because they can swim and play outdoors. Then comes autumn. The leaves turn orange and yellow and fall from the trees. Winter is the coldest season. It can snow in some places. My favourite season is summer because I love swimming and eating ice cream. What about you?`,
+vn:`Việt Nam có hai mùa chính: mùa nóng và mùa mát. Nhưng ở một số nước có 4 mùa. Mùa xuân đầu tiên — thời tiết ấm và hoa nở khắp nơi. Mùa hè nóng và có nắng, các bạn nhỏ thích vì có thể bơi và chơi ngoài trời. Tiếp theo là mùa thu — lá chuyển sang cam vàng rồi rụng. Mùa đông là mùa lạnh nhất, có thể có tuyết. Mùa yêu thích của mình là mùa hè vì mình thích bơi và ăn kem. Còn bạn thì sao?`,
+qs:[
+{q:'How many main seasons does Vietnam have?',o:['One','Two','Three','Four'],a:1},
+{q:'What happens in spring?',o:['It snows','Leaves fall','Flowers bloom','It\'s very hot'],a:2},
+{q:'What colour do leaves turn in autumn?',o:['Green and blue','Red and purple','Orange and yellow','White and pink'],a:2},
+{q:'Why does the writer love summer?',o:['Because of school','Because of flowers','Because of swimming and ice cream','Because of snow'],a:2},
+]},
+],
+listenings:[
+{em:'👋',title:'Nice to Meet You!',hint:'Nghe hai bạn Tom và Lan giới thiệu nhau',
+script:[{text:'Hello! My name is Tom. What\'s your name?'},{text:'Hi Tom! My name is Lan. Nice to meet you!',pitch:1.3},{text:'Nice to meet you too, Lan. How old are you?'},{text:'I\'m nine years old. And you?',pitch:1.3},{text:'I\'m nine too! Where are you from, Lan?'},{text:'I\'m from Vietnam. I\'m Vietnamese. And you?',pitch:1.3},{text:'I\'m from England. I\'m English. Let\'s be friends!'},{text:'Yes! Let\'s be friends!',pitch:1.3}],
+trans:['Tom: Hello! My name is Tom. What\'s your name?','Lan: Hi! My name is Lan. Nice to meet you!','Tom: Nice to meet you too. How old are you?','Lan: I\'m nine years old. And you?','Tom: I\'m nine too! Where are you from?','Lan: I\'m from Vietnam. I\'m Vietnamese.','Tom: I\'m from England. I\'m English. Let\'s be friends!','Lan: Yes! Let\'s be friends!'],
+qs:[
+{q:'How old is Lan?',o:['Eight','Nine','Ten','Seven'],a:1},
+{q:'Where is Lan from?',o:['England','Japan','Vietnam','Korea'],a:2},
+{q:'Where is Tom from?',o:['America','Australia','Vietnam','England'],a:3},
+]},
+{em:'🌤️',title:'What\'s the Weather Like?',hint:'Nghe Minh và Hoa nói chuyện về thời tiết',
+script:[{text:'Good morning, Minh! What\'s the weather like today?'},{text:'Good morning, Hoa! It\'s sunny and a little windy.',pitch:1.3},{text:'Is it hot?'},{text:'Yes, it\'s quite hot. Around thirty degrees!',pitch:1.3},{text:'Oh! What are you doing today?'},{text:'I\'m going to the park with my family. We like swimming in the summer.',pitch:1.3},{text:'That sounds fun! Can you swim well?'},{text:'Yes, I can! I can also ride a bike. Can you?',pitch:1.3},{text:'I can ride a bike, but I can\'t swim yet.'},{text:'I can teach you! Come with us!',pitch:1.3}],
+trans:['Hoa: Good morning! What\'s the weather like today?','Minh: It\'s sunny and a little windy.','Hoa: Is it hot?','Minh: Yes, quite hot — around 30 degrees!','Hoa: What are you doing today?','Minh: I\'m going to the park with my family.','Hoa: Can you swim well?','Minh: Yes, I can! I can also ride a bike.','Hoa: I can ride a bike but I can\'t swim.','Minh: I can teach you! Come with us!'],
+qs:[
+{q:'What\'s the weather like?',o:['Rainy and cold','Sunny and windy','Cloudy and cool','Snowy and cold'],a:1},
+{q:'What can\'t Hoa do?',o:['Ride a bike','Read English','Swim','Walk'],a:2},
+{q:'Where is Minh going today?',o:['To school','To the beach','To the park','To the zoo'],a:2},
+]},
+{em:'🎒',title:'What\'s in Your Bag?',hint:'Nghe Nam giới thiệu đồ dùng học tập',
+script:[{text:'Hi! I\'m Nam. Let me tell you about my school bag.'},{text:'My bag is blue and yellow. It\'s on my desk now.'},{text:'In my bag, I have three books and two notebooks.'},{text:'My pencil case is next to my books. It has pens, pencils and an eraser.'},{text:'My ruler is under my notebook.'},{text:'My favourite thing in my bag is my English dictionary.'},{text:'I like reading new words every day!'}],
+trans:['Hi! I\'m Nam, let me tell you about my school bag.','My bag is blue and yellow. It\'s on my desk now.','In my bag, I have three books and two notebooks.','My pencil case is next to my books. It has pens, pencils and an eraser.','My ruler is under my notebook.','My favourite thing is my English dictionary.','I like reading new words every day!'],
+qs:[
+{q:'What colour is Nam\'s bag?',o:['Green and white','Red and black','Blue and yellow','Purple and pink'],a:2},
+{q:'Where is the pencil case?',o:['In the bag','Under the notebook','On the desk','Next to the books'],a:3},
+{q:'Where is the ruler?',o:['In the pencil case','Next to the bag','Under the notebook','On the desk'],a:2},
+]},
+],
+writing:[
+{type:'order',words:['My','name','is','Linh','.'],vn:'Tên mình là Linh.'},
+{type:'order',words:['I','am','from','Vietnam','.'],vn:'Mình đến từ Việt Nam.'},
+{type:'order',words:['Can','you','swim','?'],vn:'Bạn có thể bơi không?'},
+{type:'order',words:['The','cat','is','under','the','chair','.'],vn:'Con mèo đang ở dưới ghế.'},
+{type:'order',words:['What','is','she','doing','?'],vn:'Cô ấy đang làm gì vậy?'},
+{type:'order',words:['I','like','drawing','and','reading','.'],vn:'Mình thích vẽ và đọc sách.'},
+{type:'gap',sent:'___ are you from? — I\'m from Japan.',a:'Where',hintvn:'Hỏi đến từ đâu → Where are you from?'},
+{type:'gap',sent:'I ___ swim but I can\'t fly.',a:'can',hintvn:'Có thể bơi → can swim'},
+{type:'gap',sent:'The book is ___ the table.',a:'on',hintvn:'Sách TRÊN bàn → on'},
+{type:'gap',sent:'She is ___ (dance) in the hall.',a:'dancing',hintvn:'is + V-ing → dancing'},
+{type:'gap',sent:'My favourite ___ is blue.',a:'colour',hintvn:'Hỏi / nói về màu sắc → colour'},
+{type:'write',prompt:'Viết câu giới thiệu bản thân (tên, tuổi, đến từ đâu).',check:['my name is','i am','i\'m'],sample:'My name is Lan. I am nine years old. I am from Vietnam.',vn:'Dùng: My name is... I am... years old. I am from...'},
+{type:'write',prompt:'Hỏi và viết câu về thứ ngày mai. (Gợi ý: Tomorrow is...)',check:['tomorrow is','today is'],sample:'Tomorrow is Thursday.',vn:'Ví dụ: Tomorrow is Monday.'},
+],
+topics:[
+{id:'g4t1',em:'👋',name:'U1-2: Chào hỏi & Quốc tịch',vocab:[['hello','xin chào'],['name','tên'],['age','tuổi'],['friend','bạn bè'],['country','quốc gia'],['Vietnamese','người Việt Nam'],['English','người Anh'],['American','người Mỹ'],['Japanese','người Nhật'],['nice to meet you','rất vui được gặp bạn']]},
+{id:'g4t2',em:'📅',name:'U3-4: Ngày & Môn học',vocab:[['Monday','Thứ Hai'],['Tuesday','Thứ Ba'],['Wednesday','Thứ Tư'],['Thursday','Thứ Năm'],['Friday','Thứ Sáu'],['Saturday','Thứ Bảy'],['Sunday','Chủ Nhật'],['Maths','Toán'],['Science','Khoa học'],['PE','Thể dục']]},
+{id:'g4t3',em:'💪',name:'U5: Kỹ năng Can / Can\'t',vocab:[['swim','bơi lội'],['fly','bay'],['run','chạy'],['jump','nhảy'],['sing','hát'],['dance','nhảy múa'],['draw','vẽ'],['ride a bike','đi xe đạp'],['play the piano','chơi đàn piano'],['cook','nấu ăn']]},
+{id:'g4t4',em:'📦',name:'U6: Giới từ nơi chốn',vocab:[['in','trong'],['on','trên'],['under','dưới'],['next to','bên cạnh'],['behind','đằng sau'],['in front of','trước mặt'],['between','ở giữa'],['desk','bàn học'],['chair','ghế'],['shelf','kệ sách']]},
+{id:'g4t5',em:'🎨',name:'U7-8: Sở thích & Màu sắc',vocab:[['swimming','bơi lội'],['drawing','vẽ tranh'],['reading','đọc sách'],['dancing','nhảy múa'],['cooking','nấu ăn'],['red','đỏ'],['blue','xanh dương'],['green','xanh lá'],['yellow','vàng'],['purple','tím']]},
+{id:'g4t6',em:'🌤️',name:'U9-10: Thời tiết & Đang làm gì',vocab:[['sunny','có nắng'],['rainy','có mưa'],['cloudy','có mây'],['windy','có gió'],['hot','nóng'],['cold','lạnh'],['spring','mùa xuân'],['summer','mùa hè'],['autumn','mùa thu'],['winter','mùa đông']]},
+],
+},
 /* ---------------- GRADE 5 ---------------- */
 5:{
 theory:[
@@ -1355,7 +1572,7 @@ writing:[
 };
 
 /* ================= MERGE EXTRA INTO DATA ================= */
-Object.keys(TLEVEL).forEach(id=>{[5,6,7].forEach(g=>{const t=DATA[g].topics.find(x=>x.id===id);if(t){t.lvl=TLEVEL[id][0];t.cefr=TLEVEL[id][1]}})});
+Object.keys(TLEVEL).forEach(id=>{[4,5,6,7].forEach(g=>{const t=DATA[g].topics.find(x=>x.id===id);if(t){t.lvl=TLEVEL[id][0];t.cefr=TLEVEL[id][1]}})});
 [5,6,7].forEach(g=>{const e=EXTRA[g];if(!e)return;
   (e.topics||[]).forEach(t=>DATA[g].topics.push(t));
   ['quiz','readings','listenings','writing'].forEach(k=>{if(e[k])DATA[g][k]=DATA[g][k].concat(e[k])});});
