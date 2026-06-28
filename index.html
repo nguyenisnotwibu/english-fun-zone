@@ -464,6 +464,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
       </div>
       <span class="lvl" id="pLvl">Lv.1</span>
     </div>
+    <button id="sndToggleBtn" onclick="toggleSound()" title="Bật/tắt âm thanh" style="background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);border-radius:50%;width:38px;height:38px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.18)'">🔊</button>
   </header>
 
   <div class="grades">
@@ -614,19 +615,47 @@ function renderPlayer(){
 }
 
 /* ===== sounds (WebAudio, no files) ===== */
-let AC=null;
-function ac(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();return AC}
-function tone(f,t,dur,type='sine',vol=.18){try{
+let AC=null,soundOn=localStorage.getItem('efz_snd')!=='0';
+function ac(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();return AC}
+function tone(f,t,dur,type='sine',vol=.18){if(!soundOn)return;try{
   const a=ac(),o=a.createOscillator(),g=a.createGain();
   o.type=type;o.frequency.value=f;o.connect(g);g.connect(a.destination);
   g.gain.setValueAtTime(vol,a.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+t+dur);
-  o.start(a.currentTime+t);o.stop(a.currentTime+t+dur);
+  o.start(a.currentTime+t);o.stop(a.currentTime+t+dur+.02);
 }catch(e){}}
-const sndOK=()=>{tone(523,0,.12);tone(659,.1,.12);tone(784,.2,.2)};
-const sndNo=()=>{tone(220,0,.18,'sawtooth',.12);tone(165,.15,.25,'sawtooth',.12)};
-const sndWin=()=>{[523,659,784,1047,1319].forEach((f,i)=>tone(f,i*.12,.25))};
-const sndClick=()=>tone(700,0,.05,'triangle',.08);
-const sndFlip=()=>tone(440,0,.07,'triangle',.1);
+/* --- sound palette --- */
+// Correct / OK — bright ascending arpeggio
+const sndOK=()=>{tone(523,0,.1,'sine',.2);tone(659,.09,.1,'sine',.2);tone(784,.18,.22,'sine',.22)};
+// Wrong — short descending buzz
+const sndNo=()=>{tone(300,0,.07,'sawtooth',.14);tone(200,.07,.22,'sawtooth',.1)};
+// Win / level complete — 5-note fanfare
+const sndWin=()=>{[523,659,784,988,1319].forEach((f,i)=>tone(f,i*.1,.22,'sine',.2))};
+// UI click — light pop
+const sndClick=()=>tone(880,0,.045,'triangle',.09);
+// Flip card
+const sndFlip=()=>{tone(660,0,.04,'triangle',.12);tone(880,.04,.06,'triangle',.08)};
+// Coin / gold
+const sndCoin=()=>{tone(1047,0,.05,'triangle',.14);tone(1319,.05,.1,'triangle',.13)};
+// Shoot / fire
+const sndShoot=()=>tone(440,0,.06,'square',.07);
+// Hit / impact
+const sndHit=()=>tone(180,0,.1,'square',.13);
+// Game over / lose
+const sndLose=()=>{[392,330,262].forEach((f,i)=>tone(f,i*.12,.2,'sawtooth',.1))};
+// Streak / combo
+const sndCombo=()=>{[523,659,784,1047].forEach((f,i)=>tone(f,i*.07,.15,'sine',.16))};
+// Nav / tab switch
+const sndNav=()=>tone(523,0,.08,'sine',.1);
+// Power up / level up (distinct from win)
+const sndLevelUp=()=>{[392,523,659,784,1047,1319].forEach((f,i)=>tone(f,i*.09,.18,'sine',.18))};
+/* toggle */
+function toggleSound(){
+  soundOn=!soundOn;
+  localStorage.setItem('efz_snd',soundOn?'1':'0');
+  const btn=document.getElementById('sndToggleBtn');
+  if(btn){btn.textContent=soundOn?'🔊':'🔇';btn.title=soundOn?'Tắt âm thanh':'Bật âm thanh'}
+  if(soundOn)sndClick();
+}
 
 /* ===== confetti & fx ===== */
 function confetti(n=60){
@@ -651,7 +680,7 @@ function gainXP(n,ev){
   P.xp+=n;
   if(ev)xpFly(n,ev.clientX,ev.clientY);else xpFly(n);
   const before=lvlOf(P.xp-n),after=lvlOf(P.xp);
-  if(after>before){confetti(80);sndWin();toast('🎉 <b>LEVEL UP!</b> Bạn đã lên cấp '+after+'!')}
+  if(after>before){confetti(80);sndLevelUp();toast('🎉 <b>LEVEL UP!</b> Bạn đã lên cấp '+after+'!')}
   persist();checkBadges();
 }
 const BADGES=[
@@ -671,13 +700,13 @@ const BADGES=[
 function checkBadges(){
   let got=false;
   BADGES.forEach(b=>{if(!P.badges.includes(b.id)&&b.test(P)){P.badges.push(b.id);got=true;
-    toast('🎖️ Huy hiệu mới: <b>'+b.em+' '+b.nm+'</b>!');confetti(40);sndWin();}});
+    toast('🎖️ Huy hiệu mới: <b>'+b.em+' '+b.nm+'</b>!');confetti(40);sndCombo();}});
   if(got)persist();
 }
 
 /* ===== streak ===== */
 let streak=0;
-function hitStreak(){streak++;if(streak>P.maxStreak){P.maxStreak=streak}if(streak>=3)toast('🔥 Chuỗi '+streak+' câu đúng! +'+streakBonus()+' XP thưởng chuỗi');persist()}
+function hitStreak(){streak++;if(streak>P.maxStreak){P.maxStreak=streak}if(streak>=3){toast('🔥 Chuỗi '+streak+' câu đúng! +'+streakBonus()+' XP thưởng chuỗi');if(streak%3===0)sndCombo();}persist()}
 function streakBonus(){return streak>=10?10:streak>=5?5:streak>=3?2:0}
 function missStreak(){streak=0}
 
@@ -716,7 +745,7 @@ function go(s){
   document.querySelectorAll('section').forEach(x=>x.classList.remove('show'));
   $('sec-'+s).classList.add('show');
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.s===s));
-  sndClick();
+  sndNav();
   if(s==='theory')renderTheory();
   if(s==='quiz')quizHome();
   if(s==='reading')readingHome();
@@ -2175,18 +2204,18 @@ function shootUfo(k){
   if(!GM||GM.type!=='shoot'||GM.locked)return;
   const ufos=document.querySelectorAll('#shStage .ufo'),btn=ufos[k];if(!btn||btn.classList.contains('miss')||btn.classList.contains('boom'))return;
   if(GM.cur.opts[k].ok){
-    GM.locked=true;clearTimeout(GM.timer);sndOK();btn.classList.add('boom');GM.score++;P.correct++;gainXP(5);persist();const sc=$('shScore');if(sc)sc.textContent=GM.score;
+    GM.locked=true;clearTimeout(GM.timer);sndShoot();setTimeout(sndOK,80);btn.classList.add('boom');GM.score++;P.correct++;gainXP(5);persist();const sc=$('shScore');if(sc)sc.textContent=GM.score;
     setTimeout(shootRound,430);
   }else{
-    sndNo();btn.classList.add('miss');btn.style.animationPlayState='paused';GM.lives--;shootHearts();
-    if(GM.lives<=0){GM.locked=true;clearTimeout(GM.timer);setTimeout(()=>shootEnd(),550);}
+    sndHit();btn.classList.add('miss');btn.style.animationPlayState='paused';GM.lives--;shootHearts();
+    if(GM.lives<=0){GM.locked=true;clearTimeout(GM.timer);setTimeout(()=>{sndLose();shootEnd()},250);}
   }
 }
 function shootMiss(id){
   if(!GM||GM.type!=='shoot'||id!==GM.roundId||GM.locked)return;
-  GM.locked=true;GM.lives--;sndNo();shootHearts();
+  GM.locked=true;GM.lives--;sndHit();shootHearts();
   const ufos=document.querySelectorAll('#shStage .ufo');GM.cur.opts.forEach((o,k)=>{if(o.ok&&ufos[k])ufos[k].classList.add('boom')});
-  setTimeout(()=>{if(GM.lives<=0)shootEnd();else shootRound();},750);
+  setTimeout(()=>{if(GM.lives<=0){sndLose();shootEnd();}else shootRound();},750);
 }
 function shootEnd(win){
   if(GM&&GM.timer)clearTimeout(GM.timer);const xp=GM.score*5+(win?20:0);if(GM.score>=6){confetti(80);sndWin()}P.gameWins++;persist();checkBadges();
@@ -2580,7 +2609,7 @@ function survAdvanceMap(){
 function survEnd(){
   clearInterval(GM.timer);
   const xp=GM.totalQ*4;P.gameWins++;persist();checkBadges();
-  if(GM.totalQ>=10){confetti(80);sndWin();}
+  if(GM.totalQ>=10){confetti(80);sndWin();}else{sndLose();}
   $('gamesCard').innerHTML=gameTop('❤️ Sinh tồn vượt ải')+
     `<div class="result">
        <div class="face">${GM.map>=3?'🏆':GM.map>=1?'🤩':'💪'}</div>
@@ -2673,7 +2702,7 @@ function td2Ans(k){
   if(!GM||!GM.cur)return;const o=GM.cur.opts[k];
   document.querySelectorAll('#td2q .opt').forEach((b,j)=>{b.disabled=true;if(GM.cur.opts[j].ok)b.classList.add('right');else if(j===k)b.classList.add('wrong')});
   const fb=$('td2qfb');
-  if(o.ok){GM.gold+=12;P.correct++;gainXP(2);sndOK();if(fb){fb.className='feedback ok';fb.innerHTML='🎉 +12🪙 — '+esc(GM.cur.right[0]+' = '+GM.cur.right[1])}persist();td2HUD();td2Side();setTimeout(td2Q,800);}
+  if(o.ok){GM.gold+=12;P.correct++;gainXP(2);sndOK();sndCoin();if(fb){fb.className='feedback ok';fb.innerHTML='🎉 +12🪙 — '+esc(GM.cur.right[0]+' = '+GM.cur.right[1])}persist();td2HUD();td2Side();setTimeout(td2Q,800);}
   else{sndNo();GM.qLocked=true;if(fb){fb.className='feedback no';fb.innerHTML='😵 Sai rồi! Đáp án: <b>'+esc(GM.cur.opts.find(x=>x.ok).t)+'</b> — khoá trả lời tới khi hết đợt này!'}persist();td2HUD();td2Side();setTimeout(td2QLocked,1300);}
 }
 function td2StartRound(){
@@ -2682,7 +2711,7 @@ function td2StartRound(){
   if(r%5===0)GM.queue.push({hp:hp*6,speed:sp*.65,em:'👹',reward:rew*8,boss:true});
   GM.running=true;GM.spawnGap=Math.max(.34,.8-r*.02);GM.spawnT=0;sndClick();td2Side()
 }
-function td2RoundDone(){GM.gold+=25;GM.round++;gainXP(6);persist();sndWin();const wasLocked=GM.qLocked;GM.qLocked=false;toast('🎉 Qua đợt! +25 🪙'+(wasLocked?' — mở lại câu hỏi! 🔓':''));td2Q();td2Side()}
+function td2RoundDone(){GM.gold+=25;GM.round++;gainXP(6);persist();sndWin();sndCoin();const wasLocked=GM.qLocked;GM.qLocked=false;toast('🎉 Qua đợt! +25 🪙'+(wasLocked?' — mở lại câu hỏi! 🔓':''));td2Q();td2Side()}
 function td2HUD(){const g=$('td2gold');if(!g)return;g.textContent=Math.floor(GM.gold);$('td2life').textContent=Math.max(0,GM.lives);$('td2round').textContent=GM.round;$('td2kills').textContent=GM.kills}
 function td2Speed(s){if(!GM||GM.type!=='tower2')return;GM.speed=s;sndClick();td2Side()}
 function td2Fire(t,tg){
@@ -3396,6 +3425,9 @@ $('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')saveName()});
   if(cur&&ps[cur]){P=ps[cur];pickedAva=P.ava;renderPlayer()}
   else showNameModal();
   renderPlayer();
+  // init sound toggle button icon
+  const sb=document.getElementById('sndToggleBtn');
+  if(sb){sb.textContent=soundOn?'🔊':'🔇';sb.title=soundOn?'Tắt âm thanh':'Bật âm thanh'}
 })();
 
 </script>
