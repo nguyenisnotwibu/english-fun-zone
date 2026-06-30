@@ -443,6 +443,32 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
 .hidden{display:none!important}
 .mt{margin-top:14px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* ===== grammar review ===== */
+.gr-diff-bar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.gr-diff-btn{padding:9px 18px;border-radius:30px;border:2.5px solid #e2e8f0;background:#fff;font-weight:800;font-size:13px;cursor:pointer;transition:.15s;font-family:'Baloo 2'}
+.gr-diff-btn.on{color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.gr-diff-btn[data-d="easy"].on{background:linear-gradient(135deg,#22d3aa,#38bdf8)}
+.gr-diff-btn[data-d="medium"].on{background:linear-gradient(135deg,#f59e0b,#f97316)}
+.gr-diff-btn[data-d="hard"].on{background:linear-gradient(135deg,#8b5cf6,#ec4899)}
+.gr-diff-btn[data-d="advanced"].on{background:linear-gradient(135deg,#dc2626,#9333ea)}
+.gr-diff-btn:hover:not(.on){background:#f6f5ff;border-color:#c4bfff}
+.gr-topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:4px}
+.gr-topic-card{border-radius:18px;padding:16px 14px;border:3px solid #e8e6ff;background:#faf9ff;text-align:left;cursor:pointer;transition:.18s;position:relative}
+.gr-topic-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(139,92,246,.15);border-color:var(--violet)}
+.gr-topic-card .gt-em{font-size:34px;margin-bottom:7px;display:block}
+.gr-topic-card .gt-name{font-family:'Baloo 2';font-size:15px;font-weight:800;color:var(--ink);line-height:1.3}
+.gr-topic-card .gt-sub{font-size:11.5px;color:var(--muted);margin-top:4px;font-weight:600}
+.gr-diff-badge{position:absolute;top:10px;right:10px;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;color:#fff}
+.diff-easy .gr-diff-badge{background:linear-gradient(135deg,#22d3aa,#38bdf8)}
+.diff-medium .gr-diff-badge{background:linear-gradient(135deg,#f59e0b,#f97316)}
+.diff-hard .gr-diff-badge{background:linear-gradient(135deg,#8b5cf6,#ec4899)}
+.diff-advanced .gr-diff-badge{background:linear-gradient(135deg,#dc2626,#9333ea)}
+.diff-easy{border-color:#a7f3e0}
+.diff-medium{border-color:#fcd97a}
+.diff-hard{border-color:#ddd6fe}
+.diff-advanced{border-color:#fca5a5}
+.gr-topic-card .gt-cnt{display:inline-block;background:#ece9ff;color:var(--violet);font-size:11px;font-weight:700;border-radius:20px;padding:2px 9px;margin-top:7px}
 </style>
 </head>
 <body>
@@ -484,6 +510,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
     <button class="tab" data-s="listening" onclick="go('listening')"><span class="ico">🎧</span>Bài nghe</button>
     <button class="tab" data-s="writing" onclick="go('writing')"><span class="ico">✍️</span>Bài viết</button>
     <button class="tab" data-s="games" onclick="go('games')"><span class="ico">🎮</span>Games</button>
+    <button class="tab" data-s="grammar" onclick="go('grammar')"><span class="ico">📝</span>Ôn Ngữ Pháp</button>
     <button class="tab" data-s="board" onclick="go('board')"><span class="ico">🏆</span>Bảng vàng</button>
     <button class="tab" data-s="ielts" onclick="go('ielts')" style="display:none" id="tabIELTS"><span class="ico">📝</span>IELTS</button>
   </nav>
@@ -495,6 +522,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
       <p class="sub">Chọn lớp ở trên, rồi chọn một hoạt động bên dưới. Làm đúng được <b>⭐ XP</b>, lên cấp và mở <b>huy hiệu</b> nha! <b>✨ Quiz, bài nghe, bài đọc, bài viết đều có ĐỀ NGẪU NHIÊN — mỗi lượt làm lại là một đề mới!</b></p>
       <div class="menu-grid">
         <button class="menu-item mi1" onclick="go('theory')"><span class="big">📖</span>Lý thuyết<small>Ôn ngữ pháp dễ hiểu</small></button>
+        <button class="menu-item" style="background:linear-gradient(135deg,#8b5cf6,#06b6d4)" onclick="go('grammar')"><span class="big">📝</span>Ôn Ngữ Pháp<small>Chủ đề · 4 cấp độ</small></button>
         <button class="menu-item mi2" onclick="go('quiz')"><span class="big">⚡</span>Quiz vui<small>Trắc nghiệm nhanh</small></button>
         <button class="menu-item mi3" onclick="go('reading')"><span class="big">📚</span>Bài đọc<small>Đọc hiểu + từ mới</small></button>
         <button class="menu-item mi4" onclick="go('listening')"><span class="big">🎧</span>Bài nghe<small>Nghe và trả lời</small></button>
@@ -509,6 +537,11 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
         <div class="stat"><div class="v" id="stBadge">0</div><div class="k">🎖️ Huy hiệu</div></div>
       </div>
     </div>
+  </section>
+
+  <!-- GRAMMAR REVIEW -->
+  <section id="sec-grammar">
+    <div class="card" id="grammarCard"></div>
   </section>
 
   <!-- THEORY -->
@@ -746,6 +779,7 @@ function go(s){
   $('sec-'+s).classList.add('show');
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.s===s));
   sndNav();
+  if(s==='grammar')grammarHome();
   if(s==='theory')renderTheory();
   if(s==='quiz')quizHome();
   if(s==='reading')readingHome();
@@ -3375,6 +3409,321 @@ function checkScramble(){
   }
 }
 
+/* ================= GRAMMAR REVIEW ================= */
+let GR=null,_grDiff='easy';
+
+const GRAMMAR_TOPICS=[
+/* -------- DỄ -------- */
+{id:'gr_present',em:'🟢',name:'Hiện Tại Đơn',sub:'Simple Present Tense',diff:'easy',qs:[
+  ()=>mkQ('She ___ to school every day. (go)','goes',['go','going','went'],'Ngôi 3 số ít → thêm s/es: go → goes'),
+  ()=>mkQ('They ___ football on weekends.','play',['plays','playing','played'],'They = ngôi số nhiều → giữ nguyên: play'),
+  ()=>mkQ('My father ___ very early. (wake up)','wakes up',['wake up','waking up','woke up'],'Ngôi 3 số ít → wake up → wakes up'),
+  ()=>mkQ('___ she like music?','Does',['Do','Is','Are'],'Ngôi 3 số ít → Does + V nguyên thể'),
+  ()=>mkQ('He doesn\'t ___ coffee.','drink',['drinks','drinking','drank'],'Sau doesn\'t → động từ nguyên thể'),
+  ()=>mkQ('Nam and Mai ___ in Hanoi.','live',['lives','lived','living'],'Chủ ngữ số nhiều → giữ nguyên: live'),
+  ()=>mkQ('She ___ (study) hard every night.','studies',['studys','studying','studied'],'study + s/es → studies (y→ies)'),
+  ()=>mkQ('___ your parents work in Hanoi?','Do',['Does','Are','Is'],'Chủ ngữ số nhiều → Do'),
+  ()=>mkQ('He always ___ (watch) TV after dinner.','watches',['watch','watching','watched'],'watch + es = watches (ngôi 3)'),
+  ()=>mkQ('I ___ not like spicy food.','do',['does','am','is'],'I → do not like'),
+]},
+{id:'gr_pronouns',em:'🔵',name:'Đại Từ & Tính Từ Sở Hữu',sub:'Pronouns & Possessives',diff:'easy',qs:[
+  ()=>mkQ('That is ___ book. (của tôi)','my',['me','I','mine'],'Trước danh từ → tính từ sở hữu: my'),
+  ()=>mkQ('___ is my best friend. (cô ấy)','She',['Her','Hers','He'],'Chủ ngữ → She'),
+  ()=>mkQ('Is this pencil ___? (của em)','yours',['your','you','mine'],'Sau động từ, không có danh từ → đại từ sở hữu: yours'),
+  ()=>mkQ('We love ___ school. (của chúng tôi)','our',['ours','us','we'],'Trước danh từ → our'),
+  ()=>mkQ('The dog wags ___ tail.','its',['it\'s','their','his'],'Con vật trung tính → its'),
+  ()=>mkQ('They finished ___ homework.','their',['they','them','theirs'],'Trước danh từ → their'),
+  ()=>mkQ('Give ___ the book, please. (cho tôi)','me',['I','my','mine'],'Sau động từ → tân ngữ: me'),
+  ()=>mkQ('___ name is Minh. (Anh ấy)','His',['He','Him','Himself'],'Trước danh từ → tính từ sở hữu: his'),
+  ()=>mkQ('That bag is ___. (của họ)','theirs',['their','them','they'],'Sau động từ, không có danh từ → theirs'),
+  ()=>mkQ('___ are good students. (Chúng tôi)','We',['Us','Our','Ours'],'Chủ ngữ → We'),
+]},
+{id:'gr_can',em:'🌟',name:'Can / Can\'t / Could',sub:'Khả năng & Xin phép',diff:'easy',qs:[
+  ()=>mkQ('She ___ swim very fast.','can',['cans','could','is able'],'can + V nguyên thể (không chia)'),
+  ()=>mkQ('___ I use your pen, please?','Can',['Do','Am','Does'],'Xin phép lịch sự → Can I...?'),
+  ()=>mkQ('He ___ play the piano when he was 5.','could',['can','was able','cans'],'Khả năng trong quá khứ → could'),
+  ()=>mkQ('They ___ speak French. (không thể)','can\'t',['don\'t','aren\'t','couldn\'t'],'can + not = can\'t (không thể hiện tại)'),
+  ()=>mkQ('___ you help me with this box?','Can',['Do','Will','Are'],'Nhờ giúp đỡ → Can you...?'),
+  ()=>mkQ('My sister ___ draw beautiful pictures.','can',['is','does','cans'],'can + động từ nguyên thể'),
+  ()=>mkQ('We ___ stay up late last night.','couldn\'t',['can\'t','don\'t','weren\'t'],'Không thể trong quá khứ → couldn\'t'),
+  ()=>mkQ('___ birds fly?','Can',['Do','Are','Is'],'Hỏi khả năng → Can + S + V?'),
+  ()=>mkQ('He can\'t ___ a bicycle.','ride',['rides','riding','rode'],'Sau can/can\'t → V nguyên thể'),
+  ()=>mkQ('She could ___ very well at age 3. (đọc)','read',['reads','reading','to read'],'Sau could → V nguyên thể'),
+]},
+{id:'gr_articles',em:'🅰️',name:'Mạo Từ A / An / The',sub:'Articles',diff:'easy',qs:[
+  ()=>mkQ('I have ___ orange.','an',['a','the','—'],'Nguyên âm (o-) → an'),
+  ()=>mkQ('___ sun rises in the east.','The',['A','An','—'],'Duy nhất, ai cũng biết → The'),
+  ()=>mkQ('She is ___ doctor.','a',['an','the','—'],'Phụ âm (d-), lần đầu nhắc → a'),
+  ()=>mkQ('He ate ___ apple for breakfast.','an',['a','the','—'],'Nguyên âm (a-) → an'),
+  ()=>mkQ('___ book on the table is mine.','The',['A','An','—'],'Đã xác định (on the table) → The'),
+  ()=>mkQ('I want to be ___ engineer.','an',['a','the','—'],'Nguyên âm (e-) → an'),
+  ()=>mkQ('___ Nile is the longest river.','The',['A','An','—'],'Tên sông → The'),
+  ()=>mkQ('Can I have ___ glass of water?','a',['an','the','—'],'Phụ âm (g-), chưa xác định → a'),
+  ()=>mkQ('She plays ___ piano every evening.','the',['a','an','—'],'Nhạc cụ → the piano/guitar...'),
+  ()=>mkQ('My father is ___ honest man.','an',['a','the','—'],'Phát âm bắt đầu bằng nguyên âm (honest = /ɒnɪst/) → an'),
+]},
+/* -------- VỪA -------- */
+{id:'gr_pcon',em:'🟡',name:'Hiện Tại Tiếp Diễn',sub:'Present Continuous',diff:'medium',qs:[
+  ()=>mkQ('Look! She ___ (dance) in the garden.','is dancing',['dances','dance','was dancing'],'Look! → hiện tại tiếp diễn: is + dancing'),
+  ()=>mkQ('They ___ (play) football now.','are playing',['play','is playing','played'],'They + now → are playing'),
+  ()=>mkQ('___ he ___ (study) at the moment?','Is ... studying',['Does ... study','Do ... study','Was ... studying'],'Câu hỏi HTTD ngôi 3: Is + S + V-ing?'),
+  ()=>mkQ('I ___ (not / watch) TV right now.','am not watching',['don\'t watch','isn\'t watching','not watching'],'I → am not watching'),
+  ()=>mkQ('Listen! The baby ___ (cry).','is crying',['cries','cry','was crying'],'Listen! → HTTD: is crying'),
+  ()=>mkQ('We ___ (have) dinner at 7 pm tonight.','are having',['have','had','will have'],'Kế hoạch tương lai gần → are having'),
+  ()=>mkQ('She can\'t talk. She ___ (sleep).','is sleeping',['sleeps','sleep','was sleeping'],'Đang xảy ra → is sleeping'),
+  ()=>mkQ('What ___ you ___ (do) now?','are ... doing',['do ... do','does ... do','did ... do'],'What + are + S + doing? → HTTD'),
+  ()=>mkQ('He ___ (sit) next to the window.','is sitting',['sits','sat','is sit'],'is + sitting (sit → sitting, nhân đôi t)'),
+  ()=>mkQ('___ they ___ (make) a cake?','Are ... making',['Do ... make','Is ... making','Did ... make'],'They → Are they making...?'),
+]},
+{id:'gr_compare',em:'🏅',name:'So Sánh Hơn & Nhất',sub:'Comparatives & Superlatives',diff:'medium',qs:[
+  ()=>mkQ('Ha Noi is ___ than Hue. (big)','bigger',['more big','biggest','big'],'1 âm tiết → thêm -er: bigger'),
+  ()=>mkQ('This is ___ film I\'ve ever seen. (bad)','the worst',['the baddest','the most bad','worse'],'Bất quy tắc: bad → worse → the worst'),
+  ()=>mkQ('She is ___ student in class. (intelligent)','the most intelligent',['the intelligentst','most intelligent','more intelligent'],'Nhiều âm tiết → the most + adj'),
+  ()=>mkQ('My bag is ___ than yours. (heavy)','heavier',['more heavy','heaviest','heavy'],'heavy → heavier (y → ier)'),
+  ()=>mkQ('This cake is ___ than that one. (good)','better',['more good','gooder','best'],'Bất quy tắc: good → better → the best'),
+  ()=>mkQ('Fansipan is ___ mountain in Vietnam. (high)','the highest',['the higher','more high','highest'],'So sánh nhất → the highest'),
+  ()=>mkQ('He runs ___ than his brother. (fast)','faster',['more fast','fastest','fastly'],'1 âm tiết → faster'),
+  ()=>mkQ('English is ___ than Maths for me. (easy)','easier',['more easy','easiest','easy'],'easy → easier (y→ier)'),
+  ()=>mkQ('Summer is ___ season of the year. (hot)','the hottest',['the most hot','the hotter','hottest'],'1 âm tiết, kết thúc VCC → double: hottest'),
+  ()=>mkQ('She speaks ___ English in the class. (fluent)','the most fluently',['the most fluent','fluenter','most fluently'],'Trạng từ nhiều âm tiết → the most fluently'),
+]},
+{id:'gr_modal',em:'⚠️',name:'Must / Should / Have to',sub:'Modal Verbs',diff:'medium',qs:[
+  ()=>mkQ('You ___ wear a helmet. It\'s the law.','must',['should','can','mustn\'t'],'Quy định/luật pháp → must'),
+  ()=>mkQ('You ___ eat junk food. It\'s unhealthy.','shouldn\'t',['mustn\'t','don\'t have to','can\'t'],'Lời khuyên không nên → shouldn\'t'),
+  ()=>mkQ('She ___ to go to school on Sunday.','doesn\'t have to',['mustn\'t','shouldn\'t','can\'t'],'Không bắt buộc → don\'t/doesn\'t have to'),
+  ()=>mkQ('You ___ talk in the library. It\'s forbidden.','mustn\'t',['don\'t have to','shouldn\'t','can\'t'],'Cấm hoàn toàn → mustn\'t'),
+  ()=>mkQ('You look tired. You ___ take a rest.','should',['must','have to','mustn\'t'],'Lời khuyên nên → should'),
+  ()=>mkQ('All students ___ wear uniform at school.','must',['should','can','don\'t have to'],'Quy định bắt buộc → must'),
+  ()=>mkQ('I ___ finish this report by Friday.','have to',['must','should','might'],'Bắt buộc từ bên ngoài → have to'),
+  ()=>mkQ('You ___ brush your teeth twice a day.','should',['must','have to','can'],'Lời khuyên sức khỏe → should'),
+  ()=>mkQ('You ___ smoke here. It\'s a hospital.','mustn\'t',['don\'t have to','shouldn\'t','can\'t'],'Cấm nghiêm ngặt → mustn\'t'),
+  ()=>mkQ('It\'s a holiday. We ___ go to school.','don\'t have to',['mustn\'t','shouldn\'t','can\'t'],'Không bắt buộc (tự chọn) → don\'t have to'),
+]},
+{id:'gr_quant',em:'🔢',name:'Some / Any / Much / Many',sub:'Quantifiers',diff:'medium',qs:[
+  ()=>mkQ('Is there ___ milk in the fridge?','any',['some','much','many'],'Câu hỏi với danh từ không đếm → any'),
+  ()=>mkQ('I have ___ good friends in my class.','some',['any','much','a few'],'Câu khẳng định → some'),
+  ()=>mkQ('How ___ apples did you buy?','many',['much','some','any'],'Đếm được (apples) → many'),
+  ()=>mkQ('How ___ sugar do you need?','much',['many','some','any'],'Không đếm được (sugar) → much'),
+  ()=>mkQ('There aren\'t ___ chairs in the room.','any',['some','many','much'],'Câu phủ định → any'),
+  ()=>mkQ('Would you like ___ tea?','some',['any','much','many'],'Mời mọc → some (dù là câu hỏi)'),
+  ()=>mkQ('She doesn\'t have ___ time to rest.','much',['many','some','any'],'Không đếm được (time) + phủ định → much'),
+  ()=>mkQ('There are ___ students absent today.','some',['any','much','many'],'Câu khẳng định đếm được → some'),
+  ()=>mkQ('He didn\'t drink ___ water.','much',['many','some','any'],'Không đếm được + phủ định → much'),
+  ()=>mkQ('Do you have ___ brothers or sisters?','any',['some','much','many'],'Câu hỏi thông thường → any'),
+]},
+/* -------- KHÓ -------- */
+{id:'gr_past',em:'🔴',name:'Quá Khứ Đơn Bất Quy Tắc',sub:'Irregular Past Simple',diff:'hard',qs:[
+  ()=>mkQ('She ___ a great film last night. (see)','saw',['seed','seen','sees'],'see → saw (bất quy tắc)'),
+  ()=>mkQ('We ___ to the beach last summer. (go)','went',['goed','gone','goes'],'go → went (bất quy tắc)'),
+  ()=>mkQ('He ___ a sandwich for lunch. (make)','made',['maked','makes','making'],'make → made (bất quy tắc)'),
+  ()=>mkQ('They ___ a test yesterday. (take)','took',['taked','taken','takes'],'take → took (bất quy tắc)'),
+  ()=>mkQ('She ___ all her money on clothes. (spend)','spent',['spended','spends','spending'],'spend → spent (bất quy tắc)'),
+  ()=>mkQ('I ___ a great idea this morning. (have)','had',['haved','has','having'],'have → had (bất quy tắc)'),
+  ()=>mkQ('He ___ a bike to school yesterday. (ride)','rode',['rided','ridden','rides'],'ride → rode (bất quy tắc)'),
+  ()=>mkQ('We ___ a lot of fun at the party. (have)','had',['have','haved','having'],'have → had'),
+  ()=>mkQ('She ___ first place in the race. (win)','won',['winned','wons','wins'],'win → won (bất quy tắc)'),
+  ()=>mkQ('The cat ___ under the bed. (hide)','hid',['hided','hidden','hides'],'hide → hid (bất quy tắc)'),
+]},
+{id:'gr_passive',em:'🔵',name:'Câu Bị Động',sub:'Passive Voice',diff:'hard',qs:[
+  ()=>mkQ('Rice ___ in the Mekong Delta. (grow)','is grown',['is growing','grows','was grown'],'Hiện tại đơn bị động: is/are + V3'),
+  ()=>mkQ('This novel ___ by Nam Cao. (write)','was written',['is written','wrote','is wrote'],'Quá khứ đơn bị động: was/were + V3'),
+  ()=>mkQ('English ___ all over the world. (speak)','is spoken',['is speaking','speaks','spoken'],'Hiện tại đơn bị động: is spoken'),
+  ()=>mkQ('The windows ___ last week. (clean)','were cleaned',['are cleaned','was cleaned','cleaned'],'Chủ ngữ số nhiều + quá khứ → were cleaned'),
+  ()=>mkQ('A new school ___ next year. (build)','will be built',['will build','is built','is building'],'Tương lai bị động: will be + V3'),
+  ()=>mkQ('The letter ___ by the secretary. (type)','was typed',['typed','is typed','was typing'],'Quá khứ bị động: was typed'),
+  ()=>mkQ('These flowers ___ every day. (water)','are watered',['water','is watered','watered'],'Chủ ngữ số nhiều, hiện tại → are watered'),
+  ()=>mkQ('The book ___ into 10 languages. (translate)','has been translated',['is translated','was translated','translated'],'Hiện tại hoàn thành bị động: has been + V3'),
+  ()=>mkQ('Dinner ___ at 7 pm. (serve)','is served',['serves','is serving','served'],'Thói quen bị động → is served'),
+  ()=>mkQ('The criminals ___ by the police. (catch)','were caught',['are caught','caught','have caught'],'Quá khứ số nhiều bị động: were caught'),
+]},
+{id:'gr_gerund',em:'🔶',name:'Gerund & Infinitive',sub:'V-ing / To V',diff:'hard',qs:[
+  ()=>mkQ('She enjoys ___ in the rain. (walk)','walking',['to walk','walk','walked'],'enjoy + V-ing'),
+  ()=>mkQ('I want ___ a new phone. (buy)','to buy',['buying','buy','bought'],'want + to V'),
+  ()=>mkQ('He finished ___ the report. (write)','writing',['to write','write','wrote'],'finish + V-ing'),
+  ()=>mkQ('They decided ___ a new house. (buy)','to buy',['buying','buy','bought'],'decide + to V'),
+  ()=>mkQ('She is good at ___ English. (speak)','speaking',['to speak','speak','spoken'],'be good at + V-ing'),
+  ()=>mkQ('We hope ___ you soon. (see)','to see',['seeing','see','saw'],'hope + to V'),
+  ()=>mkQ('He avoided ___ his teacher. (meet)','meeting',['to meet','meet','met'],'avoid + V-ing'),
+  ()=>mkQ('I prefer ___ at home to going out.','staying',['to stay','stay','stayed'],'prefer + V-ing + to + V-ing'),
+  ()=>mkQ('She promised ___ on time. (come)','to come',['coming','come','came'],'promise + to V'),
+  ()=>mkQ('He kept ___ although he was tired. (run)','running',['to run','run','ran'],'keep + V-ing (keep→ double n)'),
+]},
+{id:'gr_perfect',em:'🟣',name:'Hiện Tại Hoàn Thành',sub:'Present Perfect',diff:'hard',qs:[
+  ()=>mkQ('She ___ (just / finish) her homework.','has just finished',['just finished','is finishing','finishes'],'just → HTHT: has + just + V3'),
+  ()=>mkQ('Have you ever ___ pho? (eat)','eaten',['ate','eating','eats'],'ever → HTHT, sau have → V3: eaten'),
+  ()=>mkQ('I ___ (not / see) that film yet.','haven\'t seen',['didn\'t see','don\'t see','haven\'t saw'],'yet (phủ định) → haven\'t + V3: seen'),
+  ()=>mkQ('He ___ in Hanoi for 5 years. (live)','has lived',['lived','has been living','lives'],'for + khoảng thời gian → has lived'),
+  ()=>mkQ('They ___ (already / eat) dinner.','have already eaten',['already ate','are eating','eat'],'already → HTHT: have already + V3'),
+  ()=>mkQ('___ she ever ___ to Paris? (be)','Has ... been',['Did ... go','Is ... been','Has ... went'],'ever → Has + S + V3?'),
+  ()=>mkQ('We ___ (not / meet) since 2020.','haven\'t met',['didn\'t meet','don\'t meet','haven\'t meet'],'since → HTHT: haven\'t + V3: met'),
+  ()=>mkQ('It\'s the best cake I ___ (ever/eat).','have ever eaten',['ever ate','had ever eaten','ate'],'Cấu trúc: the best ... I have ever + V3'),
+  ()=>mkQ('She ___ (lose) her keys. She can\'t find them.','has lost',['lost','is losing','loses'],'Kết quả hiện tại → has lost'),
+  ()=>mkQ('I ___ (already / read) that book.','have already read',['already read','read','has already read'],'already + HTHT: have already read'),
+]},
+/* -------- NÂNG CAO -------- */
+{id:'gr_cond1',em:'🔷',name:'Câu Điều Kiện Loại 1',sub:'Conditional Type 1',diff:'advanced',qs:[
+  ()=>mkQ('If it ___ tomorrow, we won\'t go out. (rain)','rains',['will rain','rained','is raining'],'If + hiện tại đơn, ... will + V'),
+  ()=>mkQ('If she studies hard, she ___ the exam. (pass)','will pass',['passes','would pass','passed'],'Mệnh đề chính: will + V'),
+  ()=>mkQ('Unless you hurry, you ___ the bus.','will miss',['miss','would miss','missed'],'Unless = If not; mệnh đề chính will + V'),
+  ()=>mkQ('If I ___ more time, I\'ll help you. (have)','have',['will have','had','am having'],'Mệnh đề If: hiện tại đơn'),
+  ()=>mkQ('She\'ll be late if she ___ (not / leave) now.','doesn\'t leave',['won\'t leave','didn\'t leave','isn\'t leaving'],'Mệnh đề If: hiện tại đơn phủ định'),
+  ()=>mkQ('If they don\'t book early, they ___ a seat.','won\'t get',['don\'t get','wouldn\'t get','didn\'t get'],'Mệnh đề chính: will/won\'t + V'),
+  ()=>mkQ('What will you do if you ___ (fail) the test?','fail',['will fail','failed','are failing'],'Mệnh đề If: hiện tại đơn'),
+  ()=>mkQ('If it\'s sunny, we ___ a picnic. (have)','will have',['have','would have','had'],'Tương lai → will have'),
+  ()=>mkQ('I\'ll call you if I ___ (arrive) early.','arrive',['will arrive','arrived','am arriving'],'If clause: hiện tại đơn'),
+  ()=>mkQ('If you mix red and blue, you ___ purple.','get',['will get','got','are getting'],'Sự thật hiển nhiên → If + hiện tại, hiện tại'),
+]},
+{id:'gr_cond2',em:'🟠',name:'Câu Điều Kiện Loại 2',sub:'Conditional Type 2',diff:'advanced',qs:[
+  ()=>mkQ('If I ___ rich, I would travel the world. (be)','were',['am','was','would be'],'Loại 2: If + were/V-ed (giả định không thật)'),
+  ()=>mkQ('She would help you if she ___ time. (have)','had',['has','would have','will have'],'If clause loại 2: had (quá khứ giả định)'),
+  ()=>mkQ('If I knew the answer, I ___ you. (tell)','would tell',['will tell','told','would told'],'Mệnh đề chính: would + V nguyên thể'),
+  ()=>mkQ('What would you do if you ___ a million dollars? (win)','won',['win','would win','will win'],'If clause loại 2: won'),
+  ()=>mkQ('If he ___ (study) more, he would pass.','studied',['studies','will study','would study'],'Giả định không thật → studied'),
+  ()=>mkQ('She ___ happier if she had more friends. (be)','would be',['will be','was','were'],'Mệnh đề chính: would be'),
+  ()=>mkQ('If I were you, I ___ (not / do) that.','wouldn\'t do',['won\'t do','didn\'t do','wouldn\'t did'],'would not + V nguyên thể'),
+  ()=>mkQ('If we had a car, we ___ (drive) there.','would drive',['will drive','drove','would drove'],'would + V nguyên thể'),
+  ()=>mkQ('He ___ (come) if you invited him.','would come',['will come','came','would came'],'would + V'),
+  ()=>mkQ('If I ___ (be) the teacher, I\'d give less homework.','were',['am','was','would be'],'If I were (NOT was) – ngữ pháp trang trọng'),
+]},
+{id:'gr_relative',em:'🔺',name:'Mệnh Đề Quan Hệ',sub:'Relative Clauses',diff:'advanced',qs:[
+  ()=>mkQ('The boy ___ sits next to me is very smart.','who',['which','whom','whose'],'Người + chủ ngữ → who'),
+  ()=>mkQ('This is the book ___ I told you about.','that / which',['who','whom','whose'],'"that" hoặc "which" cho vật/sự việc'),
+  ()=>mkQ('The woman ___ bag was stolen called the police.','whose',['who','which','whom'],'Sở hữu → whose'),
+  ()=>mkQ('The city ___ I was born is very beautiful.','where',['which','who','that'],'Nơi chốn → where'),
+  ()=>mkQ('Do you know the reason ___ she left?','why',['when','where','which'],'Lý do → why'),
+  ()=>mkQ('The man ___ you met yesterday is my uncle.','whom',['who','which','whose'],'Người + tân ngữ → whom (trang trọng)'),
+  ()=>mkQ('2020 was the year ___ everything changed.','when',['where','which','who'],'Thời gian → when'),
+  ()=>mkQ('The film ___ we watched last night was fantastic.','which / that',['who','whom','whose'],'"which/that" cho vật'),
+  ()=>mkQ('She has a friend ___ can speak 5 languages.','who',['which','whom','whose'],'Người + chủ ngữ → who'),
+  ()=>mkQ('That\'s the house ___ Shakespeare was born.','where',['which','when','who'],'Nơi chốn → where'),
+]},
+{id:'gr_reported',em:'💬',name:'Câu Tường Thuật',sub:'Reported Speech',diff:'advanced',qs:[
+  ()=>mkQ('"I am tired." → She said she ___ tired.','was',['is','were','has been'],'am/is → was (lùi thì)'),
+  ()=>mkQ('"I will call you." → He said he ___ call me.','would',['will','should','could'],'will → would'),
+  ()=>mkQ('"I have finished." → She said she ___ finished.','had',['has','was','did'],'have → had (hiện tại hoàn thành → QTHT)'),
+  ()=>mkQ('"Don\'t touch that!" → She told him ___ touch that.','not to',['to not','don\'t','not'],'"Don\'t + V" → told + O + not to + V'),
+  ()=>mkQ('"I went to Paris." → He said he ___ to Paris.','had gone',['went','has gone','goes'],'Quá khứ đơn → QTHT: had gone'),
+  ()=>mkQ('"Can you help me?" → She asked if I ___ help her.','could',['can','would','should'],'"can" → could trong tường thuật'),
+  ()=>mkQ('"I live here." → He said he ___ there.','lived',['lives','is living','has lived'],'Hiện tại đơn → quá khứ đơn; here→there'),
+  ()=>mkQ('"Where do you work?" → She asked where I ___.','worked',['work','am working','had worked'],'Câu hỏi Wh- → S + V (trật tự khẳng định)'),
+  ()=>mkQ('"I am studying." → He said he ___ studying.','was',['is','were','has been'],'am/is/are + V-ing → was/were + V-ing'),
+  ()=>mkQ('"Close the window." → He asked her ___ the window.','to close',['close','closing','not to close'],'Câu mệnh lệnh → asked + O + to V'),
+]},
+];
+
+const DIFF_LABELS={easy:'🟢 Dễ',medium:'🟡 Vừa',hard:'🔴 Khó',advanced:'🟠 Nâng cao'};
+const DIFF_ORDER=['easy','medium','hard','advanced'];
+
+function grammarHome(){
+  const card=$('grammarCard');
+  card.innerHTML=`
+    <h2>📝 Ôn Tập Ngữ Pháp</h2>
+    <p class="sub">Chọn mức độ, rồi chọn chủ đề để luyện. Mỗi câu đúng +12 XP 🎯</p>
+    <div class="gr-diff-bar">
+      ${DIFF_ORDER.map(d=>`<button class="gr-diff-btn${d===_grDiff?' on':''}" data-d="${d}" onclick="grSetDiff('${d}')">${DIFF_LABELS[d]}</button>`).join('')}
+    </div>
+    <div class="gr-topic-grid" id="grTopicGrid"></div>`;
+  grRenderTopics();
+}
+
+function grSetDiff(d){
+  _grDiff=d;
+  document.querySelectorAll('.gr-diff-btn').forEach(b=>b.classList.toggle('on',b.dataset.d===d));
+  grRenderTopics();
+}
+
+function grRenderTopics(){
+  const topics=GRAMMAR_TOPICS.filter(t=>t.diff===_grDiff);
+  $('grTopicGrid').innerHTML=topics.map(t=>`
+    <button class="gr-topic-card diff-${t.diff}" onclick="startGrammarReview('${t.id}')">
+      <span class="gr-diff-badge">${DIFF_LABELS[t.diff].split(' ')[0]} ${t.diff==='easy'?'Dễ':t.diff==='medium'?'Vừa':t.diff==='hard'?'Khó':'Nâng cao'}</span>
+      <span class="gt-em">${t.em}</span>
+      <div class="gt-name">${esc(t.name)}</div>
+      <div class="gt-sub">${esc(t.sub)}</div>
+      <span class="gt-cnt">10 câu · +12 XP/câu</span>
+    </button>`).join('');
+}
+
+function startGrammarReview(topicId){
+  const topic=GRAMMAR_TOPICS.find(t=>t.id===topicId);
+  if(!topic)return;
+  const qs=shuffle(topic.qs.map(fn=>fn())).slice(0,10);
+  GR={topic,qs,i:0,right:0};
+  streak=0;
+  renderGRQ();
+}
+
+function renderGRQ(){
+  const q=GR.qs[GR.i];
+  const order=shuffle(q.o.map((t,idx)=>({t,idx})));
+  $('grammarCard').innerHTML=`
+    <div class="row" style="justify-content:space-between;margin-bottom:14px">
+      <button class="btn ghost sm" onclick="grammarHome()">← Chủ đề</button>
+      <span style="font-family:'Baloo 2';font-weight:800;color:var(--violet)">${GR.topic.em} ${esc(GR.topic.name)}</span>
+      <span class="gr-diff-badge diff-${GR.topic.diff}" style="position:static">${DIFF_LABELS[GR.topic.diff]}</span>
+    </div>
+    <div class="qbar">
+      <span class="qcount">Câu ${GR.i+1}/${GR.qs.length}</span>
+      <div class="qprog"><i style="width:${GR.i/GR.qs.length*100}%"></i></div>
+      <span class="streak">🔥 ${streak}</span>
+    </div>
+    <div class="qq">${esc(q.q)}</div>
+    <div class="opts">${order.map((o,k)=>`<button class="opt" id="grop${k}" onclick="answerGR(${o.idx},${k})">\
+<span class="ab">${'ABCD'[k]}</span>${esc(o.t)}</button>`).join('')}</div>
+    <div class="feedback" id="grfb"></div>
+    <div class="center mt hidden" id="grnextRow"><button class="btn teal" onclick="nextGRQ()">Câu tiếp theo ➜</button></div>`;
+  window._grOrder=order;
+}
+
+function answerGR(realIdx,btnK){
+  const q=GR.qs[GR.i];
+  document.querySelectorAll('#grammarCard .opt').forEach(b=>b.disabled=true);
+  const correct=realIdx===q.a;
+  window._grOrder.forEach((o,k)=>{
+    const b=$('grop'+k);
+    if(o.idx===q.a)b.classList.add('right');
+    else if(k===btnK)b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+  const fb=$('grfb');
+  if(correct){
+    GR.right++;P.correct++;hitStreak();
+    const bonus=streakBonus();
+    gainXP(12+bonus);sndOK();
+    fb.className='feedback ok';fb.innerHTML='🎉 <b>Chính xác!</b> '+esc(q.e||'');
+  }else{
+    missStreak();sndNo();
+    fb.className='feedback no';fb.innerHTML='😅 <b>Chưa đúng.</b> Đáp án: <b>'+esc(q.o[q.a])+'</b>. '+esc(q.e||'');
+  }
+  persist();
+  $('grnextRow').classList.remove('hidden');
+}
+
+function nextGRQ(){
+  GR.i++;sndClick();
+  if(GR.i<GR.qs.length)renderGRQ();
+  else{
+    P.quizDone++;persist();checkBadges();
+    const pct=GR.right/GR.qs.length;
+    if(pct===1){confetti(120);sndWin()}
+    else if(pct>=.6){confetti(50);sndWin()}
+    const face=pct===1?'🏆':pct>=.75?'🤩':pct>=.5?'😊':'💪';
+    const msg=pct===1?'HOÀN HẢO! Nắm ngữ pháp đỉnh rồi!':pct>=.75?'Tuyệt vời!':pct>=.5?'Khá lắm, luyện thêm chút!':'Ôn lại lý thuyết rồi thử lại nha!';
+    $('grammarCard').innerHTML=`
+      <div class="result">
+        <div class="face">${face}</div>
+        <h3>${msg}</h3>
+        <div class="scoreline">Bạn đúng <b>${GR.right}/${GR.qs.length}</b> câu</div>
+        <div class="xpgain">⭐ +${GR.right*12} XP</div>
+        <div class="row" style="justify-content:center">
+          <button class="btn" onclick="startGrammarReview('${GR.topic.id}')">🔄 Luyện lại</button>
+          <button class="btn sun" onclick="grammarHome()">📋 Đổi chủ đề</button>
+          <button class="btn ghost" onclick="go('theory')">📖 Xem lý thuyết</button>
+        </div>
+      </div>`;
+  }
+}
+
 /* ================= LEADERBOARD & BADGES ================= */
 function renderBoard(){
   const ps=Object.values(loadPlayers()).sort((a,b)=>b.xp-a.xp).slice(0,10);
@@ -3417,15 +3766,12 @@ $('playerChip').onclick=showNameModal;
 $('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')saveName()});
 
 (function init(){
-  // doodles
   const ds=['⭐','✏️','📘','🎈','🔤','🎧','🍀','💜','✨','📚','🎮','🌈'];
   $('doodles').innerHTML=ds.map((d,i)=>`<span class="doodle" style="left:${(i*8.3+3)%96}%;top:${(i*17+5)%92}%;animation-delay:${i*.7}s;font-size:${22+i%3*10}px">${d}</span>`).join('');
-  // player
   const cur=localStorage.getItem(LS_CUR),ps=loadPlayers();
   if(cur&&ps[cur]){P=ps[cur];pickedAva=P.ava;renderPlayer()}
   else showNameModal();
   renderPlayer();
-  // init sound toggle button icon
   const sb=document.getElementById('sndToggleBtn');
   if(sb){sb.textContent=soundOn?'🔊':'🔇';sb.title=soundOn?'Tắt âm thanh':'Bật âm thanh'}
 })();
