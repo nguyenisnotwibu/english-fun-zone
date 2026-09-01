@@ -2677,16 +2677,16 @@ const TD_KIND={
 };
 /* Boss theo tầng — mỗi 5 đợt, có giáp + kỹ năng riêng, miễn làm chậm */
 const TD_BOSS=[
- {em:'👹',name:'Quỷ Đất',      hpM:6,spM:.85,armor:4, ab:['rage'],                          tip:'Dưới 40% máu sẽ NỔI GIẬN, chạy nhanh hơn hẳn!'},
- {em:'🧟',name:'Xác Sống Chúa',hpM:7,spM:.78,armor:6, ab:['regen'],                         tip:'Tự HỒI MÁU liên tục — phải dồn sát thương thật mạnh!'},
- {em:'🐲',name:'Rồng Lửa',     hpM:7,spM:.92,armor:9, ab:['summon','rage'],                 tip:'GỌI LÍNH khi mất máu rồi nổi giận ở cuối trận!'},
- {em:'👾',name:'Quái Vũ Trụ',  hpM:8,spM:.86,armor:12,ab:['shield','summon'],               tip:'Có KHIÊN chắn, phải phá khiên mới trừ được máu!'},
- {em:'🦖',name:'Bạo Chúa',     hpM:9,spM:.95,armor:16,ab:['shield','regen','summon','rage'],tip:'Hội tụ mọi sức mạnh — cần trụ Lv.5 mới hạ nổi!'}
+ {em:'👹',name:'Quỷ Đất',      hpM:6,spM:.85,armor:3, ab:['rage'],                          tip:'Dưới 40% máu sẽ NỔI GIẬN, chạy nhanh hơn hẳn!'},
+ {em:'🧟',name:'Xác Sống Chúa',hpM:7,spM:.78,armor:4, ab:['regen'],                         tip:'Tự HỒI MÁU liên tục — phải dồn sát thương thật mạnh!'},
+ {em:'🐲',name:'Rồng Lửa',     hpM:7,spM:.92,armor:6, ab:['summon','rage'],                 tip:'GỌI LÍNH khi mất máu rồi nổi giận ở cuối trận!'},
+ {em:'👾',name:'Quái Vũ Trụ',  hpM:8,spM:.86,armor:8, ab:['shield','summon'],               tip:'Có KHIÊN chắn, phải phá khiên mới trừ được máu!'},
+ {em:'🦖',name:'Bạo Chúa',     hpM:9,spM:.95,armor:10,ab:['shield','regen','summon','rage'],tip:'Hội tụ mọi sức mạnh — cần trụ Lv.5 mới hạ nổi!'}
 ];
 function td2BossOf(r){return TD_BOSS[Math.min(Math.max(0,Math.floor(r/5)-1),TD_BOSS.length-1)]}
-function td2BaseHP(r){return Math.round(22*Math.pow(1.145,r-1)+r*10)}
+function td2BaseHP(r){return Math.round(22*Math.pow(1.17,r-1)+r*10)}
 function td2BaseSpeed(r){return 40+r*1.5}
-function td2Armor(r,base){return base?Math.round(base*(1+Math.floor(r/6))):0}
+function td2Armor(r,base){return base?Math.round(base*(1+Math.floor(r/8))):0}
 function startTower(){
   GM={type:'tower2',gold:180,lives:25,round:1,kills:0,bossKills:0,towers:[],enemies:[],fx:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false,speed:1};
   const W=[[-30,80],[200,80],[200,200],[90,200],[90,320],[330,320],[330,200],[455,200],[520,200]];
@@ -2755,8 +2755,8 @@ function td2Stats(t){
   t.em=T.evo?T.evo[Math.min(t.level-1,T.evo.length-1)]:T.em;
   return t;
 }
-function td2UpCost(t){return Math.round(TT[t.type].cost*.9*Math.pow(1.75,t.level-1))}
-function td2Paid(t){let p=TT[t.type].cost;for(let l=1;l<t.level;l++)p+=Math.round(TT[t.type].cost*.9*Math.pow(1.75,l-1));return p}
+function td2UpCost(t){return Math.round(TT[t.type].cost*.9*Math.pow(1.55,t.level-1))}
+function td2Paid(t){let p=TT[t.type].cost;for(let l=1;l<t.level;l++)p+=Math.round(TT[t.type].cost*.9*Math.pow(1.55,l-1));return p}
 function td2Upgrade(){
   const t=GM.sel;if(!t)return;const TU=TT[t.type];
   if(t.level>=TD_MAXLV){toast('⭐ '+TU.name+' đã đạt cấp tối đa Lv.'+TD_MAXLV+'!');return}
@@ -2796,13 +2796,13 @@ function td2Side(){
      <button class="btn ghost sm" style="width:100%;margin-top:6px" onclick="td2GameOver(1)">🏁 Kết thúc &amp; nhận XP</button>
      <div id="td2info" style="font-size:11.5px;color:var(--muted);margin-top:7px;min-height:36px">${info}</div>`;
 }
-function td2Q(){if(GM&&GM.qLocked)return td2QLocked();const q=vGenQ(poolVocab());GM.cur=q;const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ Trả lời đúng để kiếm vàng <b style="color:#d97706">+12🪙</b> <span style="color:var(--muted);font-weight:600">— rồi kéo xuống ⬇️ mua trụ &amp; bắt đầu đợt</span></div>${q.prompt}${optButtons(q.opts,'td2Ans')}<div class="feedback" id="td2qfb" style="margin-top:6px"></div>`}
+function td2Q(){if(GM&&GM.qLocked)return td2QLocked();const q=vGenQ(poolVocab());GM.cur=q;const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ Trả lời đúng để kiếm vàng <b style="color:#d97706">+15🪙</b> <span style="color:var(--muted);font-weight:600">— rồi kéo xuống ⬇️ mua trụ &amp; bắt đầu đợt</span></div>${q.prompt}${optButtons(q.opts,'td2Ans')}<div class="feedback" id="td2qfb" style="margin-top:6px"></div>`}
 function td2QLocked(){const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ Khu trả lời <span style="color:var(--red)">— đang khoá 🔒</span></div><div style="text-align:center;padding:16px 10px;color:var(--muted);font-weight:700;line-height:1.55">😵 Trả lời sai nên tạm khoá câu hỏi!<br>⬇️ Hãy <b>mua trụ</b> &amp; bấm <b>"Bắt đầu đợt"</b>. Đánh xong đợt này sẽ <b style="color:var(--violet)">mở lại câu hỏi</b> để kiếm vàng tiếp! 💪</div>`}
 function td2Ans(k){
   if(!GM||!GM.cur)return;const o=GM.cur.opts[k];
   document.querySelectorAll('#td2q .opt').forEach((b,j)=>{b.disabled=true;if(GM.cur.opts[j].ok)b.classList.add('right');else if(j===k)b.classList.add('wrong')});
   const fb=$('td2qfb');
-  if(o.ok){GM.gold+=12;P.correct++;gainXP(2);sndOK();sndCoin();if(fb){fb.className='feedback ok';fb.innerHTML='🎉 +12🪙 — '+esc(GM.cur.right[0]+' = '+GM.cur.right[1])}persist();td2HUD();td2Side();setTimeout(td2Q,800);}
+  if(o.ok){GM.gold+=15;P.correct++;gainXP(2);sndOK();sndCoin();if(fb){fb.className='feedback ok';fb.innerHTML='🎉 +15🪙 — '+esc(GM.cur.right[0]+' = '+GM.cur.right[1])}persist();td2HUD();td2Side();setTimeout(td2Q,800);}
   else{sndNo();GM.qLocked=true;if(fb){fb.className='feedback no';fb.innerHTML='😵 Sai rồi! Đáp án: <b>'+esc(GM.cur.opts.find(x=>x.ok).t)+'</b> — khoá trả lời tới khi hết đợt này!'}persist();td2HUD();td2Side();setTimeout(td2QLocked,1300);}
 }
 function td2StartRound(){
@@ -2829,7 +2829,7 @@ function td2StartRound(){
   GM.running=true;GM.spawnGap=Math.max(.3,.8-r*.018);GM.spawnT=0;sndClick();td2Side()
 }
 function td2RoundDone(){
-  const bonus=25+GM.round*4;GM.gold+=bonus;GM.round++;gainXP(6);persist();sndWin();sndCoin();
+  const bonus=30+GM.round*6;GM.gold+=bonus;GM.round++;gainXP(6);persist();sndWin();sndCoin();
   const wasLocked=GM.qLocked;GM.qLocked=false;
   toast('🎉 Qua đợt! +'+bonus+' 🪙'+(wasLocked?' — mở lại câu hỏi! 🔓':''));
   td2Q();td2Side()
