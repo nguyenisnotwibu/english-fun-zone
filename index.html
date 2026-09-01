@@ -2661,8 +2661,8 @@ function survEnd(){
 const TT={
  frog:{em:'🐸',name:'Ếch',cost:50,range:95,dmg:9,rate:.55,color:'#22c55e',atk:'tongue',skill:'👅 Lè lưỡi tóm mồi',
   perks:{3:'👅 Lưỡi quét — sát thương lan 28',5:'🐊 Tiến hoá Cá Sấu — lan 42',7:'🐉 Tiến hoá Rồng Nước — lan 58',10:'🌊 Sóng thần — lan 75, quét cả đàn'}},
- bee:{em:'🐝',name:'Ong',cost:70,range:90,dmg:7,rate:.3,color:'#eab308',atk:'sting',skill:'⚡ Chích nọc cực nhanh',
-  perks:{3:'🗡️ Nọc xuyên 40% giáp',5:'🗡️ Nọc xuyên 70% giáp',7:'🗡️ Xuyên giáp HOÀN TOÀN — khắc tinh Boss',10:'🐝 Ong Nữ Hoàng — xuyên giáp + chích 2 mục tiêu'}},
+ bee:{em:'🐝',name:'Ong',cost:70,range:90,dmg:7,rate:.3,color:'#eab308',atk:'sting',skill:'⚡ Chích nọc — MÀI MÒN GIÁP cho cả đội',
+  perks:{3:'🗡️ Nọc xuyên 40% giáp · mài mòn tới -5 giáp',5:'🗡️ Nọc xuyên 70% giáp · mài mòn tới -7 giáp',7:'🗡️ Xuyên giáp HOÀN TOÀN · mài mòn tới -9 giáp',10:'🐝 Ong Nữ Hoàng — chích 2 mục tiêu · mài mòn tới -12 giáp'}},
  cat:{em:'🐱',name:'Mèo',cost:80,range:92,dmg:16,rate:.8,color:'#f59e0b',atk:'claw',skill:'🐾 Vồ cào sắc lẹm',
   perks:{3:'💥 Chí mạng 20% ×2',5:'🐯 Tiến hoá Hổ — chí mạng 30% ×2',7:'🦁 Tiến hoá Sư Tử — chí mạng 40% ×2.2',10:'👑 Sư Tử Vương — chí mạng 50% ×2.5'}},
  snake:{em:'🐍',name:'Rắn',cost:100,range:92,dmg:13,rate:.75,color:'#16a34a',atk:'venom',slow:true,skill:'☠️ Phun độc làm chậm',
@@ -2762,9 +2762,9 @@ function td2Stats(t){
   t.rate=+(T.rate*Math.pow(.95,L)).toFixed(3);
   t.splash=T.splash?Math.round(T.splash*(1+L*.07)):0;
   t.slow=!!T.slow;t.slowP=T.slow?.65:1;
-  t.pierce=0;t.crit=0;t.critX=2;t.burn=0;t.multi=1;
+  t.pierce=0;t.crit=0;t.critX=2;t.burn=0;t.multi=1;t.shred=0;t.shredMax=0;
   if(t.type==='frog') t.splash= lv>=10?75: lv>=7?58: lv>=5?42: lv>=3?28:0;
-  if(t.type==='bee'){ t.pierce= lv>=7?1: lv>=5?.7: lv>=3?.4:0; if(lv>=10)t.multi=2 }
+  if(t.type==='bee'){ t.pierce= lv>=7?1: lv>=5?.7: lv>=3?.4:0; t.shred=1; t.shredMax=2+lv; if(lv>=10)t.multi=2 }
   if(t.type==='cat'){ if(lv>=10){t.crit=.5;t.critX=2.5} else if(lv>=7){t.crit=.4;t.critX=2.2} else if(lv>=5){t.crit=.3} else if(lv>=3){t.crit=.2} }
   if(t.type==='snake'){ t.burn= lv>=10?.26: lv>=7?.18: lv>=3?.1:0; t.slowP= lv>=10?.4: lv>=5?.5:.65 }
   if(t.type==='owl'){ t.multi= lv>=10?4: lv>=7?3: lv>=3?2:1; if(lv>=5)t.range+=25; if(lv>=10)t.range+=25 }
@@ -2800,12 +2800,12 @@ function td2Side(){
     const owned=Object.keys(T.perks||{}).filter(l=>t.level>=+l).map(l=>T.perks[l]);
     const nl=Object.keys(T.perks||{}).map(Number).sort((a,b)=>a-b).find(l=>l>t.level);
     const next=nl?T.perks[nl]:null;
-    info=`<b>${t.em||T.em} ${td2TowerName(t)} · Lv.${t.level}/${TD_MAXLV}${max?' ⭐MAX':''}</b><br><span style="color:var(--violet);font-weight:700;font-size:11px">${T.skill||''}</span><br>⚔️ ${t.dmg} · 🎯 ${Math.round(t.range)} · ⏱️ ${t.rate.toFixed(2)}s`
+    info=`<b>${t.em||T.em} ${td2TowerName(t)} · Lv.${t.level}/${TD_MAXLV}${max?' ⭐MAX':''}</b><br><span style="color:var(--violet);font-weight:700;font-size:11px">${T.skill||''}</span><br>⚔️ ${t.dmg} · 🎯 ${Math.round(t.range)} · ⏱️ ${t.rate.toFixed(2)}s${t.shred?` · 💥 mài mòn tối đa -${t.shredMax} giáp`:''}${t.pierce?` · 🗡️ xuyên ${Math.round(t.pierce*100)}% giáp`:''}`
       +(owned.length?`<br><span style="color:#059669;font-weight:700;font-size:11px">✅ ${owned.join('<br>✅ ')}</span>`:'')
       +(next?`<br><span style="color:#d97706;font-weight:700;font-size:11px">🔒 Lv.${nl}: ${next}</span>`:'')
       +`<div class="row" style="margin-top:5px">${max?'<button class="btn ghost sm" disabled>⭐ Cấp tối đa</button>':`<button class="btn sun sm" onclick="td2Upgrade()">⬆️ Nâng ${uc}🪙</button>`}<button class="btn ghost sm" onclick="td2Sell()">💲 Bán +${rf}</button></div>`;}
   else if(GM.place)info=`Đang chọn <b>${TT[GM.place].em} ${TT[GM.place].name}</b> — chạm chỗ trống trên bản đồ để đặt.`;
-  else info='Chạm 1 trụ ở cửa hàng rồi chạm bản đồ để đặt. Chạm trụ đã đặt để nâng cấp / bán. Trụ lên tối đa <b>Lv.10</b>, mở <b>kỹ năng mới ở Lv.3 · 5 · 7 · 10</b> và <b>tiến hoá đổi hình + đổi tên</b>. 🐝 Ong Lv.3+ <b>xuyên giáp</b> — cực mạnh với Boss!';
+  else info='Chạm 1 trụ ở cửa hàng rồi chạm bản đồ để đặt. Chạm trụ đã đặt để nâng cấp / bán. Trụ lên tối đa <b>Lv.10</b>, mở <b>kỹ năng mới ở Lv.3 · 5 · 7 · 10</b> và <b>tiến hoá đổi hình + đổi tên</b>. 🐝 Ong <b>mài mòn giáp</b> quái cho MỌI trụ cùng bắn — nuôi 1 con Ong là cả đội mạnh lên!';
   const sd=$('td2side');if(!sd)return;
   sd.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">🏪 Cửa hàng trụ</div><div class="td2-shop">${shop}</div>`+
     (GM.running
@@ -2866,8 +2866,9 @@ function td2Hit(t,e,raw,primary){
   if(!e||e.dead)return;
   let d=raw;
   if(primary&&t.crit&&Math.random()<t.crit){d*=t.critX;GM.fx.push({x1:e.x,y1:e.y-16,x2:e.x,y2:e.y-16,c:'#f59e0b',kind:'crit',lv:1,t:0,dur:.5})}
-  const armor=(e.armor||0)*(1-(t.pierce||0));
+  const armor=Math.max(0,(e.armor||0)-(e.shredV||0))*(1-(t.pierce||0));
   d=Math.max(d*.25,d-armor);
+  if(t.shred&&e.armor>0){e.shredV=Math.min(t.shredMax,(e.shredV||0)+t.shred);e.shredT=3.5}
   if(e.shield>0){const ab=Math.min(e.shield,d);e.shield-=ab;d-=ab;if(e.shield<=0&&e.boss){toast('💥 Khiên của '+e.bossName+' đã vỡ!');sndOK()}}
   if(d>0)e.hp-=d;
   if(t.slow&&!e.noSlow){e.slowT=1.5;e.slowP=Math.min(e.slowP||1,t.slowP)}
@@ -2903,6 +2904,7 @@ function td2Loop(ts){
   for(const e of GM.enemies){
     if(e.dead)continue;
     if(e.slowT>0){e.slowT-=dt;if(e.slowT<=0)e.slowP=1}
+    if(e.shredT>0){e.shredT-=dt;if(e.shredT<=0)e.shredV=0}
     if(e.burn>0){e.hp-=e.burn*dt;if(e.hp<=0){e.dead=true;e.killed=true;continue}}
     if(e.boss&&e.ab){
       if(e.ab.indexOf('regen')>=0&&e.hp<e.max)e.hp=Math.min(e.max,e.hp+e.max*.012*dt);
@@ -2950,7 +2952,7 @@ function td2Draw(){
     x.fillStyle='rgba(0,0,0,.45)';x.fillRect(e.x-w/2,top,w,4);
     x.fillStyle=e.slowT>0?'#38bdf8':(e.boss?'#ef4444':'#22c55e');x.fillRect(e.x-w/2,top,w*Math.max(0,e.hp/e.max),4);
     if(e.shield>0){x.fillStyle='rgba(0,0,0,.4)';x.fillRect(e.x-w/2,top-5,w,3);x.fillStyle='#60a5fa';x.fillRect(e.x-w/2,top-5,w*Math.max(0,e.shield/e.maxShield),3)}
-    if(e.armor>0&&!e.boss){x.font='9px serif';x.fillText('🛡️',e.x+w/2+4,top+2)}
+    if(e.armor>0&&!e.boss){x.font='9px serif';x.fillText(e.shredV>0?'💥':'🛡️',e.x+w/2+4,top+2)}
     if(e.burn>0){x.font='10px serif';x.fillText('🔥',e.x-w/2-5,top+2)}
     x.font=(e.boss?'32px':'22px')+' serif';x.fillText(e.em,e.x,e.y);
   }
@@ -2961,7 +2963,8 @@ function td2Draw(){
     x.fillStyle='#ef4444';x.fillRect(56,18,368*Math.max(0,bs.hp/bs.max),8);
     if(bs.shield>0){x.fillStyle='rgba(96,165,250,.9)';x.fillRect(56,14,368*Math.max(0,bs.shield/bs.maxShield),3)}
     x.fillStyle='#fff';x.font='bold 10px sans-serif';x.textAlign='left';
-    x.fillText(bs.em+' BOSS '+bs.bossName+'  🛡️'+bs.armor+(bs.raged?'  😤NỔI GIẬN':'')+'  '+Math.max(0,Math.ceil(bs.hp))+'/'+bs.max,58,10);
+    const ea=Math.max(0,bs.armor-(bs.shredV||0));
+    x.fillText(bs.em+' BOSS '+bs.bossName+'  '+(bs.shredV>0?'💥giáp '+ea+'/'+bs.armor:'🛡️'+bs.armor)+(bs.raged?'  😤NỔI GIẬN':'')+'  '+Math.max(0,Math.ceil(bs.hp))+'/'+bs.max,58,10);
     x.textAlign='center';
   }
   td2DrawFx(x);

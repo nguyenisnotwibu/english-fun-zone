@@ -24,8 +24,8 @@ echo.
 echo [INFO] Lay du lieu tu GitHub...
 git fetch origin main
 echo.
-set "MSG="
-set /p "MSG=Mo ta thay doi lan nay (Enter = tu dong theo ngay gio): "
+set "MSG=%~1"
+if not defined MSG set /p "MSG=Mo ta thay doi lan nay (Enter = tu dong theo ngay gio): "
 if not defined MSG call :AUTOMSG
 echo [INFO] Commit: %MSG%
 git add -A
