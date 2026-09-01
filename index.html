@@ -2659,14 +2659,31 @@ function survEnd(){
 
 /* ================= 🏰 TOWER DEFENSE (canvas, Blooket-style) ================= */
 const TT={
- frog:{em:'🐸',name:'Ếch',cost:50,range:95,dmg:9,rate:.55,color:'#22c55e',atk:'tongue',skill:'👅 Lè lưỡi tóm mồi',evo:['🐸','🐸','🐊','🐊','🐉'],perks:{3:'👅 Lưỡi quét — sát thương lan 30',5:'🐉 Tiến hoá Rồng nước — lan 48'}},
- bee:{em:'🐝',name:'Ong',cost:70,range:90,dmg:7,rate:.3,color:'#eab308',atk:'sting',skill:'⚡ Chích nọc cực nhanh',evo:['🐝','🐝','🦂','🦂','🦂'],perks:{3:'🗡️ Nọc xuyên 50% giáp',5:'🗡️ Xuyên giáp HOÀN TOÀN — khắc tinh Boss'}},
- cat:{em:'🐱',name:'Mèo',cost:80,range:92,dmg:16,rate:.8,color:'#f59e0b',atk:'claw',skill:'🐾 Vồ cào sắc lẹm',evo:['🐱','🐱','🐯','🐯','🦁'],perks:{3:'💥 Chí mạng 25% ×2 sát thương',5:'💥 Chí mạng 40% ×2.5 sát thương'}},
- snake:{em:'🐍',name:'Rắn',cost:100,range:92,dmg:13,rate:.75,color:'#16a34a',atk:'venom',slow:true,skill:'☠️ Phun độc làm chậm',evo:['🐍','🐍','🐲','🐲','🐉'],perks:{3:'☠️ Độc ăn mòn — mất máu liên tục',5:'❄️ Làm chậm 60% + độc cực mạnh'}},
- owl:{em:'🦉',name:'Cú',cost:120,range:145,dmg:22,rate:1.0,color:'#8b5cf6',atk:'dart',skill:'🪶 Phi lông tầm xa',evo:['🦉','🦉','🦅','🦅','🦅'],perks:{3:'🎯 Bắn 2 mục tiêu cùng lúc',5:'🎯 Bắn 3 mục tiêu + tầm xa nhất'}},
- dragon:{em:'🐲',name:'Rồng',cost:180,range:88,dmg:42,rate:1.3,color:'#ef4444',atk:'fire',splash:44,skill:'🔥 Phun lửa diện rộng',evo:['🐲','🐲','🐉','🐉','🐉'],perks:{3:'🔥 Thiêu đốt — quái cháy mất máu',5:'🌋 Bão lửa — nổ rộng + cháy nặng'}}
+ frog:{em:'🐸',name:'Ếch',cost:50,range:95,dmg:9,rate:.55,color:'#22c55e',atk:'tongue',skill:'👅 Lè lưỡi tóm mồi',
+  perks:{3:'👅 Lưỡi quét — sát thương lan 28',5:'🐊 Tiến hoá Cá Sấu — lan 42',7:'🐉 Tiến hoá Rồng Nước — lan 58',10:'🌊 Sóng thần — lan 75, quét cả đàn'}},
+ bee:{em:'🐝',name:'Ong',cost:70,range:90,dmg:7,rate:.3,color:'#eab308',atk:'sting',skill:'⚡ Chích nọc cực nhanh',
+  perks:{3:'🗡️ Nọc xuyên 40% giáp',5:'🗡️ Nọc xuyên 70% giáp',7:'🗡️ Xuyên giáp HOÀN TOÀN — khắc tinh Boss',10:'🐝 Ong Nữ Hoàng — xuyên giáp + chích 2 mục tiêu'}},
+ cat:{em:'🐱',name:'Mèo',cost:80,range:92,dmg:16,rate:.8,color:'#f59e0b',atk:'claw',skill:'🐾 Vồ cào sắc lẹm',
+  perks:{3:'💥 Chí mạng 20% ×2',5:'🐯 Tiến hoá Hổ — chí mạng 30% ×2',7:'🦁 Tiến hoá Sư Tử — chí mạng 40% ×2.2',10:'👑 Sư Tử Vương — chí mạng 50% ×2.5'}},
+ snake:{em:'🐍',name:'Rắn',cost:100,range:92,dmg:13,rate:.75,color:'#16a34a',atk:'venom',slow:true,skill:'☠️ Phun độc làm chậm',
+  perks:{3:'☠️ Độc ăn mòn — mất máu liên tục',5:'❄️ Làm chậm mạnh hơn (50%)',7:'☠️ Độc cực mạnh',10:'🐉 Rồng Rắn — chậm 60% + độc huỷ diệt'}},
+ owl:{em:'🦉',name:'Cú',cost:120,range:145,dmg:22,rate:1.0,color:'#8b5cf6',atk:'dart',skill:'🪶 Phi lông tầm xa',
+  perks:{3:'🎯 Bắn 2 mục tiêu cùng lúc',5:'🔭 Tầm bắn xa hơn',7:'🎯 Bắn 3 mục tiêu',10:'🎯 Bắn 4 mục tiêu + tầm xa nhất bản đồ'}},
+ dragon:{em:'🐲',name:'Rồng',cost:180,range:88,dmg:42,rate:1.3,color:'#ef4444',atk:'fire',splash:44,skill:'🔥 Phun lửa diện rộng',
+  perks:{3:'🔥 Thiêu đốt — quái cháy mất máu',5:'💨 Nổ lửa rộng hơn',7:'🌋 Cháy nặng — thiêu rụi cả đàn',10:'☄️ Rồng Cổ Đại — bão lửa huỷ diệt'}}
 };
-const TD_MAXLV=5;
+const TD_MAXLV=10;
+/* Tiến hoá theo mốc cấp: [cấp, emoji, tên mới] — đổi hình thì đổi luôn tên cho khớp */
+const TD_EVO={
+ frog  :[[1,'🐸','Ếch'],       [3,'🐊','Cá Sấu'],   [5,'🐊','Cá Sấu Chúa'],[7,'🐉','Rồng Nước'],    [10,'🐉','Rồng Nước Thần']],
+ bee   :[[1,'🐝','Ong'],       [3,'🐝','Ong Thợ'],  [5,'🐝','Ong Chúa'],   [7,'🐝','Ong Chúa Vàng'],[10,'🐝','Ong Nữ Hoàng']],
+ cat   :[[1,'🐱','Mèo'],       [3,'🐯','Hổ Con'],   [5,'🐯','Hổ'],         [7,'🦁','Sư Tử'],        [10,'🦁','Sư Tử Vương']],
+ snake :[[1,'🐍','Rắn'],       [3,'🐍','Rắn Lục'],  [5,'🐍','Mãng Xà'],    [7,'🐲','Rắn Thần'],     [10,'🐉','Rồng Rắn']],
+ owl   :[[1,'🦉','Cú'],        [3,'🦅','Đại Bàng'], [5,'🦅','Đại Bàng Lớn'],[7,'🦅','Đại Bàng Vàng'],[10,'🦅','Đại Bàng Chúa']],
+ dragon:[[1,'🐲','Rồng'],      [3,'🐉','Rồng Lửa'], [5,'🐉','Rồng Bão Lửa'],[7,'🐉','Rồng Bạo Chúa'],[10,'🐉','Rồng Cổ Đại']]
+};
+function td2Evo(type,lv){const a=TD_EVO[type]||[[1,TT[type].em,TT[type].name]];let r=a[0];for(const e of a)if(lv>=e[0])r=e;return r}
+function td2TowerName(t){return td2Evo(t.type,t.level)[2]}
 /* Các loại quái — hệ số nhân trên máu chuẩn của đợt */
 const TD_KIND={
  grunt :{em:['👾','🐛','🐀','🕷️'],hp:1,   sp:1,   armor:0,name:'Quái thường',from:1},
@@ -2684,7 +2701,7 @@ const TD_BOSS=[
  {em:'🦖',name:'Bạo Chúa',     hpM:9,spM:.95,armor:10,ab:['shield','regen','summon','rage'],tip:'Hội tụ mọi sức mạnh — cần trụ Lv.5 mới hạ nổi!'}
 ];
 function td2BossOf(r){return TD_BOSS[Math.min(Math.max(0,Math.floor(r/5)-1),TD_BOSS.length-1)]}
-function td2BaseHP(r){return Math.round(22*Math.pow(1.17,r-1)+r*10)}
+function td2BaseHP(r){return Math.round(22*Math.pow(1.145,r-1)+r*10)}
 function td2BaseSpeed(r){return 40+r*1.5}
 function td2Armor(r,base){return base?Math.round(base*(1+Math.floor(r/8))):0}
 function startTower(){
@@ -2695,7 +2712,7 @@ function startTower(){
   GM.castle={x:455,y:200};
   sndClick();
   $('gamesCard').innerHTML=gameTop('🏰 Thủ thành','<span class="streak">'+poolLabel()+'</span>')+
-    `<p class="sub" style="margin:0 0 6px">Trả lời từ vựng để kiếm 🪙, mua <b>trụ thú</b> đặt lên bản đồ — trụ tự bắn quái chạy theo đường. Nâng cấp tới <b>Lv.3 &amp; Lv.5</b> để mở <b>kỹ năng đặc biệt</b>. Cứ <b>5 đợt có 1 BOSS</b> 👹 có giáp &amp; chiêu riêng — nhớ nuôi đủ trụ mạnh! 🏰</p>
+    `<p class="sub" style="margin:0 0 6px">Trả lời từ vựng để kiếm 🪙, mua <b>trụ thú</b> đặt lên bản đồ — trụ tự bắn quái chạy theo đường. Nâng cấp tới <b>Lv.10</b> — mở <b>kỹ năng đặc biệt</b> và <b>tiến hoá</b> ở Lv.3 · 5 · 7 · 10. Cứ <b>5 đợt có 1 BOSS</b> 👹 có giáp &amp; chiêu riêng — nhớ nuôi đủ trụ mạnh! 🏰</p>
      <div class="td2-hud">
        <span class="td2-pill">🪙 <b id="td2gold">180</b></span>
        <span class="td2-pill">❤️ <b id="td2life">25</b></span>
@@ -2739,32 +2756,33 @@ function td2Place(px,py){
 }
 /* Sức mạnh hero: ×1.35 sát thương, ×0.93 hồi chiêu mỗi cấp + mốc kỹ năng Lv.3 và Lv.5 */
 function td2Stats(t){
-  const T=TT[t.type],L=t.level-1;
-  t.dmg=Math.round(T.dmg*Math.pow(1.35,L));
-  t.range=T.range+L*8;
-  t.rate=+(T.rate*Math.pow(.93,L)).toFixed(3);
-  t.splash=T.splash?Math.round(T.splash*(1+L*.14)):0;
-  t.slow=!!T.slow;t.slowP=T.slow?(t.level>=5?.4:.62):1;
+  const T=TT[t.type],L=t.level-1,lv=t.level;
+  t.dmg=Math.round(T.dmg*Math.pow(1.28,L));
+  t.range=T.range+L*5;
+  t.rate=+(T.rate*Math.pow(.95,L)).toFixed(3);
+  t.splash=T.splash?Math.round(T.splash*(1+L*.07)):0;
+  t.slow=!!T.slow;t.slowP=T.slow?.65:1;
   t.pierce=0;t.crit=0;t.critX=2;t.burn=0;t.multi=1;
-  if(t.type==='frog'){t.splash=t.level>=5?48:t.level>=3?30:0}
-  if(t.type==='bee'){t.pierce=t.level>=5?1:t.level>=3?.5:0}
-  if(t.type==='cat'){if(t.level>=5){t.crit=.4;t.critX=2.5}else if(t.level>=3){t.crit=.25;t.critX=2}}
-  if(t.type==='snake'){t.burn=t.level>=5?.22:t.level>=3?.12:0}
-  if(t.type==='owl'){t.multi=t.level>=5?3:t.level>=3?2:1;if(t.level>=5)t.range+=30}
-  if(t.type==='dragon'){t.burn=t.level>=5?.3:t.level>=3?.15:0}
-  t.em=T.evo?T.evo[Math.min(t.level-1,T.evo.length-1)]:T.em;
+  if(t.type==='frog') t.splash= lv>=10?75: lv>=7?58: lv>=5?42: lv>=3?28:0;
+  if(t.type==='bee'){ t.pierce= lv>=7?1: lv>=5?.7: lv>=3?.4:0; if(lv>=10)t.multi=2 }
+  if(t.type==='cat'){ if(lv>=10){t.crit=.5;t.critX=2.5} else if(lv>=7){t.crit=.4;t.critX=2.2} else if(lv>=5){t.crit=.3} else if(lv>=3){t.crit=.2} }
+  if(t.type==='snake'){ t.burn= lv>=10?.26: lv>=7?.18: lv>=3?.1:0; t.slowP= lv>=10?.4: lv>=5?.5:.65 }
+  if(t.type==='owl'){ t.multi= lv>=10?4: lv>=7?3: lv>=3?2:1; if(lv>=5)t.range+=25; if(lv>=10)t.range+=25 }
+  if(t.type==='dragon'){ t.burn= lv>=10?.3: lv>=7?.22: lv>=3?.12:0; if(lv>=5)t.splash+=8; if(lv>=10)t.splash+=16 }
+  t.em=td2Evo(t.type,t.level)[1];
   return t;
 }
-function td2UpCost(t){return Math.round(TT[t.type].cost*.9*Math.pow(1.55,t.level-1))}
-function td2Paid(t){let p=TT[t.type].cost;for(let l=1;l<t.level;l++)p+=Math.round(TT[t.type].cost*.9*Math.pow(1.55,l-1));return p}
+function td2UpCost(t){return Math.round(TT[t.type].cost*.9*Math.pow(1.40,t.level-1))}
+function td2Paid(t){let p=TT[t.type].cost;for(let l=1;l<t.level;l++)p+=Math.round(TT[t.type].cost*.9*Math.pow(1.40,l-1));return p}
 function td2Upgrade(){
   const t=GM.sel;if(!t)return;const TU=TT[t.type];
-  if(t.level>=TD_MAXLV){toast('⭐ '+TU.name+' đã đạt cấp tối đa Lv.'+TD_MAXLV+'!');return}
+  if(t.level>=TD_MAXLV){toast('⭐ '+td2TowerName(t)+' đã đạt cấp tối đa Lv.'+TD_MAXLV+'!');return}
   const cost=td2UpCost(t);
-  if(GM.gold<cost){toast('Chưa đủ vàng! Cần '+cost+'🪙 để nâng '+TU.name);return}
+  if(GM.gold<cost){toast('Chưa đủ vàng! Cần '+cost+'🪙 để nâng '+td2TowerName(t));return}
+  const oldName=td2TowerName(t);
   GM.gold-=cost;t.level++;td2Stats(t);sndOK();
-  const perk=TU.perks&&TU.perks[t.level];
-  toast('⬆️ '+TU.name+' → '+t.em+' Lv.'+t.level+(perk?' · '+perk:''));
+  const newName=td2TowerName(t),perk=TU.perks&&TU.perks[t.level];
+  toast((newName!==oldName?'✨ '+oldName+' tiến hoá → ':'⬆️ ')+t.em+' '+newName+' Lv.'+t.level+(perk?' · '+perk:''));
   if(perk){confetti(30);sndWin()}
   td2Side()
 }
@@ -2780,13 +2798,14 @@ function td2Side(){
   let info;
   if(GM.sel){const t=GM.sel,T=TT[t.type],max=t.level>=TD_MAXLV,uc=td2UpCost(t),rf=Math.round(td2Paid(t)*.6);
     const owned=Object.keys(T.perks||{}).filter(l=>t.level>=+l).map(l=>T.perks[l]);
-    const next=T.perks&&T.perks[t.level+1];
-    info=`<b>${t.em||T.em} ${T.name} · Lv.${t.level}${max?' ⭐MAX':''}</b><br><span style="color:var(--violet);font-weight:700;font-size:11px">${T.skill||''}</span><br>⚔️ ${t.dmg} · 🎯 ${Math.round(t.range)} · ⏱️ ${t.rate.toFixed(2)}s`
+    const nl=Object.keys(T.perks||{}).map(Number).sort((a,b)=>a-b).find(l=>l>t.level);
+    const next=nl?T.perks[nl]:null;
+    info=`<b>${t.em||T.em} ${td2TowerName(t)} · Lv.${t.level}/${TD_MAXLV}${max?' ⭐MAX':''}</b><br><span style="color:var(--violet);font-weight:700;font-size:11px">${T.skill||''}</span><br>⚔️ ${t.dmg} · 🎯 ${Math.round(t.range)} · ⏱️ ${t.rate.toFixed(2)}s`
       +(owned.length?`<br><span style="color:#059669;font-weight:700;font-size:11px">✅ ${owned.join('<br>✅ ')}</span>`:'')
-      +(next?`<br><span style="color:#d97706;font-weight:700;font-size:11px">🔒 Lv.${t.level+1}: ${next}</span>`:'')
+      +(next?`<br><span style="color:#d97706;font-weight:700;font-size:11px">🔒 Lv.${nl}: ${next}</span>`:'')
       +`<div class="row" style="margin-top:5px">${max?'<button class="btn ghost sm" disabled>⭐ Cấp tối đa</button>':`<button class="btn sun sm" onclick="td2Upgrade()">⬆️ Nâng ${uc}🪙</button>`}<button class="btn ghost sm" onclick="td2Sell()">💲 Bán +${rf}</button></div>`;}
   else if(GM.place)info=`Đang chọn <b>${TT[GM.place].em} ${TT[GM.place].name}</b> — chạm chỗ trống trên bản đồ để đặt.`;
-  else info='Chạm 1 trụ ở cửa hàng rồi chạm bản đồ để đặt. Chạm trụ đã đặt để nâng cấp / bán. Mỗi trụ mở <b>kỹ năng mới ở Lv.3 và Lv.5</b>. 🐝 Ong Lv.3+ <b>xuyên giáp</b> — cực mạnh với Boss!';
+  else info='Chạm 1 trụ ở cửa hàng rồi chạm bản đồ để đặt. Chạm trụ đã đặt để nâng cấp / bán. Trụ lên tối đa <b>Lv.10</b>, mở <b>kỹ năng mới ở Lv.3 · 5 · 7 · 10</b> và <b>tiến hoá đổi hình + đổi tên</b>. 🐝 Ong Lv.3+ <b>xuyên giáp</b> — cực mạnh với Boss!';
   const sd=$('td2side');if(!sd)return;
   sd.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">🏪 Cửa hàng trụ</div><div class="td2-shop">${shop}</div>`+
     (GM.running
@@ -2920,9 +2939,10 @@ function td2Draw(){
   x.textAlign='center';x.textBaseline='middle';
   x.font='32px serif';x.fillText('🏰',GM.castle.x,GM.castle.y);
   for(const t of GM.towers){x.fillStyle='rgba(255,255,255,.72)';x.beginPath();x.arc(t.x,t.y,16,0,7);x.fill();
-    if(t.level>=3){x.strokeStyle=t.level>=5?'#f59e0b':'#a78bfa';x.lineWidth=t.level>=5?3:2.5;x.beginPath();x.arc(t.x,t.y,16.5,0,7);x.stroke()}
-    x.font=(20+Math.min(t.level,4))+'px serif';x.fillText(t.em||TT[t.type].em,t.x,t.y);
-    if(t.level>1){x.fillStyle=t.level>=5?'#f59e0b':'#7c3aed';x.beginPath();x.arc(t.x+12,t.y-12,7,0,7);x.fill();x.fillStyle='#fff';x.font='bold 10px sans-serif';x.fillText(String(t.level),t.x+12,t.y-11)}}
+    const tier=t.level>=10?4:t.level>=7?3:t.level>=5?2:t.level>=3?1:0;
+    if(tier){x.strokeStyle=['','#a78bfa','#38bdf8','#fb923c','#f59e0b'][tier];x.lineWidth=1.8+tier*.5;x.beginPath();x.arc(t.x,t.y,16.5,0,7);x.stroke()}
+    x.font=(20+Math.min(tier*2,6))+'px serif';x.fillText(t.em||TT[t.type].em,t.x,t.y);
+    if(t.level>1){x.fillStyle=['#7c3aed','#7c3aed','#0284c7','#ea580c','#f59e0b'][tier];x.beginPath();x.arc(t.x+12,t.y-12,t.level>9?8.5:7,0,7);x.fill();x.fillStyle='#fff';x.font='bold '+(t.level>9?9:10)+'px sans-serif';x.fillText(String(t.level),t.x+12,t.y-11)}}
   if(GM.sel){x.strokeStyle='rgba(139,92,246,.55)';x.lineWidth=2;x.beginPath();x.arc(GM.sel.x,GM.sel.y,GM.sel.range,0,7);x.stroke()}
   for(const e of GM.enemies){
     const w=e.boss?36:22,top=e.y-(e.boss?24:16);
