@@ -1,0 +1,8 @@
+# Backup tu dong (giu tren may, khong day len GitHub)
+index.backup-*.html
+*.backup-*.html
+
+# File tam cua Office / LibreOffice
+~$*
+.~lock.*#
+*.tmp
