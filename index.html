@@ -2673,9 +2673,18 @@ const TT={
   perks:{3:'🔥 Thiêu đốt — quái cháy mất máu',5:'💨 Nổ lửa rộng hơn',7:'🌋 Cháy nặng — thiêu rụi cả đàn',10:'☄️ Rồng Cổ Đại — bão lửa huỷ diệt'}},
  hero:{em:'🦸',name:'Siêu Anh Hùng',cost:700,range:130,dmg:58,rate:.22,color:'#0ea5e9',atk:'beam',splash:38,unlock:10,unlockS:10,
   skill:'💥 Bắn tia năng lượng — cực nhanh, nổ diện rộng, xuyên giáp',
-  perks:{3:'🗡️ Xuyên giáp HOÀN TOÀN',5:'💥 Chí mạng 30% ×2.2',7:'🎯 Bắn 3 mục tiêu cùng lúc',10:'🌟 Tối Thượng — 4 mục tiêu · chí mạng 45% ×2.6 · nổ cực rộng'}}
+  perks:{3:'🗡️ Xuyên giáp HOÀN TOÀN',5:'💥 Chí mạng 30% ×2.2',7:'🎯 Bắn 3 mục tiêu cùng lúc',10:'🌟 Tối Thượng — 4 mục tiêu · chí mạng 45% ×2.6 · nổ cực rộng'}},
+ mage:{em:'🧙',name:'Pháp Sư Băng',cost:1300,range:150,dmg:120,rate:.55,color:'#6366f1',atk:'frost',splash:52,slow:true,unlock:20,unlockS:20,
+  skill:'🔮 Bão băng — đóng băng cả cụm quái, xuyên giáp',
+  perks:{3:'❄️ Băng giá sâu — làm chậm 55%',5:'🎯 Bắn 2 mục tiêu · xuyên 60% giáp',7:'🧊 Làm chậm 35% · nổ băng rộng hơn',10:'🔮 Đại Pháp Sư — 3 mục tiêu · xuyên giáp hoàn toàn'}},
+ robot:{em:'🤖',name:'Chiến Binh Máy',cost:3000,range:140,dmg:150,rate:.16,color:'#0891b2',atk:'laser',unlock:35,unlockS:35,
+  skill:'🔫 Đại liên laser — bắn cực nhanh, gọi drone 🛸 hỗ trợ',
+  perks:{3:'🗡️ Xuyên giáp hoàn toàn',5:'🛸 Gọi drone chiến đấu',7:'🎯 Bắn 3 mục tiêu',10:'⚙️ Cỗ Máy Tối Thượng — 5 mục tiêu · chí mạng 40% ×2.5'}},
+ titan:{em:'🐉',name:'Thần Long',cost:7000,range:120,dmg:900,rate:.85,color:'#b91c1c',atk:'fire',splash:95,unlock:55,unlockS:55,
+  skill:'🌋 Long Diễm — sát thương khổng lồ, thiêu rụi cả bản đồ',
+  perks:{3:'🔥 Thiêu đốt cực nặng',5:'💥 Chí mạng 35% ×2.4',7:'🎯 Bắn 3 mục tiêu · nổ siêu rộng',10:'👑 Long Thần — 4 mục tiêu · chí mạng 50% ×3'}}
 };
-const TD_MAXLV=10;
+const TD_MAXLV=20;
 /* Tiến hoá theo mốc cấp: [cấp, emoji, tên mới] — đổi hình thì đổi luôn tên cho khớp */
 const TD_EVO={
  frog  :[[1,'🐸','Ếch'],       [3,'🐊','Cá Sấu'],   [5,'🐊','Cá Sấu Chúa'],[7,'🐉','Rồng Nước'],    [10,'🐉','Rồng Nước Thần']],
@@ -2684,10 +2693,16 @@ const TD_EVO={
  snake :[[1,'🐍','Rắn'],       [3,'🐍','Rắn Lục'],  [5,'🐍','Mãng Xà'],    [7,'🐲','Rắn Thần'],     [10,'🐉','Rồng Rắn']],
  owl   :[[1,'🦉','Cú'],        [3,'🦅','Đại Bàng'], [5,'🦅','Đại Bàng Lớn'],[7,'🦅','Đại Bàng Vàng'],[10,'🦅','Đại Bàng Chúa']],
  dragon:[[1,'🐲','Rồng'],      [3,'🐉','Rồng Lửa'], [5,'🐉','Rồng Bão Lửa'],[7,'🐉','Rồng Bạo Chúa'],[10,'🐉','Rồng Cổ Đại']],
- hero  :[[1,'🦸','Siêu Anh Hùng'],[3,'🦸','Siêu Anh Hùng Thép'],[5,'🦸','Siêu Anh Hùng Sấm Sét'],[7,'🦸','Siêu Anh Hùng Vũ Trụ'],[10,'🦸','Siêu Anh Hùng Tối Thượng']]
+ hero  :[[1,'🦸','Siêu Anh Hùng'],[3,'🦸','Siêu Anh Hùng Thép'],[5,'🦸','Siêu Anh Hùng Sấm Sét'],[7,'🦸','Siêu Anh Hùng Vũ Trụ'],[10,'🦸','Siêu Anh Hùng Tối Thượng']],
+ mage  :[[1,'🧙','Pháp Sư Băng'],[3,'🧙','Pháp Sư Sương Giá'],[5,'🧙','Pháp Sư Băng Hà'],[7,'🧙','Đại Pháp Sư'],[10,'🧙','Chúa Tể Băng Giá']],
+ robot :[[1,'🤖','Chiến Binh Máy'],[3,'🤖','Máy Chiến Hạng Nặng'],[5,'🤖','Cỗ Máy Laser'],[7,'🤖','Siêu Máy Chiến'],[10,'🤖','Cỗ Máy Tối Thượng']],
+ titan :[[1,'🐉','Thần Long'],[3,'🐉','Thần Long Lửa'],[5,'🐉','Thần Long Bão Diễm'],[7,'🐉','Cổ Thần Long'],[10,'🐉','Long Thần Vô Cực']]
 };
+/* Cấp 13 · 16 · 20 là các bậc THĂNG HOA chung cho mọi trụ */
+const TD_ASCEND={13:'⭐ Tinh Thông — sát thương +25%',16:'🌟 Siêu Việt — tầm bắn +20%, bắn nhanh hơn 15%',20:'👑 HUYỀN THOẠI — sát thương ×1.6, kỹ năng riêng mạnh gấp đôi'};
+function td2Rank(lv){return lv>=20?' ★★★ Huyền Thoại':lv>=16?' ★★':lv>=13?' ★':''}
 function td2Evo(type,lv){const a=TD_EVO[type]||[[1,TT[type].em,TT[type].name]];let r=a[0];for(const e of a)if(lv>=e[0])r=e;return r}
-function td2TowerName(t){return td2Evo(t.type,t.level)[2]}
+function td2TowerName(t){return td2Evo(t.type,t.level)[2]+td2Rank(t.level)}
 /* Các loại quái — hệ số nhân trên máu chuẩn của đợt */
 const TD_KIND={
  grunt :{em:['👾','🐛','🐀','🕷️'],hp:1,   sp:1,   armor:0,name:'Quái thường',from:1},
@@ -2725,20 +2740,27 @@ const TD_MAPS=[
 ];
 /* ⚡ Phép chiến đấu — mua bằng vàng, có hồi chiêu */
 const TD_SPELLS={
- freeze:{em:'❄️',name:'Đóng băng',short:'Làm chậm toàn bộ',desc:'Làm chậm <b>70%</b> tất cả quái trong 6 giây',cd:14,cost:r=>120+r*8},
- bomb  :{em:'☄️',name:'Thiên thạch',short:'Bom toàn bản đồ',desc:'Nổ khắp bản đồ, <b>bỏ qua giáp</b>, sát thương rất lớn',cd:20,cost:r=>200+r*16},
- wall  :{em:'🛡️',name:'Tường lính',short:'Chặn đường',desc:'Gọi <b>5 lính</b> chặn ngang đường — quái phải đánh mới qua được',cd:25,cost:r=>250+r*18},
- wipe  :{em:'💀',name:'Tiêu diệt',short:'Xoá sạch quái',desc:'Xoá <b>toàn bộ quái thường</b> · Boss mất <b>25%</b> máu',cd:45,cost:r=>450+r*32}
+ freeze:{em:'❄️',name:'Đóng băng',at:1, desc:'Làm chậm <b>70%</b> tất cả quái trong 6 giây',cd:14,cost:r=>120+r*8},
+ bomb  :{em:'☄️',name:'Thiên thạch',at:5, desc:'Nổ khắp bản đồ, <b>bỏ qua giáp</b>, sát thương rất lớn',cd:20,cost:r=>200+r*16},
+ wall  :{em:'🛡️',name:'Tường lính',at:12,desc:'Gọi <b>5 lính 💂</b> chặn ngang đường — quái phải đánh mới qua',cd:25,cost:r=>250+r*18},
+ wipe  :{em:'💀',name:'Tiêu diệt',at:18,desc:'Xoá <b>toàn bộ quái thường</b> · Boss mất <b>25%</b> máu',cd:45,cost:r=>450+r*32},
+ rage  :{em:'⚡',name:'Cuồng nộ',at:25,desc:'<b>Mọi trụ bắn nhanh gấp đôi</b> trong 10 giây',cd:30,cost:r=>380+r*26},
+ heal  :{em:'💚',name:'Hồi sinh',at:30,desc:'Hồi <b>+5 ❤️</b> cho thành (tối đa 40)',cd:60,cost:r=>500+r*40},
+ storm :{em:'🌀',name:'Lốc xoáy',at:40,desc:'<b>Đẩy lùi</b> toàn bộ quái về sau 250 bước',cd:35,cost:r=>600+r*45},
+ apoc  :{em:'☢️',name:'Huỷ diệt',at:60,desc:'Sát thương <b>cực lớn</b> toàn bản đồ — bỏ qua giáp lẫn khiên',cd:70,cost:r=>1200+r*90}
 };
+function td2SpellAt(k){return TD_SPELLS[k].at||1}
+function td2SpellLocked(k){return GM.round<td2SpellAt(k)}
 function td2SpellCost(k){return Math.round(TD_SPELLS[k].cost(GM.round))}
 function td2Spell(k){
   if(!GM||GM.type!=='tower2')return;
   const S=TD_SPELLS[k],cd=(GM.spellCd&&GM.spellCd[k])||0;
+  if(td2SpellLocked(k)){toast('🔒 '+S.em+' '+S.name+' mở ở đợt '+S.at+'!');return}
   if(cd>0){toast('⏳ '+S.name+' đang hồi chiêu — còn '+Math.ceil(cd)+'s');return}
   const cost=td2SpellCost(k);
   if(GM.gold<cost){toast('Chưa đủ vàng! '+S.name+' cần '+cost+'🪙');return}
-  if(!GM.enemies.length&&k!=='wall'){toast('Chưa có quái nào để dùng '+S.name+'!');return}
-  GM.gold-=cost;GM.spellCd[k]=S.cd;
+  if(!GM.enemies.length&&k!=='wall'&&k!=='heal'&&k!=='rage'){toast('Chưa có quái nào để dùng '+S.name+'!');return}
+  GM.gold-=cost;GM.spellCd=GM.spellCd||{};GM.spellCd[k]=S.cd;
   const base=td2BaseHP(GM.round)*td2Mod('ehp',1);
   if(k==='freeze'){
     for(const e of GM.enemies){if(e.dead)continue;e.slowT=6;e.slowP=e.boss?.6:.3}
@@ -2763,36 +2785,96 @@ function td2Spell(k){
       else{e.dead=true;e.killed=true;n++}
       GM.fx.push({x1:e.x,y1:e.y,x2:e.x,y2:e.y,c:'#a855f7',kind:'boom',lv:2,t:0,dur:.45})}
     toast('💀 Tiêu diệt! Xoá sạch '+n+' quái thường');
+  }else if(k==='rage'){
+    GM.rageT=10;toast('⚡ CUỒNG NỘ! Mọi trụ bắn nhanh gấp đôi trong 10 giây');
+  }else if(k==='heal'){
+    GM.lives=Math.min(40,GM.lives+5);toast('💚 Hồi sinh! Thành được +5 ❤️ (còn '+GM.lives+')');
+  }else if(k==='storm'){
+    let n=0;for(const e of GM.enemies){if(e.dead)continue;e.d=Math.max(0,e.d-250);const q=td2Pos(e.d);e.x=q.x;e.y=q.y;n++;
+      GM.fx.push({x1:e.x,y1:e.y,x2:e.x,y2:e.y,c:'#38bdf8',kind:'boom',lv:1,t:0,dur:.4})}
+    toast('🌀 Lốc xoáy! Đẩy lùi '+n+' quái về sau');
+  }else if(k==='apoc'){
+    const d=base*12;let n=0;
+    for(const e of GM.enemies){if(e.dead)continue;e.shield=0;e.hp-=d;n++;
+      GM.fx.push({x1:e.x,y1:e.y,x2:e.x,y2:e.y,c:'#a3e635',kind:'boom',lv:5,t:0,dur:.7});
+      if(e.hp<=0){e.dead=true;e.killed=true}}
+    toast('☢️ HUỶ DIỆT! −'+Math.round(d)+' máu lên '+n+' quái, phá tan mọi khiên');
   }
   confetti(40);sndWin();td2HUD();td2Side();
 }
 function td2SpellBar(){
   return Object.keys(TD_SPELLS).map(k=>{
-    const S=TD_SPELLS[k],cd=(GM.spellCd&&GM.spellCd[k])||0,cost=td2SpellCost(k),ok=cd<=0&&GM.gold>=cost;
-    return `<button class="btn ${ok?'sun':'ghost'} sm" style="flex:1;min-width:0;padding:5px 2px;font-size:10.5px;line-height:1.25;${ok?'':'opacity:.5'}" onclick="td2Spell('${k}')" title="${S.desc.replace(/<[^>]+>/g,'')}">
-      <div style="font-size:15px">${S.em}</div>${S.name}<br><b>${cd>0?'⏳'+Math.ceil(cd)+'s':cost+'🪙'}</b></button>`}).join('');
+    const S=TD_SPELLS[k],lock=td2SpellLocked(k),cd=(GM.spellCd&&GM.spellCd[k])||0,cost=td2SpellCost(k);
+    const ok=!lock&&cd<=0&&GM.gold>=cost;
+    return `<button class="btn ${ok?'sun':'ghost'} sm" style="width:calc(25% - 3px);min-width:0;padding:5px 1px;font-size:10px;line-height:1.2;${ok?'':'opacity:.45'}" onclick="td2Spell('${k}')" title="${S.desc.replace(/<[^>]+>/g,'')}">
+      <div style="font-size:15px">${lock?'🔒':S.em}</div>${S.name}<br><b>${lock?'Đợt '+S.at:(cd>0?'⏳'+Math.ceil(cd)+'s':cost+'🪙')}</b></button>`}).join('');
+}
+/* 🔓 Lộ trình mở khoá — cho học sinh thấy phần thưởng phía trước */
+function td2NextUnlock(){
+  const items=[];
+  for(const k in TT)if(TT[k].unlock)items.push({at:td2UnlockAt(k),t:TT[k].em+' '+TT[k].name,kind:'trụ'});
+  for(const k in TD_SPELLS)items.push({at:td2SpellAt(k),t:TD_SPELLS[k].em+' '+TD_SPELLS[k].name,kind:'phép'});
+  const nx=items.filter(i=>i.at>GM.round).sort((a,b)=>a.at-b.at)[0];
+  return nx?`🔓 Sắp mở: <b>${nx.t}</b> (${nx.kind}) ở <b>đợt ${nx.at}</b> — còn ${nx.at-GM.round} đợt!`
+           :'🏆 Đã mở khoá toàn bộ trụ &amp; phép — cố lên tới đợt 100!';
+}
+function td2MapBanner(){
+  const M=td2Map(),n=3-((GM.round-1)%3);
+  return `${M.em} Địa hình: <b>${M.name}</b> — ${M.tip}<br><span style="color:var(--violet)">🔄 Đổi địa hình sau <b>${n}</b> đợt nữa</span>`;
+}
+/* 🔄 Cứ 3 đợt đổi sang địa hình mới — trụ được DỜI TỰ ĐỘNG sang chỗ hợp lệ, giữ nguyên cấp */
+function td2ChangeMap(){
+  const old=GM.map;
+  const M=rnd(TD_MAPS.filter(m=>m.id!==old.id));GM.map=M;
+  GM.path=[];GM.total=0;
+  const W=M.W;
+  for(let i=0;i<W.length-1;i++){const x1=W[i][0],y1=W[i][1],x2=W[i+1][0],y2=W[i+1][1];const len=Math.hypot(x2-x1,y2-y1);GM.path.push({x1,y1,x2,y2,len});GM.total+=len}
+  GM.castle={x:M.castle.x,y:M.castle.y};
+  GM.enemies=[];GM.minions=[];GM.queue=[];GM.fx=[];
+  const spots=[];
+  for(let gx=20;gx<=460;gx+=40)for(let gy=20;gy<=380;gy+=40){
+    if(td2NearPath(gx,gy)<24)continue;
+    if(Math.hypot(gx-GM.castle.x,gy-GM.castle.y)<40)continue;
+    let c=0;for(let d=0;d<GM.total;d+=12){const q=td2Pos(d);if(Math.hypot(q.x-gx,q.y-gy)<=100)c++}
+    spots.push({x:gx,y:gy,c});
+  }
+  spots.sort((a,b)=>b.c-a.c);
+  const used=[];
+  GM.towers.slice().sort((a,b)=>b.level-a.level).forEach(t=>{
+    const sp=spots.find(q=>!used.some(u=>Math.hypot(u.x-q.x,u.y-q.y)<34));
+    if(sp){t.x=sp.x;t.y=sp.y;used.push(sp)}
+    td2Stats(t);
+  });
+  GM.sel=null;GM.place=null;
+  const el=$('td2map');if(el)el.innerHTML=td2MapBanner();
+  confetti(60);sndWin();
+  toast('🔄 ĐỔI ĐỊA HÌNH! '+old.em+' '+old.name+' → '+M.em+' '+M.name+' — trụ đã dời sang chỗ hợp lệ, giữ nguyên cấp!');
 }
 function td2Map(){return (typeof GM==='object'&&GM&&GM.map)||TD_MAPS[0]}
 function td2Mod(k,d){const m=td2Map().mod||{};return m[k]===undefined?d:m[k]}
-function td2BaseHP(r){return Math.round(22*Math.pow(1.125,r-1)+r*10)}
-function td2BaseSpeed(r){return 40+r*1.5}
+function td2BaseHP(r){
+  /* tăng nhanh 30 đợt đầu rồi chậm lại để chơi được tới đợt 100 */
+  const a=Math.min(r-1,30),b=Math.max(0,r-31);
+  return Math.round(22*Math.pow(1.125,a)*Math.pow(1.055,b)+r*12);
+}
+function td2BaseSpeed(r){return 40+Math.min(r,30)*1.5+Math.max(0,r-30)*.35}
 function td2Armor(r,base){return base?Math.round(base*(1+Math.floor(r/8))):0}
 function startTower(mode){
   const surv=(mode==='survival');
   const M=rnd(TD_MAPS);
   GM={type:'tower2',mode:surv?'survival':'normal',map:M,gold:180,lives:25,round:1,kills:0,bossKills:0,
-      towers:[],enemies:[],minions:[],fx:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false,speed:1,spellCd:{freeze:0,bomb:0,wall:0,wipe:0}};
+      towers:[],enemies:[],minions:[],fx:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false,speed:1,spellCd:{},rageT:0};
   const W=M.W;
   GM.path=[];GM.total=0;
   for(let i=0;i<W.length-1;i++){const x1=W[i][0],y1=W[i][1],x2=W[i+1][0],y2=W[i+1][1];const len=Math.hypot(x2-x1,y2-y1);GM.path.push({x1,y1,x2,y2,len});GM.total+=len;}
   GM.castle={x:M.castle.x,y:M.castle.y};
   sndClick();
   const intro=surv
-    ? `<p class="sub" style="margin:0 0 6px">🔥 <b>Sinh Tồn</b>: đánh <b>không giới hạn đợt</b> — sống càng lâu điểm càng cao! Mỗi lượt chơi bốc <b>ngẫu nhiên 1 địa hình</b> có hiệu ứng riêng. 🦸 <b>Siêu Anh Hùng</b> mở từ <b>đợt 10</b> và biết <b>gọi đệ tử 🥷</b> ra chặn đánh quái. Từ đợt 10 câu hỏi cũng <b>trộn tất cả chủ đề</b> 🎲!</p>`
-    : `<p class="sub" style="margin:0 0 6px">Trả lời từ vựng để kiếm 🪙, mua <b>trụ thú</b> đặt lên bản đồ — trụ tự bắn quái chạy theo đường. Nâng cấp tới <b>Lv.10</b> — mở <b>kỹ năng đặc biệt</b> và <b>tiến hoá</b> ở Lv.3 · 5 · 7 · 10. Cứ <b>5 đợt có 1 BOSS</b> 👹 có giáp &amp; chiêu riêng. Từ <b>đợt 10</b> mở 🦸 <b>Siêu Anh Hùng</b> (biết gọi đệ tử 🥷) và <b>đề trộn tất cả chủ đề</b> 🎲. Bí quá thì dùng <b>⚡ phép chiến đấu</b> ở cột phải! 🏰</p>`;
+    ? `<p class="sub" style="margin:0 0 6px">🔥 <b>Sinh Tồn</b>: đánh <b>không giới hạn đợt</b> — sống càng lâu điểm càng cao! Cứ <b>3 đợt lại đổi sang địa hình mới</b> — trụ tự dời chỗ, giữ nguyên cấp! 🦸 <b>Siêu Anh Hùng</b> mở từ <b>đợt 10</b> và biết <b>gọi đệ tử 🥷</b> ra chặn đánh quái. Từ đợt 10 câu hỏi cũng <b>trộn tất cả chủ đề</b> 🎲!</p>`
+    : `<p class="sub" style="margin:0 0 6px">Trả lời từ vựng để kiếm 🪙, mua <b>trụ thú</b> đặt lên bản đồ — trụ tự bắn quái chạy theo đường. Nâng cấp tới <b>Lv.20</b> — kỹ năng &amp; tiến hoá ở Lv.3·5·7·10, thăng hoa ở Lv.13·16·20. Cứ <b>5 đợt có 1 BOSS</b> 👹 có giáp &amp; chiêu riêng. Cứ <b>3 đợt đổi 1 địa hình</b> 🔄. Trụ &amp; phép <b>mở dần theo đợt</b> (🦸 đợt 10 · 🧙 đợt 20 · 🤖 đợt 35 · 🐉 đợt 55). Từ <b>đợt 10</b> mở 🦸 <b>Siêu Anh Hùng</b> (biết gọi đệ tử 🥷) và <b>đề trộn tất cả chủ đề</b> 🎲. Bí quá thì dùng <b>⚡ phép chiến đấu</b> ở cột phải! 🏰</p>`;
   $('gamesCard').innerHTML=gameTop(surv?'🔥 Thủ thành Sinh Tồn':'🏰 Thủ thành','<span class="streak">'+poolLabel()+'</span>')+intro+
-    `<div style="font-size:12px;font-weight:700;line-height:1.5;background:linear-gradient(90deg,#eef2ff,#fdf4ff);border:1px solid #ddd6fe;border-radius:11px;padding:7px 10px;margin:0 0 7px">
-       ${M.em} Địa hình: <b>${M.name}</b> — ${M.tip}
+    `<div id="td2map" style="font-size:12px;font-weight:700;line-height:1.5;background:linear-gradient(90deg,#eef2ff,#fdf4ff);border:1px solid #ddd6fe;border-radius:11px;padding:7px 10px;margin:0 0 7px">
+       ${td2MapBanner()}
      </div>
      <div class="td2-hud">
        <span class="td2-pill">🪙 <b id="td2gold">180</b></span>
@@ -2854,10 +2936,11 @@ function td2Place(px,py){
 /* Sức mạnh hero: ×1.35 sát thương, ×0.93 hồi chiêu mỗi cấp + mốc kỹ năng Lv.3 và Lv.5 */
 function td2Stats(t){
   const T=TT[t.type],L=t.level-1,lv=t.level;
-  t.dmg=Math.round(T.dmg*Math.pow(1.32,L));
-  t.range=Math.round((T.range+L*5)*td2Mod('trange',1));
-  t.rate=+(T.rate*Math.pow(.945,L)*td2Mod('trate',1)).toFixed(3);
-  t.splash=T.splash?Math.round(T.splash*(1+L*.07)):0;
+  const A16=lv>=16;
+  t.dmg=Math.round(T.dmg*Math.pow(1.22,L)*(lv>=13?1.25:1)*(lv>=20?1.6:1));
+  t.range=Math.round((T.range+L*3)*(A16?1.2:1)*td2Mod('trange',1));
+  t.rate=+(T.rate*Math.pow(.965,L)*(A16?.85:1)*td2Mod('trate',1)).toFixed(3);
+  t.splash=T.splash?Math.round(T.splash*(1+L*.045)*(lv>=20?1.5:1)):0;
   t.slow=!!T.slow;t.slowP=T.slow?.65:1;
   t.pierce=0;t.crit=0;t.critX=2;t.burn=0;t.multi=1;t.shred=0;t.shredMax=0;
   if(t.type==='frog') t.splash= lv>=10?75: lv>=7?58: lv>=5?42: lv>=3?28:0;
@@ -2866,6 +2949,13 @@ function td2Stats(t){
   if(t.type==='snake'){ t.burn= lv>=10?.26: lv>=7?.18: lv>=3?.1:0; t.slowP= lv>=10?.4: lv>=5?.5:.65 }
   if(t.type==='owl'){ t.multi= lv>=10?4: lv>=7?3: lv>=3?2:1; if(lv>=5)t.range+=25; if(lv>=10)t.range+=25 }
   if(t.type==='dragon'){ t.burn= lv>=10?.3: lv>=7?.22: lv>=3?.12:0; if(lv>=5)t.splash+=8; if(lv>=10)t.splash+=16 }
+  if(t.type==='mage'){ t.pierce= lv>=10?1: lv>=5?.6:.3; t.multi= lv>=10?3: lv>=5?2:1;
+    t.slowP= lv>=7?.35: lv>=3?.45:.55; if(lv>=7)t.splash+=14 }
+  if(t.type==='robot'){ t.pierce= lv>=3?1:.5; t.multi= lv>=10?5: lv>=7?3:1;
+    if(lv>=10){t.crit=.4;t.critX=2.5}
+    if(lv>=5){ t.mCount=1+Math.floor(lv/4); t.mHpK=.9+.45*lv; t.mDmg=Math.round(t.dmg*.5); t.mRate=Math.max(2.5,7-lv*.35); t.mEm='🛸'; if(t.mCd===undefined)t.mCd=2 } }
+  if(t.type==='titan'){ t.burn= lv>=3?.35:.2; t.multi= lv>=7?3:1;
+    if(lv>=10){t.crit=.5;t.critX=3} else if(lv>=5){t.crit=.35;t.critX=2.4} }
   if(t.type==='hero'){ t.pierce= lv>=3?1:.5;
     if(lv>=10){t.crit=.45;t.critX=2.6;t.multi=4;t.splash+=26}
     else if(lv>=7){t.crit=.3;t.critX=2.2;t.multi=3;t.splash+=12}
@@ -2876,11 +2966,12 @@ function td2Stats(t){
     t.mDmg=Math.round(t.dmg*.55);
     t.mRate=Math.max(2.5,7-lv*.45);
     if(t.mCd===undefined)t.mCd=2; }
+  if(lv>=20){ t.crit=Math.min(.75,t.crit*1.6); t.burn*=2; t.multi=t.multi+1; t.shredMax=t.shredMax?t.shredMax*2:0; if(t.slow)t.slowP=Math.max(.25,t.slowP*.7) }
   t.em=td2Evo(t.type,t.level)[1];
   return t;
 }
-function td2UpCost(t){return Math.round(TT[t.type].cost*.9*Math.pow(1.40,t.level-1))}
-function td2Paid(t){let p=TT[t.type].cost;for(let l=1;l<t.level;l++)p+=Math.round(TT[t.type].cost*.9*Math.pow(1.40,l-1));return p}
+function td2UpCost(t){return Math.round(TT[t.type].cost*.9*Math.pow(1.26,t.level-1))}
+function td2Paid(t){let p=TT[t.type].cost;for(let l=1;l<t.level;l++)p+=Math.round(TT[t.type].cost*.9*Math.pow(1.26,l-1));return p}
 function td2Upgrade(){
   const t=GM.sel;if(!t)return;const TU=TT[t.type];
   if(t.level>=TD_MAXLV){toast('⭐ '+td2TowerName(t)+' đã đạt cấp tối đa Lv.'+TD_MAXLV+'!');return}
@@ -2888,7 +2979,7 @@ function td2Upgrade(){
   if(GM.gold<cost){toast('Chưa đủ vàng! Cần '+cost+'🪙 để nâng '+td2TowerName(t));return}
   const oldName=td2TowerName(t);
   GM.gold-=cost;t.level++;td2Stats(t);sndOK();
-  const newName=td2TowerName(t),perk=TU.perks&&TU.perks[t.level];
+  const newName=td2TowerName(t),perk=(TU.perks&&TU.perks[t.level])||TD_ASCEND[t.level];
   toast((newName!==oldName?'✨ '+oldName+' tiến hoá → ':'⬆️ ')+t.em+' '+newName+' Lv.'+t.level+(perk?' · '+perk:''));
   if(perk){confetti(30);sndWin()}
   td2Side()
@@ -2905,15 +2996,16 @@ function td2Side(){
     return `<button class="td2-tower ${GM.place===k?'sel':''}" style="${aff?'':'opacity:.45'}${lock?';border-color:#cbd5e1':''}" onclick="td2Pick('${k}')"><span class="ic">${lock?'🔒':T.em}</span>${T.name}<span class="pr">${lock?'Đợt '+td2UnlockAt(k):T.cost+'🪙'}</span></button>`}).join('');
   let info;
   if(GM.sel){const t=GM.sel,T=TT[t.type],max=t.level>=TD_MAXLV,uc=td2UpCost(t),rf=Math.round(td2Paid(t)*.6);
-    const owned=Object.keys(T.perks||{}).filter(l=>t.level>=+l).map(l=>T.perks[l]);
-    const nl=Object.keys(T.perks||{}).map(Number).sort((a,b)=>a-b).find(l=>l>t.level);
-    const next=nl?T.perks[nl]:null;
+    const ALL=Object.assign({},T.perks||{},TD_ASCEND);
+    const owned=Object.keys(ALL).filter(l=>t.level>=+l).map(l=>ALL[l]);
+    const nl=Object.keys(ALL).map(Number).sort((a,b)=>a-b).find(l=>l>t.level);
+    const next=nl?ALL[nl]:null;
     info=`<b>${t.em||T.em} ${td2TowerName(t)} · Lv.${t.level}/${TD_MAXLV}${max?' ⭐MAX':''}</b><br><span style="color:var(--violet);font-weight:700;font-size:11px">${T.skill||''}</span><br>⚔️ ${t.dmg} · 🎯 ${Math.round(t.range)} · ⏱️ ${t.rate.toFixed(2)}s${t.shred?` · 💥 mài mòn tối đa -${t.shredMax} giáp`:''}${t.pierce?` · 🗡️ xuyên ${Math.round(t.pierce*100)}% giáp`:''}${t.mCount?`<br>🥷 Gọi <b>${t.mCount}</b> đệ tử · ⚔️ ${t.mDmg}/đòn · 🛡️ máu ${Math.round(td2BaseHP(GM.round)*td2Mod('ehp',1)*t.mHpK)} · ⏳ ${t.mRate.toFixed(1)}s/lượt`:''}`
       +(owned.length?`<br><span style="color:#059669;font-weight:700;font-size:11px">✅ ${owned.join('<br>✅ ')}</span>`:'')
       +(next?`<br><span style="color:#d97706;font-weight:700;font-size:11px">🔒 Lv.${nl}: ${next}</span>`:'')
       +`<div class="row" style="margin-top:5px">${max?'<button class="btn ghost sm" disabled>⭐ Cấp tối đa</button>':`<button class="btn sun sm" onclick="td2Upgrade()">⬆️ Nâng ${uc}🪙</button>`}<button class="btn ghost sm" onclick="td2Sell()">💲 Bán +${rf}</button></div>`;}
   else if(GM.place)info=`Đang chọn <b>${TT[GM.place].em} ${TT[GM.place].name}</b> — chạm chỗ trống trên bản đồ để đặt.`;
-  else info='Chạm 1 trụ ở cửa hàng rồi chạm bản đồ để đặt. Chạm trụ đã đặt để nâng cấp / bán. Trụ lên tối đa <b>Lv.10</b>, mở <b>kỹ năng mới ở Lv.3 · 5 · 7 · 10</b> và <b>tiến hoá đổi hình + đổi tên</b>. 🐝 Ong <b>mài mòn giáp</b> quái cho MỌI trụ cùng bắn. 🦸 <b>Siêu Anh Hùng</b> mở khoá sau khi qua <b>đợt 25</b> — mạnh nhất game!';
+  else info='Chạm 1 trụ ở cửa hàng rồi chạm bản đồ để đặt. Chạm trụ đã đặt để nâng cấp / bán. Trụ lên tối đa <b>Lv.20</b>: kỹ năng &amp; tiến hoá ở <b>Lv.3·5·7·10</b>, thăng hoa ⭐🌟👑 ở <b>Lv.13·16·20</b>. 🐝 Ong <b>mài mòn giáp</b> quái cho MỌI trụ cùng bắn. 🦸 <b>Siêu Anh Hùng</b> mở khoá sau khi qua <b>đợt 25</b> — mạnh nhất game!';
   const sd=$('td2side');if(!sd)return;
   sd.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">🏪 Cửa hàng trụ</div><div class="td2-shop">${shop}</div>`+
     (GM.running
@@ -2921,7 +3013,8 @@ function td2Side(){
       :`<div style="font-size:11px;font-weight:600;line-height:1.55;background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:6px 8px;margin:6px 0">${td2Preview(GM.round)}</div><button class="btn teal" style="width:100%" onclick="td2StartRound()">▶️ Bắt đầu đợt ${GM.round}</button>`)+
     `<div class="row" style="gap:6px;margin-top:6px;align-items:center"><span style="font-weight:800;font-size:12px;color:var(--muted)">⚡ Tốc độ</span>${[1,2,4].map(s=>`<button class="btn ${GM.speed===s?'teal':'ghost'} sm" style="flex:1;padding:6px 0" onclick="td2Speed(${s})">${s}×</button>`).join('')}</div>
      <div style="font-weight:800;font-size:12px;margin:8px 0 3px">⚡ Phép chiến đấu <span style="color:var(--muted);font-weight:600">— dùng vàng để cứu nguy</span></div>
-     <div class="row" id="td2spells" style="gap:4px;align-items:stretch">${td2SpellBar()}</div>
+     <div id="td2spells" style="display:flex;flex-wrap:wrap;gap:4px;align-items:stretch">${td2SpellBar()}</div>
+     <div style="font-size:11px;font-weight:700;color:var(--violet);background:#f5f3ff;border-radius:9px;padding:5px 8px;margin-top:6px">${td2NextUnlock()}</div>
      <button class="btn ghost sm" style="width:100%;margin-top:6px" onclick="td2GameOver(1)">🏁 Kết thúc &amp; nhận XP</button>
      <div id="td2info" style="font-size:11.5px;color:var(--muted);margin-top:7px;min-height:36px">${info}</div>`;
 }
@@ -2946,7 +3039,7 @@ function td2Ans(k){
 }
 function td2StartRound(){
   if(!GM||GM.running)return;
-  const r=GM.round,base=Math.round(td2BaseHP(r)*td2Mod('ehp',1)),sp=td2BaseSpeed(r)*td2Mod('espd',1),rew=2+Math.floor(r/2.5);
+  const r=GM.round,base=Math.round(td2BaseHP(r)*td2Mod('ehp',1)),sp=td2BaseSpeed(r)*td2Mod('espd',1),rew=2+Math.floor(r/1.8);
   const ks=Object.keys(TD_KIND).filter(k=>r>=TD_KIND[k].from);
   const n=Math.min(46,4+Math.round(r*1.8));
   GM.queue=[];
@@ -2968,14 +3061,15 @@ function td2StartRound(){
   GM.running=true;GM.spawnGap=Math.max(.3,.8-r*.018);GM.spawnT=0;sndClick();td2Side()
 }
 function td2RoundDone(){
-  const bonus=30+GM.round*6;GM.gold+=bonus;GM.round++;gainXP(6);persist();sndWin();sndCoin();
+  const bonus=30+GM.round*11;GM.gold+=bonus;GM.round++;gainXP(6);persist();sndWin();sndCoin();
   const wasLocked=GM.qLocked;GM.qLocked=false;GM.minions=[];GM.towers.forEach(t=>{if(t.type==='hero')t.mCd=1});
+  if((GM.round-1)%3===0)td2ChangeMap(); else {const el=$('td2map');if(el)el.innerHTML=td2MapBanner()}
   toast('🎉 Qua đợt! +'+bonus+' 🪙'+(wasLocked?' — mở lại câu hỏi! 🔓':''));
   for(const k in TT)if(td2UnlockAt(k)===GM.round){confetti(80);sndWin();toast('🦸 MỞ KHOÁ TRỤ MỚI: '+TT[k].em+' '+TT[k].name+' — '+TT[k].cost+'🪙, mạnh nhất game!')}
   td2Q();td2Side()
 }
 function td2HUD(){const g=$('td2gold');if(!g)return;g.textContent=Math.floor(GM.gold);$('td2life').textContent=Math.max(0,GM.lives);$('td2round').textContent=GM.round;$('td2kills').textContent=GM.kills;const b=$('td2boss');if(b)b.textContent=GM.bossKills||0;
-  const sb=$('td2spells');if(sb){const sig=Object.keys(TD_SPELLS).map(k=>Math.ceil((GM.spellCd&&GM.spellCd[k])||0)+(GM.gold>=td2SpellCost(k)?'y':'n')).join('');
+  const sb=$('td2spells');if(sb){const sig=GM.round+'|'+Object.keys(TD_SPELLS).map(k=>Math.ceil((GM.spellCd&&GM.spellCd[k])||0)+(GM.gold>=td2SpellCost(k)?'y':'n')).join('');
     if(sig!==GM._sbSig){GM._sbSig=sig;sb.innerHTML=td2SpellBar()}}}
 function td2Speed(s){if(!GM||GM.type!=='tower2')return;GM.speed=s;sndClick();td2Side()}
 function td2Fire(t,tg){
@@ -3000,7 +3094,7 @@ function td2Hit(t,e,raw,primary){
 }
 function td2MakeFx(t,tg){
   const f={x1:t.x,y1:t.y,x2:tg.x,y2:tg.y,c:t.color,kind:t.atk,lv:t.level,t:0};
-  f.dur=t.atk==='fire'?.4:t.atk==='beam'?.18:t.atk==='dart'?.24:t.atk==='venom'?.3:t.atk==='tongue'?.18:t.atk==='claw'?.22:t.atk==='sting'?.12:.14;
+  f.dur=t.atk==='fire'?.4:t.atk==='beam'?.18:t.atk==='laser'?.1:t.atk==='frost'?.22:t.atk==='dart'?.24:t.atk==='venom'?.3:t.atk==='tongue'?.18:t.atk==='claw'?.22:t.atk==='sting'?.12:.14;
   return f;
 }
 function td2DrawFx(x){
@@ -3013,6 +3107,10 @@ function td2DrawFx(x){
     else if(f.kind==='fire'){if(p<.6){const k=p/.6,px=f.x1+(f.x2-f.x1)*k,py=f.y1+(f.y2-f.y1)*k;x.fillStyle='#f97316';x.beginPath();x.arc(px,py,5+f.lv,0,7);x.fill();x.fillStyle='#fde047';x.beginPath();x.arc(px,py,2.5,0,7);x.fill();}else{const r=(10+f.lv*4)*(1-(p-.6)/.4);x.fillStyle='rgba(249,115,22,.75)';x.beginPath();x.arc(f.x2,f.y2,Math.max(0,r),0,7);x.fill();x.fillStyle='rgba(253,224,71,.7)';x.beginPath();x.arc(f.x2,f.y2,Math.max(0,r*.5),0,7);x.fill();}}
     else if(f.kind==='dart'){const px=f.x1+(f.x2-f.x1)*p,py=f.y1+(f.y2-f.y1)*p;x.fillStyle=f.c;x.beginPath();x.arc(px,py,3.5,0,7);x.fill();}
     else if(f.kind==='venom'){const px=f.x1+(f.x2-f.x1)*p,py=f.y1+(f.y2-f.y1)*p;x.fillStyle='#16a34a';x.beginPath();x.arc(px,py,4.5,0,7);x.fill();x.fillStyle='#86efac';x.beginPath();x.arc(px,py,2,0,7);x.fill();}
+    else if(f.kind==='frost'){x.strokeStyle='#a5b4fc';x.lineWidth=4;x.beginPath();x.moveTo(f.x1,f.y1);x.lineTo(f.x2,f.y2);x.stroke();
+      const rr=(11+f.lv)*(1-p);x.fillStyle='rgba(199,210,254,.85)';x.beginPath();x.arc(f.x2,f.y2,Math.max(0,rr),0,7);x.fill();}
+    else if(f.kind==='laser'){x.strokeStyle='#22d3ee';x.lineWidth=3;x.beginPath();x.moveTo(f.x1,f.y1);x.lineTo(f.x2,f.y2);x.stroke();
+      x.fillStyle='#ecfeff';x.beginPath();x.arc(f.x2,f.y2,3,0,7);x.fill();}
     else if(f.kind==='beam'){x.strokeStyle='#7dd3fc';x.lineWidth=6+f.lv*.4;x.beginPath();x.moveTo(f.x1,f.y1);x.lineTo(f.x2,f.y2);x.stroke();
       x.strokeStyle='#fff';x.lineWidth=2.2;x.beginPath();x.moveTo(f.x1,f.y1);x.lineTo(f.x2,f.y2);x.stroke();
       const rr=(9+f.lv)*(1-p);x.fillStyle='rgba(56,189,248,.8)';x.beginPath();x.arc(f.x2,f.y2,Math.max(0,rr),0,7);x.fill();}
@@ -3062,7 +3160,7 @@ function td2Loop(ts){
         t.mCd=t.mRate;
         const hp=Math.round(td2BaseHP(GM.round)*td2Mod('ehp',1)*t.mHpK);
         const d0=Math.min(GM.total-6,td2NearestD(t.x,t.y)+30),pp=td2Pos(d0);
-        GM.minions.push({owner:t,d:d0,minD:Math.max(0,d0-210),x:pp.x,y:pp.y,hp,max:hp,dmg:t.mDmg,rate:.5,cd:0,em:'🥷',dead:false,fight:0});
+        GM.minions.push({owner:t,d:d0,minD:Math.max(0,d0-210),x:pp.x,y:pp.y,hp,max:hp,dmg:t.mDmg,rate:.5,cd:0,dead:false,fight:0,em:t.mEm||'🥷'});
       }else t.mCd=.5;
     }
   }
@@ -3085,9 +3183,10 @@ function td2Loop(ts){
   GM.minions=GM.minions.filter(m=>!m.dead);
   for(const t of GM.towers){t.cd-=dt;if(t.cd<=0){let tg=null,best=-1,bt=null,bb=-1;
     for(const e of GM.enemies){if(e.dead)continue;const dx=e.x-t.x,dy=e.y-t.y;if(dx*dx+dy*dy<=t.range*t.range){if(e.boss){if(e.d>bb){bb=e.d;bt=e}}else if(e.d>best){best=e.d;tg=e}}}
-    const aim=bt||tg;if(aim){t.cd=t.rate;td2Fire(t,aim)}}}
+    const aim=bt||tg;if(aim){t.cd=t.rate*(GM.rageT>0?.5:1);td2Fire(t,aim)}}}
   let esc=0;GM.enemies=GM.enemies.filter(e=>{if(!e.dead)return true;if(e.escaped)esc+=e.boss?3:1;if(e.killed){GM.gold+=e.reward;GM.kills++;if(e.boss){GM.bossKills=(GM.bossKills||0)+1;confetti(60);sndWin();toast('🏆 Hạ gục BOSS '+e.bossName+'! +'+e.reward+'🪙')}}return false});
   if(esc){GM.lives-=esc;sndNo()}
+  if(GM.rageT>0)GM.rageT-=dt;
   if(GM.spellCd)for(const k in GM.spellCd)if(GM.spellCd[k]>0)GM.spellCd[k]=Math.max(0,GM.spellCd[k]-dt);
   for(const f of GM.fx)f.t+=dt;GM.fx=GM.fx.filter(f=>f.t<f.dur);
   if(GM.running&&!GM.queue.length&&!GM.enemies.length){GM.running=false;td2RoundDone()}
