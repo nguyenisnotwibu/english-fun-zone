@@ -2710,18 +2710,20 @@ const TD_KIND={
  tank  :{em:['🐢','🦏'],          hp:2.4, sp:.62, armor:1,name:'Giáp dày',from:6},
  swarm :{em:['🐜','🦟'],          hp:.32, sp:1.28,armor:0,name:'Bầy đàn',from:8},
  ghost :{em:['👻','💀'],          hp:.85, sp:1.15,armor:0,noSlow:true,name:'Ma trơi (miễn làm chậm)',from:10},
- stealth:{em:['🥷','🕶️'],        hp:.9,  sp:1.1, armor:0,hide:true,   name:'Tàng hình (trụ không ngắm được)',from:20},
- sapper :{em:['🔧','🧨'],         hp:1.3, sp:.9,  armor:1,zap:true,    name:'Phá trụ (làm trụ tê liệt)',from:25},
- medic  :{em:['💉','🧪'],         hp:1.1, sp:.95, armor:0,heal:true,   name:'Y tá (hồi máu cho đồng bọn)',from:30},
- mirror :{em:['🪞','🛡️'],         hp:1.5, sp:.85, armor:2,noSplash:true,name:'Phản đòn (miễn sát thương lan)',from:35}
+ stealth:{em:['🥷','🕶️'],        hp:1,   sp:1.15,armor:0,hide:true,   name:'Tàng hình (ẩn 3s · hồi máu khi ẩn)',from:20},
+ sapper :{em:['🔧','🧨'],         hp:1.4, sp:.9,  armor:1,zap:true,    name:'Phá trụ (tê liệt trụ, càng về sau càng lâu)',from:25},
+ medic  :{em:['💉','🧪'],         hp:1.2, sp:.95, armor:0,heal:true,   name:'Y tá (hồi máu đồng bọn · giải thiêu đốt)',from:30},
+ mirror :{em:['🪞','🛡️'],         hp:1.6, sp:.85, armor:2,noSplash:true,name:'Phản đòn (miễn lan · nung nóng trụ)',from:35},
+ splitter:{em:['🧫','🦠'],        hp:1.5, sp:.9,  armor:1,split:true,  name:'Phân thân (chết thì tách làm 2)',from:45},
+ flyer  :{em:['🦅','🦇'],         hp:.95, sp:1.35,armor:0,fly:true,noSlow:true,name:'Biết bay (lính không chặn được)',from:55}
 };
 /* Boss theo tầng — mỗi 5 đợt, có giáp + kỹ năng riêng, miễn làm chậm */
 const TD_BOSS=[
  {em:'👹',name:'Quỷ Đất',      hpM:3.5,spM:.85,armor:1, ab:['rage','zap'],                          tip:'Nổi giận khi yếu máu · ⚡ ĐẬP TRỤ làm trụ tê liệt vài giây!'},
- {em:'🧟',name:'Xác Sống Chúa',hpM:3.5,spM:.78,armor:2, ab:['regen','heal'],                         tip:'Tự hồi máu · 💉 HỒI MÁU CHO CẢ ĐÀN quái xung quanh!'},
- {em:'🐲',name:'Rồng Lửa',     hpM:4,spM:.92,armor:2, ab:['summon','rage','hide'],                 tip:'Gọi lính · nổi giận · 💨 TÀNG HÌNH khiến trụ mất mục tiêu!'},
- {em:'👾',name:'Quái Vũ Trụ',  hpM:4.5,spM:.86,armor:3, ab:['shield','summon','noSplash'],               tip:'Có KHIÊN chắn · 🪞 MIỄN sát thương lan, phải bắn trúng trực tiếp!'},
- {em:'🦖',name:'Bạo Chúa',     hpM:5,spM:.95,armor:3,ab:['shield','regen','summon','rage','zap','hide','noSplash'],tip:'Hội tụ MỌI kỹ năng: khiên · hồi máu · gọi lính · nổi giận · đập trụ · tàng hình · miễn lan!'}
+ {em:'🧟',name:'Xác Sống Chúa',hpM:3.5,spM:.78,armor:2, ab:['regen','heal','aura'],                         tip:'Tự hồi · 💉 hồi máu cả đàn · 👑 HÀO QUANG giảm 35% sát thương cho quái quanh nó!'},
+ {em:'🐲',name:'Rồng Lửa',     hpM:4,spM:.92,armor:2, ab:['summon','rage','hide','aura'],                 tip:'Gọi lính · nổi giận · 💨 TÀNG HÌNH khiến trụ mất mục tiêu!'},
+ {em:'👾',name:'Quái Vũ Trụ',  hpM:4.5,spM:.86,armor:3, ab:['shield','summon','noSplash','zap','aura'],               tip:'KHIÊN chắn · 🪞 miễn sát thương lan · ⚡ đập trụ · 👑 hào quang bảo vệ cả đàn!'},
+ {em:'🦖',name:'Bạo Chúa',     hpM:5,spM:.95,armor:3,ab:['shield','regen','summon','rage','zap','hide','noSplash','aura','heal'],tip:'Hội tụ MỌI kỹ năng: khiên · hồi máu · gọi lính · nổi giận · đập trụ · tàng hình · miễn lan!'}
 ];
 function td2BossOf(r){return TD_BOSS[Math.min(Math.max(0,Math.floor(r/5)-1),TD_BOSS.length-1)]}
 /* 🗺️ Bản đồ & địa hình — đường đi khác nhau + hiệu ứng riêng (chế độ Sinh Tồn bốc ngẫu nhiên) */
@@ -3254,13 +3256,13 @@ function td2StartRound(){
     if(ks.length>1&&Math.random()>=.4)k=ks[1+Math.floor(Math.random()*(ks.length-1))];
     const K=TD_KIND[k];
     GM.queue.push({kind:k,hp:Math.max(6,Math.round(base*K.hp)),speed:sp*K.sp,em:rnd(K.em),
-      armor:td2Armor(r,K.armor)+star*2,star:star,noSlow:!!K.noSlow,hide:!!K.hide,zap:!!K.zap,heal:!!K.heal,noSplash:!!K.noSplash,
+      armor:td2Armor(r,K.armor)+star*2,star:star,noSlow:!!K.noSlow,hide:!!K.hide,zap:!!K.zap,heal:!!K.heal,noSplash:!!K.noSplash,split:!!K.split,fly:!!K.fly,
       reward:Math.max(1,Math.round(rew*(K.hp>1?1.7:K.hp<.5?.5:1))),boss:false});
   }
   if(r%5===0){
     const B=td2BossOf(r),bhp=Math.round(base*B.hpM);
     GM.queue.unshift({kind:'boss',hp:bhp,speed:sp*B.spM,em:B.em,bossName:B.name,armor:B.armor+star*3,noSlow:true,
-      star:star,ab:B.ab.slice(),hide:B.ab.indexOf('hide')>=0,zap:B.ab.indexOf('zap')>=0,heal:B.ab.indexOf('heal')>=0,noSplash:B.ab.indexOf('noSplash')>=0,shield:B.ab.indexOf('shield')>=0?Math.round(bhp*.1):0,
+      star:star,ab:B.ab.slice(),hide:B.ab.indexOf('hide')>=0,zap:B.ab.indexOf('zap')>=0,heal:B.ab.indexOf('heal')>=0,noSplash:B.ab.indexOf('noSplash')>=0,aura:B.ab.indexOf('aura')>=0,shield:B.ab.indexOf('shield')>=0?Math.round(bhp*.1):0,
       summonAt:B.ab.indexOf('summon')>=0?[.66,.33]:[],raged:false,reward:rew*10,boss:true});
     toast('⚠️ ĐỢT BOSS! '+B.em+' '+B.name+' — '+B.tip);
   }
@@ -3268,7 +3270,7 @@ function td2StartRound(){
 }
 function td2RoundDone(){
   const bonus=td2RoundBonus(GM.round);GM.gold+=bonus;GM.round++;gainXP(6);persist();sndWin();sndCoin();
-  const wasLocked=GM.qLocked;GM.qLocked=false;GM.minions=[];GM.towers.forEach(t=>{t.stun=0;if(t.type==='hero')t.mCd=1});
+  const wasLocked=GM.qLocked;GM.qLocked=false;GM.minions=[];GM.towers.forEach(t=>{t.stun=0;t.heat=0;if(t.type==='hero')t.mCd=1});
   if((GM.round-1)%3===0)td2ChangeMap(); else {const el=$('td2map');if(el)el.innerHTML=td2MapBanner()}
   if(GM.round===TD_PICK_AT+1&&!GM.roster){td2PickOpen();return}
   toast('🎉 Qua đợt! +'+bonus+' 🪙'+(wasLocked?' — mở lại câu hỏi! 🔓':''));
@@ -3303,6 +3305,14 @@ function td2Hit(t,e,raw,primary){
   const before=d;
   const armor=Math.max(0,(e.armor||0)-(e.shredV||0))*(1-(t.pierce||0));
   d=Math.max(d*.25,d-armor);
+  /* 👑 hào quang boss: quái đứng gần boss chịu ít sát thương hơn hẳn */
+  if(GM.auraB&&GM.auraB.length){
+    let aura=false;
+    for(const B of GM.auraB){if(B===e)continue;if(Math.hypot(B.x-e.x,B.y-e.y)<80){aura=true;break}}
+    if(aura){d*=.65;if(primary&&Math.random()<.2)td2Pop(e.x,e.y-10,'👑 HÀO QUANG −35%','#c084fc',11,-20)}
+  }
+  /* 🪞 phản đòn: trụ vừa bắn bị NUNG NÓNG, bắn chậm 40% trong 2s */
+  if(e.noSplash&&primary&&t){t.heat=1.6;if(Math.random()<.22)td2Pop(t.x,t.y-14,'🔥 NUNG NÓNG trụ','#fb923c',11,-20)}
   const blocked=before-d;
   if(t.shred&&e.armor>0){
     const old=e.shredV||0;
@@ -3393,6 +3403,7 @@ function td2Loop(ts){
   if(GM.running){GM.spawnT-=dt;if(GM.queue.length&&GM.spawnT<=0){GM.spawnT=GM.spawnGap;const s=GM.queue.shift(),p=td2Pos(0);
     GM.enemies.push(Object.assign({d:0,x:p.x,y:p.y,max:s.hp,maxShield:s.shield||0,slowT:0,slowP:1,burn:0},s))}}
   const born=[];
+  GM.auraB=GM.enemies.filter(e=>!e.dead&&e.boss&&e.aura);
   for(const e of GM.enemies){
     if(e.dead)continue;
     if(e.slowT>0){e.slowT-=dt;if(e.slowT<=0)e.slowP=1}
@@ -3417,18 +3428,29 @@ function td2Loop(ts){
   /* 👾 Kỹ năng của quái đối đầu với trụ: tàng hình · đập trụ · hồi máu bầy */
   for(const e of GM.enemies){
     if(e.dead)continue;
-    if(e.hide){ e.hideT=(e.hideT===undefined?2.5:e.hideT)-dt;
-      if(e.hideT<=0){e.hidden=!e.hidden;e.hideT=e.hidden?(e.boss?1.6:2):3;if(e.hidden)td2Pop(e.x,e.y-12,'💨 TÀNG HÌNH','#94a3b8',11,-18)} }
-    if(e.zap){ e.zapCd=(e.zapCd===undefined?4:e.zapCd)-dt;
-      if(e.zapCd<=0){e.zapCd=e.boss?7:9;
-        let best=null,bd=1e9;
-        for(const t of GM.towers){if(t.stun>0)continue;const d=Math.hypot(t.x-e.x,t.y-e.y);if(d<110&&d<bd){bd=d;best=t}}
-        if(best){best.stun=e.boss?4:2.5;GM.fx.push({x1:e.x,y1:e.y,x2:best.x,y2:best.y,c:'#facc15',kind:'zap',lv:2,t:0,dur:.35});sndNo();td2Pop(best.x,best.y-14,'⚡ TÊ LIỆT '+best.stun.toFixed(1)+'s','#facc15',14,-28)}
+    /* 💨 tàng hình: ẩn lâu hơn hiện, và HỒI MÁU khi đang ẩn */
+    if(e.hide){ e.hideT=(e.hideT===undefined?1.2:e.hideT)-dt;
+      if(e.hideT<=0){e.hidden=!e.hidden;e.hideT=e.hidden?3:1.5;if(e.hidden)td2Pop(e.x,e.y-12,'💨 TÀNG HÌNH','#94a3b8',12,-18)}
+      if(e.hidden&&e.hp<e.max){e.hp=Math.min(e.max,e.hp+e.max*.02*dt)} }
+    /* ⚡ phá trụ: tê liệt LÂU hơn, tầm xa hơn, đánh NHIỀU trụ một lúc */
+    if(e.zap){ e.zapCd=(e.zapCd===undefined?3:e.zapCd)-dt;
+      if(e.zapCd<=0){
+        const R=GM.round;
+        e.zapCd=e.boss?5:(R>=70?6:R>=45?7.5:9);
+        const nT=e.boss?(R>=70?3:2):(R>=70?2:1), dur=e.boss?(R>=70?6:4.5):(R>=70?4:R>=45?3:2.2);
+        e.zapCd=e.zapCd;
+        const near=GM.towers.filter(t=>!(t.stun>0)&&Math.hypot(t.x-e.x,t.y-e.y)<140)
+          .sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y)).slice(0,nT);
+        if(near.length){sndNo();
+          near.forEach(t=>{t.stun=dur;GM.fx.push({x1:e.x,y1:e.y,x2:t.x,y2:t.y,c:'#facc15',kind:'zap',lv:2,t:0,dur:.35});
+            td2Pop(t.x,t.y-14,'⚡ TÊ LIỆT '+dur+'s','#facc15',14,-28)});
+          if(near.length>1)td2Pop(e.x,e.y-20,'🔧 PHÁ '+near.length+' TRỤ!','#f59e0b',14,-26);}
       } }
+    /* 💉 y tá: hồi mạnh hơn, tầm rộng hơn, GIẢI luôn hiệu ứng thiêu đốt */
     if(e.heal){ e.healCd=(e.healCd===undefined?1:e.healCd)-dt;
-      if(e.healCd<=0){e.healCd=1;const amt=(e.boss?.05:.03);let n=0;
-        for(const o of GM.enemies){if(o===e||o.dead||o.hp>=o.max)continue;
-          if(Math.hypot(o.x-e.x,o.y-e.y)<70){o.hp=Math.min(o.max,o.hp+o.max*amt);n++}}
+      if(e.healCd<=0){e.healCd=1;const amt=(e.boss?.06:(GM.round>=60?.05:.035));let n=0;
+        for(const o of GM.enemies){if(o===e||o.dead)continue;
+          if(Math.hypot(o.x-e.x,o.y-e.y)<92){if(o.burn>0){o.burn=0;} if(o.hp<o.max){o.hp=Math.min(o.max,o.hp+o.max*amt);n++}}}
         if(n){GM.fx.push({x1:e.x,y1:e.y,x2:e.x,y2:e.y,c:'#4ade80',kind:'heal',lv:1,t:0,dur:.4});if(Math.random()<.45)td2Pop(e.x,e.y-14,'💚 hồi '+Math.round(amt*100)+'% cho '+n+' quái','#22c55e',11,-20)}
       } }
   }
@@ -3451,7 +3473,7 @@ function td2Loop(ts){
   for(const m of GM.minions){
     if(m.dead)continue;
     let foe=null;
-    for(const e of GM.enemies){if(e.dead)continue;if(e.d<=m.d+13&&e.d>m.d-45){if(!foe||e.d>foe.d)foe=e}}
+    for(const e of GM.enemies){if(e.dead||e.fly)continue;if(e.d<=m.d+13&&e.d>m.d-45){if(!foe||e.d>foe.d)foe=e}}
     if(foe){
       if(!foe.blocked)td2Pop(foe.x,foe.y-14,'🛑 BỊ CHẶN','#f97316',11,-18);
       foe.blocked=true;m.fight=.18;
@@ -3466,10 +3488,23 @@ function td2Loop(ts){
   }
   GM.minions=GM.minions.filter(m=>!m.dead);
   for(const t of GM.towers){
+    if(t.heat>0)t.heat-=dt;
     if(t.stun>0){t.stun-=dt;continue}
     t.cd-=dt;if(t.cd<=0){let tg=null,best=-1,bt=null,bb=-1;
     for(const e of GM.enemies){if(e.dead||e.hidden)continue;const dx=e.x-t.x,dy=e.y-t.y;if(dx*dx+dy*dy<=t.range*t.range){if(e.boss){if(e.d>bb){bb=e.d;bt=e}}else if(e.d>best){best=e.d;tg=e}}}
-    const aim=bt||tg;if(aim){t.cd=t.rate*(GM.rageT>0?.5:1);td2Fire(t,aim)}}}
+    const aim=bt||tg;if(aim){t.cd=t.rate*(GM.rageT>0?.5:1)*((t.heat>0)?1.3:1);td2Fire(t,aim)}}}
+  /* 🧫 phân thân: quái chết thì tách thành 2 con nhỏ */
+  const kids=[];
+  for(const e of GM.enemies){
+    if(!e.dead||!e.killed||!e.split||e.child)continue;
+    const hp=Math.max(8,Math.round(e.max*.35));
+    for(let i=0;i<2;i++){const dd=Math.max(0,e.d-8-i*14),pp=td2Pos(dd);
+      kids.push({kind:'splitter',child:true,d:dd,x:pp.x,y:pp.y,hp:hp,max:hp,speed:e.speed*1.15,em:'🦠',
+        armor:Math.round((e.armor||0)*.5),star:e.star,reward:Math.max(1,Math.round((e.reward||2)*.4)),
+        boss:false,slowT:0,slowP:1,burn:0,shield:0,maxShield:0});}
+    td2Pop(e.x,e.y,'🧫 PHÂN THÂN!','#a3e635',14,-26);
+  }
+  if(kids.length)GM.enemies=GM.enemies.concat(kids);
   let esc=0;GM.enemies=GM.enemies.filter(e=>{if(!e.dead)return true;if(e.escaped)esc+=e.boss?3:1;if(e.killed){GM.gold+=e.reward;GM.kills++;if(e.boss){GM.bossKills=(GM.bossKills||0)+1;confetti(60);sndWin();toast('🏆 Hạ gục BOSS '+e.bossName+'! +'+e.reward+'🪙')}}return false});
   if(esc){GM.lives-=esc;sndNo();td2Pop(GM.castle.x,GM.castle.y-16,'💔 −'+esc+' ❤️','#ef4444',17,-32)}
   if(GM.rageT>0)GM.rageT-=dt;
@@ -3543,6 +3578,7 @@ function td2Draw(){
     x.font=(21+Math.min(tier,4)+rec*3)+'px serif';x.fillText(t.em||TT[t.type].em,t.x,t.y-rec*1.5);
     x.globalAlpha=1;
     if(t.stun>0){x.font='15px serif';x.fillText('⚡',t.x-13,t.y-12)}
+    if(t.heat>0){x.font='12px serif';x.fillText('🥵',t.x+13,t.y-12)}
     if(GM.rageT>0){x.font='11px serif';x.fillText('🔥',t.x+13,t.y+12)}
     if(t.level>1){
       x.fillStyle=['#7c3aed','#7c3aed','#0284c7','#ea580c','#f59e0b','#d97706'][tier];
@@ -3565,6 +3601,8 @@ function td2Draw(){
   for(const e of GM.enemies){
     const w=e.boss?38:24,top=e.y-(e.boss?25:17);
     x.globalAlpha=.3;x.fillStyle='#000';x.beginPath();x.ellipse(e.x,e.y+(e.boss?14:10),e.boss?15:9,e.boss?6:4,0,0,7);x.fill();x.globalAlpha=1;
+    if(e.boss&&e.aura){x.strokeStyle='rgba(192,132,252,'+(.35+pul*.35)+')';x.lineWidth=2.5;x.beginPath();x.arc(e.x,e.y,80,0,7);x.stroke();
+      x.fillStyle='rgba(192,132,252,.07)';x.beginPath();x.arc(e.x,e.y,80,0,7);x.fill()}
     if(e.boss&&e.raged){x.fillStyle='rgba(239,68,68,'+(.18+pul*.18)+')';x.beginPath();x.arc(e.x,e.y,24,0,7);x.fill()}
     if(e.slowT>0){x.strokeStyle='rgba(56,189,248,.85)';x.lineWidth=2;x.beginPath();x.arc(e.x,e.y,e.boss?18:12,0,7);x.stroke()}
     /* thanh máu + khiên */
@@ -3586,6 +3624,9 @@ function td2Draw(){
     if(e.noSplash)ic.push('🪞');
     if(e.heal)ic.push('💉');
     if(e.zap)ic.push('⚡');
+    if(e.split)ic.push('🧫');
+    if(e.fly)ic.push('🪽');
+    if(e.aura)ic.push('👑');
     if(e.hidden)ic.push('💨');
     if(ic.length){x.font='9px serif';x.fillText(ic.join(''),e.x,top-(e.shield>0?11:7))}
     if(e.star&&!e.boss){x.fillStyle='#fbbf24';x.font='bold 8px system-ui,sans-serif';x.fillText('★'+e.star,e.x+w/2+7,e.y-3)}
