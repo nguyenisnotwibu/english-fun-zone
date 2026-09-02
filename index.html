@@ -2161,7 +2161,7 @@ function vGenQ(pool){
   else{prompt=`<div class="prompt-card"><b>${esc(right[0])}</b><div style="font-size:12px;color:var(--muted);font-weight:600">Chọn nghĩa tiếng Việt đúng</div></div>`;opts=[{t:right[1],ok:1},...others.map(o=>({t:o[1],ok:0}))];}
   return{prompt,opts:shuffle(opts),right};
 }
-function optButtons(opts,handler){return `<div class="opts mt">${opts.map((o,k)=>`<button type="button" class="opt pic-opt" onclick="${handler}(${k})"><span class="ab">${'ABCD'[k]}</span>${esc(o.t)}</button>`).join('')}</div>`}
+function optButtons(opts,handler){return `<div class="opts mt">${opts.map((o,k)=>`<button type="button" class="opt pic-opt" onclick="${handler}(${k})"><span class="ab">${'ABCDEFGH'[k]||(k+1)}</span>${esc(o.t)}</button>`).join('')}</div>`}
 
 /* ================= FLASHCARDS ================= */
 function startFlash(){const pool=poolVocab();GM={type:'flash',cards:shuffle(pool),i:0,flip:false};sndClick();renderFlash();}
@@ -3019,6 +3019,63 @@ function td2Side(){
      <button class="btn ghost sm" style="width:100%;margin-top:6px" onclick="td2GameOver(1)">🏁 Kết thúc &amp; nhận XP</button>
      <div id="td2info" style="font-size:11.5px;color:var(--muted);margin-top:7px;min-height:36px">${info}</div>`;
 }
+/* ===== ❓ Câu hỏi cho Thủ thành: KHÔNG LẶP + KHÓ DẦN theo đợt ===== */
+const TD_TIERS=[null,
+ {n:1,lab:'🟢 Dễ',    upto:8,  note:'có tranh gợi ý'},
+ {n:2,lab:'🟡 Vừa',   upto:20, note:'trộn mọi chủ đề'},
+ {n:3,lab:'🟠 Khó',   upto:40, note:'bỏ tranh · đáp án nhiễu cùng chủ đề'},
+ {n:4,lab:'🔴 Rất khó',upto:70,note:'thêm dạng điền chữ thiếu'},
+ {n:5,lab:'🟣 Siêu khó',upto:999,note:'6 đáp án · nhiễu cùng chủ đề'}];
+function td2QTier(){const r=(GM&&GM.round)||1;for(let i=1;i<=5;i++)if(r<=TD_TIERS[i].upto)return i;return 5}
+/* bản đồ từ → chủ đề, để lấy đáp án nhiễu cùng chủ đề cho khó hơn */
+function td2WordTopic(w){
+  if(!GM._wt){GM._wt={};for(const t of DATA[grade].topics||[])for(const v of (t.vocab||[]))GM._wt[v[0]]=t.id}
+  return GM._wt[w];
+}
+/* túi từ: rút hết mới xáo lại → không bao giờ lặp từ trong 1 vòng
+   (tên phải khác td2Draw() vốn là hàm vẽ bản đồ) */
+function td2DrawWord(){
+  const pool=td2Pool(),key=(GM.round>10?'all':'sel')+'|'+pool.length;
+  if(!GM.qBag||!GM.qBag.length||GM.qBagKey!==key){GM.qBagKey=key;GM.qBag=shuffle(pool.slice())}
+  const w=GM.qBag.pop();
+  return (w&&w[0])?w:rnd(pool);
+}
+function td2MaskWord(w){
+  const a=w.split('');let idx=[];
+  for(let i=0;i<a.length;i++)if(/[a-zA-Z]/.test(a[i]))idx.push(i);
+  const hide=Math.max(1,Math.round(idx.length*.4));
+  shuffle(idx).slice(0,hide).forEach(i=>a[i]='_');
+  return a.join('');
+}
+function td2GenQ(){
+  const tier=td2QTier(),pool=td2Pool();
+  let right=td2DrawWord();
+  if(!right||!right[0])right=rnd(pool);
+  let cands=pool.filter(v=>v[0]!==right[0]);
+  if(tier>=3){
+    const tp=td2WordTopic(right[0]);
+    const same=cands.filter(v=>td2WordTopic(v[0])===tp);
+    if(same.length>=(tier>=5?5:3))cands=same;
+  }
+  const nOpt=tier>=5?6:4;
+  const others=pickN(cands,nOpt-1);
+  const r=Math.random(),canPic=hasPic(right[0]);
+  let prompt,opts;
+  if(tier<=2&&canPic&&r<(tier===1?.55:.28)){
+    prompt=picBox(right[0],true);
+    opts=[{t:right[0],ok:1},...others.map(o=>({t:o[0],ok:0}))];
+  }else if(tier>=4&&r<.32){
+    prompt=`<div class="prompt-card"><b style="letter-spacing:3px">${esc(td2MaskWord(right[0]))}</b><div style="font-size:12px;color:var(--muted);font-weight:600">Từ bị thiếu chữ — nghĩa là "<b>${esc(right[1])}</b>". Chọn từ đúng!</div></div>`;
+    opts=[{t:right[0],ok:1},...others.map(o=>({t:o[0],ok:0}))];
+  }else if(r<.5){
+    prompt=`<div class="prompt-card"><b>${esc(right[1])}</b><div style="font-size:12px;color:var(--muted);font-weight:600">Chọn từ tiếng Anh đúng</div></div>`;
+    opts=[{t:right[0],ok:1},...others.map(o=>({t:o[0],ok:0}))];
+  }else{
+    prompt=`<div class="prompt-card"><b>${esc(right[0])}</b><div style="font-size:12px;color:var(--muted);font-weight:600">Chọn nghĩa tiếng Việt đúng</div></div>`;
+    opts=[{t:right[1],ok:1},...others.map(o=>({t:o[1],ok:0}))];
+  }
+  return{prompt,opts:shuffle(opts),right};
+}
 function td2Pool(){
   /* Sau đợt 10: trộn TOÀN BỘ từ vựng của lớp — mọi chủ đề, mọi mức độ, xáo ngẫu nhiên */
   if(GM&&GM.round>10){
@@ -3058,7 +3115,7 @@ function td2PickRender(){
     </button>`}).join('');
   const n=GM.pickSel.length;
   el.innerHTML=`<div style="font-weight:800;font-size:14px;margin-bottom:3px">🎖️ Chọn đội hình chính thức — tối đa <b style="color:var(--violet)">${TD_PICK_MAX}</b> trụ</div>
-    <div style="font-size:11.5px;color:var(--muted);font-weight:600;line-height:1.5;margin-bottom:7px">Từ đợt ${TD_PICK_AT+1} trở đi em chỉ được dùng những trụ đã chọn — các trụ còn lại sẽ <b>biến mất khỏi cửa hàng</b>. Trụ đang đặt mà không được chọn sẽ được <b>hoàn lại đủ vàng</b>. Chọn cả trụ chưa mở khoá để dành cho sau nhé!</div>
+    <div style="font-size:11.5px;color:var(--muted);font-weight:600;line-height:1.5;margin-bottom:7px">Từ đợt ${TD_PICK_AT+1} trở đi em chỉ được dùng những trụ đã chọn — các trụ còn lại sẽ <b>biến mất khỏi cửa hàng</b>. Trụ <b>đã đặt trên bản đồ vẫn giữ nguyên</b>, chỉ là sau này không mua thêm loại đó được nữa. Chọn cả trụ chưa mở khoá để dành cho sau nhé!</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:6px">${cards}</div>
     <div style="display:flex;align-items:center;gap:8px;margin-top:9px">
       <b style="font-size:13px">Đã chọn ${n}/${TD_PICK_MAX}</b>
@@ -3068,17 +3125,14 @@ function td2PickRender(){
 function td2PickConfirm(){
   if(!GM.pickSel.length){toast('Chọn ít nhất 1 trụ nhé!');return}
   GM.roster=GM.pickSel.slice();
-  let back=0,n=0;
-  GM.towers=GM.towers.filter(t=>{
-    if(GM.roster.indexOf(t.type)>=0)return true;
-    back+=td2Paid(t);n++;return false;
-  });
-  GM.gold+=back;GM.sel=null;GM.place=null;GM.pickPhase=false;
+  /* Trụ đã đặt trên bản đồ được GIỮ NGUYÊN — chỉ cửa hàng mới bỏ các loại không chọn */
+  const keep=GM.towers.filter(t=>GM.roster.indexOf(t.type)<0).length;
+  GM.sel=null;GM.place=null;GM.pickPhase=false;
   sndOK();confetti(60);
-  toast('🎖️ Đội hình đã chốt: '+GM.roster.map(k=>TT[k].em).join(' ')+(n?` — hoàn ${back}🪙 từ ${n} trụ bị loại`:''));
+  toast('🎖️ Đội hình đã chốt: '+GM.roster.map(k=>TT[k].em).join(' ')+(keep?` — ${keep} trụ ngoài đội hình vẫn ở lại bản đồ nhé!`:''));
   td2Q();td2Side();
 }
-function td2Q(){if(GM&&GM.qLocked)return td2QLocked();const q=vGenQ(td2Pool());GM.cur=q;const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ <b style="color:var(--violet)">Trả lời đúng = nguồn vàng chính!</b> Mỗi câu <b style="color:#d97706">+${td2AnsGold()}🪙</b> ${GM.round>10?'<span style="color:var(--violet);font-weight:700">🎲 ĐỀ TRỘN — tất cả chủ đề!</span>':'<span style="color:var(--muted);font-weight:600">— rồi kéo xuống ⬇️ mua trụ &amp; bắt đầu đợt</span>'}</div>${q.prompt}${optButtons(q.opts,'td2Ans')}<div class="feedback" id="td2qfb" style="margin-top:6px"></div>`}
+function td2Q(){if(GM&&GM.qLocked)return td2QLocked();const q=td2GenQ();GM.cur=q;const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ <b style="color:var(--violet)">Trả lời đúng = nguồn vàng chính!</b> Mỗi câu <b style="color:#d97706">+${td2AnsGold()}🪙</b> <span style="color:var(--violet);font-weight:700">${TD_TIERS[td2QTier()].lab} · ${TD_TIERS[td2QTier()].note}</span>${GM.round>10?' <span style="color:#0891b2;font-weight:700">🎲 trộn mọi chủ đề</span>':''}</div>${q.prompt}${optButtons(q.opts,'td2Ans')}<div class="feedback" id="td2qfb" style="margin-top:6px"></div>`}
 function td2QLocked(){const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ Khu trả lời <span style="color:var(--red)">— đang khoá 🔒</span></div><div style="text-align:center;padding:16px 10px;color:var(--muted);font-weight:700;line-height:1.55">😵 Trả lời sai nên tạm khoá câu hỏi!<br>⬇️ Hãy <b>mua trụ</b> &amp; bấm <b>"Bắt đầu đợt"</b>. Đánh xong đợt này sẽ <b style="color:var(--violet)">mở lại câu hỏi</b> để kiếm vàng tiếp! 💪</div>`}
 function td2Ans(k){
   if(!GM||!GM.cur)return;const o=GM.cur.opts[k];
@@ -3419,7 +3473,7 @@ function renderQuizQ(){
     </div>
     ${q.pic||''}
     <div class="qq">${esc(q.q)}</div>
-    <div class="opts">${order.map((o,k)=>`<button class="opt${q.pic?' pic-opt':''}" id="op${k}" onclick="answerQuiz(${o.idx},${k},event)"><span class="ab">${'ABCD'[k]}</span>${esc(o.t)}</button>`).join('')}</div>
+    <div class="opts">${order.map((o,k)=>`<button class="opt${q.pic?' pic-opt':''}" id="op${k}" onclick="answerQuiz(${o.idx},${k},event)"><span class="ab">${'ABCDEFGH'[k]||(k+1)}</span>${esc(o.t)}</button>`).join('')}</div>
     <div class="feedback" id="qfb"></div>
     <div class="center mt hidden" id="qnextRow"><button class="btn teal" onclick="nextQuizQ()">Câu tiếp theo ➜</button></div>`;
   window._qOrder=order;
@@ -3519,7 +3573,7 @@ function renderReadingQ(){
     <div class="qbar"><span class="qcount">Câu ${RD.i+1}/${RD.r.qs.length}</span>
     <div class="qprog"><i style="width:${RD.i/RD.r.qs.length*100}%"></i></div></div>
     <div class="qq">${esc(q.q)}</div>
-    <div class="opts">${q.o.map((t,k)=>`<button class="opt" id="rop${k}" onclick="answerReading(${k},event)"><span class="ab">${'ABCD'[k]}</span>${esc(t)}</button>`).join('')}</div>
+    <div class="opts">${q.o.map((t,k)=>`<button class="opt" id="rop${k}" onclick="answerReading(${k},event)"><span class="ab">${'ABCDEFGH'[k]||(k+1)}</span>${esc(t)}</button>`).join('')}</div>
     <div class="feedback" id="rfb"></div>
     <div class="center mt hidden" id="rnextRow"><button class="btn teal" onclick="nextReadingQ()">Tiếp ➜</button></div>`;
   $('rdQuiz').scrollIntoView({behavior:'smooth',block:'nearest'});
@@ -3613,7 +3667,7 @@ function renderListeningQ(){
     <div class="qbar"><span class="qcount">Câu ${LS.i+1}/${LS.l.qs.length}</span>
     <div class="qprog"><i style="width:${LS.i/LS.l.qs.length*100}%"></i></div></div>
     <div class="qq">${esc(q.q)}</div>
-    <div class="opts">${q.o.map((t,k)=>`<button class="opt" id="lop${k}" onclick="answerListening(${k},event)"><span class="ab">${'ABCD'[k]}</span>${esc(t)}</button>`).join('')}</div>
+    <div class="opts">${q.o.map((t,k)=>`<button class="opt" id="lop${k}" onclick="answerListening(${k},event)"><span class="ab">${'ABCDEFGH'[k]||(k+1)}</span>${esc(t)}</button>`).join('')}</div>
     <div class="feedback" id="lfb"></div>
     <div class="center mt hidden" id="lnextRow"><button class="btn teal" onclick="nextListeningQ()">Tiếp ➜</button></div>`;
 }
@@ -4308,7 +4362,7 @@ function renderGRQ(){
     </div>
     <div class="qq">${esc(q.q)}</div>
     <div class="opts">${order.map((o,k)=>`<button class="opt" id="grop${k}" onclick="answerGR(${o.idx},${k})">\
-<span class="ab">${'ABCD'[k]}</span>${esc(o.t)}</button>`).join('')}</div>
+<span class="ab">${'ABCDEFGH'[k]||(k+1)}</span>${esc(o.t)}</button>`).join('')}</div>
     <div class="feedback" id="grfb"></div>
     <div class="center mt hidden" id="grnextRow"><button class="btn teal" onclick="nextGRQ()">Câu tiếp theo ➜</button></div>`;
   window._grOrder=order;
