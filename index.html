@@ -80,6 +80,14 @@ header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 0 4p
 .ielts-word-row .iw-en{font-weight:700;color:#0f172a;font-size:14px}
 .ielts-word-row .iw-ex{display:block;font-style:italic;color:#94a3b8;font-size:11px;margin-top:2px}
 .ielts-word-row .iw-vn{color:#0f766e;font-weight:700;font-size:13px;white-space:nowrap}
+.cefr{display:inline-block;font-size:9.5px;font-weight:900;letter-spacing:.5px;padding:2px 6px;border-radius:6px;margin-right:6px;vertical-align:2px;color:#fff}
+.cefr.B1{background:#16a34a}.cefr.B2{background:#0891b2}.cefr.C1{background:#ea580c}.cefr.C2{background:#9333ea}
+.lvfilter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.lvfilter button{padding:5px 13px;border-radius:16px;border:2px solid #e2e8f0;background:#fff;font-weight:800;cursor:pointer;font-size:12px;transition:.15s}
+.lvfilter button.on{background:#0f766e;color:#fff;border-color:#0f766e}
+.qtimer{height:9px;background:#e2e8f0;border-radius:9px;overflow:hidden;margin:6px 0 9px}
+.qtimer>i{display:block;height:100%;background:linear-gradient(90deg,#16a34a,#facc15);transition:width .1s linear}
+.qtimer.warn>i{background:linear-gradient(90deg,#f97316,#dc2626)}
 .para-group{background:#fff;border:2px solid #e0f2fe;border-radius:14px;padding:12px 14px;margin-bottom:9px}
 .para-group .pg-head{font-weight:800;font-size:15px;color:#0369a1;margin-bottom:3px}
 .para-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
@@ -787,6 +795,7 @@ function go(s){
   if(s==='writing')writingHome();
   if(s==='games')gamesHome();
   if(s==='board'){renderBoard();renderBadges()}
+  if(s!=='ielts'){try{_iqStop()}catch(e){}}
   if(s==='ielts'){showIELTSTab(_ieltsTab||'vocab')}
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -2284,116 +2293,196 @@ function _survBoss(){return SURV_BOSSES[Math.floor(GM.totalQ/5)%SURV_BOSSES.leng
 /* ================= 📝 IELTS VOCAB HUB ================= */
 const IELTS_TOPICS=[
   {id:'edu',em:'🎓',name:'Education',words:[
-    ['curriculum','chương trình học','a standardized curriculum'],
-    ['scholarship','học bổng','win a scholarship'],
-    ['academic','học thuật','academic achievement'],
-    ['literacy','biết đọc biết viết','improve literacy rates'],
-    ['tuition','học phí','pay tuition fees'],
-    ['compulsory','bắt buộc','compulsory education'],
-    ['discipline','kỷ luật/môn học','academic discipline'],
-    ['extracurricular','ngoại khóa','extracurricular activities'],
-    ['prestigious','uy tín','a prestigious university'],
-    ['vocational','nghề nghiệp','vocational training'],
-    ['semester','học kỳ','spring semester'],
-    ['graduate','tốt nghiệp','graduate from university'],
+    ['curriculum','chương trình học','a standardized curriculum','B2'],
+    ['scholarship','học bổng','win a scholarship','B1'],
+    ['academic','học thuật','academic achievement','B1'],
+    ['literacy','biết đọc biết viết','improve literacy rates','B2'],
+    ['tuition','học phí','pay tuition fees','B1'],
+    ['compulsory','bắt buộc','compulsory education','B2'],
+    ['discipline','kỷ luật/môn học','academic discipline','B2'],
+    ['extracurricular','ngoại khóa','extracurricular activities','B2'],
+    ['prestigious','uy tín','a prestigious university','B2'],
+    ['vocational','nghề nghiệp','vocational training','B2'],
+    ['semester','học kỳ','spring semester','B1'],
+    ['graduate','tốt nghiệp','graduate from university','B1'],
+    ['pedagogy','phương pháp sư phạm','progressive pedagogy','C2'],
+    ['rote learning','học vẹt','rely on rote learning','C1'],
+    ['holistic','toàn diện','a holistic education','C1'],
+    ['meritocracy','chế độ trọng dụng nhân tài','an educational meritocracy','C2'],
+    ['attainment','thành tích đạt được','educational attainment','C1'],
+    ['streaming','phân ban theo năng lực','streaming pupils by ability','C1'],
+    ['truancy','tình trạng trốn học','tackle persistent truancy','C2'],
+    ['interdisciplinary','liên ngành','interdisciplinary research','C1'],
+    ['autonomy','quyền tự chủ','institutional autonomy','C1'],
+    ['indoctrination','sự nhồi nhét tư tưởng','ideological indoctrination','C2'],
   ]},
   {id:'env',em:'🌍',name:'Environment',words:[
-    ['deforestation','nạn phá rừng','stop deforestation'],
-    ['sustainable','bền vững','sustainable development'],
-    ['biodiversity','đa dạng sinh học','protect biodiversity'],
-    ['emission','khí thải','reduce carbon emissions'],
-    ['renewable','tái tạo được','renewable energy'],
-    ['ecosystem','hệ sinh thái','damage the ecosystem'],
-    ['conservation','bảo tồn','wildlife conservation'],
-    ['drought','hạn hán','severe drought'],
-    ['greenhouse gas','khí nhà kính','greenhouse gas effect'],
-    ['fossil fuel','nhiên liệu hóa thạch','burn fossil fuels'],
-    ['habitat','môi trường sống','destroy natural habitats'],
-    ['contamination','ô nhiễm','water contamination'],
+    ['deforestation','nạn phá rừng','stop deforestation','B2'],
+    ['sustainable','bền vững','sustainable development','B2'],
+    ['biodiversity','đa dạng sinh học','protect biodiversity','B2'],
+    ['emission','khí thải','reduce carbon emissions','B2'],
+    ['renewable','tái tạo được','renewable energy','B2'],
+    ['ecosystem','hệ sinh thái','damage the ecosystem','B2'],
+    ['conservation','bảo tồn','wildlife conservation','B2'],
+    ['drought','hạn hán','severe drought','B1'],
+    ['greenhouse gas','khí nhà kính','greenhouse gas effect','B2'],
+    ['fossil fuel','nhiên liệu hóa thạch','burn fossil fuels','B2'],
+    ['habitat','môi trường sống','destroy natural habitats','B2'],
+    ['contamination','ô nhiễm','water contamination','B2'],
+    ['mitigation','sự giảm thiểu tác động','climate change mitigation','C1'],
+    ['carbon footprint','dấu chân carbon','reduce your carbon footprint','C1'],
+    ['depletion','sự cạn kiệt','the depletion of natural resources','C1'],
+    ['degradation','sự suy thoái','widespread environmental degradation','C1'],
+    ['resilience','khả năng chống chịu','build climate resilience','C1'],
+    ['offset','bù trừ (khí thải)','carbon offset schemes','C1'],
+    ['anthropogenic','do con người gây ra','anthropogenic climate change','C2'],
+    ['desertification','sa mạc hóa','halt desertification','C2'],
+    ['acidification','sự axit hóa','ocean acidification','C2'],
+    ['sequestration','sự chôn giữ (carbon)','carbon sequestration','C2'],
   ]},
   {id:'tech',em:'💻',name:'Technology',words:[
-    ['innovation','đổi mới','technological innovation'],
-    ['artificial intelligence','trí tuệ nhân tạo','AI applications'],
-    ['automation','tự động hóa','factory automation'],
-    ['algorithm','thuật toán','complex algorithm'],
-    ['surveillance','giám sát','surveillance cameras'],
-    ['cybercrime','tội phạm mạng','prevent cybercrime'],
-    ['obsolete','lỗi thời','become obsolete quickly'],
-    ['prototype','bản mẫu','develop a prototype'],
-    ['data privacy','quyền riêng tư dữ liệu','protect data privacy'],
-    ['digital divide','khoảng cách kỹ thuật số','bridge the digital divide'],
-    ['renewable tech','công nghệ tái tạo','invest in renewable tech'],
-    ['virtual reality','thực tế ảo','virtual reality headset'],
+    ['innovation','đổi mới','technological innovation','B2'],
+    ['artificial intelligence','trí tuệ nhân tạo','AI applications','B1'],
+    ['automation','tự động hóa','factory automation','B2'],
+    ['algorithm','thuật toán','complex algorithm','B2'],
+    ['surveillance','giám sát','surveillance cameras','B2'],
+    ['cybercrime','tội phạm mạng','prevent cybercrime','B2'],
+    ['obsolete','lỗi thời','become obsolete quickly','C1'],
+    ['prototype','bản mẫu','develop a prototype','B2'],
+    ['data privacy','quyền riêng tư dữ liệu','protect data privacy','B2'],
+    ['digital divide','khoảng cách kỹ thuật số','bridge the digital divide','C1'],
+    ['renewable tech','công nghệ tái tạo','invest in renewable tech','B2'],
+    ['virtual reality','thực tế ảo','virtual reality headset','B1'],
+    ['encryption','sự mã hóa','end-to-end encryption','C1'],
+    ['autonomous','tự hành','autonomous vehicles','C1'],
+    ['scalability','khả năng mở rộng','the scalability of the platform','C1'],
+    ['disruptive','mang tính đột phá','disruptive technology','C1'],
+    ['redundant','bị dôi dư / cho thôi việc','workers made redundant by robots','C1'],
+    ['ubiquitous','có mặt khắp nơi','smartphones are now ubiquitous','C2'],
+    ['proliferation','sự sinh sôi lan rộng','the proliferation of fake accounts','C2'],
+    ['interoperability','khả năng liên thông','interoperability between systems','C2'],
+    ['obsolescence','sự lỗi thời','planned obsolescence','C2'],
+    ['encryption backdoor','cửa hậu giải mã','demand an encryption backdoor','C2'],
   ]},
   {id:'health',em:'❤️',name:'Health & Medicine',words:[
-    ['obesity','béo phì','childhood obesity'],
-    ['epidemic','dịch bệnh','global epidemic'],
-    ['diagnosis','chẩn đoán','early diagnosis'],
-    ['sedentary','ít vận động','sedentary lifestyle'],
-    ['nutrition','dinh dưỡng','proper nutrition'],
-    ['mortality','tỷ lệ tử vong','infant mortality rate'],
-    ['vaccination','tiêm chủng','vaccination program'],
-    ['chronic','mãn tính','chronic disease'],
-    ['mental health','sức khỏe tâm thần','mental health awareness'],
-    ['immune system','hệ miễn dịch','boost the immune system'],
-    ['preventable','có thể phòng ngừa','preventable illness'],
-    ['pharmaceutical','dược phẩm','pharmaceutical industry'],
+    ['obesity','béo phì','childhood obesity','B2'],
+    ['epidemic','dịch bệnh','global epidemic','B2'],
+    ['diagnosis','chẩn đoán','early diagnosis','B2'],
+    ['sedentary','ít vận động','sedentary lifestyle','C1'],
+    ['nutrition','dinh dưỡng','proper nutrition','B1'],
+    ['mortality','tỷ lệ tử vong','infant mortality rate','B2'],
+    ['vaccination','tiêm chủng','vaccination program','B1'],
+    ['chronic','mãn tính','chronic disease','B2'],
+    ['mental health','sức khỏe tâm thần','mental health awareness','B1'],
+    ['immune system','hệ miễn dịch','boost the immune system','B2'],
+    ['preventable','có thể phòng ngừa','preventable illness','B2'],
+    ['pharmaceutical','dược phẩm','pharmaceutical industry','C1'],
+    ['prognosis','tiên lượng bệnh','a poor prognosis','C1'],
+    ['alleviate','làm dịu / giảm nhẹ','alleviate the symptoms','C1'],
+    ['susceptible','dễ mắc / dễ bị','susceptible to infection','C1'],
+    ['longevity','tuổi thọ','increased human longevity','C1'],
+    ['sanitation','vệ sinh môi trường','access to clean sanitation','C1'],
+    ['contagious','dễ lây lan','a highly contagious virus','C1'],
+    ['placebo','giả dược','the placebo effect','C1'],
+    ['comorbidity','bệnh nền đi kèm','patients with comorbidities','C2'],
+    ['debilitating','gây suy nhược','a debilitating illness','C2'],
+    ['prophylactic','có tính phòng ngừa','prophylactic treatment','C2'],
   ]},
   {id:'soc',em:'🏙️',name:'Society & Culture',words:[
-    ['globalization','toàn cầu hóa','effects of globalization'],
-    ['urbanization','đô thị hóa','rapid urbanization'],
-    ['inequality','bất bình đẳng','social inequality'],
-    ['immigration','di dân','immigration policy'],
-    ['diversity','đa dạng','cultural diversity'],
-    ['prejudice','thành kiến','overcome prejudice'],
-    ['cohesion','sự gắn kết','social cohesion'],
-    ['welfare','phúc lợi','social welfare'],
-    ['discrimination','phân biệt','face discrimination'],
-    ['assimilation','đồng hóa','cultural assimilation'],
-    ['poverty','đói nghèo','eradicate poverty'],
-    ['census','điều tra dân số','national census'],
+    ['globalization','toàn cầu hóa','effects of globalization','B2'],
+    ['urbanization','đô thị hóa','rapid urbanization','B2'],
+    ['inequality','bất bình đẳng','social inequality','B2'],
+    ['immigration','di dân','immigration policy','B1'],
+    ['diversity','đa dạng','cultural diversity','B1'],
+    ['prejudice','thành kiến','overcome prejudice','B2'],
+    ['cohesion','sự gắn kết','social cohesion','C1'],
+    ['welfare','phúc lợi','social welfare','B2'],
+    ['discrimination','phân biệt','face discrimination','B2'],
+    ['assimilation','đồng hóa','cultural assimilation','C1'],
+    ['poverty','đói nghèo','eradicate poverty','B1'],
+    ['census','điều tra dân số','national census','B2'],
+    ['marginalized','bị gạt ra bên lề','marginalized communities','C1'],
+    ['demographic','thuộc nhân khẩu học','a demographic shift','C1'],
+    ['integration','sự hòa nhập','social integration','C1'],
+    ['disparity','sự chênh lệch','a widening income disparity','C1'],
+    ['norms','chuẩn mực','challenge social norms','C1'],
+    ['solidarity','tình đoàn kết','a sense of solidarity','C1'],
+    ['stratification','sự phân tầng','rigid social stratification','C2'],
+    ['xenophobia','tâm lý bài ngoại','rising xenophobia','C2'],
+    ['egalitarian','chủ trương bình đẳng','an egalitarian society','C2'],
+    ['gentrification','sự cao cấp hóa khu phố','urban gentrification','C2'],
   ]},
   {id:'work',em:'💼',name:'Work & Economy',words:[
-    ['unemployment','thất nghiệp','high unemployment rate'],
-    ['productivity','năng suất','boost productivity'],
-    ['entrepreneur','doanh nhân','successful entrepreneur'],
-    ['inflation','lạm phát','control inflation'],
-    ['recession','suy thoái','economic recession'],
-    ['outsourcing','thuê ngoài','cost outsourcing'],
-    ['revenue','doanh thu','annual revenue'],
-    ['expenditure','chi tiêu','government expenditure'],
-    ['monopoly','độc quyền','market monopoly'],
-    ['subsidize','trợ cấp','subsidize farmers'],
-    ['incentive','khuyến khích','financial incentive'],
-    ['workforce','lực lượng lao động','skilled workforce'],
+    ['unemployment','thất nghiệp','high unemployment rate','B1'],
+    ['productivity','năng suất','boost productivity','B2'],
+    ['entrepreneur','doanh nhân','successful entrepreneur','B2'],
+    ['inflation','lạm phát','control inflation','B2'],
+    ['recession','suy thoái','economic recession','B2'],
+    ['outsourcing','thuê ngoài','cost outsourcing','C1'],
+    ['revenue','doanh thu','annual revenue','B2'],
+    ['expenditure','chi tiêu','government expenditure','C1'],
+    ['monopoly','độc quyền','market monopoly','B2'],
+    ['subsidize','trợ cấp','subsidize farmers','C1'],
+    ['incentive','khuyến khích','financial incentive','B2'],
+    ['workforce','lực lượng lao động','skilled workforce','B2'],
+    ['stagnation','sự trì trệ','years of wage stagnation','C1'],
+    ['fiscal','thuộc tài khóa','tighten fiscal policy','C1'],
+    ['deficit','thâm hụt','a growing trade deficit','C1'],
+    ['lucrative','sinh lời cao','a lucrative career','C1'],
+    ['redundancy','sự cắt giảm nhân sự','voluntary redundancy','C1'],
+    ['diversify','đa dạng hóa','diversify the economy','C1'],
+    ['remuneration','thù lao','generous remuneration','C2'],
+    ['liquidity','tính thanh khoản','a liquidity crisis','C2'],
+    ['austerity','chính sách thắt lưng buộc bụng','harsh austerity measures','C2'],
+    ['precarious','bấp bênh','precarious employment','C2'],
   ]},
   {id:'media',em:'📺',name:'Media & Communication',words:[
-    ['propaganda','tuyên truyền','state propaganda'],
-    ['censorship','kiểm duyệt','media censorship'],
-    ['broadcast','phát sóng','broadcast live news'],
-    ['bias','thiên vị','media bias'],
-    ['disinformation','tin sai lệch','spread disinformation'],
-    ['journalism','báo chí','investigative journalism'],
-    ['viral','lan truyền','go viral online'],
-    ['algorithm','thuật toán','social media algorithm'],
-    ['transparency','minh bạch','media transparency'],
-    ['influence','ảnh hưởng','influence public opinion'],
-    ['saturated','bão hòa','market saturated with ads'],
-    ['anonymous','ẩn danh','post anonymously'],
+    ['propaganda','tuyên truyền','state propaganda','B2'],
+    ['censorship','kiểm duyệt','media censorship','B2'],
+    ['broadcast','phát sóng','broadcast live news','B1'],
+    ['bias','thiên vị','media bias','B2'],
+    ['disinformation','tin sai lệch','spread disinformation','C1'],
+    ['journalism','báo chí','investigative journalism','B1'],
+    ['viral','lan truyền','go viral online','B1'],
+    ['algorithm','thuật toán','social media algorithm','B2'],
+    ['transparency','minh bạch','media transparency','B2'],
+    ['influence','ảnh hưởng','influence public opinion','B1'],
+    ['saturated','bão hòa','market saturated with ads','C1'],
+    ['anonymous','ẩn danh','post anonymously','B2'],
+    ['credibility','độ tin cậy','the paper lost all credibility','C1'],
+    ['narrative','luận điệu / lối kể','control the public narrative','C1'],
+    ['scrutiny','sự soi xét kỹ','come under public scrutiny','C1'],
+    ['outlet','kênh / tòa soạn','independent news outlets','C1'],
+    ['clickbait','mồi nhấp chuột','misleading clickbait headlines','C1'],
+    ['sensationalism','lối giật gân','tabloid sensationalism','C2'],
+    ['echo chamber','buồng vang dư luận','trapped in an echo chamber','C2'],
+    ['defamation','sự phỉ báng','sue for defamation','C2'],
+    ['pundit','nhà bình luận','political pundits','C2'],
+    ['pervasive','lan tràn khắp nơi','the pervasive influence of ads','C2'],
   ]},
   {id:'gov',em:'⚖️',name:'Government & Law',words:[
-    ['legislation','luật pháp','introduce new legislation'],
-    ['penalty','hình phạt','severe penalty'],
-    ['corruption','tham nhũng','fight corruption'],
-    ['rehabilitation','cải tạo','criminal rehabilitation'],
-    ['democratic','dân chủ','democratic system'],
-    ['referendum','trưng cầu dân ý','hold a referendum'],
-    ['treaty','hiệp ước','international treaty'],
-    ['sanction','chế tài','economic sanction'],
-    ['bureaucracy','quan liêu','excessive bureaucracy'],
-    ['accountability','trách nhiệm','political accountability'],
-    ['jurisdiction','quyền tài phán','legal jurisdiction'],
-    ['enforcement','thực thi','law enforcement'],
+    ['legislation','luật pháp','introduce new legislation','B2'],
+    ['penalty','hình phạt','severe penalty','B1'],
+    ['corruption','tham nhũng','fight corruption','B2'],
+    ['rehabilitation','cải tạo','criminal rehabilitation','C1'],
+    ['democratic','dân chủ','democratic system','B1'],
+    ['referendum','trưng cầu dân ý','hold a referendum','C1'],
+    ['treaty','hiệp ước','international treaty','B2'],
+    ['sanction','chế tài','economic sanction','C1'],
+    ['bureaucracy','quan liêu','excessive bureaucracy','C1'],
+    ['accountability','trách nhiệm','political accountability','B2'],
+    ['jurisdiction','quyền tài phán','legal jurisdiction','C1'],
+    ['enforcement','thực thi','law enforcement','B2'],
+    ['mandate','sự ủy nhiệm của cử tri','a clear electoral mandate','C1'],
+    ['deterrent','biện pháp răn đe','act as a strong deterrent','C1'],
+    ['judiciary','ngành tư pháp','an independent judiciary','C1'],
+    ['coalition','liên minh cầm quyền','form a coalition government','C1'],
+    ['lobbying','vận động hành lang','corporate lobbying','C1'],
+    ['constituency','khu vực bầu cử','a marginal constituency','C2'],
+    ['ratify','phê chuẩn','ratify the treaty','C2'],
+    ['autocracy','chế độ chuyên quyền','slide into autocracy','C2'],
+    ['impunity','sự không bị trừng phạt','act with impunity','C2'],
+    ['devolution','sự phân quyền cho địa phương','political devolution','C2'],
   ]},
 ];
 const IELTS_PARA=[
@@ -2423,7 +2512,7 @@ function goIELTS(){
   showIELTSTab('vocab');
 }
 function showIELTSTab(tab){
-  _ieltsTab=tab;
+  _ieltsTab=tab;try{_iqStop()}catch(e){}
   const tabs=['vocab','para','quiz','game'];
   document.querySelectorAll('#ieltsSubtab button').forEach((b,i)=>b.classList.toggle('on',tabs[i]===tab));
   if(tab==='vocab')_ieltsVocab();
@@ -2431,20 +2520,35 @@ function showIELTSTab(tab){
   else if(tab==='quiz')_ieltsQuiz();
   else _ieltsFlash();
 }
+const CEFR_ORDER=['B1','B2','C1','C2'];
+const CEFR_INFO={B1:'nền tảng',B2:'band 6.0-6.5',C1:'band 7.0-7.5',C2:'band 8.0+'};
+let _ieltsLv='all';
+function _ieltsAll(lv){const a=IELTS_TOPICS.flatMap(t=>t.words);return (lv&&lv!=='all')?a.filter(w=>w[3]===lv):a}
+function _ieltsSetLv(lv){_ieltsLv=lv;_ieltsVocab(_ieltsTopic);}
+let _ieltsTopic=null;
+function _lvBar(cur,fn){
+  return `<div class="lvfilter"><button class="${cur==='all'?'on':''}" onclick="${fn}('all')">🎯 Tất cả</button>`+
+    CEFR_ORDER.map(b=>`<button class="${cur===b?'on':''}" onclick="${fn}('${b}')">${b} · ${CEFR_INFO[b]}</button>`).join('')+`</div>`;
+}
 function _ieltsVocab(topicId){
-  const el=$('ieltsContent');
+  const el=$('ieltsContent');_ieltsTopic=topicId||null;
   if(!topicId){
-    el.innerHTML=`<div class="ielts-topic-grid">`+
-      IELTS_TOPICS.map(t=>`<div class="ielts-topic-card" onclick="_ieltsVocab('${t.id}')"><span class="tc-em">${t.em}</span><div class="tc-nm">${t.name}</div><div class="tc-cnt">${t.words.length} từ</div></div>`).join('')+
-      `</div>`;
+    const cnt=t=>_ieltsLv==='all'?t.words.length:t.words.filter(w=>w[3]===_ieltsLv).length;
+    el.innerHTML=_lvBar(_ieltsLv,'_ieltsSetLv')+
+      `<div class="ielts-topic-grid">`+
+      IELTS_TOPICS.map(t=>`<div class="ielts-topic-card" onclick="_ieltsVocab('${t.id}')"><span class="tc-em">${t.em}</span><div class="tc-nm">${t.name}</div><div class="tc-cnt">${cnt(t)} từ</div></div>`).join('')+
+      `</div><p class="sub" style="margin-top:10px">Tổng cộng <b>${_ieltsAll('all').length} từ</b> — ${CEFR_ORDER.map(b=>`<b style="color:#0f766e">${_ieltsAll(b).length}</b> từ ${b}`).join(' · ')}</p>`;
     return;
   }
   const t=IELTS_TOPICS.find(x=>x.id===topicId);
   if(!t)return;
+  let ws=t.words.slice().sort((a,b)=>CEFR_ORDER.indexOf(a[3])-CEFR_ORDER.indexOf(b[3]));
+  if(_ieltsLv!=='all')ws=ws.filter(w=>w[3]===_ieltsLv);
   el.innerHTML=`<button class="btn ghost sm" onclick="_ieltsVocab()" style="margin-bottom:10px">← Chủ đề</button>
-    <h3 style="margin:0 0 10px">${t.em} ${t.name}</h3>
-    <div class="ielts-word-list">`+
-    t.words.map(([en,vn,ex])=>`<div class="ielts-word-row"><div><span class="iw-en">${en}</span><span class="iw-ex">"${ex}"</span></div><span class="iw-vn">${vn}</span></div>`).join('')+
+    <h3 style="margin:0 0 10px">${t.em} ${t.name} <small style="color:#64748b;font-weight:600">(${ws.length} từ)</small></h3>`+
+    _lvBar(_ieltsLv,'_ieltsSetLv')+
+    `<div class="ielts-word-list">`+
+    (ws.length?ws.map(([en,vn,ex,lv])=>`<div class="ielts-word-row"><div><span class="cefr ${lv||'B2'}">${lv||'B2'}</span><span class="iw-en">${en}</span><span class="iw-ex">"${ex}"</span></div><span class="iw-vn">${vn}</span></div>`).join(''):'<p class="sub">Chủ đề này chưa có từ ở mức đã chọn.</p>')+
     `</div>`;
 }
 function _ieltsParaList(){
@@ -2452,44 +2556,124 @@ function _ieltsParaList(){
   el.innerHTML=`<p class="sub" style="margin-bottom:10px">Dùng từ đồng nghĩa để paraphrase trong IELTS Writing & Speaking — tránh lặp từ!</p>`+
     IELTS_PARA.map(p=>`<div class="para-group"><div class="pg-head">${p.word} <span style="font-size:12px;color:#64748b;font-weight:400">= ${p.vn}</span></div><div class="para-chips"><span class="para-chip main">${p.word}</span>${p.syns.map(s=>`<span class="para-chip">${s}</span>`).join('')}</div></div>`).join('');
 }
-function _ieltsQuiz(){
-  const el=$('ieltsContent');
-  const allW=IELTS_TOPICS.flatMap(t=>t.words);
-  const qs=[];
-  // 6 vocab questions
-  for(let i=0;i<6;i++){
-    const w=allW[Math.floor(Math.random()*allW.length)];
-    const wrongs=allW.filter(x=>x[1]!==w[1]).sort(()=>Math.random()-.5).slice(0,3).map(x=>x[1]);
-    const opts=[w[1],...wrongs].sort(()=>Math.random()-.5);
-    qs.push({q:`"${w[0]}" có nghĩa là gì?`,opts,ans:w[1],exp:`${w[0]} = ${w[1]}`});
-  }
-  // 4 paraphrase questions
-  for(let i=0;i<4;i++){
-    const p=IELTS_PARA[Math.floor(Math.random()*IELTS_PARA.length)];
-    const right=p.syns[Math.floor(Math.random()*p.syns.length)];
-    const others=IELTS_PARA.filter(x=>x.word!==p.word).flatMap(x=>x.syns).sort(()=>Math.random()-.5).slice(0,3);
-    const opts=[right,...others].sort(()=>Math.random()-.5);
-    qs.push({q:`Paraphrase của "${p.word}" (${p.vn}) là?`,opts,ans:right,exp:`${p.word} → ${right}`});
-  }
-  qs.sort(()=>Math.random()-.5);
-  let cur=0,score=0;
-  function render(){
-    if(cur>=qs.length){
-      el.innerHTML=`<div class="result"><div class="face">${score>=8?'🏆':score>=5?'🎉':'💪'}</div><h3>${score}/${qs.length} câu đúng</h3><p>${score>=8?'Xuất sắc! IELTS ready! 🌟':score>=5?'Tốt lắm! Cố thêm nữa!':'Ôn lại rồi thử lại nhé!'}</p><button class="btn" onclick="_ieltsQuiz()">🔄 Làm lại</button></div>`;
-      gainXP(score*3);if(score>=8)sndWin();return;
+/* ===== ⚡ IELTS QUIZ — chia MÀN, khó dần, đồng hồ 4 giây ===== */
+let _iqStage=+(localStorage.getItem('efz_iqstage')||1)||1, _iqBest=+(localStorage.getItem('efz_iqbest')||1)||1, _iqTimer=null;
+const IQ_PER_STAGE=10;
+function _iqPlan(st){
+  /* mức từ, số đáp án, dạng câu, giây suy nghĩ — càng lên màn càng ngặt */
+  const P=[
+    {bands:['B1','B2'],       n:4,kinds:['meaning','word','meaning','colloc'],                        t:5},
+    {bands:['B2'],            n:4,kinds:['meaning','word','cloze','colloc','para'],                   t:5},
+    {bands:['B2','C1'],       n:4,kinds:['meaning','word','cloze','colloc','para'],                   t:4},
+    {bands:['C1'],            n:5,kinds:['meaning','word','cloze','colloc','para','notsyn'],          t:4},
+    {bands:['C1'],            n:5,kinds:['word','cloze','colloc','para','notsyn','meaning'],          t:4},
+    {bands:['C1','C2'],       n:5,kinds:['word','cloze','colloc','notsyn','para'],                    t:4},
+    {bands:['C2'],            n:6,kinds:['word','cloze','colloc','notsyn','para'],                    t:4},
+    {bands:['C2'],            n:6,kinds:['word','cloze','colloc','notsyn'],                           t:3},
+  ];
+  const q=P[Math.min(st-1,P.length-1)];
+  /* từ màn 9 trở đi: toàn C2, 6 đáp án, 3 giây */
+  return st<=P.length?q:{bands:['C2','C1'],n:6,kinds:['word','cloze','colloc','notsyn'],t:3};
+}
+function _iqStop(){if(_iqTimer){clearInterval(_iqTimer);_iqTimer=null}}
+function _iqSetStage(st){_iqStage=Math.max(1,Math.min(_iqBest,st));localStorage.setItem('efz_iqstage',_iqStage);_ieltsQuiz();}
+function _iqPickBand(bands){
+  let pool=IELTS_TOPICS.flatMap(t=>t.words.map(w=>[w,t]));
+  let f=pool.filter(([w])=>bands.indexOf(w[3])>=0);
+  return f.length>=8?f:pool;
+}
+function _iqMake(plan){
+  const pool=_iqPickBand(plan.bands),n=plan.n;
+  const kind=plan.kinds[Math.floor(Math.random()*plan.kinds.length)];
+  const [w,tp]=pool[Math.floor(Math.random()*pool.length)];
+  const others=(arr,k,key)=>shuffle(arr.filter(key)).slice(0,k);
+  if(kind==='para'||kind==='notsyn'){
+    const pr=IELTS_PARA[Math.floor(Math.random()*IELTS_PARA.length)];
+    if(kind==='para'){
+      const right=pr.syns[Math.floor(Math.random()*pr.syns.length)];
+      const wr=shuffle(IELTS_PARA.filter(x=>x.word!==pr.word).flatMap(x=>x.syns)).slice(0,n-1);
+      return{q:`🔄 Từ nào <b>paraphrase</b> đúng cho "<b>${pr.word}</b>" (${pr.vn})?`,opts:shuffle([right,...wr]),ans:right,exp:`${pr.word} → ${right}`,t:plan.t};
     }
-    const q=qs[cur];
-    el.innerHTML=`<div style="font-size:12px;color:var(--muted);margin-bottom:6px">Câu ${cur+1}/${qs.length}</div><div class="q-box" style="margin-bottom:10px"><b>${q.q}</b></div>`+
-      q.opts.map((o,i)=>`<button class="opt" onclick="_ieltsAns(this,'${o.replace(/'/g,"\\'")}','${q.ans.replace(/'/g,"\\'")}','${q.exp.replace(/'/g,"\\'")}',${cur})">${o}</button>`).join('');
+    const keep=shuffle(pr.syns).slice(0,n-1);
+    const other=IELTS_PARA.filter(x=>x.word!==pr.word);
+    const o2=other[Math.floor(Math.random()*other.length)];
+    const wrong=o2.syns[Math.floor(Math.random()*o2.syns.length)];
+    return{q:`❌ Từ nào <b>KHÔNG</b> cùng nghĩa với "<b>${pr.word}</b>" (${pr.vn})?`,opts:shuffle([wrong,...keep]),ans:wrong,exp:`"${wrong}" thuộc nhóm "${o2.word}" (${o2.vn}), không phải "${pr.word}"`,t:plan.t+1};
   }
-  window._ieltsAns=function(btn,chosen,ans,exp,idx){
+  if(kind==='cloze'){
+    const ex=w[2],re=new RegExp('\\b'+w[0].replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i');
+    if(re.test(ex)){
+      const wr=shuffle(pool.filter(([x])=>x[0]!==w[0])).slice(0,n-1).map(([x])=>x[0]);
+      return{q:`📝 Điền từ vào chỗ trống:<br><b style="font-size:16px">"${ex.replace(re,'______')}"</b>`,opts:shuffle([w[0],...wr]),ans:w[0],exp:`${w[0]} = ${w[1]} — "${ex}"`,t:plan.t+2};
+    }
+  }
+  if(kind==='colloc'){
+    const wr=shuffle(pool.filter(([x])=>x[0]!==w[0]&&x[2]!==w[2])).slice(0,n-1).map(([x])=>x[2]);
+    return{q:`🔗 Cụm từ nào đi <b>đúng</b> với "<b>${w[0]}</b>" (${w[1]})?`,opts:shuffle([w[2],...wr]),ans:w[2],exp:`✔️ "${w[2]}" — ${w[0]} = ${w[1]}`,t:plan.t+2};
+  }
+  if(kind==='word'){
+    const wr=shuffle(pool.filter(([x])=>x[1]!==w[1])).slice(0,n-1).map(([x])=>x[0]);
+    return{q:`✍️ "<b>${w[1]}</b>" — từ tiếng Anh (${w[3]}) là?`,opts:shuffle([w[0],...wr]),ans:w[0],exp:`${w[0]} = ${w[1]} — "${w[2]}"`,t:plan.t};
+  }
+  const wr=shuffle(pool.filter(([x])=>x[1]!==w[1])).slice(0,n-1).map(([x])=>x[1]);
+  return{q:`📖 "<b>${w[0]}</b>" (${w[3]}) có nghĩa là gì?`,opts:shuffle([w[1],...wr]),ans:w[1],exp:`${w[0]} = ${w[1]} — "${w[2]}"`,t:plan.t};
+}
+function _ieltsQuiz(){
+  _iqStop();
+  const el=$('ieltsContent'),plan=_iqPlan(_iqStage);
+  const qs=[];let guard=0;
+  while(qs.length<IQ_PER_STAGE&&guard++<400){
+    const q=_iqMake(plan);
+    if(q&&q.opts.length===plan.n&&new Set(q.opts).size===plan.n&&!qs.some(x=>x.q===q.q))qs.push(q);
+  }
+  let cur=0,score=0;
+  const stageBtns=Array.from({length:Math.max(_iqBest,1)},(_,i)=>i+1)
+    .map(i=>`<button class="${i===_iqStage?'on':''}" onclick="_iqSetStage(${i})">Màn ${i}</button>`).join('');
+  function head(){
+    return `<div class="lvfilter">${stageBtns}${_iqBest>=9?'<button style="border-color:#9333ea;color:#9333ea">♾️ C2</button>':''}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px">
+        <span>🏁 Màn ${_iqStage} · mức ${plan.bands.join('/')} · ${plan.n} đáp án</span><span>Câu ${cur+1}/${IQ_PER_STAGE} · ✅ ${score}</span></div>`;
+  }
+  function render(){
+    _iqStop();
+    if(cur>=qs.length){
+      const pass=score>=8;
+      if(pass&&_iqStage>=_iqBest){_iqBest=_iqStage+1;localStorage.setItem('efz_iqbest',_iqBest)}
+      el.innerHTML=`<div class="result"><div class="face">${score>=9?'🏆':pass?'🎉':score>=5?'💪':'📚'}</div>
+        <h3>Màn ${_iqStage}: ${score}/${IQ_PER_STAGE} câu đúng</h3>
+        <p>${pass?'Qua màn! Mở khoá <b>Màn '+(_iqStage+1)+'</b> khó hơn 🔥':'Cần <b>8/10</b> mới qua màn. Ôn lại rồi thử lại nhé!'}</p>
+        <div class="row" style="gap:8px;justify-content:center;margin-top:10px">
+          ${pass?`<button class="btn" onclick="_iqSetStage(${_iqStage+1})">➡️ Màn ${_iqStage+1}</button>`:''}
+          <button class="btn ghost" onclick="_ieltsQuiz()">🔄 Làm lại màn ${_iqStage}</button></div></div>`;
+      gainXP(score*3+(pass?10:0));if(pass)sndWin();return;
+    }
+    const q=qs[cur];let left=q.t*10;
+    el.innerHTML=head()+
+      `<div class="qtimer" id="iqbar"><i style="width:100%"></i></div>
+       <div class="q-box" style="margin-bottom:10px"><b>${q.q}</b></div>`+
+      q.opts.map(o=>`<button class="opt" onclick="_ieltsAns(this,${JSON.stringify(o).replace(/"/g,'&quot;')})">${o}</button>`).join('');
+    _iqTimer=setInterval(()=>{
+      left--;
+      const bar=$('iqbar');if(!bar){_iqStop();return}
+      bar.firstChild.style.width=Math.max(0,left/(q.t*10)*100)+'%';
+      bar.classList.toggle('warn',left<=q.t*10*.35);
+      if(left<=0){_iqStop();_ieltsAns(null,null)}
+    },100);
+  }
+  window._ieltsAns=function(btn,chosen){
+    _iqStop();
+    const q=qs[cur];if(!q)return;
     document.querySelectorAll('#ieltsContent .opt').forEach(b=>b.disabled=true);
-    const ok=chosen===ans;
-    btn.style.background=ok?'#dcfce7':'#fee2e2';btn.style.borderColor=ok?'#16a34a':'#dc2626';
-    if(!ok)document.querySelectorAll('#ieltsContent .opt').forEach(b=>{if(b.textContent.trim()===ans){b.style.background='#dcfce7';b.style.borderColor='#16a34a';}});
+    const ok=chosen===q.ans;
+    if(btn){btn.style.background=ok?'#dcfce7':'#fee2e2';btn.style.borderColor=ok?'#16a34a':'#dc2626';}
+    if(!ok)document.querySelectorAll('#ieltsContent .opt').forEach(b=>{if(b.textContent.trim()===String(q.ans).trim()){b.style.background='#dcfce7';b.style.borderColor='#16a34a';}});
     if(ok){score++;sndOK();}else sndNo();
-    const d=document.createElement('div');d.style.cssText='margin-top:8px;padding:8px 12px;background:#f1f5f9;border-radius:10px;font-size:13px;color:#475569';d.textContent='💡 '+exp;el.appendChild(d);
-    setTimeout(()=>{cur++;render();},1300);
+    const d=document.createElement('div');
+    d.style.cssText='margin-top:8px;padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;'+(ok?'background:#f0fdf4;color:#166534':'background:#fef2f2;color:#991b1b');
+    d.innerHTML=(chosen===null?'⏰ <b>Hết giờ — tính SAI!</b><br>':(ok?'✅ ':'❌ '))+'💡 '+esc(q.exp);
+    el.appendChild(d);
+    /* giữ phần giải thích lâu hơn để học sinh kịp đọc */
+    setTimeout(()=>{cur++;render();},chosen===null?3600:2800);
   };
   render();
 }
@@ -2706,7 +2890,7 @@ function td2TowerName(t){return td2Evo(t.type,t.level)[2]+td2Rank(t.level)+((t.s
 /* Các loại quái — hệ số nhân trên máu chuẩn của đợt */
 const TD_KIND={
  grunt :{em:['👾','🐛','🐀','🕷️'],hp:1,   sp:1,   armor:0,name:'Quái thường',from:1},
- runner:{em:['🦗','🐇'],          hp:.55, sp:1.7, armor:0,name:'Chạy nhanh',from:4},
+ runner:{em:['🦗','🐇'],          hp:.55, sp:1.8, armor:0,name:'Chạy nhanh',from:2},
  tank  :{em:['🐢','🦏'],          hp:2.4, sp:.62, armor:1,name:'Giáp dày',from:6},
  swarm :{em:['🐜','🦟'],          hp:.32, sp:1.28,armor:0,name:'Bầy đàn',from:8},
  ghost :{em:['👻','💀'],          hp:.85, sp:1.15,armor:0,noSlow:true,name:'Ma trơi (miễn làm chậm)',from:10},
@@ -2746,17 +2930,25 @@ const TD_MAPS=[
 ];
 /* ⚡ Phép chiến đấu — mua bằng vàng, có hồi chiêu */
 const TD_SPELLS={
- freeze:{em:'❄️',name:'Đóng băng',at:1, desc:'Làm chậm <b>70%</b> tất cả quái trong 6 giây',cd:14,cost:r=>120+r*8},
- bomb  :{em:'☄️',name:'Thiên thạch',at:5, desc:'Nổ khắp bản đồ, <b>bỏ qua giáp</b>, sát thương rất lớn',cd:20,cost:r=>200+r*16},
- wall  :{em:'🛡️',name:'Tường lính',at:12,desc:'Gọi <b>5 lính 💂</b> chặn ngang đường — quái phải đánh mới qua',cd:25,cost:r=>250+r*18},
- rage  :{em:'⚡',name:'Cuồng nộ',at:25,desc:'<b>Mọi trụ bắn nhanh gấp đôi</b> trong 10 giây',cd:30,cost:r=>380+r*26},
- heal  :{em:'💚',name:'Hồi sinh',at:30,desc:'Hồi <b>+5 ❤️</b> cho thành (tối đa 40)',cd:60,cost:r=>500+r*40},
- storm :{em:'🌀',name:'Lốc xoáy',at:40,desc:'<b>Đẩy lùi</b> toàn bộ quái về sau 250 bước',cd:35,cost:r=>600+r*45},
- apoc  :{em:'☢️',name:'Huỷ diệt',at:60,desc:'Sát thương <b>cực lớn</b> toàn bản đồ — bỏ qua giáp lẫn khiên',cd:70,cost:r=>1200+r*90}
+ freeze:{em:'❄️',name:'Đóng băng',at:1, desc:'Làm chậm <b>70%</b> tất cả quái trong 6 giây',cd:16,mult:1.8, min:130},
+ bomb  :{em:'☄️',name:'Thiên thạch',at:5, desc:'Nổ khắp bản đồ, <b>bỏ qua giáp</b>, sát thương rất lớn',cd:22,mult:3.0, min:260},
+ wall  :{em:'🛡️',name:'Tường lính',at:12,desc:'Gọi <b>5 lính 💂</b> chặn ngang đường — quái phải đánh mới qua',cd:26,mult:3.6, min:340},
+ rage  :{em:'⚡',name:'Cuồng nộ',at:25,desc:'<b>Mọi trụ bắn nhanh gấp đôi</b> trong 10 giây',cd:32,mult:5.0, min:560},
+ heal  :{em:'💚',name:'Hồi sinh',at:30,desc:'Hồi <b>+5 ❤️</b> cho thành (tối đa 40)',cd:65,mult:7.5, min:900},
+ storm :{em:'🌀',name:'Lốc xoáy',at:40,desc:'<b>Đẩy lùi</b> toàn bộ quái về sau 250 bước',cd:38,mult:8.5, min:1100},
+ apoc  :{em:'☢️',name:'Huỷ diệt',at:60,desc:'Sát thương <b>cực lớn</b> toàn bản đồ — bỏ qua giáp lẫn khiên',cd:75,mult:15, min:2200}
 };
+/* 💸 Giá phép bám theo thu nhập của đợt, và MỖI LẦN DÙNG TRONG CÙNG MỘT ĐỢT thì đắt lên ~2 lần
+   → không thể spam phép để "cày" qua màn; hết đợt giá tự trở về mức gốc. */
+const TD_SPELL_ESC=2.0;
 function td2SpellAt(k){return TD_SPELLS[k].at||1}
 function td2SpellLocked(k){return GM.round<td2SpellAt(k)}
-function td2SpellCost(k){return Math.round(TD_SPELLS[k].cost(GM.round))}
+function td2SpellUses(k){return (GM&&GM.spellUse&&GM.spellUse[k])||0}
+function td2SpellBaseCost(k,r){const S=TD_SPELLS[k];return Math.max(S.min,Math.round(S.mult*td2AnsGoldAt(r)));}
+function td2SpellCost(k){
+  const r=(GM&&GM.round)||1;
+  return Math.round(td2SpellBaseCost(k,r)*Math.pow(TD_SPELL_ESC,td2SpellUses(k)));
+}
 function td2Spell(k){
   if(!GM||GM.type!=='tower2')return;
   const S=TD_SPELLS[k],cd=(GM.spellCd&&GM.spellCd[k])||0;
@@ -2766,6 +2958,8 @@ function td2Spell(k){
   if(GM.gold<cost){toast('Chưa đủ vàng! '+S.name+' cần '+cost+'🪙');return}
   if(!GM.enemies.length&&k!=='wall'&&k!=='heal'&&k!=='rage'){toast('Chưa có quái nào để dùng '+S.name+'!');return}
   GM.gold-=cost;GM.spellCd=GM.spellCd||{};GM.spellCd[k]=S.cd;
+  GM.spellUse=GM.spellUse||{};GM.spellUse[k]=(GM.spellUse[k]||0)+1;
+  if(GM.spellUse[k]>=2)toast('💸 '+S.em+' '+S.name+' lần sau trong đợt này sẽ tốn '+td2SpellCost(k).toLocaleString('vi')+'🪙 — hết đợt mới về giá gốc!');
   const base=td2BaseHP(GM.round)*td2Mod('ehp',1);
   if(k==='freeze'){
     for(const e of GM.enemies){if(e.dead)continue;e.slowT=6;e.slowP=e.boss?.6:.3}
@@ -2802,10 +2996,10 @@ function td2Spell(k){
 }
 function td2SpellBar(){
   return Object.keys(TD_SPELLS).map(k=>{
-    const S=TD_SPELLS[k],lock=td2SpellLocked(k),cd=(GM.spellCd&&GM.spellCd[k])||0,cost=td2SpellCost(k);
+    const S=TD_SPELLS[k],lock=td2SpellLocked(k),cd=(GM.spellCd&&GM.spellCd[k])||0,cost=td2SpellCost(k),u=td2SpellUses(k);
     const ok=!lock&&cd<=0&&GM.gold>=cost;
-    return `<button class="btn ${ok?'sun':'ghost'} sm" style="width:calc(25% - 3px);min-width:0;padding:5px 1px;font-size:10px;line-height:1.2;${ok?'':'opacity:.45'}" onclick="td2Spell('${k}')" title="${S.desc.replace(/<[^>]+>/g,'')}">
-      <div style="font-size:15px">${lock?'🔒':S.em}</div>${S.name}<br><b>${lock?'Đợt '+S.at:(cd>0?'⏳'+Math.ceil(cd)+'s':cost+'🪙')}</b></button>`}).join('');
+    return `<button class="btn ${ok?'sun':'ghost'} sm" style="width:calc(25% - 3px);min-width:0;padding:5px 1px;font-size:10px;line-height:1.2;${ok?'':'opacity:.45'}" onclick="td2Spell('${k}')" title="${S.desc.replace(/<[^>]+>/g,'')} — giá gấp đôi sau mỗi lần dùng trong cùng một đợt">
+      <div style="font-size:15px">${lock?'🔒':S.em}</div>${S.name}${u?`<span style="color:#dc2626">×${u+1}</span>`:''}<br><b>${lock?'Đợt '+S.at:(cd>0?'⏳'+Math.ceil(cd)+'s':cost.toLocaleString('vi')+'🪙')}</b></button>`}).join('');
 }
 /* 🔓 Lộ trình mở khoá — cho học sinh thấy phần thưởng phía trước */
 function td2NextUnlock(){
@@ -2853,7 +3047,7 @@ function td2Mod(k,d){const m=td2Map().mod||{};return m[k]===undefined?d:m[k]}
 function td2BaseHP(r){
   /* tăng nhanh 30 đợt đầu rồi chậm lại để chơi được tới đợt 100 */
   const a=Math.min(r-1,30),b=Math.max(0,r-31);
-  return Math.round(22*Math.pow(1.125,a)*Math.pow(1.075,b)+r*12);
+  return Math.round(32*Math.pow(1.145,a)*Math.pow(1.082,b)+r*14);
 }
 /* 💰 Kinh tế bám theo độ khó: vàng mỗi mạng quái, thưởng qua đợt và vàng trả lời
    đều tính từ máu quái của đợt đó, nên càng lên cao càng đủ tiền mua & nâng cấp */
@@ -2861,8 +3055,9 @@ function td2BaseHP(r){
 function td2GoldRef(r){return r<=60?td2BaseHP(r):Math.round(td2BaseHP(60)*(1+(r-60)*.06))}
 function td2Reward(r){return Math.max(2+Math.floor(r/4),Math.round(td2GoldRef(r)*.005))}
 function td2RoundBonus(r){return Math.max(25+r*4,Math.round(td2GoldRef(r)*.05))}
-function td2AnsGold(){const r=(GM&&GM.round)||1;return Math.max(40+r*14,Math.round(td2GoldRef(r)*.62))}
-function td2BaseSpeed(r){return 40+Math.min(r,30)*1.5+Math.max(0,r-30)*.35}
+function td2AnsGoldAt(r){return Math.max(40+r*14,Math.round(td2GoldRef(r)*.62))}
+function td2AnsGold(){return td2AnsGoldAt((GM&&GM.round)||1)}
+function td2BaseSpeed(r){return 56+Math.min(r,30)*1.8+Math.max(0,r-30)*.45}
 /* ⭐ Cấp sao của quái: từ đợt 50, cứ 12 đợt quái lên 1 sao (tối đa 6) — mạnh & dày giáp hơn */
 function td2Star(r){return Math.max(0,Math.min(6,Math.floor((r-50)/12)+ (r>=50?1:0)))}
 function td2StarHp(r){return Math.pow(1.32,td2Star(r))}
@@ -2871,7 +3066,7 @@ function startTower(mode){
   const surv=(mode==='survival');
   const M=rnd(TD_MAPS);
   GM={type:'tower2',mode:surv?'survival':'normal',map:M,gold:180,lives:25,round:1,kills:0,bossKills:0,
-      towers:[],enemies:[],minions:[],fx:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false,speed:1,spellCd:{},rageT:0,pop:[]};
+      towers:[],enemies:[],minions:[],fx:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false,speed:1,spellCd:{},spellUse:{},rageT:0,pop:[]};
   const W=M.W;
   GM.path=[];GM.total=0;
   for(let i=0;i<W.length-1;i++){const x1=W[i][0],y1=W[i][1],x2=W[i+1][0],y2=W[i+1][1];const len=Math.hypot(x2-x1,y2-y1);GM.path.push({x1,y1,x2,y2,len});GM.total+=len;}
@@ -3018,7 +3213,8 @@ function td2Preview(r){
   const ks=Object.keys(TD_KIND).filter(k=>r>=TD_KIND[k].from);
   const B=(r%5===0)?td2BossOf(r):null;
   const st=td2Star(r);
-  return `🔭 <b>Đợt ${r}</b> — máu quái ~<b>${Math.round(td2BaseHP(r)*td2StarHp(r)).toLocaleString('vi')}</b>${st?` · quái <b style="color:#d97706">${'★'.repeat(st)} tinh nhuệ</b> (+${st*2} giáp)`:''} · ${ks.map(k=>TD_KIND[k].em[0]+' '+TD_KIND[k].name).join(' · ')}`
+  const rush=r>=2?` · <b style="color:#dc2626">⚡ ĐỢT DỒN cuối đợt: ${Math.min(7,2+Math.floor(r/7))} 🏃 trinh sát (nhanh gấp 2,4) + 🏇 <b>Sứ giả</b> (dai gấp 3,4 · miễn làm chậm)</b>`:'';
+  return `🔭 <b>Đợt ${r}</b> — máu quái ~<b>${Math.round(td2BaseHP(r)*td2StarHp(r)).toLocaleString('vi')}</b>${st?` · quái <b style="color:#d97706">${'★'.repeat(st)} tinh nhuệ</b> (+${st*2} giáp)`:''} · ${ks.map(k=>TD_KIND[k].em[0]+' '+TD_KIND[k].name).join(' · ')}${rush}`
     +(B?`<br><span style="color:#dc2626">⚠️ ${B.em} <b>BOSS ${B.name}</b> · 🛡️giáp ${B.armor} · ❤️−3 nếu lọt thành — ${B.tip}<br>💡 Trụ luôn <b>ưu tiên bắn Boss</b>, nhớ đủ trụ để chặn quái thường!</span>`:'');
 }
 function td2Side(){
@@ -3275,17 +3471,17 @@ function td2Ans(k){
   const fb=$('td2qfb');
   const sw=GM.cur.sayWord,ab=td2SayBtns(GM.cur,true);
   if(o.ok){GM.gold+=td2AnsGold();P.correct++;gainXP(2);sndOK();sndCoin();if(fb){fb.className='feedback ok';fb.innerHTML='🎉 +'+td2AnsGold()+'🪙 — '+esc(GM.cur.note||(GM.cur.right?GM.cur.right[0]+' = '+GM.cur.right[1]:''))+ab}persist();td2HUD();td2Side();
-    if(sw&&tdAutoSay){setTimeout(()=>{try{speak(sw,.85)}catch(e){}},260);setTimeout(td2Q,1900)}else setTimeout(td2Q,800);}
+    if(sw&&tdAutoSay){setTimeout(()=>{try{speak(sw,.85)}catch(e){}},260);setTimeout(td2Q,3000)}else setTimeout(td2Q,2600);}
   else{sndNo();GM.qLocked=true;if(fb){fb.className='feedback no';fb.innerHTML='😵 Sai rồi! Đáp án: <b>'+esc(GM.cur.opts.find(x=>x.ok).t)+'</b>'+(GM.cur.note?' — '+esc(GM.cur.note):'')+'<br>Khoá trả lời tới khi hết đợt này!'+ab}persist();td2HUD();td2Side();
     if(sw&&tdAutoSay)setTimeout(()=>{try{speak(sw,.85)}catch(e){}},260);
-    setTimeout(td2QLocked,sw&&tdAutoSay?2400:1300);}
+    setTimeout(td2QLocked,sw&&tdAutoSay?4000:3400);}
 }
 function td2StartRound(){
   if(!GM||GM.running)return;
   if(GM.pickPhase){toast('🎖️ Hãy chọn đội hình trước khi đánh tiếp!');return}
   const r=GM.round,star=td2Star(r),base=Math.round(td2BaseHP(r)*td2Mod('ehp',1)*td2StarHp(r)),sp=td2BaseSpeed(r)*td2Mod('espd',1),rew=td2Reward(r);
   const ks=Object.keys(TD_KIND).filter(k=>r>=TD_KIND[k].from);
-  const n=Math.min(46,4+Math.round(r*1.8));
+  const n=Math.min(60,6+Math.round(r*2.1));
   GM.queue=[];
   for(let i=0;i<n;i++){
     let k='grunt';
@@ -3295,6 +3491,18 @@ function td2StartRound(){
       armor:td2Armor(r,K.armor)+star*2,star:star,noSlow:!!K.noSlow,hide:!!K.hide,zap:!!K.zap,heal:!!K.heal,noSplash:!!K.noSplash,split:!!K.split,fly:!!K.fly,
       reward:Math.max(1,Math.round(rew*(K.hp>1?1.7:K.hp<.5?.5:1))),boss:false});
   }
+  /* ⚡ ĐỢT DỒN: cuối mỗi đợt (từ đợt 2) có một tốp trinh sát chạy rất nhanh, nối đuôi nhau */
+  if(r>=2){
+    const rn=Math.min(7,2+Math.floor(r/7)),rhp=Math.max(8,Math.round(base*.45)),rsp=sp*2.4;
+    for(let i=0;i<rn;i++)GM.queue.push({kind:'rush',hp:rhp,speed:rsp,em:rnd(['🏃','💨','🐆']),gap:.11,
+      armor:Math.round(td2Armor(r,0)+star*1),star:star,noSlow:false,
+      reward:Math.max(1,Math.round(rew*.8)),boss:false,rush:true});
+    /* 🏇 Sứ giả — con dẫn đầu tốp dồn: rất nhanh, dai, miễn làm chậm.
+       Chính nó là lý do đợt nào cũng có thể lọt 1 máu nếu bố phòng hở. */
+    GM.queue.push({kind:'herald',hp:Math.round(base*3.4),speed:sp*2.5,em:'🏇',gap:.11,
+      armor:Math.round(td2Armor(r,1)+star*2),star:star,noSlow:true,
+      reward:Math.max(2,Math.round(rew*2)),boss:false,rush:true});
+  }
   if(r%5===0){
     const B=td2BossOf(r),bhp=Math.round(base*B.hpM);
     GM.queue.unshift({kind:'boss',hp:bhp,speed:sp*B.spM,em:B.em,bossName:B.name,armor:B.armor+star*3,noSlow:true,
@@ -3302,10 +3510,10 @@ function td2StartRound(){
       summonAt:B.ab.indexOf('summon')>=0?[.66,.33]:[],raged:false,reward:rew*10,boss:true});
     toast('⚠️ ĐỢT BOSS! '+B.em+' '+B.name+' — '+B.tip);
   }
-  GM.running=true;GM.spawnGap=Math.max(.3,.8-r*.018);GM.spawnT=0;sndClick();td2Side()
+  GM.running=true;GM.spawnGap=Math.max(.2,.6-r*.014);GM.spawnT=0;sndClick();td2Side()
 }
 function td2RoundDone(){
-  const bonus=td2RoundBonus(GM.round);GM.gold+=bonus;GM.round++;gainXP(6);persist();sndWin();sndCoin();
+  const bonus=td2RoundBonus(GM.round);GM.gold+=bonus;GM.round++;GM.spellUse={};gainXP(6);persist();sndWin();sndCoin();
   const wasLocked=GM.qLocked;GM.qLocked=false;GM.minions=[];GM.towers.forEach(t=>{t.stun=0;t.heat=0;
     if(t.broken||t.hp<t.maxHp){t.broken=false;t.hp=t.maxHp;}
     if(t.type==='hero')t.mCd=1});
@@ -3316,7 +3524,7 @@ function td2RoundDone(){
   td2Q();td2Side()
 }
 function td2HUD(){const g=$('td2gold');if(!g)return;g.textContent=Math.floor(GM.gold);$('td2life').textContent=Math.max(0,GM.lives);$('td2round').textContent=GM.round;$('td2kills').textContent=GM.kills;const b=$('td2boss');if(b)b.textContent=GM.bossKills||0;
-  const sb=$('td2spells');if(sb){const sig=GM.round+'|'+Object.keys(TD_SPELLS).map(k=>Math.ceil((GM.spellCd&&GM.spellCd[k])||0)+(GM.gold>=td2SpellCost(k)?'y':'n')).join('');
+  const sb=$('td2spells');if(sb){const sig=GM.round+'|'+Object.keys(TD_SPELLS).map(k=>Math.ceil((GM.spellCd&&GM.spellCd[k])||0)+'.'+td2SpellUses(k)+(GM.gold>=td2SpellCost(k)?'y':'n')).join('');
     if(sig!==GM._sbSig){GM._sbSig=sig;sb.innerHTML=td2SpellBar()}}}
 function td2Speed(s){if(!GM||GM.type!=='tower2')return;GM.speed=s;sndClick();td2Side()}
 function td2Fire(t,tg){
@@ -3462,7 +3670,7 @@ function td2DrawFx(x){
 function td2Loop(ts){
   if(!GM||GM.type!=='tower2')return;
   if(!GM.last)GM.last=ts;let dt=(ts-GM.last)/1000;GM.last=ts;if(dt>.05)dt=.05;dt*=(GM.speed||1);
-  if(GM.running){GM.spawnT-=dt;if(GM.queue.length&&GM.spawnT<=0){GM.spawnT=GM.spawnGap;const s=GM.queue.shift(),p=td2Pos(0);
+  if(GM.running){GM.spawnT-=dt;if(GM.queue.length&&GM.spawnT<=0){const s=GM.queue.shift(),p=td2Pos(0);GM.spawnT=(s.gap||GM.spawnGap);
     GM.enemies.push(Object.assign({d:0,x:p.x,y:p.y,max:s.hp,maxShield:s.shield||0,slowT:0,slowP:1,burn:0},s))}}
   const born=[];
   GM.auraB=GM.enemies.filter(e=>!e.dead&&e.boss&&e.aura);
