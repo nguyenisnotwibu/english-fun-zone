@@ -2632,7 +2632,7 @@ function _ieltsQuiz(){
   function head(){
     return `<div class="lvfilter">${stageBtns}${_iqBest>=9?'<button style="border-color:#9333ea;color:#9333ea">♾️ C2</button>':''}</div>
       <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px">
-        <span>🏁 Màn ${_iqStage} · mức ${plan.bands.join('/')} · ${plan.n} đáp án</span><span>Câu ${cur+1}/${IQ_PER_STAGE} · ✅ ${score}</span></div>`;
+        <span>🎯 Màn ${_iqStage} · mức ${plan.bands.join('/')} · ${plan.n} đáp án</span><span>Câu ${cur+1}/${IQ_PER_STAGE} · ✅ ${score}</span></div>`;
   }
   function render(){
     _iqStop();
