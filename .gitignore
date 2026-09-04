@@ -6,3 +6,4 @@ index.backup-*.html
 ~$*
 .~lock.*#
 *.tmp
+index.bak-*.html
