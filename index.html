@@ -2711,9 +2711,9 @@ const TD_KIND={
  swarm :{em:['🐜','🦟'],          hp:.32, sp:1.28,armor:0,name:'Bầy đàn',from:8},
  ghost :{em:['👻','💀'],          hp:.85, sp:1.15,armor:0,noSlow:true,name:'Ma trơi (miễn làm chậm)',from:10},
  stealth:{em:['🥷','🕶️'],        hp:1,   sp:1.15,armor:0,hide:true,   name:'Tàng hình (ẩn 3s · hồi máu khi ẩn)',from:20},
- sapper :{em:['🔧','🧨'],         hp:1.4, sp:.9,  armor:1,zap:true,    name:'Phá trụ (tê liệt trụ, càng về sau càng lâu)',from:25},
+ sapper :{em:['🔧','🧨'],         hp:1.4, sp:.9,  armor:1,zap:true,    name:'Phá trụ (tê liệt + phá máu trụ)',from:25},
  medic  :{em:['💉','🧪'],         hp:1.2, sp:.95, armor:0,heal:true,   name:'Y tá (hồi máu đồng bọn · giải thiêu đốt)',from:30},
- mirror :{em:['🪞','🛡️'],         hp:1.6, sp:.85, armor:2,noSplash:true,name:'Phản đòn (miễn lan · nung nóng trụ)',from:35},
+ mirror :{em:['🪞','🛡️'],         hp:1.6, sp:.85, armor:2,noSplash:true,name:'Phản đòn (miễn lan · PHẢN SÁT THƯƠNG lên trụ)',from:35},
  splitter:{em:['🧫','🦠'],        hp:1.5, sp:.9,  armor:1,split:true,  name:'Phân thân (chết thì tách làm 2)',from:45},
  flyer  :{em:['🦅','🦇'],         hp:.95, sp:1.35,armor:0,fly:true,noSlow:true,name:'Biết bay (lính không chặn được)',from:55}
 };
@@ -2879,7 +2879,7 @@ function startTower(mode){
   sndClick();
   const intro=surv
     ? `<p class="sub" style="margin:0 0 6px">🔥 <b>Sinh Tồn</b>: đánh <b>không giới hạn đợt</b> — sống càng lâu điểm càng cao! Cứ <b>3 đợt lại đổi sang địa hình mới</b> — trụ tự dời chỗ, giữ nguyên cấp! 🦸 <b>Siêu Anh Hùng</b> mở từ <b>đợt 10</b> và biết <b>gọi đệ tử 🥷</b> ra chặn đánh quái. Từ đợt 10 câu hỏi cũng <b>trộn tất cả chủ đề</b> 🎲!</p>`
-    : `<p class="sub" style="margin:0 0 6px"><b>Trả lời từ vựng đúng là cách kiếm vàng chính</b> (giết quái &amp; qua đợt chỉ được chút ít) — có vàng thì mua <b>trụ thú</b> đặt lên bản đồ — trụ tự bắn quái chạy theo đường. Nâng cấp tới <b>Lv.20</b> — kỹ năng &amp; tiến hoá ở Lv.3·5·7·10, thăng hoa ở Lv.13·16·20. Cứ <b>5 đợt có 1 BOSS</b> 👹 có giáp &amp; chiêu riêng. Cứ <b>3 đợt đổi 1 địa hình</b> 🔄. Trụ &amp; phép <b>mở dần theo đợt</b> (🦸 đợt 10 · 🧙 đợt 20 · 🤖 đợt 35 · 🐉 đợt 55). Từ <b>đợt 10</b> mở 🦸 <b>Siêu Anh Hùng</b> (biết gọi đệ tử 🥷) và <b>đề trộn tất cả chủ đề</b> 🎲. Qua <b>đợt 15</b> phải <b>chốt đội hình tối đa 6 trụ</b> 🎖️. Bí quá thì dùng <b>⚡ phép chiến đấu</b>! 🏰</p>`;
+    : `<p class="sub" style="margin:0 0 6px"><b>Trả lời từ vựng đúng là cách kiếm vàng chính</b> (giết quái &amp; qua đợt chỉ được chút ít) — có vàng thì mua <b>trụ thú</b> đặt lên bản đồ — trụ tự bắn quái chạy theo đường. Nâng cấp tới <b>Lv.20</b> — kỹ năng &amp; tiến hoá ở Lv.3·5·7·10, thăng hoa ở Lv.13·16·20. Cứ <b>5 đợt có 1 BOSS</b> 👹 có giáp &amp; chiêu riêng. Cứ <b>3 đợt đổi 1 địa hình</b> 🔄. Trụ &amp; phép <b>mở dần theo đợt</b> (🦸 đợt 10 · 🧙 đợt 20 · 🤖 đợt 35 · 🐉 đợt 55). Từ <b>đợt 10</b> mở 🦸 <b>Siêu Anh Hùng</b> (biết gọi đệ tử 🥷) và <b>đề trộn tất cả chủ đề</b> 🎲. Qua <b>đợt 15</b> phải <b>chốt đội hình tối đa 6 trụ</b> 🎖️. Trụ có <b>máu</b> và bị quái đánh sập được — trụ <b>Lv.13+ tự hồi máu</b> 💚. Bí quá thì dùng <b>⚡ phép chiến đấu</b>! 🏰</p>`;
   $('gamesCard').innerHTML=gameTop(surv?'🔥 Thủ thành Sinh Tồn':'🏰 Thủ thành','<span class="streak">'+poolLabel()+'</span>')+intro+
     `<div id="td2map" style="font-size:12px;font-weight:700;line-height:1.5;background:linear-gradient(90deg,#eef2ff,#fdf4ff);border:1px solid #ddd6fe;border-radius:11px;padding:7px 10px;margin:0 0 7px">
        ${td2MapBanner()}
@@ -2938,7 +2938,7 @@ function td2Place(px,py){
   if(GM.towers.some(o=>Math.hypot(o.x-gx,o.y-gy)<34)){toast('Đã có trụ ở đó!');return}
   GM.gold-=T.cost;
   const nt={type:t,x:gx,y:gy,level:1,cd:0,color:T.color,atk:T.atk};
-  td2Stats(nt);GM.towers.push(nt);
+  td2Stats(nt);nt.hp=nt.maxHp;GM.towers.push(nt);
   sndOK();GM.sel=nt;GM.place=null;td2Side()
 }
 /* Sức mạnh hero: ×1.35 sát thương, ×0.93 hồi chiêu mỗi cấp + mốc kỹ năng Lv.3 và Lv.5 */
@@ -2975,6 +2975,14 @@ function td2Stats(t){
     t.mRate=Math.max(2.5,7-lv*.45);
     if(t.mCd===undefined)t.mCd=2; }
   if(lv>=20){ t.crit=Math.min(.75,t.crit*1.6); t.burn*=2; t.multi=t.multi+1; t.shredMax=t.shredMax?t.shredMax*2:0; if(t.slow)t.slowP=Math.max(.25,t.slowP*.7) }
+  /* 🛡️ MÁU TRỤ — quái và boss có thể đánh sập trụ */
+  const stv=t.star||0;
+  const ratio=(t.maxHp&&t.hp!==undefined)?Math.max(0,Math.min(1,t.hp/t.maxHp)):1;
+  t.maxHp=Math.round((60+T.cost*.25+(t.level-1)*22)*(1+stv*.25));
+  t.hp=Math.round(t.maxHp*ratio);
+  /* 💚 Bậc cao biết TỰ HỒI MÁU, Lv.20 còn hồi cho trụ xung quanh */
+  t.regen = (lv>=20?.08: lv>=16?.05: lv>=13?.03: 0) + stv*.015;
+  t.auraHeal = lv>=20?.02:0;
   /* ⭐ Đại cường hoá sau Lv20: mỗi sao +35% sát thương, +6% tầm, +4% nhịp bắn */
   const st=t.star||0;
   if(st){ t.dmg=Math.round(t.dmg*Math.pow(1.35,st)); t.range=Math.round(t.range*(1+st*.06));
@@ -3023,7 +3031,11 @@ function td2Side(){
     const nl=Object.keys(ALL).map(Number).sort((a,b)=>a-b).find(l=>l>t.level);
     const next=nl?ALL[nl]:null;
     const maxed=max&&(t.star||0)>=TD_MAXSTAR, sc=td2StarCost(t);
-    info=`<b>${t.em||T.em} ${td2TowerName(t)} · Lv.${t.level}/${TD_MAXLV}${maxed?' 👑ĐỈNH CAO':''}</b><br><span style="color:var(--violet);font-weight:700;font-size:11px">${T.skill||''}</span><br>⚔️ ${t.dmg} · 🎯 ${Math.round(t.range)} · ⏱️ ${t.rate.toFixed(2)}s${t.shred?` · 💥 mài mòn tối đa -${t.shredMax} giáp`:''}${t.pierce?` · 🗡️ xuyên ${Math.round(t.pierce*100)}% giáp`:''}${t.mCount?`<br>🥷 Gọi <b>${t.mCount}</b> đệ tử · ⚔️ ${t.mDmg}/đòn · 🛡️ máu ${Math.round(td2BaseHP(GM.round)*td2Mod('ehp',1)*t.mHpK)} · ⏳ ${t.mRate.toFixed(1)}s/lượt`:''}`
+    const hpr=t.maxHp?Math.round(100*t.hp/t.maxHp):100;
+    const rcost=Math.max(30,Math.round(td2Paid(t)*.18*(t.broken?1:(1-(t.hp||0)/(t.maxHp||1)))));
+    info=`<b>${t.em||T.em} ${td2TowerName(t)} · Lv.${t.level}/${TD_MAXLV}${maxed?' 👑ĐỈNH CAO':''}</b>`
+      +`<br><span style="font-size:11px;font-weight:700;color:${t.broken?'#ef4444':hpr<50?'#f59e0b':'#059669'}">${t.broken?'💥 TRỤ ĐÃ SẬP — ngừng bắn!':'🛡️ Máu trụ '+Math.round(t.hp)+'/'+t.maxHp+' ('+hpr+'%)'}${t.regen?' · 💚 tự hồi '+Math.round(t.regen*100)+'%/s':''}${t.auraHeal?' · hồi cho trụ quanh nó':''}</span>`
+      +(t.broken||hpr<100?`<div style="margin-top:4px"><button class="btn teal sm" style="width:100%" onclick="td2Repair()">🔧 Sửa trụ ${rcost.toLocaleString('vi')}🪙</button></div>`:'')+`<br><span style="color:var(--violet);font-weight:700;font-size:11px">${T.skill||''}</span><br>⚔️ ${t.dmg} · 🎯 ${Math.round(t.range)} · ⏱️ ${t.rate.toFixed(2)}s${t.shred?` · 💥 mài mòn tối đa -${t.shredMax} giáp`:''}${t.pierce?` · 🗡️ xuyên ${Math.round(t.pierce*100)}% giáp`:''}${t.mCount?`<br>🥷 Gọi <b>${t.mCount}</b> đệ tử · ⚔️ ${t.mDmg}/đòn · 🛡️ máu ${Math.round(td2BaseHP(GM.round)*td2Mod('ehp',1)*t.mHpK)} · ⏳ ${t.mRate.toFixed(1)}s/lượt`:''}`
       +(owned.length?`<br><span style="color:#059669;font-weight:700;font-size:11px">✅ ${owned.join('<br>✅ ')}</span>`:'')
       +(next?`<br><span style="color:#d97706;font-weight:700;font-size:11px">🔒 Lv.${nl}: ${next}</span>`:'')
       +(max?`<br><span style="color:#f59e0b;font-weight:800;font-size:11px">⭐ Đại cường hoá: ${t.star||0}/${TD_MAXSTAR} sao · mỗi sao +35% sát thương</span>`:'')
@@ -3071,7 +3083,23 @@ function td2MaskWord(w){
   return a.join('');
 }
 /* ===== 🎒 Kho dạng câu hỏi: từ vựng · nghe · điền · ngữ pháp · đọc hiểu ===== */
-function td2Say(){if(GM&&GM.cur&&GM.cur.say)speak(GM.cur.say,.85)}
+let tdAutoSay=localStorage.getItem('efz_tdsay')!=='0';
+function td2Say(){const w=GM&&GM.cur&&(GM.cur.sayNow||GM.cur.say||GM.cur.sayWord);if(w)try{speak(w,.85)}catch(e){}}
+function td2SayWord(){const w=GM&&GM.cur&&(GM.cur.sayWord||GM.cur.sayNow);if(w)try{speak(w,.85)}catch(e){}}
+function td2AutoSay(txt,delay){if(!tdAutoSay||!txt)return;setTimeout(()=>{try{speak(txt,.85)}catch(e){}},delay||420)}
+function td2SayBtns(q,after){
+  if(!q||!q.sayWord)return '';
+  const tog=`<button type="button" class="btn ghost sm" id="td2sayb" onclick="td2ToggleSay()">${tdAutoSay?'🔊 Tự phát: BẬT':'🔇 Tự phát: TẮT'}</button>`;
+  if(after||q.sayNow)return `<div style="display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin:5px 0"><button type="button" class="btn sun sm" onclick="td2SayWord()">🔊 Nghe phát âm</button>${tog}</div>`;
+  return `<div style="display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin:5px 0"><span style="font-size:11.5px;color:var(--muted);font-weight:700">🤫 Trả lời xong sẽ nghe phát âm</span>${tog}</div>`;
+}
+function td2ToggleSay(){
+  tdAutoSay=!tdAutoSay;try{localStorage.setItem('efz_tdsay',tdAutoSay?'1':'0')}catch(e){}
+  const b=$('td2sayb');if(b)b.innerHTML=tdAutoSay?'🔊 Tự phát: BẬT':'🔇 Tự phát: TẮT';
+  toast(tdAutoSay?'🔊 Đã BẬT tự động phát âm từ khi chơi':'🔇 Đã TẮT tự động phát âm');
+  if(tdAutoSay&&GM&&GM.cur&&GM.cur.sayNow)td2Say();
+  if(!tdAutoSay)try{speechSynthesis.cancel()}catch(e){}
+}
 /* tìm 1 câu trong bài đọc có chứa từ, để làm dạng điền vào chỗ trống */
 function td2Cloze(word){
   const D=DATA[grade]||{};
@@ -3092,7 +3120,6 @@ function td2QListen(right,others){
   return {say:right[0],
     prompt:`<div class="prompt-card"><div style="font-size:11px;color:#0891b2;font-weight:800">🎧 LUYỆN NGHE</div>
       <div style="font-size:32px;line-height:1.1">🔊</div>
-      <button type="button" class="btn sun sm" onclick="td2Say()">▶️ Nghe lại</button>
       <div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:4px">Nghe từ tiếng Anh rồi chọn <b>nghĩa tiếng Việt</b> đúng</div></div>`,
     opts:[{t:right[1],ok:1},...others.map(o=>({t:o[1],ok:0}))],
     note:right[0]+' = '+right[1]};
@@ -3121,7 +3148,7 @@ function td2QGrammar(){
   return {prompt:`<div class="prompt-card"><div style="font-size:11px;color:var(--violet);font-weight:800">📚 NGỮ PHÁP · ${esc(tp.name)}</div>
       <b style="font-size:14px;line-height:1.5;display:block;margin:4px 0">${esc(q.q)}</b>
       <div style="font-size:12px;color:var(--muted);font-weight:600">Chọn đáp án đúng</div></div>`,
-    opts:q.o.map((t2,i)=>({t:t2,ok:i===q.a?1:0})),
+    opts:q.o.map((t2,i)=>({t:t2,ok:i===q.a?1:0})),grOnly:1,
     note:(q.e||'')||('Đáp án: '+q.o[q.a])};
 }
 /* 📖 đọc hiểu — đoạn văn ngắn cuộn được + câu hỏi */
@@ -3133,7 +3160,7 @@ function td2QReading(){
   return {prompt:`<div class="prompt-card" style="text-align:left"><div style="font-size:11px;color:#059669;font-weight:800">📖 ĐỌC HIỂU · ${esc(r.title||'')}</div>
       <div style="max-height:110px;overflow:auto;font-size:11.5px;font-weight:500;line-height:1.65;background:#fff;border:1px solid #e5e7eb;border-radius:9px;padding:7px 9px;margin:5px 0">${esc(String(r.text||'')).replace(/\n+/g,'<br>')}</div>
       <b style="font-size:13px;line-height:1.5">${esc(q.q)}</b></div>`,
-    opts:q.o.map((t2,i)=>({t:t2,ok:i===q.a?1:0})),
+    opts:q.o.map((t2,i)=>({t:t2,ok:i===q.a?1:0})),grOnly:1,
     note:'Đáp án đúng: '+q.o[q.a]};
 }
 /* dạng câu hỏi mở khoá dần: mức 1 chỉ từ vựng → mức 5 có đủ 6 dạng */
@@ -3175,9 +3202,14 @@ function td2GenQ(){
          opts:[{t:right[0],ok:1},...others.map(o=>({t:o[0],ok:0}))],note:right[0]+' = '+right[1]};
     else
       q={prompt:`<div class="prompt-card"><b>${esc(right[0])}</b><div style="font-size:12px;color:var(--muted);font-weight:600">Chọn nghĩa tiếng Việt đúng</div></div>`,
-         opts:[{t:right[1],ok:1},...others.map(o=>({t:o[1],ok:0}))],note:right[0]+' = '+right[1]};
+         opts:[{t:right[1],ok:1},...others.map(o=>({t:o[1],ok:0}))],note:right[0]+' = '+right[1],enShown:1};
   }
-  return{prompt:q.prompt,opts:shuffle(q.opts),right,note:q.note,say:q.say,kind};
+  /* 🔊 phát âm: sayWord = từ tiếng Anh của câu (mọi dạng từ vựng),
+     sayNow  = chỉ tự phát NGAY khi không lộ đáp án (dạng nghe, hoặc từ Anh đã hiện sẵn) */
+  const isVocab=!(q.grOnly),
+        sayWord=isVocab&&right&&right[0]?right[0]:null,
+        sayNow=sayWord&&(q.say||q.enShown)?sayWord:null;
+  return{prompt:q.prompt,opts:shuffle(q.opts),right,note:q.note,say:q.say,sayNow,sayWord,kind};
 }
 function td2Pool(){
   /* Sau đợt 10: trộn TOÀN BỘ từ vựng của lớp — mọi chủ đề, mọi mức độ, xáo ngẫu nhiên */
@@ -3235,14 +3267,18 @@ function td2PickConfirm(){
   toast('🎖️ Đội hình đã chốt: '+GM.roster.map(k=>TT[k].em).join(' ')+(keep?` — ${keep} trụ ngoài đội hình vẫn ở lại bản đồ nhé!`:''));
   td2Q();td2Side();
 }
-function td2Q(){if(GM&&GM.qLocked)return td2QLocked();const q=td2GenQ();GM.cur=q;const el=$('td2q');if(el&&q.say)setTimeout(()=>{try{speak(q.say,.85)}catch(e){}},420);if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ <b style="color:var(--violet)">Trả lời đúng = nguồn vàng chính!</b> Mỗi câu <b style="color:#d97706">+${td2AnsGold()}🪙</b> <span style="color:var(--violet);font-weight:700">${TD_TIERS[td2QTier()].lab} · ${TD_TIERS[td2QTier()].note}</span>${GM.round>10?' <span style="color:#0891b2;font-weight:700">🎲 trộn mọi chủ đề</span>':''}</div>${q.prompt}${optButtons(q.opts,'td2Ans')}<div class="feedback" id="td2qfb" style="margin-top:6px"></div>`}
+function td2Q(){if(GM&&GM.qLocked)return td2QLocked();const q=td2GenQ();GM.cur=q;const el=$('td2q');td2AutoSay(q.sayNow,420);if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ <b style="color:var(--violet)">Trả lời đúng = nguồn vàng chính!</b> Mỗi câu <b style="color:#d97706">+${td2AnsGold()}🪙</b> <span style="color:var(--violet);font-weight:700">${TD_TIERS[td2QTier()].lab} · ${TD_TIERS[td2QTier()].note}</span>${GM.round>10?' <span style="color:#0891b2;font-weight:700">🎲 trộn mọi chủ đề</span>':''}</div>${q.prompt}${td2SayBtns(q,false)}${optButtons(q.opts,'td2Ans')}<div class="feedback" id="td2qfb" style="margin-top:6px"></div>`}
 function td2QLocked(){const el=$('td2q');if(el)el.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">❓ Khu trả lời <span style="color:var(--red)">— đang khoá 🔒</span></div><div style="text-align:center;padding:16px 10px;color:var(--muted);font-weight:700;line-height:1.55">😵 Trả lời sai nên tạm khoá câu hỏi!<br>⬇️ Hãy <b>mua trụ</b> &amp; bấm <b>"Bắt đầu đợt"</b>. Đánh xong đợt này sẽ <b style="color:var(--violet)">mở lại câu hỏi</b> để kiếm vàng tiếp! 💪</div>`}
 function td2Ans(k){
   if(!GM||!GM.cur)return;const o=GM.cur.opts[k];
   document.querySelectorAll('#td2q .opt').forEach((b,j)=>{b.disabled=true;if(GM.cur.opts[j].ok)b.classList.add('right');else if(j===k)b.classList.add('wrong')});
   const fb=$('td2qfb');
-  if(o.ok){GM.gold+=td2AnsGold();P.correct++;gainXP(2);sndOK();sndCoin();if(fb){fb.className='feedback ok';fb.innerHTML='🎉 +'+td2AnsGold()+'🪙 — '+esc(GM.cur.note||(GM.cur.right?GM.cur.right[0]+' = '+GM.cur.right[1]:''))}persist();td2HUD();td2Side();setTimeout(td2Q,800);}
-  else{sndNo();GM.qLocked=true;if(fb){fb.className='feedback no';fb.innerHTML='😵 Sai rồi! Đáp án: <b>'+esc(GM.cur.opts.find(x=>x.ok).t)+'</b>'+(GM.cur.note?' — '+esc(GM.cur.note):'')+'<br>Khoá trả lời tới khi hết đợt này!'}persist();td2HUD();td2Side();setTimeout(td2QLocked,1300);}
+  const sw=GM.cur.sayWord,ab=td2SayBtns(GM.cur,true);
+  if(o.ok){GM.gold+=td2AnsGold();P.correct++;gainXP(2);sndOK();sndCoin();if(fb){fb.className='feedback ok';fb.innerHTML='🎉 +'+td2AnsGold()+'🪙 — '+esc(GM.cur.note||(GM.cur.right?GM.cur.right[0]+' = '+GM.cur.right[1]:''))+ab}persist();td2HUD();td2Side();
+    if(sw&&tdAutoSay){setTimeout(()=>{try{speak(sw,.85)}catch(e){}},260);setTimeout(td2Q,1900)}else setTimeout(td2Q,800);}
+  else{sndNo();GM.qLocked=true;if(fb){fb.className='feedback no';fb.innerHTML='😵 Sai rồi! Đáp án: <b>'+esc(GM.cur.opts.find(x=>x.ok).t)+'</b>'+(GM.cur.note?' — '+esc(GM.cur.note):'')+'<br>Khoá trả lời tới khi hết đợt này!'+ab}persist();td2HUD();td2Side();
+    if(sw&&tdAutoSay)setTimeout(()=>{try{speak(sw,.85)}catch(e){}},260);
+    setTimeout(td2QLocked,sw&&tdAutoSay?2400:1300);}
 }
 function td2StartRound(){
   if(!GM||GM.running)return;
@@ -3270,7 +3306,9 @@ function td2StartRound(){
 }
 function td2RoundDone(){
   const bonus=td2RoundBonus(GM.round);GM.gold+=bonus;GM.round++;gainXP(6);persist();sndWin();sndCoin();
-  const wasLocked=GM.qLocked;GM.qLocked=false;GM.minions=[];GM.towers.forEach(t=>{t.stun=0;t.heat=0;if(t.type==='hero')t.mCd=1});
+  const wasLocked=GM.qLocked;GM.qLocked=false;GM.minions=[];GM.towers.forEach(t=>{t.stun=0;t.heat=0;
+    if(t.broken||t.hp<t.maxHp){t.broken=false;t.hp=t.maxHp;}
+    if(t.type==='hero')t.mCd=1});
   if((GM.round-1)%3===0)td2ChangeMap(); else {const el=$('td2map');if(el)el.innerHTML=td2MapBanner()}
   if(GM.round===TD_PICK_AT+1&&!GM.roster){td2PickOpen();return}
   toast('🎉 Qua đợt! +'+bonus+' 🪙'+(wasLocked?' — mở lại câu hỏi! 🔓':''));
@@ -3298,6 +3336,30 @@ function td2Pop(x,y,txt,col,size,vy){
   GM.pop.push({x:x+(Math.random()*14-7),y:y-6,txt:txt,c:col||'#fff',s:size||12,vy:vy||-26,t:0,dur:(size||12)>=15?1.15:.85});
 }
 function td2Num(n){n=Math.round(n);return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1000?(n/1000).toFixed(1)+'K':String(n)}
+/* 💥 Quái/boss đánh trụ — sát thương tính theo % máu tối đa nên cân ở mọi cấp */
+function td2Hurt(t,pct,label){
+  if(!t||t.broken)return;
+  if(t.maxHp===undefined)td2Stats(t);
+  if(t.hp===undefined)t.hp=t.maxHp;
+  const d=Math.max(1,Math.round(t.maxHp*pct));
+  t.hp-=d;
+  td2Pop(t.x,t.y-16,(label||'💥')+' −'+td2Num(d),'#fb7185',12,-24);
+  if(t.hp<=0){
+    t.hp=0;t.broken=true;t.cd=t.rate;
+    GM.fx.push({x1:t.x,y1:t.y,x2:t.x,y2:t.y,c:'#ef4444',kind:'boom',lv:4,t:0,dur:.6});
+    td2Pop(t.x,t.y,'💥 TRỤ SẬP!','#ef4444',17,-34);sndNo();
+    toast('💥 '+td2TowerName(t)+' bị đánh sập! Sửa ngay hoặc chờ hết đợt trụ tự hồi phục.');
+  }
+}
+function td2Repair(){
+  const t=GM.sel;if(!t)return;
+  if(!t.broken&&t.hp>=t.maxHp){toast('Trụ đang khoẻ mạnh mà!');return}
+  const cost=Math.max(30,Math.round(td2Paid(t)*.18*(t.broken?1:(1-t.hp/t.maxHp))));
+  if(GM.gold<cost){toast('Sửa trụ cần '+cost.toLocaleString('vi')+'🪙');return}
+  GM.gold-=cost;t.hp=t.maxHp;t.broken=false;sndOK();confetti(20);
+  td2Pop(t.x,t.y-16,'🔧 SỬA XONG','#22c55e',14,-26);
+  toast('🔧 Đã sửa '+td2TowerName(t)+' về đầy máu!');td2Side();
+}
 function td2Hit(t,e,raw,primary){
   if(!e||e.dead)return;
   let d=raw,crit=false;
@@ -3312,7 +3374,7 @@ function td2Hit(t,e,raw,primary){
     if(aura){d*=.65;if(primary&&Math.random()<.2)td2Pop(e.x,e.y-10,'👑 HÀO QUANG −35%','#c084fc',11,-20)}
   }
   /* 🪞 phản đòn: trụ vừa bắn bị NUNG NÓNG, bắn chậm 40% trong 2s */
-  if(e.noSplash&&primary&&t){t.heat=1.6;if(Math.random()<.22)td2Pop(t.x,t.y-14,'🔥 NUNG NÓNG trụ','#fb923c',11,-20)}
+  if(e.noSplash&&primary&&t){t.heat=1.6;td2Hurt(t,e.boss?.012:.022,'🪞 PHẢN ĐÒN')}
   const blocked=before-d;
   if(t.shred&&e.armor>0){
     const old=e.shredV||0;
@@ -3443,10 +3505,18 @@ function td2Loop(ts){
           .sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y)).slice(0,nT);
         if(near.length){sndNo();
           near.forEach(t=>{t.stun=dur;GM.fx.push({x1:e.x,y1:e.y,x2:t.x,y2:t.y,c:'#facc15',kind:'zap',lv:2,t:0,dur:.35});
-            td2Pop(t.x,t.y-14,'⚡ TÊ LIỆT '+dur+'s','#facc15',14,-28)});
+            td2Pop(t.x,t.y-14,'⚡ TÊ LIỆT '+dur+'s','#facc15',14,-28);td2Hurt(t,e.boss?.16:.07,'⚡ PHÁ TRỤ')});
           if(near.length>1)td2Pop(e.x,e.y-20,'🔧 PHÁ '+near.length+' TRỤ!','#f59e0b',14,-26);}
       } }
     /* 💉 y tá: hồi mạnh hơn, tầm rộng hơn, GIẢI luôn hiệu ứng thiêu đốt */
+    /* 🐲 Boss vừa đi vừa TẤN CÔNG TRỤ gần nhất */
+    if(e.boss){ e.atkCd=(e.atkCd===undefined?3:e.atkCd)-dt;
+      if(e.atkCd<=0){e.atkCd=3.5;
+        let bt=null,bd=1e9;
+        for(const t of GM.towers){if(t.broken)continue;const d=Math.hypot(t.x-e.x,t.y-e.y);if(d<105&&d<bd){bd=d;bt=t}}
+        if(bt){GM.fx.push({x1:e.x,y1:e.y,x2:bt.x,y2:bt.y,c:'#ef4444',kind:'zap',lv:3,t:0,dur:.3});
+          td2Hurt(bt,.22,e.em+' BOSS ĐÁNH');}
+      } }
     if(e.heal){ e.healCd=(e.healCd===undefined?1:e.healCd)-dt;
       if(e.healCd<=0){e.healCd=1;const amt=(e.boss?.06:(GM.round>=60?.05:.035));let n=0;
         for(const o of GM.enemies){if(o===e||o.dead)continue;
@@ -3489,6 +3559,14 @@ function td2Loop(ts){
   GM.minions=GM.minions.filter(m=>!m.dead);
   for(const t of GM.towers){
     if(t.heat>0)t.heat-=dt;
+    if(t.maxHp===undefined)td2Stats(t);
+    if(t.hp===undefined)t.hp=t.maxHp;
+    /* 💚 tự hồi máu (bậc cao & có sao) */
+    if(!t.broken&&t.regen&&t.hp<t.maxHp)t.hp=Math.min(t.maxHp,t.hp+t.maxHp*t.regen*dt);
+    /* 💚 Lv.20 hồi máu cho các trụ xung quanh */
+    if(!t.broken&&t.auraHeal){for(const o of GM.towers){if(o===t||o.broken||o.hp>=o.maxHp)continue;
+      if(Math.hypot(o.x-t.x,o.y-t.y)<110)o.hp=Math.min(o.maxHp,o.hp+o.maxHp*t.auraHeal*dt)}}
+    if(t.broken)continue;
     if(t.stun>0){t.stun-=dt;continue}
     t.cd-=dt;if(t.cd<=0){let tg=null,best=-1,bt=null,bb=-1;
     for(const e of GM.enemies){if(e.dead||e.hidden)continue;const dx=e.x-t.x,dy=e.y-t.y;if(dx*dx+dy*dy<=t.range*t.range){if(e.boss){if(e.d>bb){bb=e.d;bt=e}}else if(e.d>best){best=e.d;tg=e}}}
@@ -3574,9 +3652,18 @@ function td2Draw(){
     x.fillStyle=g;x.beginPath();x.arc(t.x,t.y,16,0,7);x.fill();
     x.strokeStyle=RING;x.lineWidth=tier?2.4+tier*.4:1.6;x.beginPath();x.arc(t.x,t.y,16.4,0,7);x.stroke();
     if(t.star){x.strokeStyle='rgba(251,191,36,'+(.45+pul*.45)+')';x.lineWidth=2;x.beginPath();x.arc(t.x,t.y,19.5,0,7);x.stroke()}
-    if(t.stun>0)x.globalAlpha=.42;
+    if(t.broken)x.globalAlpha=.3; else if(t.stun>0)x.globalAlpha=.42;
     x.font=(21+Math.min(tier,4)+rec*3)+'px serif';x.fillText(t.em||TT[t.type].em,t.x,t.y-rec*1.5);
     x.globalAlpha=1;
+    if(t.broken){x.font='19px serif';x.fillText('💥',t.x,t.y+2)}
+    /* thanh máu trụ — chỉ hiện khi bị thương */
+    if(t.maxHp&&t.hp<t.maxHp){
+      const hw=26,hr=Math.max(0,t.hp/t.maxHp);
+      x.fillStyle='rgba(15,23,42,.6)';x.fillRect(t.x-hw/2,t.y+17,hw,4);
+      x.fillStyle=hr>.5?'#22c55e':hr>.25?'#f59e0b':'#ef4444';
+      x.fillRect(t.x-hw/2,t.y+17,hw*hr,4);
+    }
+    if(t.regen&&!t.broken){x.font='9px serif';x.globalAlpha=.75;x.fillText('💚',t.x-13,t.y+13);x.globalAlpha=1}
     if(t.stun>0){x.font='15px serif';x.fillText('⚡',t.x-13,t.y-12)}
     if(t.heat>0){x.font='12px serif';x.fillText('🥵',t.x+13,t.y-12)}
     if(GM.rageT>0){x.font='11px serif';x.fillText('🔥',t.x+13,t.y+12)}
