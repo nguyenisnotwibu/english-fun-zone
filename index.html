@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Fun Zone 🚀 Luyện Tiếng Anh 4-5-6-7-10</title>
+<title>English Fun Zone 🚀 Luyện Tiếng Anh 4-5-6-7-8-9-10</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -14,6 +14,8 @@
   --teal:#22d3aa; --blue:#38bdf8; --red:#ff4d6d; --green:#2dd573;
   --g4a:#65a30d; --g4b:#a3e635;
   --g10a:#1d4ed8; --g10b:#60a5fa;
+  --g8a:#c2410c; --g8b:#fb923c;
+  --g9a:#4338ca; --g9b:#818cf8;
   --g5a:#ff9f1c; --g5b:#ffd23f;
   --g6a:#16c79a; --g6b:#5eead4;
   --g7a:#8b5cf6; --g7b:#f472b6;
@@ -64,6 +66,8 @@ header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 0 4p
 .gpill.g5{background:linear-gradient(135deg,var(--g5a),var(--g5b));color:#5b3500}
 .gpill.g6{background:linear-gradient(135deg,var(--g6a),var(--g6b));color:#03483a}
 .gpill.g7{background:linear-gradient(135deg,var(--g7a),var(--g7b))}
+.gpill.g8{background:linear-gradient(135deg,var(--g8a),var(--g8b));color:#fff}
+.gpill.g9{background:linear-gradient(135deg,var(--g9a),var(--g9b));color:#fff}
 .gpill.gi{background:linear-gradient(135deg,#0f766e,#0891b2);color:#fff}
 /* ===== IELTS ===== */
 .ielts-subtab{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
@@ -487,7 +491,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
       <span class="rocket">🚀</span>
       <div>
         <h1>English <span>Fun Zone</span></h1>
-        <p>Luyện tiếng Anh lớp 4 · 5 · 6 · 7 · 10 — học mà chơi, chơi mà giỏi!</p>
+        <p>Luyện tiếng Anh lớp 4·5·6·7·8·9·10 — học mà chơi, chơi mà giỏi!</p>
       </div>
     </div>
     <div class="player-chip" id="playerChip" style="cursor:pointer" title="Đổi tên / avatar">
@@ -506,6 +510,8 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
     <button class="gpill g5 on" data-g="5" onclick="setGrade(5)">🌟 Lớp 5<small>Global Success 5</small></button>
     <button class="gpill g6" data-g="6" onclick="setGrade(6)">🌊 Lớp 6<small>Global Success 6</small></button>
     <button class="gpill g7" data-g="7" onclick="setGrade(7)">🔮 Lớp 7<small>Global Success 7</small></button>
+    <button class="gpill g8" data-g="8" onclick="setGrade(8)">🎋 Lớp 8<small>Global Success 8</small></button>
+    <button class="gpill g9" data-g="9" onclick="setGrade(9)">🚀 Lớp 9<small>Global Success 9</small></button>
     <button class="gpill g10" data-g="10" onclick="setGrade(10)">🎓 Lớp 10<small>Global S. / Friends G.</small></button>
     <button class="gpill gi" id="gpillIELTS" onclick="goIELTS()">📝 IELTS<small>Vocab · Paraphrase</small></button>
   </div>
@@ -816,6 +822,354 @@ function pickN(arr,n){return shuffle(arr).slice(0,n)}
 
 /* ================= DATA ================= */
 const DATA={
+/* ---------------- GRADE 8 (Global Success 8) ---------------- */
+8:{
+theory:[
+{em:'🎯',t:'Động từ chỉ sở thích + V-ing / to-V',h:`<div class="rule">Nhóm 1 — luôn theo sau bởi <b>V-ing</b>: <b>enjoy, love, like, hate, detest, adore, fancy, mind, practise, avoid, finish, keep</b>.</div>
+<div class="ex">I <b>enjoy doing</b> origami at weekends. · She <b>detests washing</b> up.</div>
+<div class="rule">Nhóm 2 — theo sau bởi <b>to + V</b>: <b>want, hope, decide, plan, agree, promise, learn, would like</b>.</div>
+<div class="ex">We <b>decided to join</b> the DIY club. · I'<b>d like to take up</b> gardening.</div>
+<div class="rule">Nhóm 3 — dùng được <b>cả hai</b>, nghĩa không đổi: <b>like, love, hate, prefer, begin, start, continue</b>.</div>
+<div class="ex">He loves <b>swimming</b> = He loves <b>to swim</b>.</div>
+<table><tr><th>Tính từ + giới từ</th><th>Ví dụ</th></tr>
+<tr><td>be <b>keen on</b> + V-ing</td><td>She is keen on <b>collecting</b> stamps.</td></tr>
+<tr><td>be <b>fond of</b> + V-ing</td><td>I'm fond of <b>reading</b> comics.</td></tr>
+<tr><td>be <b>crazy about</b> + V-ing/N</td><td>They're crazy about <b>football</b>.</td></tr>
+<tr><td>be <b>interested in</b> + V-ing</td><td>He's interested in <b>making</b> models.</td></tr></table>
+<div class="warn">⚠️ Sau <b>giới từ</b> (on, of, about, in, at) LUÔN là <b>V-ing</b>, không bao giờ là to-V.</div>`},
+{em:'⚖️',t:'So sánh hơn & so sánh nhất của TÍNH TỪ',h:`<div class="rule">Tính từ <b>ngắn</b> (1 âm tiết, hoặc 2 âm tiết kết thúc -y, -er, -ow): + <b>er / the ...est</b></div>
+<div class="rule">Tính từ <b>dài</b> (từ 2 âm tiết trở lên): <b>more ... than / the most ...</b></div>
+<table><tr><th>Tính từ</th><th>So sánh hơn</th><th>So sánh nhất</th></tr>
+<tr><td>quiet</td><td>quiet<b>er</b> than</td><td><b>the</b> quiet<b>est</b></td></tr>
+<tr><td>big</td><td>big<b>ger</b> than (nhân đôi g)</td><td>the big<b>gest</b></td></tr>
+<tr><td>busy</td><td>bus<b>ier</b> than (y → i)</td><td>the bus<b>iest</b></td></tr>
+<tr><td>peaceful</td><td><b>more</b> peaceful than</td><td><b>the most</b> peaceful</td></tr>
+<tr><td>good / bad / far</td><td>better / worse / farther</td><td>the best / the worst / the farthest</td></tr></table>
+<div class="ex">Life in the countryside is <b>more peaceful than</b> life in the city.</div>
+<div class="rule">Bằng nhau: <b>as + adj + as</b> · Không bằng: <b>not as/so + adj + as</b></div>
+<div class="ex">My village is <b>as beautiful as</b> yours. · The road isn't <b>as busy as</b> before.</div>`},
+{em:'🏃',t:'So sánh hơn & nhất của TRẠNG TỪ (adverbs)',h:`<div class="rule">Trạng từ <b>ngắn</b> (fast, hard, late, soon, early): + <b>er / the ...est</b></div>
+<div class="rule">Trạng từ đuôi <b>-ly</b>: <b>more ... than / the most ...</b></div>
+<table><tr><th>Trạng từ</th><th>So sánh hơn</th><th>So sánh nhất</th></tr>
+<tr><td>fast</td><td>fast<b>er</b> than</td><td>the fast<b>est</b></td></tr>
+<tr><td>early</td><td>earl<b>ier</b> than</td><td>the earl<b>iest</b></td></tr>
+<tr><td>carefully</td><td><b>more</b> carefully than</td><td><b>the most</b> carefully</td></tr>
+<tr><td>well / badly / much</td><td>better / worse / more</td><td>the best / the worst / the most</td></tr></table>
+<div class="ex">Farmers get up <b>earlier than</b> city people.</div>
+<div class="ex">He drives <b>more carefully than</b> his brother.</div>
+<div class="warn">⚠️ Phân biệt: <b>hard</b> = chăm chỉ (trạng từ) ≠ <b>hardly</b> = hầu như không. <i>He works hard</i> ≠ <i>He hardly works</i>.</div>`},
+{em:'🔗',t:'Câu đơn & câu ghép (Simple &amp; Compound sentences)',h:`<div class="rule"><b>Câu đơn</b> = 1 mệnh đề độc lập (1 chủ ngữ + 1 động từ chính).</div>
+<div class="ex">My brother plays the guitar every evening.</div>
+<div class="rule"><b>Câu ghép</b> = 2 mệnh đề độc lập nối bằng liên từ FANBOYS, <b>có dấu phẩy trước liên từ</b>.</div>
+<table><tr><th>Liên từ</th><th>Nghĩa</th><th>Ví dụ</th></tr>
+<tr><td>and</td><td>và (thêm ý)</td><td>She sings<b>, and</b> he plays the piano.</td></tr>
+<tr><td>but</td><td>nhưng</td><td>It was late<b>, but</b> we kept working.</td></tr>
+<tr><td>so</td><td>nên (kết quả)</td><td>It rained<b>, so</b> we stayed inside.</td></tr>
+<tr><td>or</td><td>hoặc</td><td>You can walk<b>, or</b> you can cycle.</td></tr>
+<tr><td>yet</td><td>tuy vậy (trái ngược)</td><td>He is young<b>, yet</b> he is very mature.</td></tr>
+<tr><td>for</td><td>bởi vì (trang trọng)</td><td>We left early<b>, for</b> it was getting dark.</td></tr></table>
+<div class="warn">⚠️ Đừng nhầm: câu ghép nối 2 mệnh đề <b>ngang hàng</b>; câu phức có 1 mệnh đề <b>phụ thuộc</b>.</div>`},
+{em:'⏰',t:'Câu phức — mệnh đề trạng ngữ chỉ THỜI GIAN',h:`<div class="rule">Liên từ: <b>when, while, before, after, as soon as, until, since</b>.</div>
+<div class="ex"><b>When</b> the festival began, everyone cheered.</div>
+<div class="ex">We had dinner <b>after</b> we finished the harvest.</div>
+<div class="ex"><b>As soon as</b> she arrived, she called her mum.</div>
+<div class="rule">Mệnh đề phụ đứng <b>trước</b> → có dấu phẩy. Đứng <b>sau</b> → không cần phẩy.</div>
+<div class="ex"><b>While I was cooking</b>, the phone rang. = The phone rang <b>while I was cooking</b>.</div>
+<div class="warn">⚠️ Mệnh đề thời gian KHÔNG dùng <b>will</b>: <i>I'll call you when I <b>arrive</b></i> (không phải <s>when I will arrive</s>).</div>`},
+{em:'🔀',t:'Câu phức — LÍ DO &amp; NHƯỢNG BỘ',h:`<div class="rule"><b>Lí do</b>: because / since / as + mệnh đề · because of / due to + N</div>
+<div class="ex">We stayed home <b>because</b> it rained heavily.</div>
+<div class="ex">We stayed home <b>because of</b> the heavy rain.</div>
+<div class="rule"><b>Nhượng bộ</b>: although / though / even though + mệnh đề · despite / in spite of + N</div>
+<div class="ex"><b>Although</b> he was tired, he finished the work.</div>
+<div class="ex"><b>Despite</b> his tiredness, he finished the work.</div>
+<table><tr><th>+ MỆNH ĐỀ (S + V)</th><th>+ DANH TỪ / V-ing</th></tr>
+<tr><td>because, since, as</td><td>because of, due to</td></tr>
+<tr><td>although, though, even though</td><td>despite, in spite of</td></tr></table>
+<div class="warn">⚠️ KHÔNG dùng <b>but</b> chung với <b>although</b>: <s>Although it was late, but we went out.</s></div>`},
+{em:'❓',t:'Câu hỏi Yes/No và câu hỏi Wh-',h:`<div class="rule"><b>Yes/No</b>: đảo trợ động từ lên trước chủ ngữ.</div>
+<table><tr><th>Câu kể</th><th>Câu hỏi</th></tr>
+<tr><td>She <b>is</b> a teenager.</td><td><b>Is</b> she a teenager?</td></tr>
+<tr><td>They <b>can</b> swim.</td><td><b>Can</b> they swim?</td></tr>
+<tr><td>He <b>plays</b> football.</td><td><b>Does</b> he <b>play</b> football?</td></tr>
+<tr><td>We <b>went</b> there.</td><td><b>Did</b> we <b>go</b> there?</td></tr></table>
+<div class="rule"><b>Wh-</b>: What, Where, When, Who, Why, Which, Whose, How (+ many/much/long/often/far).</div>
+<div class="ex"><b>How often</b> do you log on to social media?</div>
+<div class="ex"><b>Why</b> are so many teenagers stressed?</div>
+<div class="warn">⚠️ Khi từ hỏi CHÍNH LÀ chủ ngữ thì KHÔNG đảo: <i><b>Who</b> broke the vase?</i> (không phải <s>Who did break</s>).</div>`},
+{em:'⚠️',t:'Should / Have to / Must — lời khuyên &amp; bắt buộc',h:`<table><tr><th>Cấu trúc</th><th>Nghĩa</th><th>Ví dụ</th></tr>
+<tr><td>should / shouldn't + V</td><td>nên / không nên (khuyên)</td><td>You <b>should</b> talk to your parents.</td></tr>
+<tr><td>ought to + V</td><td>nên (trang trọng hơn)</td><td>We <b>ought to</b> respect old customs.</td></tr>
+<tr><td>had better (not) + V</td><td>tốt hơn hết là</td><td>You'<b>d better</b> not skip breakfast.</td></tr>
+<tr><td>must + V</td><td>phải (người nói tự thấy cần)</td><td>I <b>must</b> finish this tonight.</td></tr>
+<tr><td>have to / has to + V</td><td>phải (do quy định bên ngoài)</td><td>Students <b>have to</b> wear uniforms.</td></tr>
+<tr><td>mustn't + V</td><td>CẤM</td><td>You <b>mustn't</b> litter here.</td></tr>
+<tr><td>don't have to + V</td><td>KHÔNG cần thiết</td><td>You <b>don't have to</b> come early.</td></tr></table>
+<div class="warn">⚠️ <b>mustn't</b> (cấm) ≠ <b>don't have to</b> (không bắt buộc) — hai nghĩa hoàn toàn khác nhau!</div>`},
+{em:'⏳',t:'Quá khứ đơn &amp; Quá khứ tiếp diễn',h:`<div class="rule"><b>Past simple</b>: việc đã xảy ra và kết thúc trong quá khứ. <b>S + V2/ed</b></div>
+<div class="rule"><b>Past continuous</b>: việc đang diễn ra tại một thời điểm trong quá khứ. <b>S + was/were + V-ing</b></div>
+<table><tr><th>Dùng khi</th><th>Ví dụ</th></tr>
+<tr><td>Hành động dài BỊ CẮT NGANG bởi hành động ngắn</td><td>I <b>was cooking</b> when the earthquake <b>struck</b>.</td></tr>
+<tr><td>Hai việc xảy ra CÙNG LÚC</td><td><b>While</b> she <b>was studying</b>, her brother <b>was playing</b> games.</td></tr>
+<tr><td>Bối cảnh của một câu chuyện</td><td>It <b>was raining</b> and the wind <b>was blowing</b> hard.</td></tr>
+<tr><td>Chuỗi việc nối tiếp nhau</td><td>He <b>woke up</b>, <b>got</b> dressed and <b>ran</b> outside.</td></tr></table>
+<div class="warn">⚠️ <b>when</b> thường đi với quá khứ ĐƠN, <b>while</b> thường đi với quá khứ TIẾP DIỄN.</div>`},
+{em:'🔮',t:'Tương lai: will / be going to + Hiện tại hoàn thành',h:`<table><tr><th>Cấu trúc</th><th>Dùng khi</th><th>Ví dụ</th></tr>
+<tr><td>will + V</td><td>quyết định ngay lúc nói · dự đoán chung</td><td>It's cold — I <b>'ll close</b> the window.</td></tr>
+<tr><td>be going to + V</td><td>kế hoạch đã định · dự đoán có bằng chứng</td><td>Look at those clouds! It <b>'s going to</b> rain.</td></tr>
+<tr><td>might / may + V</td><td>có thể (không chắc)</td><td>We <b>might</b> travel to Mars one day.</td></tr></table>
+<div class="rule"><b>Present perfect</b>: S + have/has + V3 — việc đã xảy ra nhưng KHÔNG nói rõ lúc nào, hoặc còn kéo dài tới hiện tại.</div>
+<div class="ex">Scientists <b>have discovered</b> water on Mars.</div>
+<div class="ex">We <b>have lived</b> in this village <b>for</b> 20 years / <b>since</b> 2005.</div>
+<div class="warn">⚠️ <b>for</b> + khoảng thời gian (for 3 years) · <b>since</b> + mốc thời gian (since 2005).</div>`},
+{em:'🔄',t:'Câu bị động (Passive voice)',h:`<div class="rule">Công thức: <b>S + be + V3/ed (+ by O)</b>. Động từ <b>be</b> chia theo thì của câu chủ động.</div>
+<table><tr><th>Thì</th><th>Chủ động</th><th>Bị động</th></tr>
+<tr><td>Hiện tại đơn</td><td>They <b>make</b> lanterns here.</td><td>Lanterns <b>are made</b> here.</td></tr>
+<tr><td>Quá khứ đơn</td><td>He <b>invented</b> the phone.</td><td>The phone <b>was invented</b> by him.</td></tr>
+<tr><td>Hiện tại hoàn thành</td><td>They <b>have built</b> a school.</td><td>A school <b>has been built</b>.</td></tr>
+<tr><td>Tương lai</td><td>They <b>will launch</b> a rocket.</td><td>A rocket <b>will be launched</b>.</td></tr>
+<tr><td>Khuyết thiếu</td><td>We <b>must protect</b> coral.</td><td>Coral <b>must be protected</b>.</td></tr></table>
+<div class="warn">⚠️ Chỉ bỏ <b>by + tân ngữ</b> khi người thực hiện không quan trọng hoặc không rõ (by people, by someone).</div>`},
+{em:'💬',t:'Câu tường thuật (Reported speech) — câu kể',h:`<div class="rule">Khi tường thuật, <b>lùi thì</b> một bậc và đổi đại từ, trạng từ thời gian - nơi chốn.</div>
+<table><tr><th>Trực tiếp</th><th>Gián tiếp</th></tr>
+<tr><td>present simple</td><td>past simple</td></tr>
+<tr><td>present continuous</td><td>past continuous</td></tr>
+<tr><td>past simple / present perfect</td><td>past perfect</td></tr>
+<tr><td>will</td><td>would</td></tr>
+<tr><td>can / must</td><td>could / had to</td></tr></table>
+<table><tr><th>now → then</th><th>today → that day</th><th>tomorrow → the next day</th></tr>
+<tr><td>yesterday → the day before</td><td>here → there</td><td>this → that</td></tr></table>
+<div class="ex">"I <b>am</b> tired," she said. → She said (that) she <b>was</b> tired.</div>
+<div class="ex">"We <b>will</b> visit Ha Long Bay," he said. → He said they <b>would</b> visit Ha Long Bay.</div>`}
+],
+quiz:[
+{q:'My sister is keen on ___ origami cranes.',o:['fold','to fold','folding','folds'],a:2,e:'be keen on + V-ing → folding.'},
+{q:'I detest ___ up early at weekends.',o:['get','getting','to get','got'],a:1,e:'detest + V-ing → getting.'},
+{q:'We would like ___ a DIY course this summer.',o:['taking','take','to take','took'],a:2,e:'would like + TO V → to take.'},
+{q:'Life in the countryside is ___ than life in the city.',o:['peaceful','peacefuler','more peaceful','most peaceful'],a:2,e:'Tính từ dài → more + adj + than.'},
+{q:'Farmers usually get up ___ than office workers.',o:['early','earlier','more early','earliest'],a:1,e:'Trạng từ \'early\' → earlier than.'},
+{q:'He drives ___ than his brother.',o:['careful','carefuller','more carefully','most carefully'],a:2,e:'Trạng từ đuôi -ly → more + adv + than.'},
+{q:'It was raining heavily, ___ the festival was cancelled.',o:['but','or','so','yet'],a:2,e:'Mưa to → KẾT QUẢ huỷ lễ hội → so.'},
+{q:'___ he was very tired, he finished the harvest.',o:['Because','Although','Despite','So'],a:1,e:'Although + MỆNH ĐỀ, mang ý nhượng bộ.'},
+{q:'We stayed at home ___ the heavy rain.',o:['although','because','because of','so'],a:2,e:'because of + DANH TỪ (the heavy rain).'},
+{q:'I was cooking dinner ___ the earthquake struck.',o:['while','when','although','since'],a:1,e:'when + quá khứ ĐƠN cắt ngang hành động đang diễn ra.'},
+{q:'___ she was studying, her brother was playing games.',o:['When','While','After','Until'],a:1,e:'While + hai việc CÙNG diễn ra.'},
+{q:'I\'ll call you as soon as I ___ at the station.',o:['will arrive','arrive','arrived','am arriving'],a:1,e:'Mệnh đề thời gian KHÔNG dùng will → arrive.'},
+{q:'Students ___ wear uniforms at this school. It\'s a rule.',o:['should','have to','don\'t have to','might'],a:1,e:'Quy định bên ngoài → have to.'},
+{q:'You ___ litter in the national park. It\'s forbidden.',o:['mustn\'t','don\'t have to','needn\'t','shouldn\'t have'],a:0,e:'Cấm tuyệt đối → mustn\'t.'},
+{q:'You ___ come early. The meeting starts at ten.',o:['mustn\'t','don\'t have to','must','have to'],a:1,e:'Không bắt buộc → don\'t have to.'},
+{q:'Lanterns ___ by hand in this village.',o:['make','are made','made','is made'],a:1,e:'Bị động hiện tại đơn, chủ ngữ số nhiều → are made.'},
+{q:'The telephone ___ by Alexander Graham Bell.',o:['invented','was invented','is invented','has invented'],a:1,e:'Bị động quá khứ đơn → was invented.'},
+{q:'Coral reefs must ___ from pollution.',o:['protect','be protected','protected','protecting'],a:1,e:'Sau must → be + V3 → be protected.'},
+{q:'"I am very tired," she said. → She said that she ___ very tired.',o:['is','was','were','has been'],a:1,e:'Lùi thì: am → was.'},
+{q:'He said he ___ visit Ha Long Bay the next day.',o:['will','would','is going to','shall'],a:1,e:'Lùi thì: will → would.'},
+{q:'Scientists ___ traces of water on Mars.',o:['find','found','have found','are finding'],a:2,e:'Kết quả còn giá trị đến nay → present perfect.'},
+{q:'My family has lived in this village ___ 2005.',o:['for','since','in','from'],a:1,e:'since + MỐC thời gian (2005).'},
+{q:'Which sentence is a COMPOUND sentence?',o:['Although it rained, we went out.','She sings, and he plays the piano.','When I arrived, he left.','Running every day keeps me fit.'],a:1,e:'Câu ghép = 2 mệnh đề ngang hàng nối bằng FANBOYS (and).'},
+{q:'___ do you log on to social media?',o:['How many','How much','How often','How long'],a:2,e:'Hỏi tần suất → How often.'},
+{q:'___ broke the ancient statue?',o:['Who did','Who','Whom did','What did'],a:1,e:'Từ hỏi là CHỦ NGỮ → không đảo: Who broke...?'}
+],
+readings:[
+{em:'🌾',title:'A Day in the Countryside',tags:['Life in the countryside','Comparatives'],
+text:`Nam spent last summer at his grandparents' farm in Ha Nam. Every morning he woke up at five, much earlier than he did in the city. His first job was to feed the chickens and collect their eggs. After breakfast, he helped his grandfather herd the buffaloes to the paddy field. The village was quieter and more peaceful than his noisy street in Ha Noi, and the air was much fresher. In the afternoon, Nam and his cousins swam in the river or flew kites on the dyke. The villagers were very hospitable; neighbours often brought over fruit from their orchards. At first Nam thought village life would be boring, but by the end of August he did not want to go home. “The countryside is not as exciting as the city,” he wrote in his diary, “but it makes me feel free.”`,
+vn:`Hè năm ngoái Nam về trang trại của ông bà ở Hà Nam. Sáng nào cậu cũng dậy lúc 5 giờ, sớm hơn nhiều so với khi ở thành phố. Việc đầu tiên là cho gà ăn và nhặt trứng. Ăn sáng xong, cậu giúp ông lùa trâu ra ruộng. Làng yên tĩnh và thanh bình hơn con phố ồn ào ở Hà Nội, không khí cũng trong lành hơn nhiều. Buổi chiều, Nam và các anh chị em họ bơi sông hoặc thả diều trên đê. Dân làng rất hiếu khách; hàng xóm hay mang hoa quả trong vườn sang cho. Ban đầu Nam nghĩ sống ở quê sẽ chán, nhưng đến cuối tháng Tám cậu lại không muốn về. “Nông thôn không thú vị bằng thành phố,” cậu viết trong nhật kí, “nhưng nó khiến mình thấy tự do.”`,
+qs:[{q:'What time did Nam wake up on the farm?',o:['Four o\'clock','Five o\'clock','Six o\'clock','Seven o\'clock'],a:1},{q:'What was Nam\'s FIRST job every morning?',o:['Herding the buffaloes','Swimming in the river','Feeding the chickens','Flying kites'],a:2},{q:'According to the passage, the village air was ___ than the city air.',o:['dirtier','fresher','noisier','warmer'],a:1},{q:'What does Nam say about the countryside at the end?',o:['It is more exciting than the city','It is boring','It makes him feel free','He wants to go home'],a:2}]},
+{em:'♻️',title:'Saving Our Blue Planet',tags:['Environmental protection','Passive voice'],
+text:`Every year about eight million tonnes of plastic are dumped into the ocean. Single-use items such as straws, bags and bottles break into tiny pieces that are eaten by fish, turtles and dugongs. Many of these animals die, and some species are now in danger of extinction. Coral reefs, which are home to a quarter of all sea creatures, are also being destroyed by toxic substances and rising temperatures. The good news is that ordinary people can help. Students in Da Nang have started a “Refuse the Straw” campaign, and more than forty cafes have joined. Some schools now collect used paper and plastic bottles every Friday; the money raised is given to a local turtle rescue centre. Small actions, when they are repeated by millions of people, become a powerful force.`,
+vn:`Mỗi năm khoảng 8 triệu tấn nhựa bị đổ ra đại dương. Đồ dùng một lần như ống hút, túi ni lông và chai nhựa vỡ thành mảnh nhỏ và bị cá, rùa, bò biển ăn phải. Nhiều con vật chết, một số loài giờ đứng trước nguy cơ tuyệt chủng. Các rạn san hô — nơi ở của một phần tư sinh vật biển — cũng đang bị phá huỷ bởi chất độc hại và nhiệt độ tăng. Tin vui là người bình thường vẫn có thể góp sức. Học sinh Đà Nẵng đã khởi xướng chiến dịch “Từ chối ống hút”, hơn 40 quán cà phê đã tham gia. Một số trường thu gom giấy và chai nhựa mỗi thứ Sáu; tiền bán được ủng hộ cho trung tâm cứu hộ rùa biển. Những hành động nhỏ, khi được hàng triệu người lặp lại, sẽ thành sức mạnh lớn.`,
+qs:[{q:'How much plastic goes into the ocean each year?',o:['Eight thousand tonnes','Eight hundred tonnes','Eight million tonnes','Eighty million tonnes'],a:2},{q:'Coral reefs are home to ___ of all sea creatures.',o:['a half','a third','a quarter','a fifth'],a:2},{q:'What is the campaign in Da Nang called?',o:['Save the Turtle','Refuse the Straw','Clean the Beach','Green Friday'],a:1},{q:'What happens to the money raised by the schools?',o:['It buys new books','It goes to a turtle rescue centre','It pays for a school trip','It is saved for next year'],a:1}]},
+{em:'📱',title:'Teenagers and Screen Time',tags:['Teenagers','Complex sentences'],
+text:`Although smartphones help teenagers stay connected with friends, doctors warn that too much screen time can be harmful. A recent survey of 1,200 students in Ho Chi Minh City found that the average teenager spends more than five hours a day on a screen. Many said they check notifications as soon as they wake up. Because they go to bed late browsing social media, they find it hard to concentrate in class the next morning. Some students also reported feeling anxious when they compare their lives with the perfect photos they see online. Experts suggest three simple rules: keep phones out of the bedroom at night, turn off notifications while studying, and spend at least one hour outdoors every day. “Technology is a good servant but a bad master,” said Dr Linh, who led the survey.`,
+vn:`Mặc dù điện thoại thông minh giúp thanh thiếu niên giữ liên lạc với bạn bè, bác sĩ cảnh báo dùng màn hình quá nhiều có thể có hại. Một khảo sát gần đây với 1.200 học sinh ở TP.HCM cho thấy trung bình mỗi bạn dùng màn hình hơn 5 tiếng một ngày. Nhiều bạn nói vừa thức dậy đã kiểm tra thông báo. Vì thức khuya lướt mạng xã hội nên sáng hôm sau các bạn khó tập trung trong lớp. Một số học sinh còn thấy lo âu khi so sánh cuộc sống của mình với những bức ảnh hoàn hảo trên mạng. Chuyên gia đề xuất ba quy tắc đơn giản: không để điện thoại trong phòng ngủ ban đêm, tắt thông báo khi học, và ra ngoài trời ít nhất một tiếng mỗi ngày. “Công nghệ là người hầu tốt nhưng là ông chủ tồi,” bác sĩ Linh — người chủ trì khảo sát — nói.`,
+qs:[{q:'How many students took part in the survey?',o:['120','1,200','12,000','500'],a:1},{q:'How long does an average teenager spend on a screen daily?',o:['Less than two hours','About three hours','More than five hours','Eight hours'],a:2},{q:'Why do students find it hard to concentrate in class?',o:['They eat too little','They go to bed late browsing social media','They walk to school','They study too much'],a:1},{q:'Which is NOT one of the three rules the experts suggest?',o:['Keep phones out of the bedroom at night','Turn off notifications while studying','Spend an hour outdoors daily','Delete all social media accounts'],a:3}]}
+],
+listenings:[
+{em:'🎋',title:'Tet in My Family',hint:'Nghe bạn Mai kể về Tết',
+script:[{text:'Hello, my name is Mai and I want to tell you about Tet in my family.'},{text:'About one week before Tet, we clean the whole house together.'},{text:'My mother and my grandmother make banh chung on the twenty-eighth of December.'},{text:'On New Year\'s Eve, we watch fireworks on television.'},{text:'The next morning, my father gives us lucky money in red envelopes.'},{text:'We visit our grandparents first, because they are the oldest in the family.'},{text:'My favourite part is the family reunion dinner on the first day.'}],
+trans:['Xin chào, mình là Mai và mình muốn kể về Tết ở nhà mình.','Khoảng một tuần trước Tết, cả nhà cùng nhau dọn dẹp.','Mẹ và bà mình gói bánh chưng vào ngày 28 tháng Chạp.','Đêm Giao thừa, cả nhà xem pháo hoa trên tivi.','Sáng hôm sau, bố lì xì cho chúng mình trong bao đỏ.','Chúng mình đến chúc Tết ông bà trước vì ông bà là người lớn tuổi nhất nhà.','Phần mình thích nhất là bữa cơm sum họp ngày mùng Một.'],
+qs:[{q:'When does Mai\'s family make banh chung?',o:['On New Year\'s Eve','On the 28th of December','One week before Tet','On the first day'],a:1},{q:'What do they do on New Year\'s Eve?',o:['Give lucky money','Watch fireworks on TV','Clean the house','Visit grandparents'],a:1},{q:'Why do they visit their grandparents first?',o:['They live nearest','They are the oldest in the family','They cook the best food','They give the most money'],a:1}]},
+{em:'🌪️',title:'A Storm Warning',hint:'Nghe bản tin cảnh báo bão',
+script:[{text:'Good evening. This is the six o\'clock weather report.'},{text:'A powerful storm is moving towards the central coast.'},{text:'It will reach the mainland at about four o\'clock tomorrow morning.'},{text:'Winds may reach one hundred and thirty kilometres an hour.'},{text:'Residents should stay indoors and prepare an emergency kit.'},{text:'Please put torches, drinking water and dry food in your kit.'},{text:'Local authorities have asked fishing boats to return to shore immediately.'}],
+trans:['Chào buổi tối. Đây là bản tin thời tiết lúc 6 giờ.','Một cơn bão mạnh đang tiến về vùng ven biển miền Trung.','Bão sẽ đổ bộ đất liền vào khoảng 4 giờ sáng mai.','Gió có thể đạt 130 km một giờ.','Người dân nên ở trong nhà và chuẩn bị bộ dụng cụ khẩn cấp.','Hãy để đèn pin, nước uống và đồ ăn khô vào bộ dụng cụ.','Chính quyền địa phương đã yêu cầu tàu cá quay về bờ ngay lập tức.'],
+qs:[{q:'When will the storm reach the mainland?',o:['Six o\'clock this evening','Midnight','Four o\'clock tomorrow morning','Tomorrow evening'],a:2},{q:'How strong may the winds be?',o:['30 km/h','103 km/h','130 km/h','300 km/h'],a:2},{q:'What should people put in the emergency kit?',o:['Torches, water and dry food','Books and toys','Money and jewellery','Clothes and shoes'],a:0}]},
+{em:'🛰️',title:'Life on Mars?',hint:'Nghe bài nói ngắn về sao Hoả',
+script:[{text:'Today I will talk about the possibility of life on Mars.'},{text:'Mars is the fourth planet from the Sun.'},{text:'Scientists have found traces of frozen water under its surface.'},{text:'Where there is water, there may once have been simple life.'},{text:'However, the atmosphere on Mars is very thin, and there is almost no oxygen.'},{text:'Temperatures can fall to minus sixty degrees Celsius at night.'},{text:'Many scientists believe humans will land on Mars before the year twenty forty.'}],
+trans:['Hôm nay mình sẽ nói về khả năng có sự sống trên sao Hoả.','Sao Hoả là hành tinh thứ tư tính từ Mặt Trời.','Các nhà khoa học đã tìm thấy dấu vết nước đóng băng dưới bề mặt.','Nơi nào có nước thì nơi đó có thể từng có sự sống đơn giản.','Tuy nhiên, bầu khí quyển sao Hoả rất mỏng và gần như không có ô-xi.','Nhiệt độ ban đêm có thể xuống tới âm 60 độ C.','Nhiều nhà khoa học tin con người sẽ đặt chân lên sao Hoả trước năm 2040.'],
+qs:[{q:'Mars is the ___ planet from the Sun.',o:['second','third','fourth','fifth'],a:2},{q:'What have scientists found under the surface of Mars?',o:['Oxygen','Frozen water','Plants','Metal'],a:1},{q:'How cold can it get on Mars at night?',o:['Minus six degrees','Minus sixteen degrees','Minus sixty degrees','Minus six hundred degrees'],a:2}]}
+],
+topics:[
+{id:'g8u1',em:'🎯',name:'U1: Leisure time',vocab:[['balance','sự cân bằng'],['bracelet','vòng đeo tay'],['crazy about','rất thích, quá say mê'],['cruel','độc ác'],['detest','căm ghét'],['DIY','tự làm đồ tại nhà'],['fancy','thích, mến'],['fold','gấp, gập'],['fond of','thích, mến'],['keen on','say mê, ham thích'],['keep in touch','giữ liên lạc'],['kit','bộ đồ nghề'],['leisure','thời gian rảnh rỗi'],['message','gửi tin nhắn'],['muscle','cơ bắp'],['origami','nghệ thuật gấp giấy Nhật Bản'],['outdoors','ngoài trời'],['prefer','thích hơn'],['socialise','giao lưu, kết bạn'],['spare time','thời gian rảnh'],['take up','bắt đầu một sở thích'],['adore','yêu thích, ngưỡng mộ'],['craft kit','bộ đồ làm thủ công'],['virtual','ảo, trên mạng']]},
+{id:'g8u2',em:'🌾',name:'U2: Life in the countryside',vocab:[['catch','đánh được, câu được (cá)'],['cattle','gia súc'],['combine harvester','máy gặt đập liên hợp'],['crop','vụ, mùa'],['cultivate','trồng trọt'],['dry','phơi khô, sấy khô'],['feed','cho ăn'],['ferry','phà'],['harvest','vụ thu hoạch, gặt hái'],['herd','chăn giữ vật nuôi'],['hospitable','mến khách, hiếu khách'],['lighthouse','đèn biển, hải đăng'],['load','chất, chở'],['milk','vắt sữa'],['orchard','vườn cây ăn quả'],['paddy field','ruộng lúa'],['picturesque','đẹp, hấp dẫn (phong cảnh)'],['plough','cày (thửa ruộng)'],['buffalo-drawn cart','xe trâu kéo'],['brick','viên gạch'],['collect water','lấy nước'],['generous','hào phóng, rộng rãi'],['vast','rộng lớn, bao la'],['peaceful','yên bình']]},
+{id:'g8u3',em:'🧑‍🎓',name:'U3: Teenagers',vocab:[['account','tài khoản'],['browse','đọc lướt, tìm trên mạng'],['bully','bắt nạt'],['bullying','sự bắt nạt'],['concentrate','tập trung'],['connect','kết nối'],['craft','nghề, đồ thủ công'],['enjoyable','thú vị, gây hứng thú'],['expectation','sự mong chờ, kì vọng'],['focused','chuyên tâm, tập trung'],['forum','diễn đàn'],['log on to','đăng nhập'],['mature','chín chắn, trưởng thành'],['media','phương tiện truyền thông'],['midterm','giữa kì'],['notification','sự thông báo'],['peer','bạn đồng lứa'],['pressure','áp lực'],['relaxed','thư giãn, thoải mái'],['self-aware','tự nhận thức bản thân'],['stressed','căng thẳng'],['teenager','thiếu niên'],['informed','hiểu biết, nắm thông tin'],['delete','xoá']]},
+{id:'g8u4',em:'🏞️',name:'U4: Ethnic groups of Viet Nam',vocab:[['communal house','nhà rông, nhà sinh hoạt cộng đồng'],['costume','trang phục'],['crop','vụ mùa, vụ trồng trọt'],['ethnic group','nhóm dân tộc'],['feature','nét, đặc điểm'],['flute','cái sáo'],['folk','thuộc về dân gian, truyền thống'],['gong','cái cồng, cái chiêng'],['harvest','vụ mùa'],['highland','vùng cao nguyên'],['livestock','gia súc'],['minority','dân tộc thiểu số'],['overlook','nhìn ra, đối diện'],['post','cột'],['raise','chăn nuôi'],['soil','đất trồng'],['staircase','cầu thang bộ'],['statue','tượng'],['stilt house','nhà sàn'],['terraced field','ruộng bậc thang'],['weave','dệt vải'],['ritual','nghi lễ'],['unique','độc đáo'],['heritage','di sản']]},
+{id:'g8u5',em:'🎋',name:'U5: Our customs and traditions',vocab:[['acrobatics','xiếc, các động tác nhào lộn'],['admire','khâm phục, ngưỡng mộ'],['bad spirit','điều xấu xa, tà ma'],['bamboo pole','cây nêu'],['carp','con cá chép'],['coastal','thuộc miền ven biển'],['ceremony','nghi thức, nghi lễ'],['chase away','xua đuổi'],['contestant','thí sinh'],['decorative','có tính trang trí'],['family bonding','sự gắn kết tình cảm gia đình'],['family reunion','cuộc sum họp gia đình'],['festival goer','người đi xem lễ hội'],['lantern','đèn lồng'],['longevity','sự sống lâu, tuổi thọ'],['martial arts','võ thuật'],['monk','nhà sư'],['offering','đồ thờ cúng'],['peach blossom','hoa đào'],['prosperity','sự thịnh vượng'],['sticky rice','gạo nếp, xôi'],['superstition','sự mê tín'],['worship','thờ cúng'],['custom','phong tục']]},
+{id:'g8u6',em:'🏠',name:'U6: Lifestyles',vocab:[['dogsled','xe trượt tuyết chó kéo'],['experience','kinh nghiệm, trải nghiệm'],['greet','chào hỏi'],['greeting','lời chào'],['in the habit of','có thói quen làm gì'],['in a hurry','đang vội'],['igloo','lều tuyết'],['impact','sự ảnh hưởng'],['independent','độc lập'],['interact','tương tác'],['interaction','sự tương tác'],['lifestyle','lối sống'],['make craft','làm hàng thủ công'],['maintain','duy trì, gìn giữ'],['musher','người điều khiển xe chó kéo'],['nomadic','du mục'],['offline','trực tiếp, ngoại tuyến'],['online','trực tuyến'],['online learning','việc học trực tuyến'],['revive','làm sống lại, hồi sinh'],['serve','phục vụ'],['staple','cơ bản, chủ yếu'],['traditional','truyền thống'],['urban','thuộc thành thị']]},
+{id:'g8u7',em:'🌍',name:'U7: Environmental protection',vocab:[['carbon dioxide','khí các-bon đi-ô-xít'],['carbon footprint','dấu chân các-bon'],['coral','san hô'],['dugong','con cá cúi, bò biển'],['ecosystem','hệ sinh thái'],['endangered species','loài có nguy cơ tuyệt chủng'],['extinction','sự tuyệt chủng'],['habitat','môi trường sống'],['oxygen','khí ô-xi'],['participate','tham gia'],['product','sản phẩm'],['protect','bảo vệ'],['release','thải ra, làm thoát ra'],['resident','người dân, dân cư'],['single-use','dùng một lần'],['species','loài động thực vật'],['substance','chất'],['toxic','độc hại'],['pollution','sự ô nhiễm'],['recycle','tái chế'],['reduce','giảm bớt'],['reuse','tái sử dụng'],['waste','rác thải'],['sustainable','bền vững']]},
+{id:'g8u8',em:'🛒',name:'U8: Shopping',vocab:[['access','nguồn để tiếp cận, truy cập'],['addicted to','say mê, nghiện'],['advertisement','quảng cáo'],['bargain','mặc cả'],['complaint','lời phàn nàn, khiếu nại'],['convenience store','cửa hàng tiện ích'],['customer','khách hàng'],['discount shop','cửa hàng hạ giá'],['display','trưng bày, bày biện'],['dollar store','cửa hàng đồng giá'],['fair','hội chợ'],['farmers\' market','chợ nông sản'],['goods','hàng hoá'],['home-grown','tự trồng'],['home-made','tự làm'],['item','một món hàng'],['on sale','đang hạ giá'],['open-air market','chợ họp ngoài trời'],['price tag','nhãn ghi giá'],['schedule','lịch trình, thời gian biểu'],['shopaholic','người nghiện mua sắm'],['purchase','mua, sự mua'],['refund','hoàn tiền'],['second-hand','đồ cũ, đã qua sử dụng']]},
+{id:'g8u9',em:'🌪️',name:'U9: Natural disasters',vocab:[['authority','chính quyền'],['damage','thiệt hại, gây tổn hại'],['destroy','phá huỷ'],['disaster','thảm hoạ'],['earthquake','trận động đất'],['emergency kit','bộ dụng cụ khẩn cấp'],['erupt','phun trào'],['Fahrenheit','độ F (đo nhiệt độ)'],['funnel','cái phễu'],['landslide','vụ sạt lở'],['liquid','chất lỏng'],['predict','dự đoán'],['property','của cải, nhà cửa'],['pull up','kéo lên, nhổ lên'],['rescue worker','nhân viên cứu hộ'],['Richter scale','độ Richter'],['shake','rung, lắc'],['storm','bão'],['suddenly','đột nhiên, bỗng nhiên'],['drought','hạn hán'],['flood','lũ lụt'],['tsunami','sóng thần'],['volcano','núi lửa'],['evacuate','sơ tán']]},
+{id:'g8u10',em:'📡',name:'U10: Communication in the future',vocab:[['account','tài khoản (ngân hàng, mạng xã hội)'],['advanced','tiên tiến'],['carrier pigeon','bồ câu đưa thư'],['charge','nạp, sạc (pin)'],['emoji','biểu tượng cảm xúc'],['holography','giao tiếp bằng ảnh ba chiều'],['instantly','ngay lập tức'],['Internet connection','kết nối mạng'],['language barrier','rào cản ngôn ngữ'],['live','phát sóng trực tiếp'],['smartphone','điện thoại thông minh'],['social network','mạng xã hội'],['tablet','máy tính bảng'],['telepathy','thần giao cách cảm'],['text','nhắn tin, văn bản'],['thought','ý nghĩ'],['translation machine','máy dịch thuật'],['transmit','truyền, chuyển giao'],['device','thiết bị'],['face-to-face','mặt đối mặt'],['netiquette','phép lịch sự trên mạng'],['video call','cuộc gọi video'],['wearable','đồ công nghệ đeo trên người'],['signal','tín hiệu']]},
+{id:'g8u11',em:'🔬',name:'U11: Science and technology',vocab:[['application','ứng dụng'],['attendance','sự có mặt, sĩ số'],['biometric','thuộc về sinh trắc'],['breakout room','phòng học chia nhóm'],['cheating','sự gian lận'],['complain','phàn nàn, khiếu nại'],['contact lens','kính áp tròng'],['convenient','thuận tiện, tiện lợi'],['develop','phát triển'],['digital','số, kĩ thuật số'],['discover','phát hiện, khám phá'],['epidemic','dịch bệnh'],['experiment','thí nghiệm'],['eye-tracking','theo dõi cử động mắt'],['face to face','trực tiếp'],['feedback','ý kiến phản hồi'],['fingerprint','dấu vân tay'],['invent','phát minh'],['invention','sự phát minh, sáng chế'],['mark','chấm điểm'],['platform','nền tảng'],['robot','người máy'],['submit','nộp bài'],['artificial intelligence','trí tuệ nhân tạo']]},
+{id:'g8u12',em:'🪐',name:'U12: Life on other planets',vocab:[['alien','người ngoài hành tinh'],['commander','người chỉ huy'],['crater','miệng núi lửa'],['creature','sinh vật, loài vật'],['galaxy','thiên hà'],['gravity','trọng lực'],['habitable','có thể ở được'],['Jupiter','sao Mộc'],['Mars','sao Hoả'],['Mercury','sao Thuỷ'],['Neptune','sao Hải Vương'],['oppose','chống lại, phản đối'],['possibility','khả năng, sự có thể'],['promising','đầy hứa hẹn'],['rocket','tên lửa'],['Saturn','sao Thổ'],['telescope','kính thiên văn'],['trace','dấu vết, vết tích'],['UFO','vật thể bay không xác định'],['Uranus','sao Thiên Vương'],['astronaut','phi hành gia'],['orbit','quỹ đạo'],['solar system','hệ mặt trời'],['spacecraft','tàu vũ trụ']]}
+]
+},
+/* ---------------- GRADE 9 (Global Success 9) ---------------- */
+9:{
+theory:[
+{em:'🔤',t:'Cụm động từ (Phrasal verbs)',h:`<div class="rule">Cụm động từ = <b>động từ + tiểu từ</b> (up, down, on, off, in, out, over, away...). Nghĩa thường KHÁC hẳn nghĩa từng từ.</div>
+<table><tr><th>Cụm động từ</th><th>Nghĩa</th><th>Ví dụ</th></tr>
+<tr><td>set up</td><td>thành lập</td><td>They <b>set up</b> a craft village in 1990.</td></tr>
+<tr><td>pass down</td><td>truyền lại</td><td>The skill is <b>passed down</b> from father to son.</td></tr>
+<tr><td>take over</td><td>tiếp quản</td><td>She <b>took over</b> the family workshop.</td></tr>
+<tr><td>look after</td><td>chăm sóc</td><td>He <b>looks after</b> his grandparents.</td></tr>
+<tr><td>turn down</td><td>từ chối · vặn nhỏ</td><td>She <b>turned down</b> the job offer.</td></tr>
+<tr><td>put up with</td><td>chịu đựng</td><td>I can't <b>put up with</b> the noise.</td></tr>
+<tr><td>come up with</td><td>nghĩ ra</td><td>They <b>came up with</b> a great idea.</td></tr>
+<tr><td>get on with</td><td>hoà hợp với</td><td>I <b>get on with</b> my classmates.</td></tr></table>
+<div class="warn">⚠️ Có thể tách: <i>turn <b>the radio</b> down</i>. Nhưng nếu tân ngữ là ĐẠI TỪ thì BẮT BUỘC tách: <i>turn <b>it</b> down</i>.</div>`},
+{em:'🧩',t:'Câu phức — mệnh đề trạng ngữ đầy đủ',h:`<table><tr><th>Loại</th><th>Liên từ</th><th>Ví dụ</th></tr>
+<tr><td>Thời gian</td><td>when, while, before, after, as soon as, until</td><td><b>As soon as</b> he arrived, the show began.</td></tr>
+<tr><td>Lí do</td><td>because, since, as</td><td>They moved <b>because</b> the rent was high.</td></tr>
+<tr><td>Nhượng bộ</td><td>although, though, even though, whereas</td><td><b>Even though</b> it rained, the tour went on.</td></tr>
+<tr><td>Mục đích</td><td>so that, in order that</td><td>Speak slowly <b>so that</b> everyone can hear.</td></tr>
+<tr><td>Kết quả</td><td>so + adj + that · such a + N + that</td><td>It was <b>so</b> cold <b>that</b> we stayed in.</td></tr>
+<tr><td>Điều kiện</td><td>if, unless, as long as</td><td><b>Unless</b> we act now, coral will die.</td></tr></table>
+<div class="ex">The scenery was <b>such a</b> beautiful sight <b>that</b> nobody wanted to leave.</div>
+<div class="warn">⚠️ <b>unless</b> = if... not, nên KHÔNG dùng thêm "not": <s>Unless you don't hurry</s> → <b>Unless you hurry</b>.</div>`},
+{em:'⚖️',t:'So sánh nâng cao: as...as, the same as, different from',h:`<table><tr><th>Cấu trúc</th><th>Nghĩa</th><th>Ví dụ</th></tr>
+<tr><td>as + adj/adv + as</td><td>bằng nhau</td><td>Ha Noi is <b>as busy as</b> Sai Gon.</td></tr>
+<tr><td>not as/so + adj + as</td><td>không bằng</td><td>My town isn't <b>as crowded as</b> yours.</td></tr>
+<tr><td>the same + N + as</td><td>giống như</td><td>He wears <b>the same size as</b> me.</td></tr>
+<tr><td>different from / similar to</td><td>khác với / giống với</td><td>City life is <b>different from</b> village life.</td></tr>
+<tr><td>the + comp, the + comp</td><td>càng... càng...</td><td><b>The more</b> you practise, <b>the better</b> you get.</td></tr>
+<tr><td>comp and comp</td><td>ngày càng</td><td>Cities are getting <b>bigger and bigger</b>.</td></tr>
+<tr><td>twice / three times as... as</td><td>gấp đôi / gấp ba</td><td>It costs <b>twice as much as</b> before.</td></tr></table>`},
+{em:'🟣',t:'Hiện tại hoàn thành &amp; Hiện tại hoàn thành tiếp diễn',h:`<div class="rule"><b>Present perfect</b> (have/has + V3): nhấn mạnh KẾT QUẢ.</div>
+<div class="rule"><b>Present perfect continuous</b> (have/has been + V-ing): nhấn mạnh QUÁ TRÌNH kéo dài.</div>
+<table><tr><th>Hoàn thành</th><th>Hoàn thành tiếp diễn</th></tr>
+<tr><td>I <b>have written</b> three emails. (xong 3 cái)</td><td>I <b>have been writing</b> emails all morning. (viết suốt sáng)</td></tr>
+<tr><td>She <b>has learnt</b> English for 5 years.</td><td>She <b>has been learning</b> English for 5 years.</td></tr></table>
+<div class="rule">Dấu hiệu chung: <b>for, since, just, already, yet, ever, never, recently, so far</b>.</div>
+<div class="warn">⚠️ Động từ trạng thái (know, like, want, believe, be) KHÔNG dùng dạng tiếp diễn.</div>`},
+{em:'⏪',t:'used to / be used to / get used to',h:`<table><tr><th>Cấu trúc</th><th>Nghĩa</th><th>Ví dụ</th></tr>
+<tr><td><b>used to + V</b></td><td>từng làm (nay không còn)</td><td>Villagers <b>used to</b> travel by boat.</td></tr>
+<tr><td><b>be used to + V-ing/N</b></td><td>đã quen với</td><td>I <b>am used to</b> getting up early.</td></tr>
+<tr><td><b>get used to + V-ing/N</b></td><td>đang dần quen với</td><td>She is <b>getting used to</b> city life.</td></tr></table>
+<div class="ex">My grandmother <b>used to</b> cook on a wood stove. (trước kia)</div>
+<div class="ex">She isn't <b>used to</b> cooking with gas. (chưa quen)</div>
+<div class="warn">⚠️ Sau <b>used to</b> là V nguyên mẫu; sau <b>be/get used to</b> là <b>V-ing</b>. Đây là lỗi sai phổ biến nhất!</div>`},
+{em:'🔄',t:'Câu bị động ở mọi thì',h:`<table><tr><th>Thì</th><th>Bị động</th><th>Ví dụ</th></tr>
+<tr><td>Hiện tại đơn</td><td>am/is/are + V3</td><td>Silk <b>is woven</b> here.</td></tr>
+<tr><td>Hiện tại tiếp diễn</td><td>am/is/are being + V3</td><td>A bridge <b>is being built</b>.</td></tr>
+<tr><td>Quá khứ đơn</td><td>was/were + V3</td><td>The temple <b>was built</b> in 1070.</td></tr>
+<tr><td>Quá khứ tiếp diễn</td><td>was/were being + V3</td><td>The road <b>was being repaired</b>.</td></tr>
+<tr><td>Hiện tại hoàn thành</td><td>have/has been + V3</td><td>The results <b>have been announced</b>.</td></tr>
+<tr><td>Tương lai</td><td>will be + V3</td><td>A satellite <b>will be launched</b>.</td></tr>
+<tr><td>Khuyết thiếu</td><td>modal + be + V3</td><td>Rubbish <b>must be sorted</b>.</td></tr></table>
+<div class="warn">⚠️ Chỉ ngoại động từ (có tân ngữ) mới đổi sang bị động được. <s>He was arrived.</s></div>`},
+{em:'💬',t:'Câu tường thuật đầy đủ: kể, hỏi, mệnh lệnh',h:`<div class="rule"><b>Câu kể</b>: S + said (that) + mệnh đề lùi thì.</div>
+<div class="ex">"I am busy." → He said (that) he <b>was</b> busy.</div>
+<div class="rule"><b>Câu hỏi Yes/No</b>: S + asked + <b>if / whether</b> + S + V (KHÔNG đảo).</div>
+<div class="ex">"Do you like it?" → She asked <b>if I liked</b> it.</div>
+<div class="rule"><b>Câu hỏi Wh-</b>: S + asked + <b>từ hỏi</b> + S + V (KHÔNG đảo).</div>
+<div class="ex">"Where do you live?" → He asked <b>where I lived</b>.</div>
+<div class="rule"><b>Mệnh lệnh</b>: S + told/asked + O + <b>(not) to + V</b>.</div>
+<div class="ex">"Close the door." → She told me <b>to close</b> the door.</div>
+<div class="ex">"Don't be late!" → He told us <b>not to be</b> late.</div>`},
+{em:'🧷',t:'Mệnh đề quan hệ xác định &amp; không xác định',h:`<table><tr><th>Đại từ</th><th>Thay cho</th><th>Ví dụ</th></tr>
+<tr><td>who</td><td>người</td><td>The artisan <b>who</b> made this is 80.</td></tr>
+<tr><td>which</td><td>vật, sự việc</td><td>The cave <b>which</b> we visited is huge.</td></tr>
+<tr><td>that</td><td>người hoặc vật (chỉ MĐ xác định)</td><td>The book <b>that</b> I bought is great.</td></tr>
+<tr><td>whose</td><td>sở hữu</td><td>The girl <b>whose</b> father is a pilot.</td></tr>
+<tr><td>where / when</td><td>nơi chốn / thời gian</td><td>This is the village <b>where</b> I grew up.</td></tr></table>
+<div class="rule"><b>Xác định</b> (không phẩy): bỏ đi thì câu mất nghĩa. <b>Không xác định</b> (CÓ phẩy): chỉ bổ sung thông tin.</div>
+<div class="ex">Ha Long Bay, <b>which</b> is a UNESCO site, attracts millions of tourists.</div>
+<div class="warn">⚠️ Mệnh đề KHÔNG xác định không dùng <b>that</b> và không được bỏ đại từ quan hệ.</div>`},
+{em:'🌦️',t:'Câu điều kiện loại 1, 2 và câu ước (wish)',h:`<table><tr><th>Loại</th><th>Cấu trúc</th><th>Ví dụ</th></tr>
+<tr><td>Loại 1 — có thật</td><td>If + S + V(s/es), S + will + V</td><td><b>If</b> we recycle, we <b>will save</b> energy.</td></tr>
+<tr><td>Loại 2 — không có thật ở hiện tại</td><td>If + S + V2/were, S + would + V</td><td><b>If</b> I <b>were</b> you, I <b>would</b> apply.</td></tr>
+<tr><td>Ước ở hiện tại</td><td>S + wish + S + V2/were</td><td>I <b>wish</b> I <b>had</b> more free time.</td></tr>
+<tr><td>Ước ở quá khứ</td><td>S + wish + S + had + V3</td><td>I <b>wish</b> I <b>had studied</b> harder.</td></tr></table>
+<div class="warn">⚠️ Ở loại 2 và câu ước, dùng <b>were</b> cho MỌI chủ ngữ: <i>If I <b>were</b> a bird...</i></div>`},
+{em:'💡',t:'Đề nghị, gợi ý &amp; giới từ đi kèm',h:`<table><tr><th>Cấu trúc gợi ý</th><th>Ví dụ</th></tr>
+<tr><td>suggest + V-ing</td><td>I <b>suggest going</b> by train.</td></tr>
+<tr><td>suggest (that) S + (should) V</td><td>She <b>suggested that we should book</b> early.</td></tr>
+<tr><td>Why don't we + V?</td><td><b>Why don't we</b> visit the museum?</td></tr>
+<tr><td>How about / What about + V-ing?</td><td><b>How about</b> taking a guided tour?</td></tr>
+<tr><td>Let's + V</td><td><b>Let's</b> apply for that job.</td></tr></table>
+<table><tr><th>Tính từ + giới từ</th><th>Động từ + giới từ</th></tr>
+<tr><td>good <b>at</b>, interested <b>in</b>, afraid <b>of</b></td><td>depend <b>on</b>, apply <b>for</b>, succeed <b>in</b></td></tr>
+<tr><td>proud <b>of</b>, famous <b>for</b>, keen <b>on</b></td><td>believe <b>in</b>, consist <b>of</b>, insist <b>on</b></td></tr></table>
+<div class="warn">⚠️ Sau MỌI giới từ đều là <b>V-ing</b>: <i>She succeeded <b>in getting</b> the job.</i></div>`}
+],
+quiz:[
+{q:'My grandfather ___ the family workshop in 1985.',o:['set up','set out','set off','set in'],a:0,e:'set up = thành lập.'},
+{q:'The weaving skill has been ___ from generation to generation.',o:['passed down','passed by','passed away','passed out'],a:0,e:'pass down = truyền lại.'},
+{q:'I can\'t ___ the noise from the construction site.',o:['put on','put up with','put off','put down'],a:1,e:'put up with = chịu đựng.'},
+{q:'___ it rained heavily, the guided tour went on.',o:['Because','Even though','So that','Unless'],a:1,e:'Nhượng bộ → Even though.'},
+{q:'Speak more slowly ___ everyone can understand you.',o:['so that','because','although','unless'],a:0,e:'Mục đích → so that.'},
+{q:'It was ___ a beautiful sight that nobody wanted to leave.',o:['so','such','very','too'],a:1,e:'such + a + adj + N + that.'},
+{q:'___ we act now, coral reefs will disappear.',o:['If','Unless','Although','So'],a:1,e:'Unless = if not → Unless we act now.'},
+{q:'Ha Noi is not ___ crowded as Ho Chi Minh City.',o:['so','more','the most','as much'],a:0,e:'not so/as + adj + as.'},
+{q:'The more you practise, ___ you become.',o:['the good','better','the better','the best'],a:2,e:'Càng... càng...: the + comparative, the + comparative.'},
+{q:'She ___ English for five years and still studies it now.',o:['learns','learnt','has learnt','is learning'],a:2,e:'for 5 years + còn tiếp diễn → present perfect.'},
+{q:'I ___ emails all morning; my hand hurts.',o:['have written','have been writing','wrote','write'],a:1,e:'Nhấn mạnh quá trình kéo dài → present perfect continuous.'},
+{q:'Villagers ___ travel by boat, but now they use a bridge.',o:['use to','used to','are used to','get used to'],a:1,e:'Từng làm, nay không còn → used to + V.'},
+{q:'She isn\'t used to ___ with gas yet.',o:['cook','cooking','cooked','to cook'],a:1,e:'be used to + V-ing.'},
+{q:'Silk ___ in this village for over 300 years.',o:['has woven','has been woven','was weaving','weaves'],a:1,e:'Bị động hiện tại hoàn thành → has been woven.'},
+{q:'A new bridge ___ across the river at the moment.',o:['is built','is being built','was built','builds'],a:1,e:'Đang xảy ra → bị động hiện tại tiếp diễn.'},
+{q:'All rubbish must ___ before it is collected.',o:['sort','be sorted','sorted','sorting'],a:1,e:'modal + be + V3.'},
+{q:'"Do you like the museum?" → She asked me ___ the museum.',o:['do I like','if I liked','did I like','that I like'],a:1,e:'Câu hỏi Yes/No → if + S + V, KHÔNG đảo.'},
+{q:'"Don\'t be late!" → He told us ___ late.',o:['not be','to not be','not to be','don\'t be'],a:2,e:'Mệnh lệnh phủ định → not to + V.'},
+{q:'Ha Long Bay, ___ is a UNESCO site, attracts many tourists.',o:['that','which','who','where'],a:1,e:'Mệnh đề KHÔNG xác định → which (không dùng that).'},
+{q:'This is the village ___ my grandparents grew up.',o:['which','that','where','who'],a:2,e:'Chỉ nơi chốn → where.'},
+{q:'If I ___ you, I would apply for that scholarship.',o:['am','was','were','be'],a:2,e:'Điều kiện loại 2 → were cho mọi chủ ngữ.'},
+{q:'I wish I ___ more free time to travel.',o:['have','had','will have','having'],a:1,e:'Ước ở hiện tại → wish + S + V2.'},
+{q:'I suggest ___ by train instead of by plane.',o:['to go','going','go','went'],a:1,e:'suggest + V-ing.'},
+{q:'She succeeded ___ getting the job she wanted.',o:['on','at','in','for'],a:2,e:'succeed IN + V-ing.'},
+{q:'He is very proud ___ his daughter\'s achievement.',o:['in','of','at','for'],a:1,e:'proud OF.'}
+],
+readings:[
+{em:'🏺',title:'The Pottery Village of Bat Trang',tags:['Local community','Relative clauses'],
+text:`Bat Trang, which lies about thirteen kilometres from the centre of Ha Noi, has produced pottery for more than seven hundred years. The clay used here is special: it is white, smooth and does not crack easily when it is fired. Visitors who come to the village can watch artisans shape bowls on a spinning wheel, then paint delicate patterns by hand before the pieces are put into the kiln. Many families have passed the craft down through ten generations. In recent years, however, young people have begun to leave for city jobs, and the village faces a shortage of skilled workers. To attract them back, local authorities have set up workshops where tourists can make their own cups. The money earned helps young artisans stay, so a tradition that is centuries old may survive another century.`,
+vn:`Bát Tràng, ngôi làng cách trung tâm Hà Nội khoảng 13 km, đã làm gốm hơn 700 năm. Đất sét ở đây rất đặc biệt: trắng, mịn và không dễ nứt khi nung. Du khách đến làng có thể xem nghệ nhân tạo hình bát trên bàn xoay, rồi vẽ hoa văn tinh xảo bằng tay trước khi cho vào lò. Nhiều gia đình đã truyền nghề qua mười thế hệ. Tuy nhiên, những năm gần đây người trẻ bắt đầu rời làng đi làm ở thành phố, làng thiếu thợ lành nghề. Để thu hút họ trở về, chính quyền địa phương đã mở các xưởng cho du khách tự nặn cốc. Tiền thu được giúp nghệ nhân trẻ ở lại, nhờ vậy một truyền thống hàng thế kỉ có thể sống thêm một thế kỉ nữa.`,
+qs:[{q:'How far is Bat Trang from the centre of Ha Noi?',o:['3 km','13 km','30 km','130 km'],a:1},{q:'Why is the clay of Bat Trang special?',o:['It is red and rough','It is white, smooth and does not crack easily','It is very cheap','It comes from the sea'],a:1},{q:'What problem does the village face now?',o:['Too many tourists','A shortage of skilled workers','No clay left','Bad weather'],a:1},{q:'How do the workshops help the village?',o:['They train foreign artisans','The money earned helps young artisans stay','They sell clay to other villages','They build new roads'],a:1}]},
+{em:'🚀',title:'The First Woman to Walk in Space',tags:['Space travel','Past tenses'],
+text:`On 18 July 1984, Svetlana Savitskaya became the first woman to walk in space. She left the Salyut 7 station wearing a heavy spacesuit and spent three hours and thirty-five minutes outside, cutting and welding metal to test new equipment. Working in space is far harder than it looks. Because there is no gravity, tools float away if they are not tied down, and a small mistake can be dangerous. Savitskaya had trained for years as a test pilot before she joined the space programme, and she had already set several world records in flying. When she returned to Earth, she said the most beautiful thing she had ever seen was the thin blue line of the atmosphere around our planet. Today more than seventy women have flown into space, and many of them mention Savitskaya as their role model.`,
+vn:`Ngày 18/7/1984, Svetlana Savitskaya trở thành người phụ nữ đầu tiên đi bộ ngoài không gian. Bà rời trạm Salyut 7 trong bộ đồ phi hành nặng nề và ở bên ngoài 3 giờ 35 phút, cắt và hàn kim loại để thử nghiệm thiết bị mới. Làm việc ngoài không gian khó hơn nhiều so với vẻ ngoài. Vì không có trọng lực, dụng cụ sẽ trôi đi nếu không buộc lại, và một sai sót nhỏ cũng có thể nguy hiểm. Savitskaya đã huấn luyện nhiều năm với vai trò phi công thử nghiệm trước khi tham gia chương trình vũ trụ, và bà từng lập vài kỉ lục thế giới về bay. Khi trở về Trái Đất, bà nói điều đẹp nhất bà từng thấy là vệt xanh mỏng của bầu khí quyển quanh hành tinh chúng ta. Ngày nay hơn 70 phụ nữ đã bay vào vũ trụ, nhiều người trong số họ coi Savitskaya là hình mẫu.`,
+qs:[{q:'How long did Savitskaya stay outside the station?',o:['35 minutes','3 hours 35 minutes','13 hours','1 hour'],a:1},{q:'Why do tools float away in space?',o:['Because of the wind','Because there is no gravity','Because the station moves','Because they are light'],a:1},{q:'What was her job before the space programme?',o:['A doctor','A teacher','A test pilot','An engineer'],a:2},{q:'What did she find most beautiful?',o:['The Moon','The stars','The thin blue line of the atmosphere','The Sun'],a:2}]},
+{em:'👩‍🔧',title:'Changing Roles at Home',tags:['Changing roles in society','Reported speech'],
+text:`Thirty years ago, most Vietnamese families followed a simple rule: the father was the breadwinner and the mother looked after the house. Today that picture has changed a great deal. In a survey carried out last year, sixty-two per cent of married women said that they earned as much as, or more than, their husbands. Many men said they now cooked, washed clothes and took their children to school. One father interviewed for the study said that he had learnt to cook only after his wife was promoted and had to travel for work. Experts explain that when both parents share the workload, children grow up with fewer stereotypes about what men and women can do. However, the survey also found that women still spend about two hours more on housework every day, so equality is not complete yet.`,
+vn:`Ba mươi năm trước, phần lớn gia đình Việt theo một quy tắc đơn giản: bố là trụ cột kinh tế, mẹ lo việc nhà. Ngày nay bức tranh ấy đã thay đổi rất nhiều. Trong một khảo sát năm ngoái, 62% phụ nữ đã kết hôn nói rằng họ kiếm được bằng hoặc nhiều hơn chồng. Nhiều người đàn ông nói giờ họ nấu ăn, giặt giũ và đưa con đi học. Một người bố tham gia nghiên cứu kể rằng anh chỉ học nấu ăn sau khi vợ được thăng chức và phải đi công tác. Chuyên gia giải thích rằng khi cả bố lẫn mẹ cùng chia sẻ công việc, trẻ lớn lên với ít định kiến hơn về việc nam hay nữ làm được gì. Tuy nhiên khảo sát cũng cho thấy phụ nữ vẫn làm việc nhà nhiều hơn khoảng hai tiếng mỗi ngày, nên bình đẳng vẫn chưa trọn vẹn.`,
+qs:[{q:'What percentage of married women earn as much as or more than their husbands?',o:['26%','52%','62%','72%'],a:2},{q:'Why did the father in the study learn to cook?',o:['He liked cooking','His wife was promoted and had to travel','He went to a cooking school','He lived alone'],a:1},{q:'What benefit do experts mention when parents share the workload?',o:['Children earn more money','Children grow up with fewer stereotypes','Parents sleep more','Houses become bigger'],a:1},{q:'According to the survey, women still spend ___ more on housework each day.',o:['30 minutes','one hour','about two hours','four hours'],a:2}]}
+],
+listenings:[
+{em:'🧳',title:'Booking a Tour',hint:'Nghe cuộc gọi đặt tour du lịch',
+script:[{text:'Good morning, Sunrise Travel. How can I help you?'},{text:'I would like to book a three-day tour to Phong Nha Cave.'},{text:'Certainly. We have a package tour that departs every Friday morning.'},{text:'The price is four million dong per person, including accommodation and meals.'},{text:'Does that price include the entrance fee to the cave?'},{text:'Yes, it does, and a guided tour in English is also included.'},{text:'Great. Please book two places for the twelfth of August.'}],
+trans:['Chào buổi sáng, Sunrise Travel đây. Tôi có thể giúp gì ạ?','Tôi muốn đặt tour ba ngày đi động Phong Nha.','Vâng ạ. Bên em có tour trọn gói khởi hành sáng thứ Sáu hằng tuần.','Giá là 4 triệu đồng một người, bao gồm chỗ ở và các bữa ăn.','Giá đó đã gồm vé vào động chưa?','Rồi ạ, và cũng có hướng dẫn viên tiếng Anh đi kèm.','Tuyệt. Vui lòng đặt hai chỗ cho ngày 12 tháng Tám.'],
+qs:[{q:'How long is the tour?',o:['Two days','Three days','Five days','One week'],a:1},{q:'When does the package tour depart?',o:['Every Monday','Every Friday morning','Every weekend','Every day'],a:1},{q:'What is included in the price?',o:['Only accommodation','Accommodation, meals, entrance fee and a guide','Only meals','Flights'],a:1}]},
+{em:'💼',title:'A Job Interview',hint:'Nghe một buổi phỏng vấn xin việc',
+script:[{text:'Good afternoon. Please tell me a little about yourself.'},{text:'I graduated from a vocational school two years ago.'},{text:'Since then I have worked as an apprentice in a furniture workshop.'},{text:'Why do you want to work for our company?'},{text:'Because your company is famous for training its young workers.'},{text:'What do you think your greatest strength is?'},{text:'I am patient, and I get on well with my colleagues.'}],
+trans:['Chào buổi chiều. Bạn hãy giới thiệu đôi chút về bản thân.','Em tốt nghiệp trường nghề cách đây hai năm.','Từ đó tới nay em làm thợ học việc ở một xưởng đồ gỗ.','Vì sao bạn muốn làm việc cho công ty chúng tôi?','Vì công ty nổi tiếng về việc đào tạo lao động trẻ.','Bạn nghĩ điểm mạnh nhất của mình là gì?','Em kiên nhẫn và hoà đồng với đồng nghiệp.'],
+qs:[{q:'Where did the candidate study?',o:['A university','A vocational school','A high school','Abroad'],a:1},{q:'How long has the candidate worked as an apprentice?',o:['Two months','Two years','Five years','Since last week'],a:1},{q:'What is the candidate\'s greatest strength?',o:['Speaking English','Being patient and getting on with colleagues','Working fast','Using computers'],a:1}]},
+{em:'🌏',title:'English Around the World',hint:'Nghe bài nói về tiếng Anh toàn cầu',
+script:[{text:'English is spoken by about one and a half billion people today.'},{text:'However, only around four hundred million are native speakers.'},{text:'This means most conversations in English happen between non-native speakers.'},{text:'English has borrowed thousands of words from other languages.'},{text:'For example, the word bamboo came from Malay, and tea came from Chinese.'},{text:'There are also many varieties, such as British, American, Australian and Indian English.'},{text:'Experts say the accent matters far less than being clear and polite.'}],
+trans:['Ngày nay khoảng 1,5 tỉ người nói tiếng Anh.','Tuy nhiên chỉ khoảng 400 triệu người là người bản ngữ.','Nghĩa là phần lớn các cuộc hội thoại tiếng Anh diễn ra giữa những người không bản ngữ.','Tiếng Anh đã vay mượn hàng nghìn từ từ các ngôn ngữ khác.','Ví dụ từ bamboo đến từ tiếng Mã Lai, còn tea đến từ tiếng Trung.','Cũng có nhiều biến thể như tiếng Anh Anh, Mỹ, Úc và Ấn Độ.','Chuyên gia nói giọng nói ít quan trọng hơn nhiều so với việc nói rõ ràng và lịch sự.'],
+qs:[{q:'How many people speak English today?',o:['400 million','1.5 billion','15 billion','150 million'],a:1},{q:'Where did the word bamboo come from?',o:['Chinese','Malay','French','Latin'],a:1},{q:'According to experts, what matters more than accent?',o:['Speed','Vocabulary size','Being clear and polite','Grammar rules'],a:2}]}
+],
+topics:[
+{id:'g9u1',em:'🏘️',name:'U1: Local community',vocab:[['artisan','nghệ nhân'],['attraction','điểm thu hút'],['authentic','chân thực, nguyên bản'],['charity','tổ chức từ thiện'],['community','cộng đồng'],['craft village','làng nghề'],['drumhead','mặt trống'],['embroider','thêu'],['handicraft','đồ thủ công'],['layer','lớp'],['mould','đúc, khuôn đúc'],['preserve','bảo tồn'],['remind','nhắc nhở'],['sculpture','tác phẩm điêu khắc'],['set up','thành lập'],['skilled','lành nghề'],['surface','bề mặt'],['thread','sợi chỉ'],['treasure','kho báu, trân trọng'],['weave','dệt'],['workshop','xưởng thủ công'],['heritage','di sản'],['generation','thế hệ'],['donate','quyên góp']]},
+{id:'g9u2',em:'🌆',name:'U2: City life',vocab:[['affordable','có giá phải chăng'],['bustling','tấp nập, nhộn nhịp'],['conflict','xung đột'],['determine','xác định, quyết định'],['downtown','khu trung tâm'],['dweller','cư dân'],['fascinating','hấp dẫn, lôi cuốn'],['forbidden','bị cấm'],['green space','không gian xanh'],['high-rise','nhà cao tầng'],['historic','có tính lịch sử'],['liveable','đáng sống'],['metropolitan','thuộc đô thị lớn'],['multicultural','đa văn hoá'],['packed','chật kín người'],['pedestrian','người đi bộ'],['public transport','giao thông công cộng'],['reliable','đáng tin cậy'],['skyscraper','toà nhà chọc trời'],['stuck','mắc kẹt'],['traffic jam','tắc đường'],['urban','thuộc thành thị'],['variety','sự đa dạng'],['cost of living','chi phí sinh hoạt']]},
+{id:'g9u3',em:'💚',name:'U3: Healthy living for teens',vocab:[['acne','mụn trứng cá'],['anxious','lo lắng'],['balanced diet','chế độ ăn cân bằng'],['calorie','ca-lo'],['concentration','sự tập trung'],['dairy','sản phẩm từ sữa'],['depressed','chán nản, trầm cảm'],['energetic','tràn đầy năng lượng'],['fibre','chất xơ'],['gain weight','tăng cân'],['infection','sự nhiễm trùng'],['mental','thuộc tinh thần'],['nutrient','chất dinh dưỡng'],['obesity','béo phì'],['physical','thuộc thể chất'],['protein','chất đạm'],['puberty','tuổi dậy thì'],['reduce stress','giảm căng thẳng'],['skip meals','bỏ bữa'],['sleep deprivation','thiếu ngủ'],['wellbeing','sự khoẻ mạnh'],['junk food','đồ ăn vặt'],['immune','thuộc miễn dịch'],['relieve','làm dịu, giảm nhẹ']]},
+{id:'g9u4',em:'🏛️',name:'U4: Remembering the past',vocab:[['ancestor','tổ tiên'],['ancient','cổ xưa'],['bare-footed','đi chân đất'],['brass','đồng thau'],['clay','đất sét'],['collection','bộ sưu tập'],['decade','thập kỉ'],['dye','nhuộm'],['era','thời đại, kỉ nguyên'],['face-to-face','mặt đối mặt'],['historical','thuộc lịch sử'],['illiterate','mù chữ'],['loudspeaker','cái loa'],['memorable','đáng nhớ'],['nostalgia','nỗi hoài niệm'],['occasion','dịp, cơ hội'],['pass down','truyền lại'],['ritual','nghi lễ'],['thatched house','nhà tranh'],['used to','từng làm gì (nay không còn)'],['village gate','cổng làng'],['wartime','thời chiến'],['witness','chứng kiến'],['tradition','truyền thống']]},
+{id:'g9u5',em:'🎒',name:'U5: Our experiences',vocab:[['achievement','thành tựu'],['adventure','cuộc phiêu lưu'],['camping','cắm trại'],['challenge','thử thách'],['confident','tự tin'],['delighted','vui sướng'],['embarrassing','đáng xấu hổ'],['exchange student','học sinh trao đổi'],['exhausted','kiệt sức'],['frightened','sợ hãi'],['get lost','bị lạc'],['hostel','nhà nghỉ giá rẻ'],['independence','sự độc lập'],['memorable','đáng nhớ'],['overcome','vượt qua'],['regret','hối tiếc'],['responsible','có trách nhiệm'],['scenery','phong cảnh'],['survival skill','kĩ năng sinh tồn'],['teamwork','làm việc nhóm'],['unforgettable','không thể quên'],['volunteer','tình nguyện viên'],['backpack','ba lô'],['homesick','nhớ nhà']]},
+{id:'g9u6',em:'🍚',name:'U6: Vietnamese lifestyle: then and now',vocab:[['ao dai','áo dài'],['bamboo','tre'],['changed','đã thay đổi'],['compulsory','bắt buộc'],['convenient','tiện lợi'],['extended family','gia đình nhiều thế hệ'],['facility','tiện nghi, cơ sở vật chất'],['go up','tăng lên'],['household','hộ gia đình'],['illiteracy','nạn mù chữ'],['improve','cải thiện'],['living standard','mức sống'],['modernise','hiện đại hoá'],['nuclear family','gia đình hạt nhân'],['possession','tài sản, đồ sở hữu'],['progress','sự tiến bộ'],['rural','thuộc nông thôn'],['shortage','sự thiếu hụt'],['street vendor','người bán hàng rong'],['subsidy period','thời bao cấp'],['thanks to','nhờ có'],['transform','biến đổi'],['well-off','khá giả'],['commute','đi lại hằng ngày']]},
+{id:'g9u7',em:'🏔️',name:'U7: Natural wonders of the world',vocab:[['breathtaking','đẹp đến ngộp thở'],['canyon','hẻm núi'],['cave','hang động'],['cavern','hang lớn'],['cliff','vách đá'],['continent','lục địa'],['coral reef','rạn san hô'],['desert','sa mạc'],['erosion','sự xói mòn'],['geographical','thuộc địa lí'],['glacier','sông băng'],['landscape','phong cảnh'],['majestic','hùng vĩ'],['measure','đo đạc, kích thước'],['natural wonder','kì quan thiên nhiên'],['peak','đỉnh núi'],['plain','đồng bằng'],['rock formation','khối đá tạo hình'],['spectacular','ngoạn mục'],['stalactite','nhũ đá'],['summit','đỉnh cao nhất'],['valley','thung lũng'],['waterfall','thác nước'],['wilderness','vùng hoang dã']]},
+{id:'g9u8',em:'✈️',name:'U8: Tourism',vocab:[['accommodation','chỗ ở'],['baggage','hành lí'],['boarding pass','thẻ lên máy bay'],['book in advance','đặt trước'],['check in','làm thủ tục'],['cruise','chuyến du ngoạn tàu biển'],['depart','khởi hành'],['destination','điểm đến'],['eco-tourism','du lịch sinh thái'],['excursion','chuyến tham quan ngắn'],['guided tour','tour có hướng dẫn viên'],['itinerary','lịch trình'],['luggage','hành lí'],['package tour','tour trọn gói'],['passport','hộ chiếu'],['resort','khu nghỉ dưỡng'],['safari','chuyến đi xem thú hoang'],['sightseeing','tham quan'],['souvenir','quà lưu niệm'],['tourist attraction','điểm du lịch'],['travel agency','công ti du lịch'],['vacancy','phòng còn trống'],['visa','thị thực'],['backpacking','du lịch bụi']]},
+{id:'g9u9',em:'🌐',name:'U9: English in the world',vocab:[['accent','giọng, chất giọng'],['bilingual','song ngữ'],['borrow','vay mượn (từ)'],['dialect','phương ngữ'],['dominant','chiếm ưu thế'],['fluent','trôi chảy, lưu loát'],['foreign language','ngoại ngữ'],['global','toàn cầu'],['imitate','bắt chước'],['immersion','sự đắm mình trong ngôn ngữ'],['mother tongue','tiếng mẹ đẻ'],['multilingual','đa ngữ'],['native speaker','người bản ngữ'],['official language','ngôn ngữ chính thức'],['pronunciation','cách phát âm'],['second language','ngôn ngữ thứ hai'],['simplify','đơn giản hoá'],['slang','tiếng lóng'],['spread','lan rộng'],['term','thuật ngữ'],['vocabulary','vốn từ vựng'],['widely used','được dùng rộng rãi'],['communicate','giao tiếp'],['translate','dịch']]},
+{id:'g9u10',em:'🚀',name:'U10: Space travel',vocab:[['astronaut','phi hành gia'],['atmosphere','bầu khí quyển'],['cosmonaut','nhà du hành vũ trụ (Nga)'],['countdown','đếm ngược'],['float','trôi nổi, lơ lửng'],['fuel','nhiên liệu'],['gravity','trọng lực'],['launch','phóng (tàu vũ trụ)'],['meteorite','thiên thạch'],['mission','nhiệm vụ'],['orbit','quỹ đạo, bay quanh'],['outer space','không gian vũ trụ'],['parachute','cái dù'],['planet','hành tinh'],['satellite','vệ tinh'],['space junk','rác vũ trụ'],['space shuttle','tàu con thoi'],['spacesuit','bộ đồ phi hành'],['spacewalk','đi bộ ngoài không gian'],['telescope','kính thiên văn'],['universe','vũ trụ'],['weightless','không trọng lượng'],['explore','khám phá'],['crew','phi hành đoàn']]},
+{id:'g9u11',em:'👩‍💼',name:'U11: Changing roles in society',vocab:[['adapt','thích nghi'],['attitude','thái độ'],['breadwinner','trụ cột kinh tế gia đình'],['burden','gánh nặng'],['career path','con đường sự nghiệp'],['discriminate','phân biệt đối xử'],['equality','sự bình đẳng'],['expectation','kì vọng'],['flexible','linh hoạt'],['gender role','vai trò giới'],['housework','việc nhà'],['income','thu nhập'],['leadership','khả năng lãnh đạo'],['male-dominated','do nam giới thống trị'],['opportunity','cơ hội'],['prejudice','định kiến'],['responsibility','trách nhiệm'],['role model','hình mẫu'],['share the workload','chia sẻ công việc'],['society','xã hội'],['stereotype','khuôn mẫu, định kiến'],['workforce','lực lượng lao động'],['independent','độc lập'],['respect','tôn trọng']]},
+{id:'g9u12',em:'🎓',name:'U12: My future career',vocab:[['apply for','nộp đơn xin'],['apprentice','người học việc'],['aptitude','năng khiếu'],['career','sự nghiệp'],['colleague','đồng nghiệp'],['cover letter','thư xin việc'],['craftsman','thợ thủ công lành nghề'],['CV','sơ yếu lí lịch'],['degree','bằng cấp'],['employer','người sử dụng lao động'],['full-time','toàn thời gian'],['interview','phỏng vấn'],['interpersonal skill','kĩ năng giao tiếp'],['marine biologist','nhà sinh vật biển'],['part-time','bán thời gian'],['promotion','sự thăng chức'],['qualification','bằng cấp, trình độ'],['salary','tiền lương'],['self-employed','tự làm chủ'],['shift work','làm việc theo ca'],['skilled worker','lao động lành nghề'],['vocational school','trường nghề'],['work experience','kinh nghiệm làm việc'],['suit','phù hợp với']]}
+]
+},
 /* ---------------- GRADE 10 ---------------- */
 10:{
 theory:[
@@ -2855,18 +3209,18 @@ const TT={
   perks:{3:'🎯 Bắn 2 mục tiêu cùng lúc',5:'🔭 Tầm bắn xa hơn',7:'🎯 Bắn 3 mục tiêu',10:'🎯 Bắn 4 mục tiêu + tầm xa nhất bản đồ'}},
  dragon:{em:'🐲',name:'Rồng',cost:180,range:88,dmg:48,rate:1.3,color:'#ef4444',atk:'fire',splash:44,skill:'🔥 Phun lửa diện rộng',
   perks:{3:'🔥 Thiêu đốt — quái cháy mất máu',5:'💨 Nổ lửa rộng hơn',7:'🌋 Cháy nặng — thiêu rụi cả đàn',10:'☄️ Rồng Cổ Đại — bão lửa huỷ diệt'}},
- hero:{em:'🦸',name:'Siêu Anh Hùng',cost:700,range:130,dmg:58,rate:.22,color:'#0ea5e9',atk:'beam',splash:38,unlock:10,unlockS:10,
-  skill:'💥 Bắn tia năng lượng — cực nhanh, nổ diện rộng, xuyên giáp',
-  perks:{3:'🗡️ Xuyên giáp HOÀN TOÀN',5:'💥 Chí mạng 30% ×2.2',7:'🎯 Bắn 3 mục tiêu cùng lúc',10:'🌟 Tối Thượng — 4 mục tiêu · chí mạng 45% ×2.6 · nổ cực rộng'}},
+ hero:{em:'🦸',name:'Siêu Anh Hùng',cost:6000,range:150,dmg:96,rate:.25,color:'#0ea5e9',atk:'beam',splash:72,unlock:55,unlockS:55,
+  skill:'💥 Siêu tia năng lượng — bắn cực nhanh, nổ cực rộng, xuyên giáp · gọi đệ tử 🥷',
+  perks:{3:'🗡️ Xuyên giáp HOÀN TOÀN',5:'💥 Chí mạng 35% ×2.4 · 🥷 gọi đệ tử ra chặn đường',7:'🎯 Bắn 4 mục tiêu cùng lúc',10:'🌟 Tối Thượng — 5 mục tiêu · chí mạng 50% ×2.8 · nổ huỷ diệt'}},
  mage:{em:'🧙',name:'Pháp Sư Băng',cost:1100,range:150,dmg:55,rate:.55,color:'#6366f1',atk:'frost',splash:52,slow:true,unlock:20,unlockS:20,
   skill:'🔮 Bão băng — đóng băng cả cụm quái, xuyên giáp',
   perks:{3:'❄️ Băng giá sâu — làm chậm 55%',5:'🎯 Bắn 2 mục tiêu · xuyên 60% giáp',7:'🧊 Làm chậm 35% · nổ băng rộng hơn',10:'🔮 Đại Pháp Sư — 3 mục tiêu · xuyên giáp hoàn toàn'}},
  robot:{em:'🤖',name:'Chiến Binh Máy',cost:2600,range:140,dmg:42,rate:.16,color:'#0891b2',atk:'laser',unlock:35,unlockS:35,
   skill:'🔫 Đại liên laser — bắn cực nhanh, gọi drone 🛸 hỗ trợ',
   perks:{3:'🗡️ Xuyên giáp hoàn toàn',5:'🛸 Gọi drone chiến đấu',7:'🎯 Bắn 3 mục tiêu',10:'⚙️ Cỗ Máy Tối Thượng — 5 mục tiêu · chí mạng 40% ×2.5'}},
- titan:{em:'🐉',name:'Thần Long',cost:6000,range:120,dmg:320,rate:.85,color:'#b91c1c',atk:'fire',splash:95,unlock:55,unlockS:55,
-  skill:'🌋 Long Diễm — sát thương khổng lồ, thiêu rụi cả bản đồ',
-  perks:{3:'🔥 Thiêu đốt cực nặng',5:'💥 Chí mạng 35% ×2.4',7:'🎯 Bắn 3 mục tiêu · nổ siêu rộng',10:'👑 Long Thần — 4 mục tiêu · chí mạng 50% ×3'}}
+ titan:{em:'🐉',name:'Thần Long',cost:700,range:125,dmg:132,rate:.5,color:'#b91c1c',atk:'fire',splash:58,unlock:10,unlockS:10,
+  skill:'🌋 Long Diễm — thiêu cả cụm quái · gọi ĐÀN RỒNG CON 🐲 bay tán loạn cắn quái',
+  perks:{3:'🔥 Thiêu đốt nặng',5:'🐲 Gọi đàn rồng con bay tấn công',7:'🎯 Bắn 3 mục tiêu · nổ rộng hơn',10:'👑 Long Thần — 4 mục tiêu · chí mạng 45% ×2.6 · đàn rồng đông gấp đôi'}}
 };
 const TD_MAXLV=20;
 /* Tiến hoá theo mốc cấp: [cấp, emoji, tên mới] — đổi hình thì đổi luôn tên cho khớp */
@@ -2895,6 +3249,7 @@ const TD_KIND={
  swarm :{em:['🐜','🦟'],          hp:.32, sp:1.28,armor:0,name:'Bầy đàn',from:8},
  ghost :{em:['👻','💀'],          hp:.85, sp:1.15,armor:0,noSlow:true,name:'Ma trơi (miễn làm chậm)',from:10},
  stealth:{em:['🥷','🕶️'],        hp:1,   sp:1.15,armor:0,hide:true,   name:'Tàng hình (ẩn 3s · hồi máu khi ẩn)',from:20},
+ breaker:{em:['🪨','🗿'],         hp:1.6, sp:.72, armor:2,wreck:true, name:'Ném Đá (đập vỡ máu trụ)',from:12},
  sapper :{em:['🔧','🧨'],         hp:1.4, sp:.9,  armor:1,zap:true,    name:'Phá trụ (tê liệt + phá máu trụ)',from:25},
  medic  :{em:['💉','🧪'],         hp:1.2, sp:.95, armor:0,heal:true,   name:'Y tá (hồi máu đồng bọn · giải thiêu đốt)',from:30},
  mirror :{em:['🪞','🛡️'],         hp:1.6, sp:.85, armor:2,noSplash:true,name:'Phản đòn (miễn lan · PHẢN SÁT THƯƠNG lên trụ)',from:35},
@@ -3054,7 +3409,9 @@ function td2Warm(r){
 function td2BaseHP(r){
   /* tăng nhanh 30 đợt đầu rồi chậm lại để chơi được tới đợt 100 */
   const a=Math.min(r-1,30),b=Math.max(0,r-31);
-  return Math.round((32*Math.pow(1.145,a)*Math.pow(1.082,b)+r*14)*td2Warm(r));
+  /* từ đợt 21 quái dày máu thêm dần (bù lại việc trụ bậc cao gọi quân & hút máu) */
+  const late=r>TD_WARM_TO?(1+Math.min(1.1,(r-TD_WARM_TO)*.035)):1;
+  return Math.round((32*Math.pow(1.145,a)*Math.pow(1.082,b)+r*14)*td2Warm(r)*late);
 }
 /* 💰 Kinh tế bám theo độ khó: vàng mỗi mạng quái, thưởng qua đợt và vàng trả lời
    đều tính từ máu quái của đợt đó, nên càng lên cao càng đủ tiền mua & nâng cấp */
@@ -3236,7 +3593,7 @@ function td2Restore(d){
   GM={type:'tower2',mode:d.mode||'normal',map:M,gold:d.gold,lives:d.lives,round:d.round,
       kills:d.kills||0,bossKills:d.bossKills||0,towers:[],enemies:[],minions:[],fx:[],queue:[],
       running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false,
-      speed:d.speed||1,spellCd:{},spellUse:{},rageT:0,pop:[],roster:d.roster||null};
+      speed:d.speed||1,spellCd:{},spellUse:{},rageT:0,pop:[],bergs:[],roster:d.roster||null};
   const W=M.W;GM.path=[];GM.total=0;
   for(let i=0;i<W.length-1;i++){const x1=W[i][0],y1=W[i][1],x2=W[i+1][0],y2=W[i+1][1];
     const len=Math.hypot(x2-x1,y2-y1);GM.path.push({x1,y1,x2,y2,len});GM.total+=len}
@@ -3322,7 +3679,7 @@ function startTower(mode){
   const surv=(mode==='survival');
   const M=rnd(TD_MAPS);
   GM={type:'tower2',mode:surv?'survival':'normal',map:M,gold:180,lives:25,round:1,kills:0,bossKills:0,
-      towers:[],enemies:[],minions:[],fx:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false,speed:1,spellCd:{},spellUse:{},rageT:0,pop:[]};
+      towers:[],enemies:[],minions:[],fx:[],queue:[],running:false,place:null,sel:null,spawnT:0,spawnGap:.7,last:0,qLocked:false,speed:1,spellCd:{},spellUse:{},rageT:0,pop:[],bergs:[]};
   const W=M.W;
   GM.path=[];GM.total=0;
   for(let i=0;i<W.length-1;i++){const x1=W[i][0],y1=W[i][1],x2=W[i+1][0],y2=W[i+1][1];const len=Math.hypot(x2-x1,y2-y1);GM.path.push({x1,y1,x2,y2,len});GM.total+=len;}
@@ -3332,8 +3689,8 @@ function startTower(mode){
 }
 function td2Shell(surv){
   const intro=surv
-    ? `<p class="sub" style="margin:0 0 6px">🔥 <b>Sinh Tồn</b>: đánh <b>không giới hạn đợt</b> — sống càng lâu điểm càng cao! Cứ <b>3 đợt lại đổi sang địa hình mới</b> — trụ tự dời chỗ, giữ nguyên cấp! 🦸 <b>Siêu Anh Hùng</b> mở từ <b>đợt 10</b> và biết <b>gọi đệ tử 🥷</b> ra chặn đánh quái. Từ đợt 10 câu hỏi cũng <b>trộn tất cả chủ đề</b> 🎲!</p>`
-    : `<p class="sub" style="margin:0 0 6px"><b>Trả lời từ vựng đúng là cách kiếm vàng chính</b> (giết quái &amp; qua đợt chỉ được chút ít) — có vàng thì mua <b>trụ thú</b> đặt lên bản đồ — trụ tự bắn quái chạy theo đường. Nâng cấp tới <b>Lv.20</b> — kỹ năng &amp; tiến hoá ở Lv.3·5·7·10, thăng hoa ở Lv.13·16·20. Cứ <b>5 đợt có 1 BOSS</b> 👹 có giáp &amp; chiêu riêng. Cứ <b>3 đợt đổi 1 địa hình</b> 🔄. Trụ &amp; phép <b>mở dần theo đợt</b> (🦸 đợt 10 · 🧙 đợt 20 · 🤖 đợt 35 · 🐉 đợt 55). Từ <b>đợt 10</b> mở 🦸 <b>Siêu Anh Hùng</b> (biết gọi đệ tử 🥷) và <b>đề trộn tất cả chủ đề</b> 🎲. Qua <b>đợt 15</b> phải <b>chốt đội hình tối đa 6 trụ</b> 🎖️. Trụ có <b>máu</b> và bị quái đánh sập được — trụ <b>Lv.13+ tự hồi máu</b> 💚. Bí quá thì dùng <b>⚡ phép chiến đấu</b>! 🏰</p>`;
+    ? `<p class="sub" style="margin:0 0 6px">🔥 <b>Sinh Tồn</b>: đánh <b>không giới hạn đợt</b> — sống càng lâu điểm càng cao! Cứ <b>3 đợt lại đổi sang địa hình mới</b> — trụ tự dời chỗ, giữ nguyên cấp! 🐉 <b>Thần Long</b> mở từ <b>đợt 10</b> và biết <b>gọi đàn rồng con 🐲</b> bay tán loạn cắn quái. Từ đợt 10 câu hỏi cũng <b>trộn tất cả chủ đề</b> 🎲!</p>`
+    : `<p class="sub" style="margin:0 0 6px"><b>Trả lời từ vựng đúng là cách kiếm vàng chính</b> (giết quái &amp; qua đợt chỉ được chút ít) — có vàng thì mua <b>trụ thú</b> đặt lên bản đồ — trụ tự bắn quái chạy theo đường. Nâng cấp tới <b>Lv.20</b> — kỹ năng &amp; tiến hoá ở Lv.3·5·7·10, thăng hoa ở Lv.13·16·20. Cứ <b>5 đợt có 1 BOSS</b> 👹 có giáp &amp; chiêu riêng. Cứ <b>3 đợt đổi 1 địa hình</b> 🔄. Trụ &amp; phép <b>mở dần theo đợt</b> (🐉 đợt 10 · 🧙 đợt 20 · 🤖 đợt 35 · 🦸 đợt 55). Từ <b>đợt 10</b> mở 🐉 <b>Thần Long</b> (gọi đàn rồng con 🐲) và <b>đề trộn tất cả chủ đề</b> 🎲. Qua <b>đợt 15</b> phải <b>chốt đội hình tối đa 6 trụ</b> 🎖️. Trụ có <b>máu</b> và bị quái đánh sập được — trụ <b>Lv.13+ tự hồi máu</b> 💚. Bí quá thì dùng <b>⚡ phép chiến đấu</b>! 🏰</p>`;
   $('gamesCard').innerHTML=gameTop(surv?'🔥 Thủ thành Sinh Tồn':'🏰 Thủ thành','<span class="streak">'+poolLabel()+'</span>')+intro+
     `<div id="td2map" style="font-size:12px;font-weight:700;line-height:1.5;background:linear-gradient(90deg,#eef2ff,#fdf4ff);border:1px solid #ddd6fe;border-radius:11px;padding:7px 10px;margin:0 0 7px">
        ${td2MapBanner()}
@@ -3412,22 +3769,34 @@ function td2Stats(t){
   if(t.type==='owl'){ t.multi= lv>=10?4: lv>=7?3: lv>=3?2:1; if(lv>=5)t.range+=25; if(lv>=10)t.range+=25 }
   if(t.type==='dragon'){ t.burn= lv>=10?.3: lv>=7?.22: lv>=3?.12:0; if(lv>=5)t.splash+=8; if(lv>=10)t.splash+=16 }
   if(t.type==='mage'){ t.pierce= lv>=10?1: lv>=5?.6:.3; t.multi= lv>=10?3: lv>=5?2:1;
-    t.slowP= lv>=7?.35: lv>=3?.45:.55; if(lv>=7)t.splash+=14 }
+    t.slowP= lv>=7?.35: lv>=3?.45:.55; if(lv>=7)t.splash+=14;
+    /* 🧊 TẢNG BĂNG: từ Lv.3 pháp sư dựng băng chặn ngang đường ~1 giây */
+    if(lv>=3){ t.berg=1; t.bergHold= lv>=10?1.8: lv>=7?1.5: lv>=5?1.2:1;
+      t.bergRate=Math.max(3,9-lv*.5); if(t.bergCd===undefined)t.bergCd=2 } }
   if(t.type==='robot'){ t.pierce= lv>=3?1:.5; t.multi= lv>=10?5: lv>=7?3:1;
     if(lv>=10){t.crit=.4;t.critX=2.5}
-    if(lv>=5){ t.mCount=1+Math.floor(lv/4); t.mHpK=.9+.45*lv; t.mDmg=Math.round(t.dmg*.5); t.mRate=Math.max(2.5,7-lv*.35); t.mEm='🛸'; if(t.mCd===undefined)t.mCd=2 } }
-  if(t.type==='titan'){ t.burn= lv>=3?.35:.2; t.multi= lv>=7?3:1;
-    if(lv>=10){t.crit=.5;t.critX=3} else if(lv>=5){t.crit=.35;t.critX=2.4} }
+    /* 🛸 Drone: gọi sớm hơn (Lv.3), đông hơn và nhanh hơn nhiều */
+    if(lv>=3){ t.mCount=2+Math.floor(lv/3); t.mHpK=1+.5*lv; t.mDmg=Math.round(t.dmg*.55);
+      t.mRate=Math.max(1.2,4.2-lv*.28); t.mEm='🛸'; if(t.mCd===undefined)t.mCd=1.5 } }
+  if(t.type==='titan'){ t.burn= lv>=3?.35:.2; t.multi= lv>=10?4: lv>=7?3:1;
+    if(lv>=10){t.crit=.45;t.critX=2.6} else if(lv>=5){t.crit=.3;t.critX=2.2}
+    /* 🐲 ĐÀN RỒNG CON: bay tán loạn, cắn quái — vai trò như đệ tử của anh hùng */
+    if(lv>=5){ t.mCount=(lv>=10?2:1)+Math.floor(lv/3); t.mHpK=.8+.42*lv;
+      t.mDmg=Math.round(t.dmg*.42); t.mRate=Math.max(2,6.5-lv*.42); t.mEm='🐲'; t.mFly=1;
+      if(t.mCd===undefined)t.mCd=2 } }
+  if(t.type==='dragon'&&lv>=10){ /* 🐲 Rồng thường Lv.10 cũng gọi được 1-2 rồng con */
+    t.mCount=1+Math.floor((lv-10)/6); t.mHpK=.6+.3*lv; t.mDmg=Math.round(t.dmg*.4);
+    t.mRate=Math.max(3.5,9-lv*.3); t.mEm='🐲'; t.mFly=1; if(t.mCd===undefined)t.mCd=3 }
   if(t.type==='hero'){ t.pierce= lv>=3?1:.5;
-    if(lv>=10){t.crit=.45;t.critX=2.6;t.multi=4;t.splash+=26}
-    else if(lv>=7){t.crit=.3;t.critX=2.2;t.multi=3;t.splash+=12}
-    else if(lv>=5){t.crit=.3;t.critX=2.2}
+    if(lv>=10){t.crit=.5;t.critX=2.8;t.multi=5;t.splash+=34}
+    else if(lv>=7){t.crit=.35;t.critX=2.4;t.multi=4;t.splash+=16}
+    else if(lv>=5){t.crit=.35;t.critX=2.4}
     /* 🥷 Đệ tử: số lượng, máu, sát thương, nhịp gọi — đều theo cấp anh hùng */
-    t.mCount=1+Math.floor(lv/3);
-    t.mHpK=.8+.4*lv;
-    t.mDmg=Math.round(t.dmg*.55);
-    t.mRate=Math.max(2.5,7-lv*.45);
-    if(t.mCd===undefined)t.mCd=2; }
+    if(lv>=5){ t.mCount=1+Math.floor(lv/3);
+      t.mHpK=.9+.45*lv;
+      t.mDmg=Math.round(t.dmg*.55);
+      t.mRate=Math.max(2.2,6.5-lv*.42);
+      if(t.mCd===undefined)t.mCd=2 } }
   if(lv>=20){ t.crit=Math.min(.75,t.crit*1.6); t.burn*=2; t.multi=t.multi+1; t.shredMax=t.shredMax?t.shredMax*2:0; if(t.slow)t.slowP=Math.max(.25,t.slowP*.7) }
   /* 🛡️ MÁU TRỤ — quái và boss có thể đánh sập trụ */
   const stv=t.star||0;
@@ -3437,6 +3806,8 @@ function td2Stats(t){
   /* 💚 Bậc cao biết TỰ HỒI MÁU, Lv.20 còn hồi cho trụ xung quanh */
   t.regen = (lv>=20?.08: lv>=16?.05: lv>=13?.03: 0) + stv*.015;
   t.auraHeal = lv>=20?.02:0;
+  /* 🩸 HÚT MÁU — trụ bậc cao hồi máu cho chính nó mỗi đòn đánh trúng */
+  t.lifesteal = (lv>=20?.022: lv>=16?.014: lv>=13?.008: 0) + stv*.004;
   /* ⭐ Đại cường hoá sau Lv20: mỗi sao +35% sát thương, +6% tầm, +4% nhịp bắn */
   const st=t.star||0;
   if(st){ t.dmg=Math.round(t.dmg*Math.pow(1.35,st)); t.range=Math.round(t.range*(1+st*.06));
@@ -3492,13 +3863,13 @@ function td2Side(){
     const rcost=Math.max(30,Math.round(td2Paid(t)*.18*(t.broken?1:(1-(t.hp||0)/(t.maxHp||1)))));
     info=`<b>${t.em||T.em} ${td2TowerName(t)} · Lv.${t.level}/${TD_MAXLV}${maxed?' 👑ĐỈNH CAO':''}</b>`
       +`<br><span style="font-size:11px;font-weight:700;color:${t.broken?'#ef4444':hpr<50?'#f59e0b':'#059669'}">${t.broken?'💥 TRỤ ĐÃ SẬP — ngừng bắn!':'🛡️ Máu trụ '+Math.round(t.hp)+'/'+t.maxHp+' ('+hpr+'%)'}${t.regen?' · 💚 tự hồi '+Math.round(t.regen*100)+'%/s':''}${t.auraHeal?' · hồi cho trụ quanh nó':''}</span>`
-      +(t.broken||hpr<100?`<div style="margin-top:4px"><button class="btn teal sm" style="width:100%" onclick="td2Repair()">🔧 Sửa trụ ${rcost.toLocaleString('vi')}🪙</button></div>`:'')+`<br><span style="color:var(--violet);font-weight:700;font-size:11px">${T.skill||''}</span><br>⚔️ ${t.dmg} · 🎯 ${Math.round(t.range)} · ⏱️ ${t.rate.toFixed(2)}s${t.shred?` · 💥 mài mòn tối đa -${t.shredMax} giáp`:''}${t.pierce?` · 🗡️ xuyên ${Math.round(t.pierce*100)}% giáp`:''}${t.mCount?`<br>🥷 Gọi <b>${t.mCount}</b> đệ tử · ⚔️ ${t.mDmg}/đòn · 🛡️ máu ${Math.round(td2BaseHP(GM.round)*td2Mod('ehp',1)*t.mHpK)} · ⏳ ${t.mRate.toFixed(1)}s/lượt`:''}`
+      +(t.broken||hpr<100?`<div style="margin-top:4px"><button class="btn teal sm" style="width:100%" onclick="td2Repair()">🔧 Sửa trụ ${rcost.toLocaleString('vi')}🪙</button></div>`:'')+`<br><span style="color:var(--violet);font-weight:700;font-size:11px">${T.skill||''}</span><br>⚔️ ${t.dmg} · 🎯 ${Math.round(t.range)} · ⏱️ ${t.rate.toFixed(2)}s${t.shred?` · 💥 mài mòn tối đa -${t.shredMax} giáp`:''}${t.pierce?` · 🗡️ xuyên ${Math.round(t.pierce*100)}% giáp`:''}${t.lifesteal?` · 🩸 hút máu ${(t.lifesteal*100).toFixed(1)}%/đòn`:''}${t.berg?` · 🧊 dựng băng chặn ${t.bergHold}s mỗi ${t.bergRate.toFixed(1)}s`:''}${t.mCount?`<br>${t.mEm||'🥷'} Gọi <b>${t.mCount}</b> ${t.mEm==='🐲'?'rồng con':t.mEm==='🛸'?'drone':'đệ tử'} · ⚔️ ${t.mDmg}/đòn · 🛡️ máu ${Math.round(td2BaseHP(GM.round)*td2Mod('ehp',1)*t.mHpK)} · ⏳ ${t.mRate.toFixed(1)}s/lượt`:''}`
       +(owned.length?`<br><span style="color:#059669;font-weight:700;font-size:11px">✅ ${owned.join('<br>✅ ')}</span>`:'')
       +(next?`<br><span style="color:#d97706;font-weight:700;font-size:11px">🔒 Lv.${nl}: ${next}</span>`:'')
       +(max?`<br><span style="color:#f59e0b;font-weight:800;font-size:11px">⭐ Đại cường hoá: ${t.star||0}/${TD_MAXSTAR} sao · mỗi sao +35% sát thương</span>`:'')
       +`<div class="row" style="margin-top:5px">${maxed?'<button class="btn ghost sm" disabled>👑 Đỉnh cao</button>':max?`<button class="btn sun sm" onclick="td2Upgrade()">⭐ Cường hoá ${sc.toLocaleString('vi')}🪙</button>`:`<button class="btn sun sm" onclick="td2Upgrade()">⬆️ Nâng ${uc}🪙</button>`}<button class="btn ghost sm" onclick="td2Sell()">💲 Bán +${rf}</button></div>`;}
   else if(GM.place)info=`Đang chọn <b>${TT[GM.place].em} ${TT[GM.place].name}</b> — chạm chỗ trống trên bản đồ để đặt.`;
-  else info='Chạm 1 trụ ở cửa hàng rồi chạm bản đồ để đặt. Chạm trụ đã đặt để nâng cấp / bán. Trụ lên tối đa <b>Lv.20</b>: kỹ năng &amp; tiến hoá ở <b>Lv.3·5·7·10</b>, thăng hoa ⭐🌟👑 ở <b>Lv.13·16·20</b>. 🐝 Ong <b>mài mòn giáp</b> quái cho MỌI trụ cùng bắn. 🦸 <b>Siêu Anh Hùng</b> mở khoá sau khi qua <b>đợt 25</b> — mạnh nhất game!';
+  else info='Chạm 1 trụ ở cửa hàng rồi chạm bản đồ để đặt. Chạm trụ đã đặt để nâng cấp / bán. Trụ lên tối đa <b>Lv.20</b>: kỹ năng &amp; tiến hoá ở <b>Lv.3·5·7·10</b>, thăng hoa ⭐🌟👑 ở <b>Lv.13·16·20</b>. 🐝 Ong <b>mài mòn giáp</b> quái cho MỌI trụ cùng bắn. 🐉 <b>Thần Long</b> (đợt 10) gọi <b>đàn rồng con 🐲</b>, 🧙 <b>Pháp Sư Băng</b> (đợt 20) dựng <b>tảng băng 🧊 chặn đường</b>, 🤖 <b>Chiến Binh Máy</b> (đợt 35) thả <b>drone 🛸</b> liên tục, 🦸 <b>Siêu Anh Hùng</b> (đợt 55) mạnh nhất game. Trụ <b>Lv.13+ hút máu 🩸</b> mỗi đòn đánh trúng.';
   const sd=$('td2side');if(!sd)return;
   sd.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:4px">🏪 Cửa hàng trụ</div><div class="td2-shop">${shop}</div>`+
     (GM.running
@@ -3753,7 +4124,7 @@ function td2StartRound(){
     if(ks.length>1&&Math.random()>=.4)k=ks[1+Math.floor(Math.random()*(ks.length-1))];
     const K=TD_KIND[k];
     GM.queue.push({kind:k,hp:Math.max(6,Math.round(base*K.hp)),speed:sp*K.sp,em:rnd(K.em),
-      armor:td2Armor(r,K.armor)+star*2,star:star,noSlow:!!K.noSlow,hide:!!K.hide,zap:!!K.zap,heal:!!K.heal,noSplash:!!K.noSplash,split:!!K.split,fly:!!K.fly,
+      armor:td2Armor(r,K.armor)+star*2,star:star,noSlow:!!K.noSlow,hide:!!K.hide,zap:!!K.zap,wreck:!!K.wreck,heal:!!K.heal,noSplash:!!K.noSplash,split:!!K.split,fly:!!K.fly,
       reward:Math.max(1,Math.round(rew*(K.hp>1?1.7:K.hp<.5?.5:1))),boss:false});
   }
   /* ⚡ ĐỢT DỒN: cuối mỗi đợt (từ đợt 2) có một tốp trinh sát chạy rất nhanh, nối đuôi nhau */
@@ -3782,7 +4153,7 @@ function td2StartRound(){
 function td2RoundDone(){
   const bonus=td2RoundBonus(GM.round);GM.gold+=bonus;GM.round++;GM.spellUse={};gainXP(6);persist();sndWin();sndCoin();
   setTimeout(()=>{try{td2Save(false)}catch(e){}},60);   /* 💾 tự lưu sau mỗi đợt */
-  const wasLocked=GM.qLocked;GM.qLocked=false;GM.minions=[];GM.towers.forEach(t=>{t.stun=0;t.heat=0;
+  const wasLocked=GM.qLocked;GM.qLocked=false;GM.minions=[];GM.bergs=[];GM.towers.forEach(t=>{t.stun=0;t.heat=0;
     if(t.broken||t.hp<t.maxHp){t.broken=false;t.hp=t.maxHp;}
     if(t.type==='hero')t.mCd=1});
   if((GM.round-1)%3===0)td2ChangeMap(); else {const el=$('td2map');if(el)el.innerHTML=td2MapBanner()}
@@ -3866,6 +4237,12 @@ function td2Hit(t,e,raw,primary){
     if(crit)td2Pop(e.x,e.y,'💥 '+td2Num(d)+' CHÍ MẠNG!','#f59e0b',16,-34);
     else if(big||Math.random()<.3)td2Pop(e.x,e.y,td2Num(d),blocked>before*.35?'#cbd5e1':'#fff',blocked>before*.35?11:13,-26);
     if(blocked>before*.35&&Math.random()<.35)td2Pop(e.x,e.y+7,'🛡️ chặn '+td2Num(blocked),'#94a3b8',10,-16);
+  }
+  /* 🩸 hút máu: mỗi đòn trúng, trụ tự hồi một phần máu tối đa */
+  if(t.lifesteal&&d>0&&t.maxHp&&t.hp<t.maxHp&&!t.broken){
+    const heal=t.maxHp*t.lifesteal;
+    t.hp=Math.min(t.maxHp,t.hp+heal);
+    if(primary&&Math.random()<.14)td2Pop(t.x,t.y-20,'🩸 +'+td2Num(Math.round(heal)),'#f87171',11,-20);
   }
   if(t.slow&&!e.noSlow){e.slowT=1.5;e.slowP=Math.min(e.slowP||1,t.slowP)}
   if(t.burn)e.burn=Math.max(e.burn||0,t.burn*t.dmg);
@@ -4000,6 +4377,14 @@ function td2Loop(ts){
         sndNo();toast('👺 '+e.bossName+' GỌI LÍNH — 4 quái chạy nhanh!');
       }
     }
+    /* 🧊 tảng băng của Pháp Sư chắn ngang — quái phải đứng lại */
+    if(GM.bergs&&GM.bergs.length&&!e.fly){
+      for(const b of GM.bergs){
+        if(e.d<=b.d&&b.d-e.d<26){e.blocked=true;
+          if(Math.random()<.05)td2Pop(e.x,e.y-14,'🧊 KẸT BĂNG','#7dd3fc',11,-18);
+          break}
+      }
+    }
     if(!e.blocked)e.d+=e.speed*(e.slowT>0?e.slowP:1)*dt;
     e.blocked=false;
     if(e.d>=GM.total){e.dead=true;e.escaped=true}else{const p=td2Pos(e.d);e.x=p.x;e.y=p.y}
@@ -4012,6 +4397,18 @@ function td2Loop(ts){
     if(e.hide){ e.hideT=(e.hideT===undefined?1.2:e.hideT)-dt;
       if(e.hideT<=0){e.hidden=!e.hidden;e.hideT=e.hidden?3:1.5;if(e.hidden)td2Pop(e.x,e.y-12,'💨 TÀNG HÌNH','#94a3b8',12,-18)}
       if(e.hidden&&e.hp<e.max){e.hp=Math.min(e.max,e.hp+e.max*.02*dt)} }
+    /* 🪨 NÉM ĐÁ: vừa đi vừa ném đá vào trụ gần nhất, chỉ làm mất MÁU TRỤ */
+    if(e.wreck){ e.wrCd=(e.wrCd===undefined?2.5:e.wrCd)-dt;
+      if(e.wrCd<=0){
+        const R=GM.round;
+        e.wrCd=R>=60?2.6:R>=30?3.2:4;
+        const tg=GM.towers.filter(t=>!t.broken&&Math.hypot(t.x-e.x,t.y-e.y)<125)
+          .sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y))[0];
+        if(tg){
+          GM.fx.push({x1:e.x,y1:e.y,x2:tg.x,y2:tg.y,c:'#a8a29e',kind:'dart',lv:2,t:0,dur:.3,arc:16});
+          td2Hurt(tg,R>=60?.10:R>=30?.08:.06,'🪨 TRÚNG ĐÁ');
+        }else e.wrCd=1;
+      } }
     /* ⚡ phá trụ: tê liệt LÂU hơn, tầm xa hơn, đánh NHIỀU trụ một lúc */
     if(e.zap){ e.zapCd=(e.zapCd===undefined?3:e.zapCd)-dt;
       if(e.zapCd<=0){
@@ -4042,10 +4439,11 @@ function td2Loop(ts){
         if(n){GM.fx.push({x1:e.x,y1:e.y,x2:e.x,y2:e.y,c:'#4ade80',kind:'heal',lv:1,t:0,dur:.4});if(Math.random()<.45)td2Pop(e.x,e.y-14,'💚 hồi '+Math.round(amt*100)+'% cho '+n+' quái','#22c55e',11,-20)}
       } }
   }
-  /* 🦸 Siêu Anh Hùng gọi đệ tử 🥷 ra đường chặn đánh quái */
+  /* 🦸🐉🤖 Trụ biết GỌI QUÂN: đệ tử 🥷 · đàn rồng con 🐲 · drone 🛸 */
   if(!GM.minions)GM.minions=[];
   for(const t of GM.towers){
-    if(t.type!=='hero')continue;
+    if(!t.mCount||t.broken||t.stun>0)continue;
+    if(t.mCd===undefined)t.mCd=2;
     t.mCd-=dt;
     if(GM.running&&t.mCd<=0){
       const alive=GM.minions.filter(m=>m.owner===t&&!m.dead).length;
@@ -4053,10 +4451,34 @@ function td2Loop(ts){
         t.mCd=t.mRate;
         const hp=Math.round(td2BaseHP(GM.round)*td2Mod('ehp',1)*t.mHpK);
         const d0=Math.min(GM.total-6,td2NearestD(t.x,t.y)+30),pp=td2Pos(d0);
-        GM.minions.push({owner:t,d:d0,minD:Math.max(0,d0-210),x:pp.x,y:pp.y,hp,max:hp,dmg:t.mDmg,rate:.5,cd:0,dead:false,fight:0,em:t.mEm||'🥷'});
+        GM.minions.push({owner:t,d:d0,minD:Math.max(0,d0-210),x:pp.x,y:pp.y,hp,max:hp,dmg:t.mDmg,
+          rate:t.mFly?.35:.5,cd:0,dead:false,fight:0,em:t.mEm||'🥷',fly:!!t.mFly,ph:Math.random()*6.28});
       }else t.mCd=.5;
     }
   }
+  /* 🧊 PHÁP SƯ BĂNG dựng tảng băng chặn ngang đường — quái phải đứng lại ~1 giây */
+  if(!GM.bergs)GM.bergs=[];
+  for(const t of GM.towers){
+    if(!t.berg||t.broken||t.stun>0)continue;
+    if(t.bergCd===undefined)t.bergCd=2;
+    t.bergCd-=dt;
+    if(GM.running&&t.bergCd<=0){
+      t.bergCd=t.bergRate;
+      /* dựng ngay trước mặt con quái xa nhất trong tầm */
+      let best=null,bd=-1;
+      for(const e of GM.enemies){if(e.dead||e.hidden)continue;
+        if(Math.hypot(e.x-t.x,e.y-t.y)>t.range)continue;
+        if(e.d>bd){bd=e.d;best=e}}
+      if(best){
+        const bdd=Math.min(GM.total-4,best.d+26),pp=td2Pos(bdd);
+        GM.bergs.push({d:bdd,x:pp.x,y:pp.y,t:t.bergHold,max:t.bergHold});
+        td2Pop(pp.x,pp.y-16,'🧊 CHẶN ĐƯỜNG!','#7dd3fc',13,-24);
+        GM.fx.push({x1:t.x,y1:t.y-4,x2:pp.x,y2:pp.y,c:'#7dd3fc',kind:'frost',lv:t.level,t:0,dur:.22,arc:10});
+      }else t.bergCd=1;
+    }
+  }
+  for(const b of GM.bergs)b.t-=dt;
+  GM.bergs=GM.bergs.filter(b=>b.t>0);
   const eDps=td2BaseHP(GM.round)*td2Mod('ehp',1)*.5;
   for(const m of GM.minions){
     if(m.dead)continue;
@@ -4364,14 +4786,27 @@ function td2Draw(){
     rg.addColorStop(0,'rgba(139,92,246,.02)');rg.addColorStop(1,'rgba(139,92,246,.14)');
     x.fillStyle=rg;x.beginPath();x.arc(GM.sel.x,GM.sel.y,GM.sel.range,0,7);x.fill();
   }
+  /* ----- 🧊 tảng băng chắn đường ----- */
+  for(const b of (GM.bergs||[])){
+    const k=Math.max(0,b.t/b.max);
+    td2Sh(x,b.x,b.y+10,13,5,.30*k);
+    x.save();x.globalAlpha=.35+k*.45;
+    x.fillStyle='#bae6fd';x.strokeStyle='#0ea5e9';x.lineWidth=2;
+    x.beginPath();x.moveTo(b.x-12,b.y+8);x.lineTo(b.x-7,b.y-11);x.lineTo(b.x+2,b.y-15);
+    x.lineTo(b.x+11,b.y-6);x.lineTo(b.x+12,b.y+8);x.closePath();x.fill();x.stroke();
+    x.restore();
+    td2Emo(x,'🧊',b.x,b.y-2,17);
+  }
   /* ----- lính & đệ tử ----- */
   for(const m of (GM.minions||[])){
+    if(m.fly){m.wx=Math.sin(T*4.5+m.ph)*9;m.wy=Math.cos(T*6.2+m.ph)*7-9}else{m.wx=0;m.wy=0}
     td2Sh(x,m.x,m.y+11,10,4.2,.30);
     x.fillStyle='rgba(15,23,42,.55)';x.fillRect(m.x-11,m.y-16,22,4.5);
     const mg=x.createLinearGradient(m.x-11,0,m.x+11,0);mg.addColorStop(0,'#7dd3fc');mg.addColorStop(1,'#0284c7');
     x.fillStyle=mg;x.fillRect(m.x-11,m.y-16,22*Math.max(0,m.hp/m.max),4.5);
-    td2Emo(x,m.em,m.x,m.y+Math.sin(T*5+m.x)*1.1,19,m.fight>0?Math.sin(T*18)*.22:0);
-    if(m.fight>0)td2Emo(x,'⚔️',m.x+12,m.y-9,14);
+    td2Emo(x,m.em,m.x+(m.wx||0),m.y+(m.wy||0)+Math.sin(T*5+m.x)*1.1,m.fly?17:19,
+           m.fight>0?Math.sin(T*18)*.22:(m.fly?Math.sin(T*7+m.ph)*.25:0));
+    if(m.fight>0)td2Emo(x,'⚔️',m.x+12+(m.wx||0),m.y-9+(m.wy||0),14);
   }
   /* ----- QUÁI: bóng, dáng chạy nhấp nhô, chớp sáng khi trúng đòn ----- */
   for(const e of GM.enemies){
@@ -4435,6 +4870,7 @@ function td2Draw(){
     if(e.noSplash)ic.push('🪞');
     if(e.heal)ic.push('💉');
     if(e.zap)ic.push('⚡');
+    if(e.wreck)ic.push('🪨');
     if(e.split)ic.push('🧫');
     if(e.fly)ic.push('🪽');
     if(e.aura)ic.push('👑');
@@ -4918,6 +5354,7 @@ function gamesHome(){
     ${selBar()}
     <div class="sect-title">📚 Học &amp; ôn từ vựng</div>
     <div class="game-grid">
+      <button class="gcard gcP" style="background:linear-gradient(135deg,#0891b2,#db2777)" onclick="startSkills()"><span class="em">🎯</span><h3>Luyện 4 Kỹ Năng</h3><p>Nghe · Nói · Đọc · Viết — 10 cấp độ</p></button>
       <button class="gcard gcV" onclick="startFlash()"><span class="em">🃏</span><h3>Thẻ từ vựng</h3><p>Lật thẻ học từ + nghe đọc</p></button>
       <button class="gcard gcP" onclick="startPicQuiz()"><span class="em">🖼️</span><h3>Đố vui qua tranh</h3><p>Nhìn tranh chọn từ · +5 XP/câu</p></button>
     </div>
@@ -4940,6 +5377,314 @@ function gamesHome(){
 function gameTop(title,extra){
   return `<div class="row" style="justify-content:space-between"><button class="btn ghost sm" onclick="gamesHome()">← Games</button><h2 style="font-size:19px">${title}</h2><span>${extra||''}</span></div>`;
 }
+/* --- memory --- */
+/* ==========================================================
+   🎯 LUYỆN 4 KỸ NĂNG (kiểu IELTS) — Nghe · Nói · Đọc · Viết
+   Mỗi kỹ năng chia LEVEL, càng lên càng khó. Qua 4/5 câu mới mở level sau.
+   ========================================================== */
+const SK_DEF={
+  listen:{em:'🎧',name:'Nghe',color:'#0891b2',desc:'Nghe từ · nghe câu · nghe đoạn hội thoại'},
+  speak :{em:'🗣️',name:'Nói', color:'#db2777',desc:'Đọc vào micro — máy chấm phát âm từng từ'},
+  read  :{em:'📖',name:'Đọc', color:'#059669',desc:'Đọc câu · đọc đoạn · tìm ý chính · True/False'},
+  write :{em:'✍️',name:'Viết',color:'#d97706',desc:'Xếp câu · điền từ · viết lại câu theo gợi ý'}
+};
+const SK_MAXLV=10, SK_PER=5, SK_PASS=4;
+function skKey(){return 'efz_sk_'+grade}
+function skLoad(){try{return JSON.parse(localStorage.getItem(skKey()))||{}}catch(e){return{}}}
+function skSave(o){try{localStorage.setItem(skKey(),JSON.stringify(o))}catch(e){}}
+function skBest(sk){const d=skLoad();return Math.max(1,Math.min(SK_MAXLV,(d[sk]&&d[sk].best)||1))}
+function skStars(sk,lv){const d=skLoad();return (d[sk]&&d[sk].stars&&d[sk].stars[lv])||0}
+function skWin(sk,lv,score){
+  const d=skLoad();d[sk]=d[sk]||{best:1,stars:{}};
+  const st=score>=5?3:score>=4?2:1;
+  d[sk].stars=d[sk].stars||{};
+  if(st>(d[sk].stars[lv]||0))d[sk].stars[lv]=st;
+  if(score>=SK_PASS&&lv>=(d[sk].best||1))d[sk].best=Math.min(SK_MAXLV,lv+1);
+  skSave(d);
+}
+/* ---------- màn hình chính ---------- */
+function startSkills(){
+  sndClick();SK=null;
+  $('gamesCard').innerHTML=gameTop('🎯 Luyện 4 Kỹ Năng','<span class="streak">Lớp '+grade+'</span>')+
+   `<p class="sub" style="margin:0 0 10px">Bốn kỹ năng như thi IELTS. Mỗi kỹ năng có <b>${SK_MAXLV} cấp độ</b>, mỗi cấp <b>${SK_PER} câu</b> — đúng <b>${SK_PASS}/${SK_PER}</b> là mở cấp tiếp theo. Càng lên cấp câu càng dài và khó hơn.</p>
+    <div class="ielts-topic-grid">`+
+    Object.keys(SK_DEF).map(k=>{const S=SK_DEF[k],b=skBest(k);
+      return `<div class="ielts-topic-card" style="border-color:${S.color}55;background:linear-gradient(135deg,#fff,${S.color}12)" onclick="skPick('${k}')">
+        <span class="tc-em">${S.em}</span><div class="tc-nm" style="color:${S.color}">${S.name}</div>
+        <div class="tc-cnt">Đang ở cấp ${b}/${SK_MAXLV}</div></div>`}).join('')+
+    `</div><p class="sub" style="margin-top:10px;font-size:12px">💡 Kỹ năng <b>Nói</b> cần cho phép dùng <b>micro</b> và chạy tốt nhất trên Chrome/Edge. Máy nào không hỗ trợ sẽ tự chuyển sang chế độ <b>nghe rồi nhắc lại</b>.</p>`;
+}
+function skPick(sk){
+  sndClick();const S=SK_DEF[sk],b=skBest(sk);
+  $('gamesCard').innerHTML=gameTop(S.em+' '+S.name,'<span class="streak">Lớp '+grade+'</span>')+
+   `<button class="btn ghost sm" onclick="startSkills()" style="margin-bottom:10px">← 4 kỹ năng</button>
+    <p class="sub" style="margin:0 0 10px">${S.desc}</p>
+    <div class="ielts-topic-grid">`+
+    Array.from({length:SK_MAXLV},(_,i)=>i+1).map(lv=>{
+      const lock=lv>b, st=skStars(sk,lv);
+      return `<div class="ielts-topic-card" style="${lock?'opacity:.45;cursor:not-allowed':''}" ${lock?'':`onclick="skStart('${sk}',${lv})"`}>
+        <span class="tc-em">${lock?'🔒':S.em}</span>
+        <div class="tc-nm" style="color:${S.color}">Cấp ${lv}</div>
+        <div class="tc-cnt">${lock?'Chưa mở':(st?'⭐'.repeat(st):'Chưa chơi')}</div></div>`}).join('')+
+    `</div>`;
+}
+/* ---------- kho câu hỏi theo kỹ năng & cấp ---------- */
+let SK=null, SKrec=null;
+function skPool(){const v=poolVocab();return v.length>=6?v:DATA[grade].topics.flatMap(t=>t.vocab)}
+function skSent(){ /* câu tiếng Anh có sẵn trong SGK để luyện nghe/nói/đọc */
+  const out=[];
+  for(const l of (DATA[grade].listenings||[]))for(let i=0;i<l.script.length;i++)
+    out.push({en:l.script[i].text,vn:(l.trans&&l.trans[i])||''});
+  for(const r of (DATA[grade].readings||[]))
+    for(const sen of String(r.text||'').split(/(?<=[.!?])\s+/))
+      if(sen.trim().length>18&&sen.trim().length<150)out.push({en:sen.trim(),vn:''});
+  return out.length?out:[{en:'I like learning English.',vn:'Mình thích học tiếng Anh.'}];
+}
+function skMake(sk,lv,i){
+  const pool=skPool(), S=skSent();
+  const word=()=>rnd(pool);
+  const wrongs=(right,n,idx)=>pickN(pool.filter(v=>v[idx]!==right[idx]),n).map(v=>v[idx]);
+  if(sk==='listen'){
+    if(lv<=2){const w=word();
+      return {kind:'listen',say:w[0],prompt:'Nghe rồi chọn <b>nghĩa tiếng Việt</b> đúng',
+        opts:shuffle([{t:w[1],ok:1},...wrongs(w,lv===1?2:3,1).map(t=>({t,ok:0}))]),note:w[0]+' = '+w[1]};}
+    if(lv<=4){const w=word();
+      return {kind:'listen',say:w[0],prompt:'Nghe rồi chọn <b>từ tiếng Anh</b> em vừa nghe',
+        opts:shuffle([{t:w[0],ok:1},...wrongs(w,3,0).map(t=>({t,ok:0}))]),note:w[0]+' = '+w[1]};}
+    if(lv<=6){const s=rnd(S);const w=word();
+      return {kind:'listen',say:s.en,prompt:'Nghe cả câu rồi chọn câu em vừa nghe',
+        opts:shuffle([{t:s.en,ok:1},...pickN(S.filter(x=>x.en!==s.en),3).map(x=>({t:x.en,ok:0}))]),note:s.vn||s.en};}
+    /* cấp cao: nghe đoạn thật trong SGK rồi trả lời */
+    const ls=(DATA[grade].listenings||[]).filter(l=>l.qs&&l.qs.length);
+    if(ls.length){const l=rnd(ls),q=rnd(l.qs);
+      return {kind:'listenLong',say:l.script.map(x=>x.text),title:l.title,
+        prompt:'🎧 Nghe cả đoạn <b>'+esc(l.title)+'</b> rồi trả lời:<br><b>'+esc(q.q)+'</b>',
+        opts:shuffle(q.o.map((t,k)=>({t,ok:k===q.a?1:0}))),note:'Đáp án: '+q.o[q.a]};}
+    const s=rnd(S);
+    return {kind:'listen',say:s.en,prompt:'Nghe rồi chọn câu đúng',
+      opts:shuffle([{t:s.en,ok:1},...pickN(S.filter(x=>x.en!==s.en),3).map(x=>({t:x.en,ok:0}))]),note:s.vn||s.en};
+  }
+  if(sk==='speak'){
+    if(lv<=2){const w=word();return {kind:'speak',target:w[0],hint:w[1],label:'Đọc to từ này'};}
+    if(lv<=4){const w=word();
+      const tmpl=['I like '+w[0]+'.','This is a '+w[0]+'.','I can see the '+w[0]+'.'];
+      return {kind:'speak',target:rnd(tmpl),hint:w[1],label:'Đọc to cả cụm'};}
+    const s=rnd(S.filter(x=>x.en.split(' ').length<=(lv<=6?10:18)))||rnd(S);
+    return {kind:'speak',target:s.en,hint:s.vn,label:'Đọc to cả câu — rõ ràng, đúng nhịp'};
+  }
+  if(sk==='read'){
+    if(lv<=2){const w=word();
+      return {kind:'read',prompt:'Từ <b>'+esc(w[0])+'</b> nghĩa là gì?',
+        opts:shuffle([{t:w[1],ok:1},...wrongs(w,lv===1?2:3,1).map(t=>({t,ok:0}))]),note:w[0]+' = '+w[1]};}
+    if(lv<=4){const s=rnd(S);const ws=s.en.split(' ');
+      const k=ws.findIndex(x=>x.length>3);const key=(ws[k]||ws[0]).replace(/[.,!?]/g,'');
+      const blank=ws.map((x,j)=>j===k?'______':x).join(' ');
+      return {kind:'read',prompt:'Đọc câu và điền từ còn thiếu:<br><b>'+esc(blank)+'</b>',
+        opts:shuffle([{t:key,ok:1},...pickN(pool.filter(v=>v[0]!==key),3).map(v=>({t:v[0],ok:0}))]),note:s.en};}
+    const rs=(DATA[grade].readings||[]).filter(r=>r.qs&&r.qs.length);
+    if(rs.length){const r=rnd(rs),q=rnd(r.qs);
+      const cut=lv<=6?Math.ceil(r.text.length*.6):r.text.length;
+      return {kind:'readLong',passage:r.text.slice(0,cut),title:r.title,
+        prompt:'<b>'+esc(q.q)+'</b>',opts:shuffle(q.o.map((t,k)=>({t,ok:k===q.a?1:0}))),note:'Đáp án: '+q.o[q.a]};}
+    const w=word();
+    return {kind:'read',prompt:'Từ <b>'+esc(w[0])+'</b> nghĩa là gì?',
+      opts:shuffle([{t:w[1],ok:1},...wrongs(w,3,1).map(t=>({t,ok:0}))]),note:w[0]+' = '+w[1]};
+  }
+  /* ---- WRITE ---- */
+  if(lv<=2){const w=word();
+    return {kind:'type',target:w[0],prompt:'Viết <b>từ tiếng Anh</b> của: <b>'+esc(w[1])+'</b>',hint:w[0][0]+'…'};}
+  if(lv<=4){const s=rnd(S.filter(x=>x.en.split(' ').length<=9))||rnd(S);
+    const ws=s.en.replace(/[.]$/,'').split(' ');
+    return {kind:'order',target:ws.join(' '),words:shuffle(ws),prompt:'Sắp xếp thành câu đúng:',hint:s.vn};}
+  if(lv<=6){const s=rnd(S);const ws=s.en.split(' ');
+    const k=ws.findIndex(x=>x.length>3);const key=(ws[k]||ws[0]).replace(/[.,!?]/g,'');
+    return {kind:'type',target:key,prompt:'Điền từ còn thiếu:<br><b>'+esc(ws.map((x,j)=>j===k?'______':x).join(' '))+'</b>',hint:key[0]+'…'};}
+  const s=rnd(S.filter(x=>x.en.split(' ').length>=5))||rnd(S);
+  return {kind:'type',target:s.en.replace(/[.]$/,''),prompt:'Viết lại nguyên văn câu sau (chú ý chính tả &amp; dấu câu):<br><b>'+esc(s.en)+'</b>',hint:'Gõ đúng từng chữ'};
+}
+/* ---------- chạy một cấp ---------- */
+function skStart(sk,lv){
+  sndClick();
+  SK={sk,lv,i:0,score:0,qs:[]};
+  for(let i=0;i<SK_PER;i++)SK.qs.push(skMake(sk,lv,i));
+  skRender();
+}
+function skHead(){
+  const S=SK_DEF[SK.sk];
+  return gameTop(S.em+' '+S.name+' — Cấp '+SK.lv,'<span class="streak">Lớp '+grade+'</span>')+
+   `<div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px">
+      <span>Câu ${SK.i+1}/${SK_PER}</span><span>✅ ${SK.score} · cần ${SK_PASS} để qua cấp</span></div>`;
+}
+function skRender(){
+  if(SK.i>=SK_PER)return skEnd();
+  const q=SK.qs[SK.i],el=$('gamesCard'),S=SK_DEF[SK.sk];
+  if(q.kind==='speak')return skRenderSpeak(q);
+  if(q.kind==='type')return skRenderType(q);
+  if(q.kind==='order')return skRenderOrder(q);
+  let head='';
+  if(q.kind==='listenLong')head=`<div class="prompt-card"><div style="font-size:34px">🔊</div>
+     <button type="button" class="btn sun sm" onclick="skSay()">▶️ Nghe lại cả đoạn</button></div>`;
+  else if(q.kind==='listen')head=`<div class="prompt-card"><div style="font-size:34px">🔊</div>
+     <button type="button" class="btn sun sm" onclick="skSay()">▶️ Nghe lại</button></div>`;
+  else if(q.kind==='readLong')head=`<div class="prompt-card" style="text-align:left">
+     <div style="font-size:11px;color:#059669;font-weight:800">📖 ${esc(q.title||'')}</div>
+     <div style="max-height:190px;overflow:auto;font-size:12.5px;line-height:1.7;background:#fff;border:1px solid #e5e7eb;border-radius:9px;padding:8px 10px;margin:6px 0">${esc(q.passage).replace(/\n+/g,'<br>')}</div></div>`;
+  el.innerHTML=skHead()+head+
+    `<div class="q-box" style="margin:8px 0"><b>${q.prompt}</b></div>`+
+    optButtons(q.opts,'skAns')+`<div class="feedback" id="skfb" style="margin-top:6px"></div>`;
+  if(q.say)setTimeout(skSay,420);
+}
+function skSay(){const q=SK&&SK.qs[SK.i];if(!q||!q.say)return;
+  try{speak(Array.isArray(q.say)?q.say.map(t=>({text:t,pause:420})):q.say,.9)}catch(e){}}
+function skAns(k){
+  const q=SK.qs[SK.i],ok=q.opts[k].ok;
+  document.querySelectorAll('#gamesCard .opt').forEach((b,j)=>{b.disabled=true;
+    if(q.opts[j].ok)b.classList.add('right');else if(j===k)b.classList.add('wrong')});
+  skDone(!!ok,q.note||'');
+}
+function skDone(ok,note){
+  const fb=$('skfb');
+  if(ok){SK.score++;sndOK();gainXP(6);if(fb){fb.className='feedback ok';fb.innerHTML='🎉 Chính xác! '+esc(note)}}
+  else{sndNo();if(fb){fb.className='feedback no';fb.innerHTML='😅 Chưa đúng. '+esc(note)}}
+  persist();
+  setTimeout(()=>{SK.i++;skRender()},ok?1800:2800);
+}
+/* ---------- VIẾT: gõ chữ ---------- */
+function skRenderType(q){
+  $('gamesCard').innerHTML=skHead()+
+   `<div class="q-box" style="margin:8px 0"><b>${q.prompt}</b>
+      <div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:4px">💡 Gợi ý: ${esc(q.hint||'')}</div></div>
+    <input id="skin" type="text" autocomplete="off" style="width:100%;font-size:16px;padding:11px 13px;border:2px solid #ddd6fe;border-radius:12px;font-family:inherit" placeholder="Gõ câu trả lời rồi bấm Enter...">
+    <div class="row" style="gap:8px;margin-top:8px"><button class="btn" onclick="skCheckType()">✅ Kiểm tra</button></div>
+    <div class="feedback" id="skfb" style="margin-top:8px"></div>`;
+  const inp=$('skin');if(inp){inp.focus();inp.onkeydown=e=>{if(e.key==='Enter')skCheckType()}}
+}
+function skCheckType(){
+  const q=SK.qs[SK.i],inp=$('skin');if(!inp||inp.disabled)return;
+  const got=norm(inp.value),want=norm(q.target);
+  inp.disabled=true;
+  const ok=got===want;
+  inp.style.borderColor=ok?'#16a34a':'#dc2626';
+  skDone(ok,'Đáp án đúng: '+q.target);
+}
+/* ---------- VIẾT: xếp câu ---------- */
+function skRenderOrder(q){
+  SK.picked=[];SK.bank=q.words.slice();
+  $('gamesCard').innerHTML=skHead()+
+   `<div class="q-box" style="margin:8px 0"><b>${q.prompt}</b>${q.hint?`<div style="font-size:12px;color:var(--muted);font-weight:600;margin-top:4px">💡 ${esc(q.hint)}</div>`:''}</div>
+    <div id="skline" style="min-height:46px;background:#f8fafc;border:2px dashed #cbd5e1;border-radius:12px;padding:9px;font-size:15px;font-weight:700;display:flex;flex-wrap:wrap;gap:6px"></div>
+    <div id="skbank" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:9px"></div>
+    <div class="row" style="gap:8px;margin-top:9px"><button class="btn" onclick="skCheckOrder()">✅ Kiểm tra</button><button class="btn ghost sm" onclick="skResetOrder()">↩️ Làm lại</button></div>
+    <div class="feedback" id="skfb" style="margin-top:8px"></div>`;
+  skDrawOrder();
+}
+function skDrawOrder(){
+  const L=$('skline'),B=$('skbank');if(!L||!B)return;
+  L.innerHTML=SK.picked.map((w,i)=>`<button class="btn ghost sm" style="padding:5px 11px" onclick="skUnpick(${i})">${esc(w)}</button>`).join('')||'<span style="color:#94a3b8;font-weight:600;font-size:13px">Bấm các từ bên dưới để xếp câu…</span>';
+  B.innerHTML=SK.bank.map((w,i)=>`<button class="btn sun sm" style="padding:5px 11px" onclick="skPickW(${i})">${esc(w)}</button>`).join('');
+}
+function skPickW(i){SK.picked.push(SK.bank[i]);SK.bank.splice(i,1);sndClick();skDrawOrder()}
+function skUnpick(i){SK.bank.push(SK.picked[i]);SK.picked.splice(i,1);sndClick();skDrawOrder()}
+function skResetOrder(){SK.bank=SK.bank.concat(SK.picked);SK.picked=[];skDrawOrder()}
+function skCheckOrder(){
+  const q=SK.qs[SK.i];
+  const ok=norm(SK.picked.join(' '))===norm(q.target);
+  skDone(ok,'Câu đúng: '+q.target);
+}
+/* ---------- NÓI: chấm phát âm bằng micro ---------- */
+function skSpeechOK(){return !!(window.SpeechRecognition||window.webkitSpeechRecognition)}
+function skRenderSpeak(q){
+  const has=skSpeechOK();
+  $('gamesCard').innerHTML=skHead()+
+   `<div class="prompt-card"><div style="font-size:11px;color:#db2777;font-weight:800">🗣️ ${esc(q.label)}</div>
+      <b style="font-size:19px;line-height:1.45;display:block;margin:7px 0">${esc(q.target)}</b>
+      ${q.hint?`<div style="font-size:12.5px;color:var(--muted);font-weight:600">${esc(q.hint)}</div>`:''}
+      <button type="button" class="btn sun sm" style="margin-top:7px" onclick="skSpeakModel()">🔊 Nghe mẫu</button></div>
+    ${has?`<div class="row" style="gap:8px;justify-content:center;margin-top:10px">
+        <button class="btn" id="skmic" onclick="skMic()">🎙️ Bấm rồi đọc</button></div>
+      <div id="skheard" style="text-align:center;font-size:13px;font-weight:700;color:var(--muted);margin-top:8px;min-height:22px"></div>`
+     :`<div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:11px;padding:9px 11px;font-size:12.5px;font-weight:600;margin-top:10px">
+        🎙️ Trình duyệt này không hỗ trợ chấm phát âm. Em hãy <b>nghe mẫu rồi nhắc lại</b>, sau đó tự đánh giá nhé (nên dùng Chrome hoặc Edge để được chấm điểm).</div>
+      <div class="row" style="gap:8px;justify-content:center;margin-top:9px">
+        <button class="btn" onclick="skSelfMark(true)">✅ Em đọc được</button>
+        <button class="btn ghost" onclick="skSelfMark(false)">🔁 Chưa được</button></div>`}
+    <div class="feedback" id="skfb" style="margin-top:9px"></div>`;
+  setTimeout(skSpeakModel,400);
+}
+function skSpeakModel(){const q=SK&&SK.qs[SK.i];if(q)try{speak(q.target,.85)}catch(e){}}
+function skSelfMark(ok){skDone(ok,ok?'Cố gắng đọc rõ từng âm cuối nhé!':'Nghe mẫu thêm vài lần rồi thử lại nha!')}
+function skMic(){
+  const q=SK.qs[SK.i],btn=$('skmic'),hd=$('skheard');
+  const R=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!R)return skSelfMark(true);
+  try{if(SKrec)SKrec.abort()}catch(e){}
+  SKrec=new R();SKrec.lang='en-US';SKrec.interimResults=true;SKrec.maxAlternatives=3;
+  let finalTxt='';
+  if(btn){btn.disabled=true;btn.innerHTML='🔴 Đang nghe… đọc đi!'}
+  SKrec.onresult=ev=>{
+    let interim='';
+    for(let i=ev.resultIndex;i<ev.results.length;i++){
+      const r=ev.results[i];
+      if(r.isFinal)finalTxt+=' '+r[0].transcript; else interim+=r[0].transcript;
+    }
+    if(hd)hd.textContent='👂 '+(finalTxt+' '+interim).trim();
+  };
+  SKrec.onerror=e=>{
+    if(btn){btn.disabled=false;btn.innerHTML='🎙️ Bấm rồi đọc'}
+    const fb=$('skfb');
+    if(fb){fb.className='feedback no';
+      fb.innerHTML=(e.error==='not-allowed'||e.error==='service-not-allowed')
+        ? '🚫 Trình duyệt chưa được cấp quyền micro. Bấm vào ổ khoá 🔒 trên thanh địa chỉ → cho phép Micro, rồi thử lại nhé!'
+        : '😵 Không nghe rõ ('+esc(e.error||'')+'). Thử lại giúp em nha!';}
+  };
+  SKrec.onend=()=>{
+    if(btn){btn.disabled=false;btn.innerHTML='🎙️ Đọc lại'}
+    if(!finalTxt.trim())return;
+    skGrade(finalTxt.trim(),q.target);
+  };
+  try{SKrec.start()}catch(e){if(btn){btn.disabled=false;btn.innerHTML='🎙️ Bấm rồi đọc'}}
+}
+/* so khớp từng từ giữa câu mẫu và câu học sinh đọc */
+function skGrade(heard,target){
+  const A=norm(target).split(' ').filter(Boolean);
+  const B=norm(heard).split(' ').filter(Boolean);
+  const used=new Array(B.length).fill(false);
+  const marks=A.map(w=>{
+    let j=B.findIndex((x,k)=>!used[k]&&x===w);
+    if(j<0)j=B.findIndex((x,k)=>!used[k]&&(x.startsWith(w.slice(0,Math.max(3,w.length-2)))||w.startsWith(x.slice(0,Math.max(3,x.length-2)))));
+    if(j>=0){used[j]=true;return 1}
+    return 0;
+  });
+  const hit=marks.reduce((a,b)=>a+b,0), pct=Math.round(hit/A.length*100);
+  const need=SK.lv<=2?70:SK.lv<=5?65:60;
+  const ok=pct>=need;
+  const detail=A.map((w,i)=>`<span style="color:${marks[i]?'#16a34a':'#dc2626'};font-weight:800">${esc(w)}</span>`).join(' ');
+  const fb=$('skfb');
+  if(fb){fb.className='feedback '+(ok?'ok':'no');
+    fb.innerHTML=`${ok?'🎉':'💪'} <b>${pct}% khớp</b> (cần ${need}%) — đúng ${hit}/${A.length} từ<br>
+      <span style="font-size:13px">${detail}</span><br>
+      <span style="font-size:12px;color:#475569">👂 Máy nghe được: “${esc(heard)}”</span>`;}
+  if(ok){SK.score++;sndOK();gainXP(8)}else sndNo();
+  persist();
+  setTimeout(()=>{SK.i++;skRender()},ok?2200:3600);
+}
+/* ---------- kết thúc cấp ---------- */
+function skEnd(){
+  const sk=SK.sk,lv=SK.lv,sc=SK.score,pass=sc>=SK_PASS;
+  skWin(sk,lv,sc);
+  const S=SK_DEF[sk];
+  if(pass){confetti(70);sndWin()}
+  gainXP(sc*4+(pass?15:0));P.gameWins++;persist();checkBadges();
+  $('gamesCard').innerHTML=gameTop(S.em+' '+S.name+' — Cấp '+lv,'')+
+   `<div class="result"><div class="face">${sc>=5?'🏆':pass?'🎉':'💪'}</div>
+      <h3>${sc}/${SK_PER} câu đúng</h3>
+      <p>${pass?(lv>=SK_MAXLV?'Em đã chinh phục cấp cao nhất! 🌟':'Qua cấp! Mở khoá <b>Cấp '+(lv+1)+'</b> 🔓'):'Cần <b>'+SK_PASS+'/'+SK_PER+'</b> mới qua cấp. Thử lại nhé!'}</p>
+      <div class="row" style="gap:8px;justify-content:center;margin-top:10px">
+        ${pass&&lv<SK_MAXLV?`<button class="btn" onclick="skStart('${sk}',${lv+1})">➡️ Cấp ${lv+1}</button>`:''}
+        <button class="btn ghost" onclick="skStart('${sk}',${lv})">🔄 Chơi lại cấp ${lv}</button>
+        <button class="btn teal" onclick="skPick('${sk}')">📋 Chọn cấp</button></div></div>`;
+}
+
 /* --- memory --- */
 function startMemory(){
   const pairs=pickN(poolVocab(),8);
@@ -5571,6 +6316,9 @@ $('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')saveName()});
   if(sb){sb.textContent=soundOn?'🔊':'🔇';sb.title=soundOn?'Tắt âm thanh':'Bật âm thanh'}
 })();
 
+
+/* 🔧 để trang admin.html đọc được số liệu nội dung (const không tự gắn vào window) */
+try{window.DATA=DATA;window.TT=TT;window.IELTS_TOPICS=IELTS_TOPICS;window.GRAMMAR_TOPICS=GRAMMAR_TOPICS;window.SK_DEF=SK_DEF;window.TD_MAPS=TD_MAPS;window.TD_SPELLS=TD_SPELLS;window.TD_KIND=TD_KIND;}catch(e){}
 </script>
 </body>
 </html>

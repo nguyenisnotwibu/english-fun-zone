@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>🔧 Bảng điều khiển — English Fun Zone</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif}
+:root{--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--violet:#7c3aed;--teal:#0f766e}
+body{background:#0f172a;color:#e2e8f0;min-height:100vh;padding:18px}
+.wrap{max-width:1080px;margin:0 auto}
+h1{font-size:22px;font-weight:800;margin-bottom:2px}
+h2{font-size:15px;font-weight:800;margin:0 0 9px}
+.sub{color:#94a3b8;font-size:13px}
+.card{background:#fff;color:var(--ink);border-radius:16px;padding:16px;margin-top:14px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.btn{background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;font-weight:700;font-size:14px;padding:9px 17px;border:0;border-radius:11px;cursor:pointer;transition:.15s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.g{background:linear-gradient(135deg,#0f766e,#0891b2)}
+.btn.o{background:linear-gradient(135deg,#ea580c,#f59e0b)}
+.btn.r{background:linear-gradient(135deg,#dc2626,#f87171)}
+.btn.s{background:#fff;color:#334155;border:2px solid var(--line)}
+.btn.sm{font-size:12.5px;padding:6px 12px;border-radius:9px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input,select{font-size:14px;padding:8px 11px;border:2px solid var(--line);border-radius:10px;color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line)}
+th{background:#f8fafc;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:#475569}
+.pill{display:inline-block;font-size:11px;font-weight:800;padding:3px 9px;border-radius:20px;background:#eef2ff;color:#4338ca}
+.ok{color:#15803d;font-weight:700}.no{color:#b91c1c;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.stat{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.stat b{display:block;font-size:21px;color:var(--violet)}
+.stat span{font-size:12px;color:var(--muted);font-weight:600}
+pre{background:#0f172a;color:#a5f3fc;padding:11px;border-radius:10px;font-size:11.5px;overflow:auto;max-height:260px;white-space:pre-wrap;word-break:break-all}
+.gate{max-width:460px;margin:9vh auto;text-align:center}
+.warnbox{background:#fef3c7;border:1px solid #fcd34d;color:#78350f;border-radius:11px;padding:10px 13px;font-size:12.5px;font-weight:600;line-height:1.6;margin-top:10px}
+iframe{width:100%;height:78vh;border:0;border-radius:12px;background:#fff}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ====== CỔNG ĐĂNG NHẬP ====== -->
+<div id="gate" class="gate">
+  <div class="card">
+    <div style="font-size:44px">🔧</div>
+    <h1 style="color:var(--ink)">Bảng điều khiển</h1>
+    <p class="sub" style="color:var(--muted);margin-bottom:14px">English Fun Zone — khu vực riêng của thầy Vũ Nguyên</p>
+
+    <div id="gGoogle" class="hide">
+      <button class="btn g" onclick="aLogin()" style="width:100%">🔐 Đăng nhập bằng Google</button>
+      <p class="sub" style="color:var(--muted);margin-top:8px;font-size:12px">Chỉ email trong danh sách quản trị mới vào được.</p>
+    </div>
+
+    <div id="gCode">
+      <p class="sub" style="color:var(--muted);margin-bottom:8px">Nhập mã quản trị:</p>
+      <input id="pass" type="password" placeholder="Mã quản trị" style="width:100%;text-align:center;font-size:17px;letter-spacing:2px"
+             onkeydown="if(event.key==='Enter')aCheckCode()">
+      <button class="btn" onclick="aCheckCode()" style="width:100%;margin-top:9px">Vào bảng điều khiển</button>
+    </div>
+
+    <div id="gErr" class="no" style="margin-top:9px;min-height:20px;font-size:13px"></div>
+
+    <div class="warnbox">
+      ⚠️ <b>Nói thẳng để thầy nắm:</b> trang này chạy hoàn toàn trong trình duyệt nên <b>mã quản trị không phải bảo mật thật</b> —
+      người nào biết xem mã nguồn trang vẫn đọc được. Nó chỉ để học sinh không vô tình bấm vào.
+      Muốn khoá thật thì bật <b>đăng nhập Google</b> (điền cấu hình Firebase trong <code>index.html</code>),
+      lúc đó chỉ email của thầy mới mở được.
+    </div>
+  </div>
+</div>
+
+<!-- ====== BẢNG ĐIỀU KHIỂN ====== -->
+<div id="panel" class="hide">
+  <div class="row" style="justify-content:space-between">
+    <div>
+      <h1>🔧 Bảng điều khiển <span class="pill" id="who">quản trị</span></h1>
+      <p class="sub">Xem, thử và kiểm tra mọi thay đổi trước khi học sinh dùng.</p>
+    </div>
+    <button class="btn s sm" onclick="aOut()">Đăng xuất</button>
+  </div>
+
+  <div class="card">
+    <h2>📊 Thống kê nội dung</h2>
+    <div class="grid" id="stats"></div>
+    <div style="overflow:auto;margin-top:12px"><table id="tblGrade"></table></div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 Nhảy thẳng vào trạng thái muốn thử</h2>
+    <p class="sub" style="margin-bottom:9px">Đặt sẵn ván Thủ thành rồi mở site — khỏi phải chơi lại từ đợt 1.</p>
+    <div class="row">
+      <label class="sub">Đợt</label><input id="jRound" type="number" value="30" min="1" max="200" style="width:88px">
+      <label class="sub">Vàng</label><input id="jGold" type="number" value="500000" style="width:130px">
+      <label class="sub">Máu</label><input id="jLives" type="number" value="25" min="1" max="99" style="width:78px">
+      <label class="sub">Bản đồ</label>
+      <select id="jMap"><option value="grass">Đồng Cỏ</option><option value="desert">Sa Mạc</option>
+        <option value="ice">Băng Giá</option><option value="jungle">Rừng Rậm</option><option value="volcano">Núi Lửa</option></select>
+      <button class="btn o" onclick="aJump()">⚡ Tạo ván thử</button>
+      <button class="btn s sm" onclick="aOpen()">▶️ Mở site</button>
+    </div>
+    <div class="row" style="margin-top:9px">
+      <button class="btn g sm" onclick="aUnlockSkills()">🔓 Mở hết 10 cấp của 4 kỹ năng</button>
+      <button class="btn g sm" onclick="aUnlockQuiz()">🔓 Mở hết màn quiz IELTS</button>
+      <button class="btn r sm" onclick="aWipe()">🗑️ Xoá toàn bộ dữ liệu lưu</button>
+    </div>
+    <div id="jMsg" class="ok" style="margin-top:9px;min-height:20px;font-size:13px"></div>
+  </div>
+
+  <div class="card">
+    <h2>💾 Dữ liệu đang lưu trên máy này</h2>
+    <div class="row" style="margin-bottom:8px">
+      <button class="btn s sm" onclick="aDump()">🔄 Đọc lại</button>
+      <button class="btn s sm" onclick="aCopy()">📋 Chép tất cả</button>
+    </div>
+    <pre id="dump">—</pre>
+  </div>
+
+  <div class="card">
+    <h2>🖥️ Xem trước site ngay tại đây</h2>
+    <p class="sub" style="margin-bottom:9px">Khung bên dưới là <code>index.html</code> thật, dùng chung dữ liệu lưu với các nút ở trên.</p>
+    <div class="row" style="margin-bottom:9px">
+      <button class="btn sm" onclick="aReload()">🔄 Tải lại khung</button>
+      <button class="btn s sm" onclick="window.open('index.html','_blank')">↗️ Mở tab mới</button>
+    </div>
+    <iframe id="prev" src="about:blank"></iframe>
+  </div>
+</div>
+</div>
+
+<script>
+/* =========================================================
+   ⚙️ CẤU HÌNH — thầy sửa hai chỗ này
+   ========================================================= */
+const ADMIN_CODE   = 'vunguyen2026';                    // mã quản trị (đổi tuỳ ý)
+const ADMIN_EMAILS = ['nguyenleader2002@gmail.com'];    // email được vào khi bật Google
+/* Muốn dùng đăng nhập Google: điền EFZ_FIREBASE trong index.html rồi dán y hệt vào đây. */
+const EFZ_FIREBASE = { apiKey:"", authDomain:"", projectId:"", storageBucket:"", messagingSenderId:"", appId:"" };
+/* ========================================================= */
+
+const $=id=>document.getElementById(id);
+const cloudOn=()=>!!(EFZ_FIREBASE.apiKey&&EFZ_FIREBASE.projectId);
+
+/* ---------- cổng vào ---------- */
+function aShowGate(){
+  $('gGoogle').classList.toggle('hide',!cloudOn());
+  $('gCode').classList.toggle('hide',cloudOn());
+  if(cloudOn())aInitFB();
+}
+function aCheckCode(){
+  const v=($('pass').value||'').trim();
+  if(v===ADMIN_CODE){sessionStorage.setItem('efz_admin','1');aEnter('quản trị (mã)')}
+  else{$('gErr').textContent='❌ Mã không đúng.';$('pass').value=''}
+}
+function aEnter(label){
+  $('gate').classList.add('hide');$('panel').classList.remove('hide');
+  $('who').textContent=label;
+  aDump();aReload();aStats();
+}
+function aOut(){sessionStorage.removeItem('efz_admin');if(window.__fb)window.__fb.auth.signOut();location.reload()}
+function _s(src){return new Promise((ok,no)=>{const e=document.createElement('script');e.src=src;e.onload=ok;e.onerror=()=>no(0);document.head.appendChild(e)})}
+async function aInitFB(){
+  if(window.__fb)return window.__fb;
+  const V='10.12.2';
+  for(const h of ['https://www.gstatic.com/firebasejs/'+V+'/','https://cdnjs.cloudflare.com/ajax/libs/firebase/'+V+'/']){
+    try{await _s(h+'firebase-app-compat.js');await _s(h+'firebase-auth-compat.js');break}catch(e){}
+  }
+  if(typeof firebase==='undefined'){$('gErr').textContent='😢 Không tải được Firebase.';return null}
+  firebase.initializeApp(EFZ_FIREBASE);
+  window.__fb={auth:firebase.auth()};
+  window.__fb.auth.onAuthStateChanged(u=>{
+    if(!u)return;
+    const mail=(u.email||'').toLowerCase();
+    if(ADMIN_EMAILS.map(x=>x.toLowerCase()).indexOf(mail)>=0)aEnter(u.email);
+    else{$('gErr').textContent='🚫 Email '+u.email+' không nằm trong danh sách quản trị.';window.__fb.auth.signOut()}
+  });
+  return window.__fb;
+}
+async function aLogin(){
+  const fb=await aInitFB();if(!fb)return;
+  try{await fb.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())}
+  catch(e){$('gErr').textContent='😢 Đăng nhập lỗi: '+(e&&e.code||'')}
+}
+
+/* ---------- thống kê nội dung (đọc thẳng từ khung xem trước) ---------- */
+function aSite(){
+  try{const w=$('prev').contentWindow;return (w&&w.DATA)?w:null}catch(e){return null}
+}
+function aStats(tries){
+  tries=tries||0;
+  const w=aSite();
+  if(!w){
+    if(tries<40)return setTimeout(()=>aStats(tries+1),400);
+    $('stats').innerHTML='<div class="stat"><b>—</b><span>Chưa đọc được nội dung site.<br>Bấm “🔄 Tải lại khung” ở dưới rồi thử lại.</span></div>';
+    return;
+  }
+  const D=w.DATA, gs=Object.keys(D).sort((a,b)=>a-b);
+  const tot=k=>gs.reduce((s,g)=>s+((D[g][k]||[]).length),0);
+  const totVoc=gs.reduce((s,g)=>s+(D[g].topics||[]).reduce((a,t)=>a+t.vocab.length,0),0);
+  $('stats').innerHTML=[
+    ['Lớp có nội dung',gs.length],['Tổng từ vựng',totVoc],['Bài ngữ pháp',tot('theory')],
+    ['Câu quiz',tot('quiz')],['Bài đọc',tot('readings')],['Bài nghe',tot('listenings')],
+    ['Từ IELTS',(w.IELTS_TOPICS||[]).reduce((s,t)=>s+t.words.length,0)],
+    ['Chuyên đề ngữ pháp',(w.GRAMMAR_TOPICS||[]).length],
+    ['Loại trụ Thủ thành',Object.keys(w.TT||{}).length]
+  ].map(([k,v])=>`<div class="stat"><b>${v}</b><span>${k}</span></div>`).join('');
+  let h='<tr><th>Lớp</th><th>Unit</th><th>Từ vựng</th><th>Ngữ pháp</th><th>Quiz</th><th>Bài đọc</th><th>Bài nghe</th></tr>';
+  for(const g of gs){const d=D[g];
+    h+=`<tr><td><b>Lớp ${g}</b></td><td>${(d.topics||[]).length}</td>
+      <td>${(d.topics||[]).reduce((a,t)=>a+t.vocab.length,0)}</td>
+      <td>${(d.theory||[]).length}</td><td>${(d.quiz||[]).length}</td>
+      <td>${(d.readings||[]).length}</td><td>${(d.listenings||[]).length}</td></tr>`}
+  $('tblGrade').innerHTML=h;
+}
+/* ---------- công cụ thử nghiệm ---------- */
+function aJump(){
+  const r=+$('jRound').value||1;
+  const save={v:3,ts:Date.now(),who:'ADMIN',mode:'normal',mapId:$('jMap').value,
+    gold:+$('jGold').value||0,lives:+$('jLives').value||25,round:r,kills:0,bossKills:0,
+    roster:null,speed:1,towers:[]};
+  localStorage.setItem('efz_td_save',JSON.stringify(save));
+  $('jMsg').textContent='✅ Đã tạo ván thử: đợt '+r+' · '+save.gold.toLocaleString('vi')+'🪙 · ❤️'+save.lives+
+    ' · bản đồ '+$('jMap').value+'. Mở site rồi bấm "Chơi tiếp".';
+  aDump();aReload();
+}
+function aUnlockSkills(){
+  let n=0;
+  for(const g of [4,5,6,7,8,9,10]){
+    const d={};for(const s of ['listen','speak','read','write'])d[s]={best:10,stars:{}};
+    localStorage.setItem('efz_sk_'+g,JSON.stringify(d));n++;
+  }
+  $('jMsg').textContent='✅ Đã mở hết 10 cấp của cả 4 kỹ năng cho '+n+' lớp.';aDump();aReload();
+}
+function aUnlockQuiz(){
+  localStorage.setItem('efz_iqbest','12');localStorage.setItem('efz_iqstage','1');
+  $('jMsg').textContent='✅ Đã mở khoá tới màn 12 của quiz IELTS.';aDump();aReload();
+}
+function aWipe(){
+  if(!confirm('Xoá TOÀN BỘ dữ liệu lưu của English Fun Zone trên máy này?'))return;
+  Object.keys(localStorage).filter(k=>/^efz_/.test(k)).forEach(k=>localStorage.removeItem(k));
+  $('jMsg').textContent='🗑️ Đã xoá sạch. Site sẽ như lần đầu mở.';aDump();aReload();
+}
+function aOpen(){window.open('index.html','_blank')}
+function aReload(){$('prev').src='index.html?admin='+Date.now();setTimeout(()=>aStats(),1200)}
+
+/* ---------- xem dữ liệu lưu ---------- */
+function aDump(){
+  const o={};
+  Object.keys(localStorage).filter(k=>/^efz_/.test(k)).sort().forEach(k=>{
+    let v=localStorage.getItem(k);
+    try{v=JSON.parse(v)}catch(e){}
+    o[k]=v;
+  });
+  $('dump').textContent=Object.keys(o).length?JSON.stringify(o,null,1):'(chưa có dữ liệu nào)';
+}
+function aCopy(){
+  navigator.clipboard.writeText($('dump').textContent).then(
+    ()=>{$('jMsg').textContent='📋 Đã chép vào bộ nhớ tạm.'},
+    ()=>{$('jMsg').textContent='Không chép được — hãy bôi đen rồi Ctrl+C.'});
+}
+
+/* ---------- khởi động ---------- */
+if(sessionStorage.getItem('efz_admin')==='1')aEnter('quản trị (mã)');
+else aShowGate();
+</script>
+</body>
+</html>
