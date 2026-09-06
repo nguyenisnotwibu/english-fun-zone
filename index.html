@@ -4421,9 +4421,9 @@ function td2Loop(ts){
          HẠ thì nhanh, NÂNG lại thì chậm (phải mượt liên tục 4 giây) — nếu nâng vội
          thì chất lượng cứ nhảy lên nhảy xuống, và chính cái đó mới là thứ gây giật. */
       const f=GM._fps; GM._lo=GM._lo||0;
-      if(f<30){GM._loU=0;if((GM._loD=(GM._loD||0)+1)>=1&&GM._lo<2){GM._lo++;GM._loD=0}}
-      else if(f<48){GM._loU=0;if((GM._loD=(GM._loD||0)+1)>=2&&GM._lo<2){GM._lo++;GM._loD=0}}
-      else if(f>=58){GM._loD=0;if((GM._loU=(GM._loU||0)+1)>=8&&GM._lo>0){GM._lo--;GM._loU=0}}
+      if(f<26){GM._loU=0;if((GM._loD=(GM._loD||0)+1)>=1&&GM._lo<2){GM._lo++;GM._loD=0}}
+      else if(f<42){GM._loU=0;if((GM._loD=(GM._loD||0)+1)>=3&&GM._lo<2){GM._lo++;GM._loD=0}}
+      else if(f>=54){GM._loD=0;if((GM._loU=(GM._loU||0)+1)>=4&&GM._lo>0){GM._lo--;GM._loU=0}}
       else {GM._loD=0;GM._loU=0}
     }
   }
@@ -4666,17 +4666,44 @@ function td2Cyl(x,cx,cy,R,H,topA,topB,sideA,sideB,cache){
    (shadowBlur là thứ tốn CPU nhất trong canvas 2D).
    Ngoài ra, gán ctx.font là thao tác đắt vì trình duyệt phải phân tích lại chuỗi font:
    ở đây cỡ chữ được làm tròn rồi CHỈ gán khi khác cỡ cũ — bớt được rất nhiều lần gán. */
+/* 🖼️ KHO ẢNH EMOJI
+   Vẽ emoji bằng fillText là phải dựng lại cả glyph màu mỗi lần — với hơn 120 emoji
+   động mỗi khung hình, đó là phần nặng nhất của cả bản vẽ.
+   Giờ mỗi cặp (emoji · cỡ) chỉ dựng MỘT LẦN vào một ảnh nhỏ, sau đó chỉ còn dán ảnh.
+   Nhìn ra y hệt như cũ — chỉ khác là không phải dựng lại mỗi khung. */
+const TD_ESPR={}; let TD_ESPRN=0;
+function td2Spr(em,S){
+  const k=em+'|'+S; let c=TD_ESPR[k]; if(c)return c;
+  if(TD_ESPRN>2200){for(const kk in TD_ESPR)delete TD_ESPR[kk];TD_ESPRN=0}
+  const W=(S*1.8|0)+6;
+  const tmp=document.createElement('canvas');tmp.width=W;tmp.height=W;
+  const g=tmp.getContext('2d');
+  g.textAlign='center';g.textBaseline='middle';g.font=S+'px serif';
+  g.fillText(em,W/2,W/2);
+  /* ✂️ Cắt sát viền: ảnh thừa toàn khoảng trong suốt vẫn phải dán và trộn màu.
+     Cắt bỏ đi thì mỗi khung hình đỡ được khoảng một nửa số điểm ảnh. */
+  let x0=W,y0=W,x1=-1,y1=-1;
+  try{
+    const d=g.getImageData(0,0,W,W).data;
+    for(let y=0;y<W;y++){const ro=y*W;
+      for(let x=0;x<W;x++){ if(d[(ro+x)*4+3]>6){ if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y } }}
+  }catch(e){ x1=-1 }
+  if(x1<0){x0=0;y0=0;x1=W-1;y1=W-1}
+  const cw=x1-x0+1, ch=y1-y0+1;
+  c=document.createElement('canvas');c.width=cw;c.height=ch;
+  c.getContext('2d').drawImage(tmp,x0,y0,cw,ch,0,0,cw,ch);
+  c._ox=W/2-x0; c._oy=W/2-y0;
+  TD_ESPR[k]=c; TD_ESPRN++; return c;
+}
 function td2Emo(x,em,cx,cy,size,rot,squash){
   const lo=(typeof GM==='object'&&GM)?(GM._lo||0):0;
-  /* mức nhẹ: làm tròn cỡ chữ về số chẵn -> ctx.font ít phải đổi -> đỡ tốn CPU */
   let S=size<8?8:size|0; if(lo)S=S&~1;
-  if(x.__fs!==S){x.font=S+'px serif';x.__fs=S}
-  if(lo>1){x.fillText(em,cx,cy);return}    /* mức siêu nhẹ: bỏ xoay & bóp hình */
-  if(!rot&&!squash){x.fillText(em,cx,cy);return}
+  const sp=td2Spr(em,S);
+  if(lo>1||(!rot&&!squash)){x.drawImage(sp,cx-sp._ox,cy-sp._oy);return}
   x.save();x.translate(cx,cy);
   if(rot)x.rotate(rot);
   if(squash)x.scale(squash[0],squash[1]);
-  x.fillText(em,0,0);
+  x.drawImage(sp,-sp._ox,-sp._oy);
   x.restore();
 }
 /* 🧱 Kho ảnh BỆ TRỤ dựng sẵn theo (bậc · số sao) — dán ảnh nhanh hơn tô elip dày rất nhiều */
@@ -4852,9 +4879,9 @@ function td2Draw(){
   /* 🪶 Máy đuối thì VẼ NHỎ LẠI rồi để trình duyệt phóng to cho vừa khung.
      Số điểm ảnh phải tô giảm gần một nửa — đây là cách giảm tải mạnh nhất
      mà không phải bỏ bớt quái hay hiệu ứng nào của trò chơi. */
-  const rs = GM._lo>1?.66 : GM._lo?.84 : 1;
+  const rs = GM._lo>1?.72 : 1;
   if(GM._rs!==rs){GM._rs=rs;cv.width=Math.round(480*rs);cv.height=Math.round(400*rs)}
-  const x=cv.getContext('2d');
+  const x=cv.getContext('2d',{alpha:false});
   x.setTransform(rs,0,0,rs,0,0);
   x.__fs=0;x.__pf=0;
   const MP=td2Map(),T=(GM.last||0)/1000;
