@@ -487,6 +487,66 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
 .diff-hard{border-color:#ddd6fe}
 .diff-advanced{border-color:#fca5a5}
 .gr-topic-card .gt-cnt{display:inline-block;background:#ece9ff;color:var(--violet);font-size:11px;font-weight:700;border-radius:20px;padding:2px 9px;margin-top:7px}
+/* ===== ÔN NGỮ PHÁP — bộ lọc lớp, lý thuyết, 5 dạng bài ===== */
+.gr-filter-lb{font-family:'Baloo 2';font-weight:800;font-size:13.5px;color:var(--muted);margin:10px 0 6px}
+.gr-grade-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.gr-grade-btn{padding:8px 15px;border-radius:30px;border:2.5px solid #e2e8f0;background:#fff;font-weight:800;font-size:13px;cursor:pointer;transition:.15s;font-family:'Baloo 2';color:var(--ink)}
+.gr-grade-btn:hover:not(.on){background:#f0fdfa;border-color:#5eead4}
+.gr-grade-btn.on{background:linear-gradient(135deg,#0ea5e9,#6366f1);color:#fff;border-color:transparent;transform:translateY(-2px);box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.gr-diff-btn[data-d="all"].on{background:linear-gradient(135deg,#64748b,#334155)}
+.gr-topic-card .gt-grades{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}
+.gr-topic-card .gt-gchip{background:#e0f2fe;color:#0369a1;font-size:10px;font-weight:800;border-radius:20px;padding:2px 7px}
+.gr-subtitle{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:12px}
+.gr-type-badge{background:#ede9fe;color:#6d28d9;font-family:'Baloo 2';font-weight:800;font-size:12px;border-radius:20px;padding:4px 12px;white-space:nowrap}
+
+/* --- Lý thuyết --- */
+.gr-theory{background:#fbfaff;border:3px solid #ece9ff;border-radius:18px;padding:16px 16px 6px}
+.gr-theory .th-sec{margin-bottom:16px}
+.gr-theory h4{font-family:'Baloo 2';font-size:15.5px;color:var(--violet);margin:0 0 8px}
+.gr-theory ul{margin:0;padding-left:20px}
+.gr-theory li{font-size:14.5px;line-height:1.65;margin-bottom:4px}
+.gr-theory .th-tips li{color:#9a3412}
+.th-tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.th-table{width:100%;border-collapse:collapse;font-size:14px;min-width:420px}
+.th-table th{background:#ede9fe;color:#4c1d95;font-family:'Baloo 2';font-size:13px;padding:8px 10px;text-align:left;border:1px solid #ddd6fe}
+.th-table td{padding:8px 10px;border:1px solid #e9e7f7;vertical-align:top}
+.th-table .th-k{font-weight:800;color:var(--violet);white-space:nowrap}
+.th-table .th-f{font-weight:700;color:#0f766e}
+.th-table .th-e{color:#475569;font-style:italic}
+.th-sign{background:#fef9c3;border:2px solid #fde68a;border-radius:12px;padding:10px 12px;font-size:14px;font-weight:600;color:#713f12;line-height:1.6}
+.th-exrow{display:flex;flex-direction:column;gap:2px;padding:9px 12px;border-radius:12px;background:#fff;border:2px solid #eee9ff;margin-bottom:7px}
+.th-exrow b{font-size:15px;color:#1e293b}
+.th-exrow span{font-size:13.5px;color:var(--muted)}
+
+/* --- Điền từ / Viết lại câu --- */
+.gr-hint{background:#eff6ff;border:2px solid #bfdbfe;border-radius:12px;padding:9px 12px;font-size:13.5px;font-weight:600;color:#1e40af;margin-bottom:12px}
+.gr-inputrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.gr-input{flex:1;min-width:200px;padding:14px 16px;border-radius:16px;border:3px solid #e3e0ff;font-size:16px;font-weight:700;font-family:inherit;color:var(--ink);outline:none;transition:.15s}
+.gr-input:focus{border-color:var(--violet);background:#fbfaff}
+.gr-input.right{border-color:#22c55e;background:#e9fbef;color:#0f8a4d}
+.gr-input.wrong{border-color:#ef4444;background:#ffe9ee;color:#c2233f}
+
+/* --- Sắp xếp câu --- */
+.gr-built{min-height:56px;border:3px dashed #c4bfff;border-radius:16px;background:#fbfaff;padding:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.gr-built-ph{color:var(--muted);font-size:13.5px;font-weight:600}
+.gr-pool{display:flex;flex-wrap:wrap;gap:8px}
+.gr-tile{background:#fff;border:3px solid #e3e0ff;border-radius:14px;padding:9px 14px;font-size:15px;font-weight:700;color:var(--ink);cursor:pointer;transition:.14s;font-family:inherit}
+.gr-tile:hover:not(:disabled){border-color:var(--violet);transform:translateY(-2px)}
+.gr-tile.built{background:linear-gradient(135deg,#8b5cf6,#6366f1);color:#fff;border-color:transparent}
+.gr-tile:disabled{opacity:.75;cursor:default}
+
+/* --- Tìm lỗi sai --- */
+.gr-words{display:flex;flex-wrap:wrap;gap:7px;padding:14px;background:#fbfaff;border:3px solid #ece9ff;border-radius:16px}
+.gr-word{background:#fff;border:2.5px solid #e3e0ff;border-radius:12px;padding:8px 12px;font-size:15.5px;font-weight:700;color:var(--ink);cursor:pointer;transition:.14s;font-family:inherit}
+.gr-word:hover:not(:disabled){border-color:#f59e0b;background:#fffbeb}
+.gr-word.right{background:#e9fbef;border-color:#22c55e;color:#0f8a4d;text-decoration:line-through}
+.gr-word.wrong{background:#ffe9ee;border-color:#ef4444;color:#c2233f}
+.gr-word:disabled{cursor:default}
+@media(max-width:520px){
+  .gr-input{min-width:100%}
+  .gr-theory{padding:13px 12px 4px}
+  .gr-theory li,.th-table{font-size:13.5px}
+}
 </style>
 </head>
 <body>
@@ -2405,19 +2465,85 @@ function g7How(){
   const[s,a]=rnd(G7HOW);
   return mkQ(s,a,['far','much','often','many','long'],`How ${a}: ${a==='far'?'hỏi khoảng cách':a==='much'?'hỏi giá/lượng không đếm được':a==='often'?'hỏi tần suất':a==='many'?'hỏi số lượng đếm được':'hỏi thời gian bao lâu'}.`);
 }
-const GENQ={5:[g5Present,g5Past,g5Health,g5Advice,g5Job],6:[g6PsPc,g6Compare,g6Prep,g6Must,g6Quant,g6If],7:[g7Ving,g7Passive,g7EdIng,g7UsedTo,g7Connector,g7How]};
+/* ---- GRADE 4 generators ---- */
+const G4BE=[["I ___ a pupil at Nguyen Du Primary School.","am",["is","are","be"]],["My name ___ Linh and I ___ nine years old.","is / am",["am / is","are / am","is / are"]],["They ___ my new classmates.","are",["is","am","be"]],["This ___ my favourite book.","is",["are","am","be"]],["Nam and I ___ in Class 4A.","are",["is","am","be"]],["It ___ a beautiful day today.","is",["are","am","be"]]];
+function g4Be(){const[s,a,d]=rnd(G4BE);return mkQ(s,a,[a,...d],"I → am · He/She/It → is · You/We/They → are.");}
+const G4CAN=[["___ you ride a bike? — Yes, I can.","Can",["Do","Are","Is"]],["She can ___ very well.","sing",["sings","singing","to sing"]],["I can't ___ English songs yet.","understand",["understands","understanding","to understand"]],["What ___ you do? — I can draw.","can",["do","are","is"]],["My brother ___ swim. He is afraid of water.","can't",["doesn't can","not can","isn't"]],["___ he play the piano? — No, he can't.","Can",["Do","Does","Is"]]];
+function g4Can(){const[s,a,d]=rnd(G4CAN);return mkQ(s,a,[a,...d],"Can + S + V nguyên thể? · Phủ định: can't + V.");}
+const G4PREP=[["The cat is ___ the table. (dưới)","under",["on","in","behind"]],["My bag is ___ the chair. (trên)","on",["in","under","between"]],["The ball is ___ the box. (trong)","in",["on","under","near"]],["The door is ___ the two windows. (giữa)","between",["behind","under","on"]],["The garden is ___ the house. (đằng sau)","behind",["in front of","on","in"]],["The bus stop is ___ my school. (trước)","in front of",["behind","under","between"]]];
+function g4Prep(){const[s,a,d]=rnd(G4PREP);return mkQ(s,a,[a,...d],"in = trong · on = trên · under = dưới · behind = sau · in front of = trước · between = giữa.");}
+const G4WH=[["___ is your name? — My name is Mai.","What",["Where","When","Who"]],["___ do you live? — I live in Hue.","Where",["What","When","How"]],["___ are you from? — I am from Viet Nam.","Where",["What","Who","When"]],["___ old are you? — I am ten.","How",["What","Where","Who"]],["___ is your birthday? — It is in May.","When",["Where","Who","How"]],["___ is that boy? — He is my brother.","Who",["What","Where","When"]]];
+function g4Wh(){const[s,a,d]=rnd(G4WH);return mkQ(s,a,[a,...d],"What = cái gì · Where = ở đâu · When = khi nào · Who = ai · How old = bao nhiêu tuổi.");}
+const G4DAY=[["Today is Monday. Tomorrow is ___ .","Tuesday",["Sunday","Friday","Saturday"]],["We have Maths ___ Wednesday.","on",["in","at","to"]],["What ___ is it today? — It is Friday.","day",["time","month","date"]],["My favourite ___ is English.","subject",["day","colour","food"]],["Yesterday was Sunday. Today is ___ .","Monday",["Tuesday","Saturday","Friday"]],["We do not go to school ___ Sunday.","on",["in","at","of"]]];
+function g4Day(){const[s,a,d]=rnd(G4DAY);return mkQ(s,a,[a,...d],"Thứ trong tuần đi với giới từ ON: on Monday, on Sunday.");}
+const G4WEA=[["What is the weather like? — It is ___ . (mưa)","rainy",["rain","raining day","rains"]],["It is very ___ in summer. (nóng)","hot",["cold","cool","windy"]],["Look! It ___ now.","is raining",["rains","rain","rained"]],["They ___ football in the playground at the moment.","are playing",["play","plays","played"]],["She ___ a picture right now.","is drawing",["draws","draw","drew"]],["What ___ you doing? — I am reading.","are",["is","am","do"]]];
+function g4Weather(){const[s,a,d]=rnd(G4WEA);return mkQ(s,a,[a,...d],"Đang xảy ra lúc nói → am/is/are + V-ing (now, at the moment, Look!).");}
+const G4HAVE=[["I ___ got a new schoolbag.","have",["has","am","is"]],["She ___ got two brothers.","has",["have","are","is"]],["___ you got a pet? — Yes, I have.","Have",["Has","Do","Are"]],["My school ___ got a big library.","has",["have","is","are"]],["There ___ a clock on the wall.","is",["are","have","has"]],["There ___ five books on my desk.","are",["is","has","have"]]];
+function g4Have(){const[s,a,d]=rnd(G4HAVE);return mkQ(s,a,[a,...d],"I/You/We/They have got · He/She/It has got · There is + số ít, There are + số nhiều.");}
+
+/* ---- GRADE 8 generators ---- */
+const G8GER=[["I enjoy ___ badminton after school.","playing",["play","to play","played"]],["She decided ___ a new hobby this summer.","to take up",["taking up","take up","took up"]],["Would you mind ___ the window?","opening",["to open","open","opened"]],["My parents want me ___ harder at school.","to study",["studying","study","studied"]],["We avoided ___ out during the storm.","going",["to go","go","went"]],["He promised ___ the environment club.","to join",["joining","join","joined"]]];
+function g8Gerund(){const[s,a,d]=rnd(G8GER);return mkQ(s,a,[a,...d],"enjoy/mind/avoid/practise + V-ing · want/decide/promise/hope + to V.");}
+const G8PASS=[["Many ethnic costumes ___ by hand.","are made",["make","are making","made"]],["This pagoda ___ over 300 years ago.","was built",["built","is built","has built"]],["Plastic bags ___ in many supermarkets now.","are banned",["ban","banned","are banning"]],["The message ___ to all villagers tomorrow.","will be sent",["will send","is sending","sends"]],["Rubbish must ___ into the right bin.","be put",["put","putting","to put"]],["A new shopping centre ___ in my town at the moment.","is being built",["is built","builds","is building"]]];
+function g8Passive(){const[s,a,d]=rnd(G8PASS);return mkQ(s,a,[a,...d],"Bị động = be + V3, chia be theo thì của câu chủ động.");}
+const G8CMP=[["Life in the countryside is ___ than life in the city.","more peaceful",["peacefuler","most peaceful","peaceful"]],["Nam runs ___ than his brother.","faster",["more fast","fastest","fast"]],["She sings ___ of all the students in her class.","the most beautifully",["more beautifully","beautifullier","beautifully"]],["Ha Long Bay is one of ___ places in Viet Nam.","the most famous",["more famous","famouser","famous"]],["My new phone works ___ than the old one.","better",["gooder","more good","best"]],["The H'Mong live ___ from the town than the Tay.","farther",["far","more far","farthest"]]];
+function g8Compare(){const[s,a,d]=rnd(G8CMP);return mkQ(s,a,[a,...d],"Trạng từ ngắn + er · Trạng từ đuôi -ly → more + adv · So sánh nhất: the most + adv.");}
+const G8PERF=[["I ___ never ___ to Sa Pa.","have / been",["has / been","have / gone","am / being"]],["She ___ in this village since 2019.","has lived",["lives","lived","is living"]],["They ___ already ___ the rubbish.","have / collected",["has / collected","have / collect","are / collecting"]],["We ___ him for three years.","have known",["know","knew","are knowing"]],["___ you ever ___ a traditional festival?","Have / joined",["Did / join","Have / join","Do / join"]],["My grandmother ___ this custom for a long time.","has kept",["keeps","kept","is keeping"]]];
+function g8Perfect(){const[s,a,d]=rnd(G8PERF);return mkQ(s,a,[a,...d],"HTHT: have/has + V3. Dấu hiệu: since, for, already, never, ever, just, yet.");}
+const G8COND=[["If we recycle more, we ___ the environment.","will protect",["protect","would protect","protected"]],["If I were you, I ___ that plastic bottle.","would reuse",["will reuse","reuse","reused"]],["If the storm comes, the school ___ closed.","will be",["is","would be","was"]],["If people ___ litter, our beaches would be clean.","didn't drop",["don't drop","won't drop","aren't dropping"]],["Unless we act now, many species ___ .","will disappear",["disappear","would disappear","disappeared"]],["If I ___ more free time, I would join the volunteer club.","had",["have","will have","having"]]];
+function g8If(){const[s,a,d]=rnd(G8COND);return mkQ(s,a,[a,...d],"Loại 1: If + HT đơn, will + V (có thật) · Loại 2: If + QK đơn, would + V (giả định).");}
+const G8REL=[["The girl ___ won the prize is my cousin.","who",["which","whose","where"]],["This is the market ___ my mother buys fresh food.","where",["which","who","when"]],["The festival, ___ takes place in spring, attracts many tourists.","which",["that","who","where"]],["I like the boy ___ father is a doctor.","whose",["who","whom","which"]],["The book ___ I borrowed yesterday is very useful.","that",["who","whose","where"]],["Tet is the time ___ families gather together.","when",["where","which","who"]]];
+function g8Rel(){const[s,a,d]=rnd(G8REL);return mkQ(s,a,[a,...d],"who = người · which/that = vật · whose = sở hữu · where = nơi chốn · when = thời gian.");}
+
+/* ---- GRADE 9 generators ---- */
+const G9PHR=[["Please ___ your shoes before entering the house.","take off",["take on","take up","take in"]],["We should ___ plastic bags to protect the environment.","cut down on",["cut off","cut up","cut in"]],["My grandparents ___ in a small village in the north.","grew up",["grew on","grew in","grew off"]],["Don't ___ ! You can pass the exam.","give up",["give in","give off","give away"]],["She ___ her mother — they look exactly the same.","takes after",["takes over","takes up","takes in"]],["The meeting was ___ because of the storm.","called off",["called on","called up","called in"]]];
+function g9Phrasal(){const[s,a,d]=rnd(G9PHR);return mkQ(s,a,[a,...d],"Cụm động từ mang nghĩa riêng, phải học thuộc cả cụm.");}
+const G9WISH=[["I wish I ___ speak English fluently.","could",["can","will","am able"]],["She wishes she ___ more free time to travel.","had",["has","have","will have"]],["I wish it ___ raining so we could go out.","weren't",["isn't","won't be","didn't"]],["They wish they ___ in a big city.","lived",["live","will live","are living"]],["I wish I ___ harder for the last test.","had studied",["studied","study","have studied"]],["He wishes he ___ taller.","were",["is","will be","has been"]]];
+function g9Wish(){const[s,a,d]=rnd(G9WISH);return mkQ(s,a,[a,...d],"Wish ở hiện tại → lùi một thì: V-ed / were / could + V.");}
+const G9REP=[["She said she ___ tired that day.","was",["is","has been","will be"]],["He told me he ___ finish the project soon.","would",["will","can","shall"]],["Mai asked me where I ___ .","lived",["live","am living","will live"]],["The teacher told us ___ late.","not to be",["to not be","don't be","not be"]],["They said they ___ already visited the museum.","had",["have","has","were"]],["He asked if I ___ join the club.","could",["can","will","may"]]];
+function g9Reported(){const[s,a,d]=rnd(G9REP);return mkQ(s,a,[a,...d],"Tường thuật lùi một thì: is→was, will→would, have→had, can→could; mệnh lệnh → (not) to V.");}
+const G9SUG=[["I suggest ___ the local museum this weekend.","visiting",["to visit","visit","visited"]],["She suggested that we ___ a guided tour.","should take",["taking","to take","took"]],["Why ___ we go to the craft village?","don't",["aren't","not","doesn't"]],["How about ___ a homestay in Mai Chau?","trying",["to try","try","tried"]],["Let's ___ the rubbish along the river.","collect",["collecting","to collect","collected"]],["I suggest that the council ___ more trees.","plant",["plants","planting","to plant"]]];
+function g9Suggest(){const[s,a,d]=rnd(G9SUG);return mkQ(s,a,[a,...d],"suggest + V-ing · suggest (that) S + (should) V · How about + V-ing · Why don't we + V.");}
+const G9ADV=[["___ it rained heavily, we still enjoyed the trip.","Although",["Because","So","However"]],["The city is crowded, ___ it offers many opportunities.","but",["so","although","because"]],["We left early ___ we could catch the first bus.","so that",["because of","in spite of","although"]],["___ the bad weather, the festival went on.","In spite of",["Although","Because","So"]],["He speaks English well ___ he practises every day.","because",["although","so that","in spite of"]],["She was tired; ___, she finished her homework.","however",["although","because","so that"]]];
+function g9Linking(){const[s,a,d]=rnd(G9ADV);return mkQ(s,a,[a,...d],"Although/Because + mệnh đề · In spite of/Because of + N/V-ing · However, đứng đầu câu có dấu phẩy.");}
+const G9PAS=[["English ___ as an official language in many countries.","is used",["uses","is using","used"]],["The ao dai ___ by Vietnamese women for centuries.","has been worn",["has worn","is wearing","wore"]],["Hoi An ___ a World Heritage Site in 1999.","was recognised",["recognised","is recognised","has recognised"]],["Solar energy ___ more widely in the future.","will be used",["will use","is used","uses"]],["This bridge ___ by French engineers.","was designed",["designed","is designing","has designed"]],["Many jobs ___ by robots one day.","may be done",["may do","may doing","may done"]]];
+function g9Passive(){const[s,a,d]=rnd(G9PAS);return mkQ(s,a,[a,...d],"Bị động = be + V3; chú ý thì của động từ be.");}
+
+/* ---- GRADE 10 generators ---- */
+const G10T=[["I ___ this app since last year and it still works well.","have used",["use","used","am using"]],["While I ___ online, the electricity went off.","was studying",["studied","study","have studied"]],["By the time we arrived, the concert ___ .","had started",["started","has started","starts"]],["She ___ to the gym three times a week.","goes",["is going","went","has gone"]],["Look! The band ___ on the main stage.","is performing",["performs","performed","has performed"]],["This time next year, I ___ at university.","will be studying",["will study","study","am studying"]]];
+function g10Tense(){const[s,a,d]=rnd(G10T);return mkQ(s,a,[a,...d],"Chọn thì theo dấu hiệu thời gian: since/for → HTHT · while → QKTD · by the time → QKHT.");}
+const G10P=[["Social media ___ by billions of people every day.","is used",["uses","is using","used"]],["The national park ___ in 1991 to protect rare animals.","was established",["established","is established","has established"]],["Gender equality ___ in many workplaces recently.","has been promoted",["has promoted","is promoting","promoted"]],["A new music festival ___ next summer.","will be held",["will hold","is holding","holds"]],["Waste ___ properly to reduce pollution.","should be sorted",["should sort","should sorting","should sorted"]],["Eco-tours ___ by local guides at the moment.","are being led",["are leading","are led by","lead"]]];
+function g10Passive(){const[s,a,d]=rnd(G10P);return mkQ(s,a,[a,...d],"Bị động = be + V3; modal + be + V3; đang diễn ra: is/are being + V3.");}
+const G10G=[["He gave up ___ fast food to stay healthy.","eating",["to eat","eat","eaten"]],["They agreed ___ the community project.","to support",["supporting","support","supported"]],["I look forward to ___ from you.","hearing",["hear","to hear","heard"]],["We went to the gallery ___ the new exhibition.","to see",["seeing","see","saw"]],["She is used to ___ up early for her morning run.","getting",["get","to get","got"]],["The school encourages students ___ volunteer work.","to do",["doing","do","done"]]];
+function g10Ger(){const[s,a,d]=rnd(G10G);return mkQ(s,a,[a,...d],"give up/look forward to/be used to + V-ing · agree/encourage sb + to V · to V chỉ mục đích.");}
+const G10R=[["The artist ___ paintings were stolen is very famous.","whose",["who","which","whom"]],["Ha Noi, ___ is the capital of Viet Nam, has a long history.","which",["that","who","where"]],["This is the school ___ my mother used to teach.","where",["which","who","when"]],["The volunteers ___ helped us were all students.","who",["which","whose","where"]],["2020 was the year ___ online learning became common.","when",["where","which","who"]],["The song ___ I listened to yesterday is a folk song.","that",["who","whose","when"]]];
+function g10Rel(){const[s,a,d]=rnd(G10R);return mkQ(s,a,[a,...d],"Có dấu phẩy → không dùng that; whose + N (sở hữu); where (nơi), when (thời gian).");}
+const G10C=[["If people used public transport more, the air ___ cleaner.","would be",["will be","is","was"]],["If she ___ the scholarship, she will study abroad.","gets",["will get","got","would get"]],["If I had known about the workshop, I ___ it.","would have joined",["would join","will join","joined"]],["We would save energy if we ___ off unused lights.","turned",["turn","will turn","would turn"]],["Unless we protect forests, wildlife ___ .","will suffer",["would suffer","suffers","suffered"]],["If the concert ___ cancelled, we would have gone.","hadn't been",["wasn't","isn't","weren't"]]];
+function g10If(){const[s,a,d]=rnd(G10C);return mkQ(s,a,[a,...d],"Loại 1: HT đơn + will · Loại 2: QK đơn + would · Loại 3: had V3 + would have V3.");}
+const G10L=[["___ the heavy traffic, she arrived on time.","Despite",["Although","Because","So"]],["Music helps us relax; ___, it improves our mood.","moreover",["although","despite","because of"]],["___ he practised a lot, he did not win the contest.","Although",["Despite","Because of","So"]],["The show was cancelled ___ the bad weather.","because of",["because","although","however"]],["She loves classical music ___ her brother prefers rock.","whereas",["because","so","despite"]],["Recycling saves money. ___ , it protects the planet.","In addition",["Although","Because","Despite"]]];
+function g10Link(){const[s,a,d]=rnd(G10L);return mkQ(s,a,[a,...d],"Although/Because + mệnh đề · Despite/Because of + N · Moreover/In addition/However đứng đầu câu.");}
+
+const GENQ={
+  4:[g4Be,g4Can,g4Prep,g4Wh,g4Day,g4Weather,g4Have],
+  5:[g5Present,g5Past,g5Health,g5Advice,g5Job],
+  6:[g6PsPc,g6Compare,g6Prep,g6Must,g6Quant,g6If],
+  7:[g7Ving,g7Passive,g7EdIng,g7UsedTo,g7Connector,g7How],
+  8:[g8Gerund,g8Passive,g8Compare,g8Perfect,g8If,g8Rel],
+  9:[g9Phrasal,g9Wish,g9Reported,g9Suggest,g9Linking,g9Passive],
+  10:[g10Tense,g10Passive,g10Ger,g10Rel,g10If,g10Link]
+};
 
 /* --- build a fresh quiz set every round --- */
 function buildQuizSet(g,topicId){
   let qs=[];
   if(topicId==='all'){
     qs=pickN(DATA[g].quiz,4);
-    pickN(GENQ[g],2).forEach(f=>qs.push(f()));
+    pickN(GENQ[g]||[],2).forEach(f=>qs.push(f()));
     qs.push(genVocabMCQ(g));qs.push(genOdd(g));qs.push(genPicMCQ(g));
   }else{
     const t=DATA[g].topics.find(x=>x.id===topicId);
     qs.push(genVocabMCQ(g,t),genVocabMCQ(g,t),genPicMCQ(g,t),genOdd(g,t),genSpell(g,t));
-    pickN(GENQ[g],3).forEach(f=>qs.push(f()));
+    pickN(GENQ[g]||[],3).forEach(f=>qs.push(f()));
   }
   return shuffle(qs);
 }
@@ -2427,51 +2553,467 @@ function qPool(q,correct,pool){
   return{q,o,a:o.indexOf(correct)};
 }
 const STORY_NAMES=[['Mai','She','her'],['Nam','He','his'],['Hoa','She','her'],['Quân','He','his'],['Linh','She','her'],['Tú','He','his']];
-function genStory(g){
-  const[name,pron,poss]=rnd(STORY_NAMES);
-  if(g===5){
-    const cls=rnd(['5A','5B','5C']),
-    GET=['six o\'clock','half past five','six thirty','half past six'],getup=rnd(GET),
-    BR=['noodles and milk','rice and eggs','bread and orange juice','pho with my father'],br=rnd(BR),
-    TR=['by bike','by bus','on foot','by motorbike with my dad'],tr=rnd(TR),
-    SU=['English','Maths','Music','Art'],su=rnd(SU),
-    AF=['water the plants','feed the cat','play badminton','draw pictures'],af=rnd(AF),
-    BE=['nine o\'clock','nine thirty','ten o\'clock','eight thirty'],be=rnd(BE);
-    const lines=[`Hello! My name is ${name}. I am in class ${cls}.`,`Every day, I get up at ${getup}.`,`I usually have ${br} for breakfast.`,`I go to school ${tr}.`,`My favourite subject is ${su}.`,`After school, I ${af}.`,`I always go to bed at ${be}.`];
-    const qs=[qPool(`What time does ${name} get up?`,getup,GET),qPool(`What does ${name} have for breakfast?`,br,BR),qPool(`How does ${name} go to school?`,tr,TR),qPool(`What is ${name}'s favourite subject?`,su,SU),qPool(`What does ${name} do after school?`,af,AF),qPool(`What time does ${name} go to bed?`,be,BE)];
-    return{em:'⏰',title:`A Day with ${name}`,hint:`Một ngày của bạn ${name} — mỗi lần một đề khác nhau!`,lines,qs,
-      vn:`${name} học lớp ${cls}, dậy lúc ${getup}, ăn sáng món ${br}, đi học ${tr}, thích môn ${su}, sau giờ học thì ${af}, đi ngủ lúc ${be}. (Tự dịch chi tiết nhé!)`};
-  }
-  if(g===6){
-    const CI=['Hue','Da Nang','Ha Noi','Can Tho'],ci=rnd(CI),
-    AD=['quiet and peaceful','busy but exciting','modern and clean'],ad=rnd(AD),
-    HO=['a town house','a small flat','a country house with a garden'],ho=rnd(HO),
-    RO=['four','five','six'],ro=rnd(RO),
-    FA=['the kitchen','the living room','my bedroom','the attic'],fa=rnd(FA),
-    NE=['a beautiful park','a big market','a new cinema','a small stadium'],ne=rnd(NE);
-    const lines=[`Hi, I am ${name}. I live in ${ci}.`,`My neighbourhood is ${ad}.`,`My family lives in ${ho}.`,`Our home has ${ro} rooms.`,`My favourite room is ${fa}.`,`Near my house, there is ${ne}.`,`I love my neighbourhood because the people are very friendly.`];
-    const qs=[qPool(`Where does ${name} live?`,ci,CI),qPool(`How many rooms does the home have?`,ro,RO.concat(['seven'])),qPool(`What is ${name}'s favourite room?`,fa,FA),qPool(`What is near ${poss} house?`,ne,NE)];
-    return{em:'🏘️',title:`${name}'s Neighbourhood`,hint:`Khu phố nhà ${name} — số liệu đổi mỗi lần!`,lines,qs,
-      vn:`${name} sống ở ${ci}, khu phố ${ad}. Nhà là ${ho}, có ${ro} phòng, phòng yêu thích là ${fa}, gần nhà có ${ne}.`};
-  }
-  const HO=['playing the guitar','collecting stamps','gardening','making model planes','cycling'],hb=rnd(HO),
-  ST=['one year ago','two years ago','three years ago'],st=rnd(ST),
-  ME=['my uncle','my father','my best friend','online videos'],me=rnd(ME),
-  PR=['thirty minutes','one hour','fifteen minutes'],pr=rnd(PR),
-  WH=['after dinner','after school','early in the morning'],wh=rnd(WH),
-  FE=['relaxed','happy and creative'],fe=rnd(FE);
-  const lines=[`Hi everyone, I am ${name}.`,`My hobby is ${hb}.`,`I started this hobby ${st}.`,me==='online videos'?`I learned it from online videos.`:`${me.charAt(0).toUpperCase()+me.slice(1)} taught me how to do it.`,`I practise for ${pr} every day ${wh}.`,`My hobby makes me feel ${fe}.`,`Next month, I will show it to my classmates at school.`];
-  const qs=[qPool(`What is ${name}'s hobby?`,hb,HO),qPool(`When did ${name} start the hobby?`,st,ST),qPool(`Who taught ${name}?`,me==='online videos'?'Nobody — online videos':me,ME.map(x=>x==='online videos'?'Nobody — online videos':x)),qPool(`How long does ${name} practise every day?`,pr,PR.concat(['two hours']))];
-  return{em:'🎨',title:`${name}'s Hobby`,hint:`Sở thích của ${name} — mỗi lần một câu chuyện mới!`,lines,qs,
-    vn:`${name} có sở thích ${hb}, bắt đầu ${st}, học từ ${me}, luyện tập ${pr} mỗi ngày ${wh} và cảm thấy ${fe}.`};
+/* ============ NGÂN HÀNG BÀI ĐỌC / BÀI NGHE THẬT (theo chủ đề unit từng lớp) ============ */
+const RBANK={
+4:[
+{em:'🏫',title:'My First Day at School',tags:['U1-2','Trường học'],
+text:`Hello! My name is Linh. I am nine years old and I am from Hue.
+Today is my first day in Class 4A. My new school is big and clean. There are twenty classrooms and a nice library.
+My teacher is Miss Hoa. She is kind and she smiles a lot. My new friend is Nam. He sits next to me.
+We have four lessons today: Maths, Vietnamese, Art and English. English is my favourite subject.
+I am very happy at my new school.`,
+vn:`Xin chào! Mình tên là Linh. Mình chín tuổi và đến từ Huế. Hôm nay là ngày đầu tiên của mình ở lớp 4A. Trường mới của mình rộng và sạch sẽ. Trường có hai mươi phòng học và một thư viện đẹp. Cô giáo của mình là cô Hoa. Cô rất tốt bụng và hay cười. Bạn mới của mình là Nam, bạn ấy ngồi cạnh mình. Hôm nay chúng mình có bốn tiết: Toán, Tiếng Việt, Mĩ thuật và Tiếng Anh. Tiếng Anh là môn mình thích nhất. Mình rất vui khi học ở trường mới.`,
+qs:[{q:'How old is Linh?',o:['Nine','Ten','Eight','Eleven'],a:0},
+{q:'Where is Linh from?',o:['Hue','Ha Noi','Da Nang','Can Tho'],a:0},
+{q:'Who is her teacher?',o:['Miss Hoa','Miss Linh','Mr Nam','Miss Mai'],a:0},
+{q:'What is her favourite subject?',o:['English','Maths','Art','Vietnamese'],a:0},
+{q:'How many classrooms are there?',o:['Twenty','Twelve','Ten','Thirty'],a:0}]},
+
+{em:'🐶',title:'My Pet Dog',tags:['U7-8','Con vật'],
+text:`I have a pet dog. His name is Bin. He is two years old.
+Bin is small and brown. He has big black eyes and short legs. He is very friendly.
+Every morning I give him food and water. In the afternoon we play in the garden. Bin can run fast and he can jump high, but he cannot swim.
+At night Bin sleeps in a small basket near the door. I love my dog very much.`,
+vn:`Mình có một chú chó cưng. Tên bạn ấy là Bin, hai tuổi. Bin nhỏ và có màu nâu. Bạn ấy có đôi mắt đen to và chân ngắn. Bin rất thân thiện. Mỗi sáng mình cho bạn ấy ăn và uống nước. Buổi chiều chúng mình chơi trong vườn. Bin chạy rất nhanh và nhảy rất cao, nhưng không biết bơi. Buổi tối Bin ngủ trong một cái giỏ nhỏ gần cửa. Mình rất yêu chú chó của mình.`,
+qs:[{q:'What is the name of the dog?',o:['Bin','Bon','Ben','Bim'],a:0},
+{q:'What colour is Bin?',o:['Brown','Black','White','Grey'],a:0},
+{q:'What can Bin NOT do?',o:['Swim','Run','Jump','Eat'],a:0},
+{q:'Where does Bin sleep?',o:['In a basket near the door','In the garden','On the bed','Under the table'],a:0},
+{q:'When do they play together?',o:['In the afternoon','In the morning','At night','At noon'],a:0}]},
+
+{em:'☀️',title:'The Weather in Viet Nam',tags:['U9-10','Thời tiết'],
+text:`Viet Nam has different weather in different places.
+In the north, there are four seasons. Spring is warm and wet. Summer is very hot. Autumn is cool and dry. Winter is cold, and in Sa Pa it sometimes snows.
+In the south, there are only two seasons: the dry season and the rainy season. In the rainy season it often rains in the afternoon.
+Today it is sunny in Ha Noi and it is raining in Can Tho.`,
+vn:`Việt Nam có thời tiết khác nhau ở các vùng khác nhau. Ở miền Bắc có bốn mùa. Mùa xuân ấm và ẩm. Mùa hè rất nóng. Mùa thu mát và khô. Mùa đông lạnh, và ở Sa Pa đôi khi có tuyết. Ở miền Nam chỉ có hai mùa: mùa khô và mùa mưa. Vào mùa mưa trời thường mưa vào buổi chiều. Hôm nay Hà Nội có nắng còn Cần Thơ đang mưa.`,
+qs:[{q:'How many seasons are there in the north?',o:['Four','Two','Three','Five'],a:0},
+{q:'Where does it sometimes snow?',o:['Sa Pa','Can Tho','Hue','Da Nang'],a:0},
+{q:'How is autumn in the north?',o:['Cool and dry','Hot and wet','Cold','Warm and wet'],a:0},
+{q:'What is the weather in Can Tho today?',o:['Rainy','Sunny','Snowy','Windy'],a:0},
+{q:'How many seasons are there in the south?',o:['Two','Four','Three','One'],a:0}]},
+
+{em:'🎨',title:'Colours and Hobbies',tags:['U7-8','Sở thích'],
+text:`My name is Minh. I am in Class 4B. I like drawing very much.
+My favourite colour is blue, like the sea. My sister likes pink and my brother likes green.
+Every Saturday afternoon I go to an art club near my house. There are fifteen children in the club. We draw flowers, animals and houses.
+Last week I drew a yellow sun and a red flower. My teacher said my picture was beautiful.`,
+vn:`Mình tên là Minh, học lớp 4B. Mình rất thích vẽ. Màu mình thích nhất là màu xanh dương, giống màu biển. Chị mình thích màu hồng còn anh mình thích màu xanh lá. Chiều thứ Bảy nào mình cũng đến câu lạc bộ mĩ thuật gần nhà. Câu lạc bộ có mười lăm bạn. Chúng mình vẽ hoa, con vật và ngôi nhà. Tuần trước mình vẽ một ông mặt trời màu vàng và một bông hoa màu đỏ. Cô giáo nói bức tranh của mình rất đẹp.`,
+qs:[{q:'What is Minh’s favourite colour?',o:['Blue','Pink','Green','Yellow'],a:0},
+{q:'When does he go to the art club?',o:['Saturday afternoon','Sunday morning','Friday evening','Monday'],a:0},
+{q:'How many children are in the club?',o:['Fifteen','Fifty','Five','Twelve'],a:0},
+{q:'What did he draw last week?',o:['A sun and a flower','A house and a cat','A tree','A school'],a:0},
+{q:'What colour does his sister like?',o:['Pink','Blue','Green','Red'],a:0}]},
+
+{em:'🍜',title:'My Family Meal',tags:['U3-4','Gia đình & Đồ ăn'],
+text:`My family has dinner together at seven o’clock every evening.
+My mother cooks rice, fish and vegetables. My father makes a soup. I help them: I wash the vegetables and put the bowls on the table.
+On Sunday we eat pho at a small shop near our house. Pho is my favourite food. My little brother likes noodles with chicken.
+After dinner, we drink tea and talk about our day.`,
+vn:`Gia đình mình ăn tối cùng nhau lúc bảy giờ mỗi tối. Mẹ mình nấu cơm, cá và rau. Bố mình nấu canh. Mình giúp bố mẹ: mình rửa rau và đặt bát lên bàn. Chủ nhật cả nhà đi ăn phở ở một quán nhỏ gần nhà. Phở là món mình thích nhất. Em trai mình thích mì gà. Sau bữa tối, cả nhà uống trà và kể chuyện trong ngày.`,
+qs:[{q:'What time does the family have dinner?',o:['Seven o’clock','Six o’clock','Eight o’clock','Five o’clock'],a:0},
+{q:'What does the father make?',o:['A soup','Rice','Fish','Tea'],a:0},
+{q:'What does the writer do to help?',o:['Washes the vegetables','Cooks the fish','Makes the soup','Buys the rice'],a:0},
+{q:'Where do they eat pho?',o:['At a small shop near the house','At home','At school','At the market'],a:0},
+{q:'What does the little brother like?',o:['Noodles with chicken','Pho','Fish','Soup'],a:0}]}
+],
+
+5:[
+{em:'⏰',title:'Mai’s Daily Routine',tags:['Thói quen','Hiện tại đơn'],
+text:`Mai is a pupil in Class 5A. She lives in a small town near Da Nang.
+She gets up at half past five and does morning exercise for fifteen minutes. She has breakfast at six and goes to school by bike at half past six.
+Lessons start at seven and finish at half past eleven. In the afternoon, Mai does her homework and helps her mother water the plants.
+She usually goes to bed at nine thirty. On Sunday she gets up later and visits her grandparents.`,
+vn:`Mai là học sinh lớp 5A. Bạn ấy sống ở một thị trấn nhỏ gần Đà Nẵng. Mai dậy lúc năm rưỡi và tập thể dục mười lăm phút. Bạn ấy ăn sáng lúc sáu giờ và đi học bằng xe đạp lúc sáu rưỡi. Các tiết học bắt đầu lúc bảy giờ và kết thúc lúc mười một rưỡi. Buổi chiều Mai làm bài tập và giúp mẹ tưới cây. Bạn ấy thường đi ngủ lúc chín rưỡi. Chủ nhật Mai dậy muộn hơn và về thăm ông bà.`,
+qs:[{q:'What time does Mai get up?',o:['Half past five','Six o’clock','Half past six','Five o’clock'],a:0},
+{q:'How does she go to school?',o:['By bike','By bus','On foot','By car'],a:0},
+{q:'When do lessons finish?',o:['Half past eleven','Eleven o’clock','Twelve o’clock','Ten o’clock'],a:0},
+{q:'What does she do to help her mother?',o:['Waters the plants','Cooks dinner','Washes clothes','Cleans the floor'],a:0},
+{q:'What does she do on Sunday?',o:['Visits her grandparents','Goes to school','Plays football','Does exercise'],a:0}]},
+
+{em:'🏖️',title:'A Trip to Nha Trang',tags:['Quá khứ','Kỳ nghỉ'],
+text:`Last summer my family went to Nha Trang. We travelled by train and the journey took twelve hours.
+We stayed in a small hotel near the beach. Every morning we swam in the blue sea and built sandcastles. In the afternoon we ate fresh seafood at a local market.
+On the third day we visited an island by boat. I saw many colourful fish under the water.
+The weather was sunny all week. It was the best holiday of my life.`,
+vn:`Mùa hè năm ngoái gia đình mình đi Nha Trang. Cả nhà đi bằng tàu hỏa và hành trình mất mười hai tiếng. Chúng mình ở trong một khách sạn nhỏ gần biển. Mỗi sáng cả nhà bơi ở biển xanh và xây lâu đài cát. Buổi chiều chúng mình ăn hải sản tươi ở chợ địa phương. Ngày thứ ba cả nhà đi thuyền ra đảo. Mình nhìn thấy rất nhiều cá nhiều màu dưới nước. Cả tuần trời đều nắng. Đó là kỳ nghỉ tuyệt nhất đời mình.`,
+qs:[{q:'How did the family travel?',o:['By train','By plane','By bus','By car'],a:0},
+{q:'How long was the journey?',o:['Twelve hours','Two hours','Twenty hours','Ten hours'],a:0},
+{q:'What did they do in the afternoon?',o:['Ate seafood at a market','Swam in the sea','Visited an island','Slept in the hotel'],a:0},
+{q:'When did they visit the island?',o:['On the third day','On the first day','On the last day','On the second day'],a:0},
+{q:'How was the weather?',o:['Sunny','Rainy','Cold','Windy'],a:0}]},
+
+{em:'👩‍⚕️',title:'My Dream Job',tags:['Nghề nghiệp'],
+text:`My name is Hung and I am eleven years old. I want to be a doctor when I grow up.
+My aunt is a doctor at the city hospital. She helps sick people every day and she is never tired of her work. Last month she took me to the hospital and I saw many nurses and doctors working hard.
+To be a doctor, I must study Science and English very well. I also need to be patient and kind.
+My sister wants to be a teacher and my brother wants to be a pilot.`,
+vn:`Mình tên là Hùng, mười một tuổi. Lớn lên mình muốn làm bác sĩ. Cô mình là bác sĩ ở bệnh viện thành phố. Cô giúp người bệnh mỗi ngày và không bao giờ chán công việc. Tháng trước cô dẫn mình tới bệnh viện, mình thấy rất nhiều y tá và bác sĩ làm việc chăm chỉ. Để làm bác sĩ, mình phải học giỏi môn Khoa học và Tiếng Anh. Mình cũng cần kiên nhẫn và tốt bụng. Chị mình muốn làm giáo viên còn anh mình muốn làm phi công.`,
+qs:[{q:'What does Hung want to be?',o:['A doctor','A teacher','A pilot','A nurse'],a:0},
+{q:'Who works at the city hospital?',o:['His aunt','His mother','His sister','His brother'],a:0},
+{q:'Which subjects must he study well?',o:['Science and English','Maths and Art','Music and History','Vietnamese and Maths'],a:0},
+{q:'What does his brother want to be?',o:['A pilot','A doctor','A teacher','An engineer'],a:0},
+{q:'How old is Hung?',o:['Eleven','Ten','Twelve','Nine'],a:0}]},
+
+{em:'🤒',title:'At the Doctor’s',tags:['Sức khỏe','Lời khuyên'],
+text:`Yesterday Nam did not feel well. He had a headache and a sore throat, so his mother took him to see the doctor.
+The doctor asked him some questions and checked his temperature. Nam had a fever of 38 degrees.
+The doctor said, "You have a cold. You should drink a lot of warm water and rest at home. You shouldn’t eat ice cream or go out in the rain."
+Nam stayed at home for two days. Now he feels much better and he is back at school.`,
+vn:`Hôm qua Nam thấy không khỏe. Bạn ấy bị đau đầu và đau họng nên mẹ đưa đi khám bác sĩ. Bác sĩ hỏi vài câu và đo nhiệt độ. Nam sốt 38 độ. Bác sĩ nói: "Cháu bị cảm lạnh. Cháu nên uống nhiều nước ấm và nghỉ ngơi ở nhà. Cháu không nên ăn kem hay ra ngoài trời mưa." Nam ở nhà hai ngày. Bây giờ bạn ấy đã đỡ hơn nhiều và đi học trở lại.`,
+qs:[{q:'What was wrong with Nam?',o:['He had a cold','He had a stomach ache','He broke his leg','He had toothache'],a:0},
+{q:'What was his temperature?',o:['38 degrees','37 degrees','39 degrees','40 degrees'],a:0},
+{q:'What should he drink?',o:['A lot of warm water','Cold milk','Orange juice','Tea'],a:0},
+{q:'What shouldn’t he eat?',o:['Ice cream','Rice','Soup','Fruit'],a:0},
+{q:'How long did he stay at home?',o:['Two days','One day','A week','Three days'],a:0}]},
+
+{em:'🐘',title:'A Day at the Zoo',tags:['Động vật'],
+text:`Last Saturday our class went to the zoo in the city. We left school at eight o’clock by bus.
+First we saw the monkeys. They were jumping from tree to tree and eating bananas. Then we watched two big elephants taking a bath. My friend Lan liked the tigers best because they looked strong and beautiful.
+Our teacher told us that many animals are in danger, so we must protect them and never throw rubbish in the zoo.
+We came back to school at four o’clock, tired but very happy.`,
+vn:`Thứ Bảy tuần trước lớp mình đi sở thú trong thành phố. Chúng mình rời trường lúc tám giờ bằng xe buýt. Đầu tiên chúng mình xem khỉ. Chúng nhảy từ cây này sang cây khác và ăn chuối. Sau đó chúng mình xem hai con voi lớn đang tắm. Bạn Lan thích hổ nhất vì trông chúng khỏe và đẹp. Cô giáo nói nhiều loài vật đang gặp nguy hiểm nên chúng ta phải bảo vệ chúng và không được vứt rác trong sở thú. Chúng mình về trường lúc bốn giờ, mệt nhưng rất vui.`,
+qs:[{q:'When did they go to the zoo?',o:['Last Saturday','Last Sunday','Last Monday','Yesterday'],a:0},
+{q:'Which animals did they see first?',o:['The monkeys','The elephants','The tigers','The birds'],a:0},
+{q:'What were the elephants doing?',o:['Taking a bath','Eating bananas','Sleeping','Running'],a:0},
+{q:'Which animal did Lan like best?',o:['The tigers','The monkeys','The elephants','The lions'],a:0},
+{q:'What time did they come back?',o:['Four o’clock','Three o’clock','Five o’clock','Two o’clock'],a:0}]}
+],
+
+6:[
+{em:'🏫',title:'My New School',tags:['U1','Trường mới'],
+text:`My name is Phong and I am a Grade 6 student at Chu Van An Secondary School.
+My school is different from my primary school. It is much bigger and we study more subjects, such as Physics, History and Geography. We have a modern computer room and a large playground.
+At first I was nervous because I did not know anyone. Now I have many new friends. My best friend is Duy; he is funny and he helps me with Maths.
+I am studying harder this year because secondary school is not easy.`,
+vn:`Mình tên là Phong, học sinh lớp 6 trường THCS Chu Văn An. Trường mình khác với trường tiểu học. Trường lớn hơn nhiều và chúng mình học nhiều môn hơn như Vật lí, Lịch sử và Địa lí. Trường có phòng máy tính hiện đại và sân chơi rộng. Lúc đầu mình lo lắng vì không quen ai. Bây giờ mình có nhiều bạn mới. Bạn thân của mình là Duy; bạn ấy hài hước và giúp mình học Toán. Năm nay mình học chăm hơn vì cấp hai không dễ.`,
+qs:[{q:'Which grade is Phong in?',o:['Grade 6','Grade 5','Grade 7','Grade 8'],a:0},
+{q:'What is NOT mentioned as a new subject?',o:['English','Physics','History','Geography'],a:0},
+{q:'Why was he nervous at first?',o:['He did not know anyone','The school was far','He had no books','He was late'],a:0},
+{q:'How does Duy help him?',o:['With Maths','With English','With Physics','With sport'],a:0},
+{q:'What does the school have?',o:['A modern computer room','A swimming pool','A theatre','A farm'],a:0}]},
+
+{em:'🏮',title:'Tet in Viet Nam',tags:['U5-6','Lễ hội'],
+text:`Tet is the most important festival in Viet Nam. It usually takes place in late January or February.
+Before Tet, families clean and decorate their houses. In the north people buy peach blossoms, and in the south they buy apricot blossoms. Everybody prepares special food such as banh chung, sticky rice and pickled onions.
+On the first day of Tet, children wear new clothes and receive lucky money in red envelopes. Families visit relatives and wish each other health and happiness.
+People believe that the first visitor of the year brings good luck.`,
+vn:`Tết là lễ hội quan trọng nhất ở Việt Nam, thường diễn ra vào cuối tháng Một hoặc tháng Hai. Trước Tết, các gia đình dọn dẹp và trang trí nhà cửa. Miền Bắc mua hoa đào, miền Nam mua hoa mai. Mọi người chuẩn bị món ăn đặc biệt như bánh chưng, xôi và dưa hành. Ngày mùng một Tết, trẻ em mặc quần áo mới và nhận lì xì trong phong bao đỏ. Các gia đình đi thăm họ hàng và chúc nhau sức khỏe, hạnh phúc. Người ta tin rằng người xông nhà đầu năm sẽ mang lại may mắn.`,
+qs:[{q:'When does Tet usually take place?',o:['Late January or February','March','December','June'],a:0},
+{q:'What flower do people in the south buy?',o:['Apricot blossoms','Peach blossoms','Roses','Sunflowers'],a:0},
+{q:'What do children receive?',o:['Lucky money in red envelopes','New books','Toys','Sweets only'],a:0},
+{q:'What do people do before Tet?',o:['Clean and decorate their houses','Travel abroad','Plant rice','Go to school'],a:0},
+{q:'What do people believe about the first visitor?',o:['He brings good luck','He brings food','He must be a relative','He must be a child'],a:0}]},
+
+{em:'🌆',title:'Cities of the Future',tags:['U9-10','Thành phố tương lai'],
+text:`What will cities look like in fifty years? Many scientists think life will be very different.
+Buildings will be taller and greener, with trees and small gardens on every floor. People will travel in electric cars that drive themselves, so there will be fewer accidents.
+Robots will help us at home. They will clean the floor, cook meals and even look after old people.
+However, some problems may stay. If cities keep growing, there will be less space and more rubbish. We will need to recycle much more than we do today.`,
+vn:`Năm mươi năm nữa các thành phố sẽ trông ra sao? Nhiều nhà khoa học cho rằng cuộc sống sẽ rất khác. Các tòa nhà sẽ cao hơn và xanh hơn, có cây và vườn nhỏ trên mỗi tầng. Con người sẽ đi lại bằng ô tô điện tự lái nên sẽ ít tai nạn hơn. Robot sẽ giúp chúng ta ở nhà: lau sàn, nấu ăn và thậm chí chăm sóc người già. Tuy nhiên vẫn có thể còn một số vấn đề. Nếu thành phố tiếp tục mở rộng, sẽ ít không gian hơn và nhiều rác hơn. Chúng ta sẽ phải tái chế nhiều hơn hiện nay.`,
+qs:[{q:'How will buildings be?',o:['Taller and greener','Smaller','Older','Made of wood'],a:0},
+{q:'Why will there be fewer accidents?',o:['Cars will drive themselves','People will walk','There will be no cars','Roads will be wider'],a:0},
+{q:'What will robots NOT do?',o:['Go to school','Clean the floor','Cook meals','Look after old people'],a:0},
+{q:'What problem may stay?',o:['Less space and more rubbish','No electricity','No water','No food'],a:0},
+{q:'What will people need to do more?',o:['Recycle','Drive','Build','Travel'],a:0}]},
+
+{em:'♻️',title:'Going Green at School',tags:['U11-12','Sống xanh'],
+text:`Our school started a Green Club last year. Now more than sixty students are members.
+Every Friday afternoon we collect paper, plastic bottles and cans around the school. We put them in three different bins. Then we sell them and use the money to buy young trees.
+We have already planted thirty trees in the school garden. We also remind our friends to turn off the lights and fans when they leave the classroom.
+Our teacher says that small actions can make a big difference to the environment.`,
+vn:`Trường mình thành lập Câu lạc bộ Xanh năm ngoái. Hiện có hơn sáu mươi bạn tham gia. Chiều thứ Sáu hằng tuần chúng mình thu gom giấy, chai nhựa và lon quanh trường, bỏ vào ba thùng rác khác nhau. Sau đó chúng mình bán và dùng tiền mua cây non. Chúng mình đã trồng được ba mươi cây trong vườn trường. Chúng mình cũng nhắc các bạn tắt đèn và quạt khi ra khỏi lớp. Cô giáo nói những hành động nhỏ có thể tạo ra khác biệt lớn cho môi trường.`,
+qs:[{q:'How many students are in the Green Club?',o:['More than sixty','Sixteen','Six','More than a hundred'],a:0},
+{q:'When do they collect rubbish?',o:['Friday afternoon','Monday morning','Sunday','Every day'],a:0},
+{q:'What do they buy with the money?',o:['Young trees','Books','Bins','Bottles'],a:0},
+{q:'How many trees have they planted?',o:['Thirty','Thirteen','Three','Fifty'],a:0},
+{q:'What do they remind friends to do?',o:['Turn off lights and fans','Close the windows','Bring lunch','Walk to school'],a:0}]},
+
+{em:'🏘️',title:'My Neighbourhood',tags:['U3-4','Khu phố'],
+text:`I live in a quiet neighbourhood in Hue, about two kilometres from the city centre.
+There is a small market at the end of my street where my mother buys fresh food every morning. Next to the market there is a post office and a new supermarket.
+The best place in my neighbourhood is the park. In the early morning old people do tai chi there, and in the afternoon children play football.
+The people here are friendly. When somebody has a problem, the neighbours always help.`,
+vn:`Mình sống ở một khu phố yên tĩnh ở Huế, cách trung tâm thành phố khoảng hai ki-lô-mét. Cuối đường nhà mình có một khu chợ nhỏ, nơi mẹ mình mua thực phẩm tươi mỗi sáng. Cạnh chợ là bưu điện và một siêu thị mới. Nơi đẹp nhất khu phố là công viên. Sáng sớm các cụ già tập thái cực quyền ở đó, buổi chiều trẻ con chơi bóng đá. Mọi người ở đây rất thân thiện. Khi ai đó gặp khó khăn, hàng xóm luôn giúp đỡ.`,
+qs:[{q:'How far is it from the city centre?',o:['Two kilometres','Ten kilometres','Twenty kilometres','Half a kilometre'],a:0},
+{q:'What is next to the market?',o:['A post office and a supermarket','A school','A hospital','A cinema'],a:0},
+{q:'What do old people do in the park?',o:['Tai chi','Football','Shopping','Reading'],a:0},
+{q:'What does the mother buy at the market?',o:['Fresh food','Clothes','Books','Flowers'],a:0},
+{q:'How are the people there?',o:['Friendly','Busy','Quiet','Rich'],a:0}]}
+],
+
+7:[
+{em:'🎸',title:'Hobbies of Vietnamese Teenagers',tags:['U1','Sở thích'],
+text:`A recent survey asked 500 students in Ha Noi about their free-time activities.
+Playing sports was the most popular hobby: 42% of the students said they enjoyed football, badminton or swimming. Listening to music came second with 30%.
+Interestingly, only 8% enjoyed collecting things such as stamps or coins, although this hobby was very common twenty years ago.
+Reading books has become more popular again, rising from 10% to 15% in three years. Teachers say this is good news, because reading improves both vocabulary and imagination.`,
+vn:`Một khảo sát gần đây hỏi 500 học sinh ở Hà Nội về hoạt động lúc rảnh. Chơi thể thao là sở thích phổ biến nhất: 42% học sinh nói thích bóng đá, cầu lông hoặc bơi. Nghe nhạc đứng thứ hai với 30%. Thú vị là chỉ 8% thích sưu tầm đồ vật như tem hay tiền xu, dù sở thích này rất phổ biến hai mươi năm trước. Đọc sách đang phổ biến trở lại, tăng từ 10% lên 15% trong ba năm. Giáo viên cho rằng đây là tin tốt vì đọc sách giúp tăng vốn từ và trí tưởng tượng.`,
+qs:[{q:'What was the most popular hobby?',o:['Playing sports','Listening to music','Reading','Collecting things'],a:0},
+{q:'What percentage enjoyed listening to music?',o:['30%','42%','15%','8%'],a:0},
+{q:'Which hobby was common twenty years ago?',o:['Collecting things','Swimming','Reading','Music'],a:0},
+{q:'How much has reading risen?',o:['From 10% to 15%','From 15% to 20%','From 5% to 10%','From 8% to 15%'],a:0},
+{q:'Why is reading good, according to teachers?',o:['It improves vocabulary and imagination','It is cheap','It is easy','It is quiet'],a:0}]},
+
+{em:'🍲',title:'Vietnamese Street Food',tags:['U5','Ẩm thực'],
+text:`Street food is an important part of Vietnamese culture. In every city you can find small stalls selling cheap and delicious dishes.
+Pho, a noodle soup with beef or chicken, is eaten all over the country, usually for breakfast. Banh mi, a crispy baguette filled with pork, pate and vegetables, was influenced by French cooking.
+In Hue, bun bo Hue is famous for its spicy taste, while in Ho Chi Minh City com tam is a favourite lunch dish.
+Most street food is cooked in front of the customer, so it is always fresh and hot.`,
+vn:`Ẩm thực đường phố là một phần quan trọng của văn hóa Việt Nam. Ở mọi thành phố bạn đều tìm thấy những quán nhỏ bán món ăn rẻ và ngon. Phở — món nước với thịt bò hoặc gà — được ăn khắp cả nước, thường vào bữa sáng. Bánh mì, ổ bánh giòn kẹp thịt, pa-tê và rau, chịu ảnh hưởng từ ẩm thực Pháp. Ở Huế, bún bò Huế nổi tiếng với vị cay, còn ở TP. Hồ Chí Minh cơm tấm là món trưa được ưa thích. Phần lớn đồ ăn đường phố được nấu ngay trước mặt khách nên luôn tươi và nóng.`,
+qs:[{q:'When is pho usually eaten?',o:['For breakfast','For dinner','At midnight','For a snack'],a:0},
+{q:'Which cuisine influenced banh mi?',o:['French','Chinese','Thai','Japanese'],a:0},
+{q:'What is bun bo Hue famous for?',o:['Its spicy taste','Its sweet taste','Its low price','Its size'],a:0},
+{q:'What is a favourite lunch dish in Ho Chi Minh City?',o:['Com tam','Pho','Banh mi','Bun bo'],a:0},
+{q:'Why is street food always fresh?',o:['It is cooked in front of the customer','It is frozen','It is imported','It is cheap'],a:0}]},
+
+{em:'🚲',title:'Getting to School',tags:['U7','Giao thông'],
+text:`Traffic in big Vietnamese cities is often very heavy in the morning. Millions of motorbikes fill the streets between seven and eight o’clock.
+Many schools now encourage students to cycle or walk instead. Cycling is cheap, healthy and it does not pollute the air. However, some parents worry about safety, so schools are asking the city to build separate bike lanes.
+Students who live far away can take the bus. Buses are cheaper than motorbike taxis, although they are sometimes crowded and slow.
+Whatever you choose, remember to wear a helmet and obey the traffic lights.`,
+vn:`Giao thông ở các thành phố lớn Việt Nam thường rất đông vào buổi sáng. Hàng triệu xe máy chật kín đường phố từ bảy đến tám giờ. Nhiều trường hiện khuyến khích học sinh đạp xe hoặc đi bộ. Đạp xe rẻ, tốt cho sức khỏe và không gây ô nhiễm không khí. Tuy nhiên một số phụ huynh lo về an toàn nên các trường đề nghị thành phố xây làn đường riêng cho xe đạp. Học sinh ở xa có thể đi xe buýt. Xe buýt rẻ hơn xe ôm, dù đôi khi đông và chậm. Dù chọn cách nào, hãy nhớ đội mũ bảo hiểm và tuân thủ đèn giao thông.`,
+qs:[{q:'When is traffic heaviest?',o:['Between seven and eight in the morning','At noon','In the evening','At night'],a:0},
+{q:'Why is cycling good?',o:['It is cheap, healthy and clean','It is fast','It is fashionable','It is safe at night'],a:0},
+{q:'What do parents worry about?',o:['Safety','Money','Time','Weather'],a:0},
+{q:'What are schools asking the city to build?',o:['Separate bike lanes','More bus stops','Bigger car parks','New bridges'],a:0},
+{q:'What is a disadvantage of buses?',o:['They are sometimes crowded and slow','They are expensive','They pollute a lot','They are unsafe'],a:0}]},
+
+{em:'🎆',title:'The Hue Festival',tags:['U9','Lễ hội'],
+text:`The Hue Festival is held every two years in the ancient capital of Viet Nam. It usually lasts about a week in spring.
+During the festival, the streets around the Imperial City are full of music, dancing and colourful lanterns. Artists from more than twenty countries come to perform. Visitors can watch royal court music, which UNESCO has recognised as a cultural heritage.
+Local people also organise a food street where you can try traditional Hue dishes.
+Last year, more than one hundred thousand tourists attended the festival.`,
+vn:`Festival Huế được tổ chức hai năm một lần tại cố đô Việt Nam, thường kéo dài khoảng một tuần vào mùa xuân. Trong lễ hội, các con phố quanh Đại Nội tràn ngập âm nhạc, điệu múa và đèn lồng nhiều màu. Nghệ sĩ từ hơn hai mươi quốc gia đến biểu diễn. Du khách có thể xem nhã nhạc cung đình — di sản văn hóa được UNESCO công nhận. Người dân địa phương còn tổ chức phố ẩm thực để thưởng thức món Huế truyền thống. Năm ngoái hơn một trăm nghìn du khách tham dự lễ hội.`,
+qs:[{q:'How often is the Hue Festival held?',o:['Every two years','Every year','Every five years','Twice a year'],a:0},
+{q:'How long does it last?',o:['About a week','A day','A month','Two weeks'],a:0},
+{q:'What has UNESCO recognised?',o:['Royal court music','The food street','The lanterns','The Imperial City gate'],a:0},
+{q:'How many countries send artists?',o:['More than twenty','Ten','Five','More than fifty'],a:0},
+{q:'How many tourists came last year?',o:['More than one hundred thousand','One thousand','Ten thousand','One million'],a:0}]},
+
+{em:'💡',title:'Saving Energy at Home',tags:['U10','Năng lượng'],
+text:`Electricity in Viet Nam is mostly produced from coal, water and, more recently, the sun and the wind.
+Families can save a lot of energy with simple habits. Turning off lights when you leave a room can cut the electricity bill by up to ten per cent. Using an electric fan instead of an air conditioner saves even more.
+Many households in the central provinces now install solar panels on their roofs. Sunlight is free and renewable, so the panels pay for themselves after a few years.
+Saving energy is not only good for your family budget; it also reduces pollution.`,
+vn:`Điện ở Việt Nam chủ yếu được sản xuất từ than, nước và gần đây là mặt trời và gió. Các gia đình có thể tiết kiệm nhiều năng lượng bằng thói quen đơn giản. Tắt đèn khi ra khỏi phòng có thể giảm hóa đơn điện tới mười phần trăm. Dùng quạt điện thay điều hòa còn tiết kiệm hơn nữa. Nhiều hộ gia đình ở miền Trung nay lắp tấm pin mặt trời trên mái. Ánh nắng miễn phí và tái tạo được nên vài năm là hoàn vốn. Tiết kiệm năng lượng không chỉ tốt cho ngân sách gia đình mà còn giảm ô nhiễm.`,
+qs:[{q:'What is electricity mostly produced from?',o:['Coal and water','Only the sun','Only gas','Wood'],a:0},
+{q:'How much can turning off lights save?',o:['Up to ten per cent','Half the bill','One per cent','Fifty per cent'],a:0},
+{q:'What saves more than an air conditioner?',o:['An electric fan','A heater','A washing machine','A fridge'],a:0},
+{q:'Where do many households install solar panels?',o:['In the central provinces','In the north only','In Ha Noi','In the mountains'],a:0},
+{q:'What is another benefit of saving energy?',o:['It reduces pollution','It makes rooms brighter','It is fashionable','It is required by law'],a:0}]}
+],
+
+8:[
+{em:'🌾',title:'Life in the Countryside',tags:['U2','Nông thôn'],
+text:`Life in the Vietnamese countryside moves at a slower pace than life in the city.
+People usually get up before sunrise. Farmers go to the rice fields early, when the air is still cool, and come home for lunch and a short rest. Children often help their parents by feeding the buffalo or collecting eggs.
+The air is fresh and the neighbours all know each other, so village life feels safe and friendly. However, there are fewer schools and hospitals, and young people often move to the city to look for better jobs.
+Recently, rural tourism has brought new income to many villages.`,
+vn:`Cuộc sống ở nông thôn Việt Nam diễn ra chậm rãi hơn ở thành phố. Người dân thường dậy trước khi mặt trời mọc. Nông dân ra đồng sớm khi trời còn mát, rồi về nhà ăn trưa và nghỉ ngơi. Trẻ em thường giúp bố mẹ cho trâu ăn hoặc nhặt trứng. Không khí trong lành và hàng xóm đều quen biết nhau nên cuộc sống làng quê an toàn và thân thiện. Tuy nhiên có ít trường học và bệnh viện hơn, và người trẻ thường chuyển lên thành phố tìm việc tốt hơn. Gần đây du lịch nông thôn đã mang lại nguồn thu mới cho nhiều làng.`,
+qs:[{q:'When do farmers go to the fields?',o:['Early, when the air is cool','At noon','In the evening','At night'],a:0},
+{q:'How do children help?',o:['Feeding the buffalo or collecting eggs','Driving tractors','Selling rice','Teaching'],a:0},
+{q:'What is a disadvantage of village life?',o:['Fewer schools and hospitals','Bad air','Unfriendly people','No food'],a:0},
+{q:'Why do young people move to the city?',o:['To look for better jobs','To study art','To buy land','To visit relatives'],a:0},
+{q:'What has brought new income recently?',o:['Rural tourism','Fishing','Mining','Factories'],a:0}]},
+
+{em:'👕',title:'Traditional Costumes of Ethnic Groups',tags:['U4','Dân tộc'],
+text:`Viet Nam has 54 ethnic groups, and each one has its own traditional costume.
+The H’Mong are famous for their colourful clothes decorated with silver coins and hand embroidery. It can take a woman several months to finish one skirt. The Thai wear a tight black skirt with a bright blouse and a silver belt.
+These costumes are not worn every day any more. Today most people put them on only during festivals, weddings or important community events.
+Many schools in the mountains now teach embroidery so that young people do not forget the skills of their grandparents.`,
+vn:`Việt Nam có 54 dân tộc, mỗi dân tộc có trang phục truyền thống riêng. Người H'Mông nổi tiếng với trang phục sặc sỡ trang trí bằng đồng bạc và thêu tay. Một người phụ nữ có thể mất vài tháng để hoàn thành một chiếc váy. Người Thái mặc váy đen bó cùng áo sáng màu và thắt lưng bạc. Những bộ trang phục này không còn được mặc hằng ngày. Ngày nay phần lớn mọi người chỉ mặc vào dịp lễ hội, đám cưới hay sự kiện quan trọng của cộng đồng. Nhiều trường học vùng cao hiện dạy thêu để người trẻ không quên kỹ năng của ông bà.`,
+qs:[{q:'How many ethnic groups are there in Viet Nam?',o:['54','45','24','64'],a:0},
+{q:'What decorates H’Mong clothes?',o:['Silver coins and embroidery','Gold buttons','Paper flowers','Glass beads only'],a:0},
+{q:'How long can one skirt take?',o:['Several months','A few hours','One day','A week'],a:0},
+{q:'When are the costumes worn today?',o:['At festivals and weddings','Every day','At work','At school daily'],a:0},
+{q:'Why do schools teach embroidery?',o:['So young people do not forget the skills','To sell clothes','To earn money','To pass exams'],a:0}]},
+
+{em:'🌊',title:'Preparing for a Storm',tags:['U9','Thiên tai'],
+text:`Every year, about ten tropical storms hit the coast of Viet Nam, mostly between July and November.
+Before a storm arrives, people are advised to listen carefully to weather forecasts. Families should store drinking water, dry food, candles and a torch. Windows must be taped or covered with wooden boards, and loose objects on the roof should be tied down.
+During the storm, everybody should stay indoors and keep away from windows. Nobody should go outside to look at the sea, even when the wind seems to stop — the calm may only be the eye of the storm.
+After the storm, people must be careful with broken electric wires.`,
+vn:`Mỗi năm khoảng mười cơn bão nhiệt đới đổ bộ vào bờ biển Việt Nam, chủ yếu từ tháng Bảy đến tháng Mười một. Trước khi bão đến, người dân được khuyên nghe kỹ dự báo thời tiết. Các gia đình nên trữ nước uống, thức ăn khô, nến và đèn pin. Cửa sổ phải dán băng dính hoặc che ván gỗ, đồ vật trên mái phải chằng buộc. Trong bão, mọi người nên ở trong nhà và tránh xa cửa sổ. Không ai nên ra ngoài ngắm biển, kể cả khi gió có vẻ ngừng — sự yên tĩnh đó có thể chỉ là mắt bão. Sau bão, cần cẩn thận với dây điện đứt.`,
+qs:[{q:'How many storms hit Viet Nam each year?',o:['About ten','About two','About thirty','About fifty'],a:0},
+{q:'Which months are the storm season?',o:['July to November','January to March','April to June','December to February'],a:0},
+{q:'What should families store?',o:['Water, dry food, candles and a torch','Only water','Only food','Money'],a:0},
+{q:'Why is the calm dangerous?',o:['It may be the eye of the storm','It brings rain','It is very cold','It causes floods'],a:0},
+{q:'What must people be careful with after the storm?',o:['Broken electric wires','Hot weather','Traffic','Noise'],a:0}]},
+
+{em:'📱',title:'Communication in the Future',tags:['U10','Giao tiếp'],
+text:`Fifty years ago, people wrote letters and waited for weeks to get an answer. Today a message can travel around the world in one second.
+Experts believe communication will change even more. Video calls with 3D holograms may replace ordinary phone calls, so you will feel as if the other person is in the same room. Instant translation software could allow two people who speak different languages to chat easily.
+But there are worries too. If we spend all our time with screens, we may lose the ability to talk face to face. Technology should help human contact, not replace it.`,
+vn:`Năm mươi năm trước, người ta viết thư và chờ hàng tuần mới nhận được hồi âm. Ngày nay một tin nhắn đi vòng quanh thế giới chỉ trong một giây. Các chuyên gia tin rằng giao tiếp sẽ còn thay đổi nhiều hơn. Cuộc gọi video bằng ảnh ba chiều có thể thay thế cuộc gọi thường, khiến bạn cảm giác như người kia đang ở cùng phòng. Phần mềm dịch tức thời có thể giúp hai người nói khác ngôn ngữ trò chuyện dễ dàng. Nhưng cũng có lo ngại. Nếu dành hết thời gian cho màn hình, ta có thể mất khả năng nói chuyện trực tiếp. Công nghệ nên hỗ trợ chứ không thay thế sự tiếp xúc giữa con người.`,
+qs:[{q:'How long did people wait for an answer 50 years ago?',o:['Weeks','Seconds','Hours','Months'],a:0},
+{q:'What may replace ordinary phone calls?',o:['Video calls with 3D holograms','Letters','Emails','Radio'],a:0},
+{q:'What could instant translation software do?',o:['Let people who speak different languages chat easily','Write letters','Make calls cheaper','Store photos'],a:0},
+{q:'What is the main worry?',o:['Losing face-to-face communication','Losing money','Losing phones','Losing time'],a:0},
+{q:'What is the writer’s opinion of technology?',o:['It should help, not replace, human contact','It is dangerous','It is useless','It should be banned'],a:0}]},
+
+{em:'🛍️',title:'Shopping Habits Are Changing',tags:['U8','Mua sắm'],
+text:`Vietnamese people used to buy almost everything at traditional markets. Shoppers chose fresh food every morning and bargained over the price.
+Now supermarkets and online shops are becoming more popular, especially among young people in big cities. Online shopping is convenient: you can order at midnight and receive the goods the next day. Prices are often clearly shown, so there is no need to bargain.
+However, traditional markets still have advantages. The food is fresher, the sellers know their customers, and shopping there supports small local families.
+Many people now use both: markets for food and the internet for clothes and electronics.`,
+vn:`Người Việt trước đây mua hầu như mọi thứ ở chợ truyền thống. Người mua chọn thực phẩm tươi mỗi sáng và mặc cả giá. Nay siêu thị và cửa hàng trực tuyến ngày càng phổ biến, nhất là với người trẻ ở thành phố lớn. Mua sắm online tiện lợi: bạn có thể đặt hàng lúc nửa đêm và nhận hàng hôm sau. Giá thường được niêm yết rõ nên không cần mặc cả. Tuy nhiên chợ truyền thống vẫn có lợi thế. Thực phẩm tươi hơn, người bán quen khách, và mua ở đó giúp các hộ gia đình nhỏ. Nhiều người nay dùng cả hai: chợ để mua thực phẩm, internet để mua quần áo và đồ điện tử.`,
+qs:[{q:'What did shoppers do at traditional markets?',o:['Bargained over the price','Paid by card','Ordered online','Booked in advance'],a:0},
+{q:'Who prefers online shopping?',o:['Young people in big cities','Old farmers','Children','Tourists'],a:0},
+{q:'What is an advantage of online shopping?',o:['You can order at midnight','The food is fresher','You can bargain','You meet the seller'],a:0},
+{q:'What is an advantage of traditional markets?',o:['The food is fresher','Lower delivery cost','Faster service','Bigger choice of electronics'],a:0},
+{q:'What do many people do now?',o:['Use both markets and the internet','Only shop online','Only go to markets','Stop shopping'],a:0}]}
+],
+
+9:[
+{em:'🏘️',title:'Craft Villages of Viet Nam',tags:['U1','Cộng đồng'],
+text:`Viet Nam has more than two thousand traditional craft villages. Some of them are hundreds of years old.
+Bat Trang, near Ha Noi, has produced ceramics for over seven centuries. Visitors can watch artisans shape clay on a wheel and even try it themselves. Van Phuc is known for its silk, which was once used to make clothes for the royal family.
+Sadly, many villages are struggling. Young people prefer working in factories, where the salary is higher and the work is less tiring. If the skills are not passed on, they may disappear within one generation.
+Tourism and online selling are now helping some villages survive.`,
+vn:`Việt Nam có hơn hai nghìn làng nghề truyền thống, một số làng đã hàng trăm năm tuổi. Bát Tràng gần Hà Nội làm gốm hơn bảy thế kỷ. Du khách có thể xem nghệ nhân tạo hình đất sét trên bàn xoay và tự thử làm. Vạn Phúc nổi tiếng với lụa, từng được dùng may trang phục cho hoàng gia. Đáng tiếc là nhiều làng đang gặp khó. Người trẻ thích làm ở nhà máy hơn vì lương cao và đỡ vất vả. Nếu kỹ năng không được truyền lại, chúng có thể biến mất chỉ sau một thế hệ. Du lịch và bán hàng trực tuyến hiện đang giúp một số làng tồn tại.`,
+qs:[{q:'How many craft villages does Viet Nam have?',o:['More than two thousand','About two hundred','Fifty','Twenty thousand'],a:0},
+{q:'What is Bat Trang famous for?',o:['Ceramics','Silk','Wood carving','Paper'],a:0},
+{q:'Who once wore Van Phuc silk?',o:['The royal family','Farmers','Soldiers','Students'],a:0},
+{q:'Why do young people leave the villages?',o:['Factory salaries are higher','They dislike the village','They want to study','The villages are far'],a:0},
+{q:'What is helping some villages survive?',o:['Tourism and online selling','Government money','New factories','Foreign workers'],a:0}]},
+
+{em:'🥗',title:'Healthy Living for Teens',tags:['U3','Sức khỏe'],
+text:`Doctors say that Vietnamese teenagers today face two opposite problems: some eat too little, while others eat too much fast food.
+A balanced diet should include rice or noodles for energy, plenty of vegetables, some protein such as fish or beans, and fruit instead of sweets. Teenagers also need about eight hours of sleep every night, but many stay awake using their phones.
+Exercise matters as much as food. Thirty minutes of walking, cycling or sport a day keeps the heart strong and reduces stress before exams.
+Small changes, kept up for months, work far better than a strict diet for one week.`,
+vn:`Bác sĩ cho biết thanh thiếu niên Việt Nam ngày nay gặp hai vấn đề trái ngược: một số ăn quá ít, số khác ăn quá nhiều đồ ăn nhanh. Chế độ ăn cân bằng nên có cơm hoặc mì để lấy năng lượng, nhiều rau, một ít đạm như cá hoặc đậu, và trái cây thay cho đồ ngọt. Thanh thiếu niên cũng cần ngủ khoảng tám tiếng mỗi đêm, nhưng nhiều bạn thức khuya dùng điện thoại. Vận động quan trọng không kém ăn uống. Ba mươi phút đi bộ, đạp xe hay chơi thể thao mỗi ngày giúp tim khỏe và giảm căng thẳng trước kỳ thi. Những thay đổi nhỏ duy trì hàng tháng hiệu quả hơn nhiều so với ăn kiêng nghiêm ngặt một tuần.`,
+qs:[{q:'What two problems do teenagers face?',o:['Eating too little and eating too much fast food','Sleeping and studying','Sport and screens','Stress and money'],a:0},
+{q:'What should replace sweets?',o:['Fruit','Rice','Fish','Bread'],a:0},
+{q:'How many hours of sleep do teens need?',o:['About eight','About five','About twelve','About ten'],a:0},
+{q:'How much daily exercise is recommended?',o:['Thirty minutes','Five minutes','Three hours','One hour'],a:0},
+{q:'What works better than a strict one-week diet?',o:['Small changes kept up for months','Skipping meals','Eating once a day','Taking pills'],a:0}]},
+
+{em:'🗿',title:'A Natural Wonder: Son Doong Cave',tags:['U7','Kỳ quan'],
+text:`Son Doong, in Quang Binh Province, is the largest cave in the world. It was found by a local man, Ho Khanh, in 1991, but he could not find the entrance again for many years.
+British scientists explored it in 2009 and measured a passage more than five kilometres long, 200 metres high and 150 metres wide. A Boeing 747 could fly through parts of it.
+Inside there is a river, a jungle that grows where the roof has fallen in, and clouds that form near the ceiling.
+Only a few hundred tourists are allowed to visit each year, so that the cave is not damaged.`,
+vn:`Sơn Đoòng ở tỉnh Quảng Bình là hang động lớn nhất thế giới. Hang được ông Hồ Khanh, một người dân địa phương, phát hiện năm 1991 nhưng nhiều năm sau ông không tìm lại được lối vào. Các nhà khoa học Anh khám phá hang năm 2009 và đo được đoạn hang dài hơn năm ki-lô-mét, cao 200 mét, rộng 150 mét. Một chiếc Boeing 747 có thể bay qua vài đoạn. Bên trong có một dòng sông, một khu rừng mọc ở nơi trần hang sụp xuống, và mây hình thành gần trần hang. Mỗi năm chỉ vài trăm du khách được phép vào để hang không bị hư hại.`,
+qs:[{q:'Who found Son Doong?',o:['A local man, Ho Khanh','British scientists','A tourist','A government team'],a:0},
+{q:'When did scientists explore it?',o:['2009','1991','2019','1999'],a:0},
+{q:'How long is the measured passage?',o:['More than five kilometres','Five hundred metres','Fifty kilometres','Two kilometres'],a:0},
+{q:'Why does a jungle grow inside?',o:['Because the roof has fallen in','Because of the river','Because tourists planted it','Because of the clouds'],a:0},
+{q:'Why are visitor numbers limited?',o:['So that the cave is not damaged','Because it is far','Because it is dangerous','Because of the cost'],a:0}]},
+
+{em:'🌍',title:'English in the World',tags:['U9','Tiếng Anh toàn cầu'],
+text:`English is spoken by about 1.5 billion people, but fewer than 400 million of them are native speakers. In other words, most conversations in English today happen between two non-native speakers.
+This has changed the way English is taught. Many teachers now focus on being clear and easy to understand rather than on copying a British or American accent.
+English is also the main language of science, aviation and the internet. Pilots from any country must speak it during international flights.
+For Vietnamese students, good English opens doors to scholarships, jobs and information that is not yet available in Vietnamese.`,
+vn:`Khoảng 1,5 tỷ người nói tiếng Anh, nhưng chưa tới 400 triệu người là người bản ngữ. Nói cách khác, phần lớn cuộc hội thoại tiếng Anh ngày nay diễn ra giữa hai người không phải bản ngữ. Điều này làm thay đổi cách dạy tiếng Anh. Nhiều giáo viên nay chú trọng nói rõ ràng, dễ hiểu hơn là bắt chước giọng Anh hay Mỹ. Tiếng Anh cũng là ngôn ngữ chính của khoa học, hàng không và internet. Phi công từ bất kỳ nước nào cũng phải dùng tiếng Anh trong chuyến bay quốc tế. Với học sinh Việt Nam, tiếng Anh tốt mở ra cơ hội học bổng, việc làm và nguồn thông tin chưa có bằng tiếng Việt.`,
+qs:[{q:'How many people speak English?',o:['About 1.5 billion','About 400 million','About 1 million','About 5 billion'],a:0},
+{q:'Most English conversations happen between whom?',o:['Two non-native speakers','Two native speakers','A native and a native','Teachers only'],a:0},
+{q:'What do many teachers focus on now?',o:['Being clear and easy to understand','A British accent','An American accent','Perfect grammar only'],a:0},
+{q:'Who must speak English on international flights?',o:['Pilots','Passengers','Ground staff only','Tourists'],a:0},
+{q:'What does good English open for Vietnamese students?',o:['Scholarships, jobs and information','Only jobs','Only travel','Only exams'],a:0}]},
+
+{em:'🚀',title:'Living in Space',tags:['U10','Du hành vũ trụ'],
+text:`Astronauts on the International Space Station orbit the Earth sixteen times a day, so they see sixteen sunrises.
+Life there is strange. Without gravity, water floats in balls, so astronauts drink through straws from sealed bags. They sleep in sleeping bags fixed to the wall, otherwise they would drift around the cabin.
+Because muscles and bones grow weak in space, each astronaut must exercise for about two hours a day on special machines.
+Everything is recycled, even the air they breathe out and the water from their sweat. Nothing can be wasted when the nearest shop is 400 kilometres below.`,
+vn:`Các phi hành gia trên Trạm Vũ trụ Quốc tế bay quanh Trái Đất mười sáu vòng mỗi ngày nên họ thấy mười sáu lần mặt trời mọc. Cuộc sống ở đó rất lạ. Không có trọng lực, nước nổi thành từng quả cầu nên phi hành gia uống bằng ống hút từ túi kín. Họ ngủ trong túi ngủ gắn vào tường, nếu không sẽ trôi lơ lửng khắp khoang. Vì cơ và xương yếu đi trong không gian, mỗi phi hành gia phải tập khoảng hai tiếng mỗi ngày trên máy chuyên dụng. Mọi thứ đều được tái chế, kể cả không khí họ thở ra và nước từ mồ hôi. Không gì được lãng phí khi cửa hàng gần nhất ở cách 400 ki-lô-mét bên dưới.`,
+qs:[{q:'How many sunrises do astronauts see daily?',o:['Sixteen','One','Six','Twenty-four'],a:0},
+{q:'How do they drink?',o:['Through straws from sealed bags','From open cups','From bottles','From taps'],a:0},
+{q:'Why are sleeping bags fixed to the wall?',o:['So astronauts do not drift around','To save space','To keep warm','To block light'],a:0},
+{q:'How long must they exercise each day?',o:['About two hours','Ten minutes','Six hours','Half an hour'],a:0},
+{q:'What is recycled?',o:['Air and water from sweat','Only food','Only clothes','Nothing'],a:0}]}
+],
+
+10:[
+{em:'📵',title:'Teenagers and Social Media',tags:['U1-2','Công nghệ'],
+text:`Social media has become part of daily life for most Vietnamese teenagers. A study in 2024 found that students aged 15 to 18 spend an average of three hours a day on social platforms.
+The benefits are real: students share study notes, join online clubs and keep in touch with relatives far away. Some have even started small businesses selling handmade products.
+However, researchers warn about the cost. Heavy users report more anxiety, less sleep and a habit of comparing themselves with the edited lives of others.
+Experts do not suggest quitting completely. They recommend setting a daily limit, turning off notifications while studying, and keeping phones out of the bedroom at night.`,
+vn:`Mạng xã hội đã trở thành một phần đời sống hằng ngày của phần lớn thanh thiếu niên Việt Nam. Một nghiên cứu năm 2024 cho thấy học sinh 15–18 tuổi dành trung bình ba tiếng mỗi ngày trên mạng xã hội. Lợi ích là có thật: học sinh chia sẻ tài liệu học, tham gia câu lạc bộ trực tuyến và giữ liên lạc với người thân ở xa. Một số bạn còn khởi nghiệp nhỏ bán đồ thủ công. Tuy nhiên các nhà nghiên cứu cảnh báo về cái giá phải trả. Người dùng nhiều thường lo âu hơn, ngủ ít hơn và có thói quen so sánh mình với cuộc sống đã chỉnh sửa của người khác. Chuyên gia không khuyên bỏ hẳn. Họ khuyên đặt giới hạn mỗi ngày, tắt thông báo khi học và không để điện thoại trong phòng ngủ ban đêm.`,
+qs:[{q:'How long do students spend on social media daily?',o:['About three hours','About one hour','About six hours','About ten minutes'],a:0},
+{q:'What have some students started?',o:['Small businesses selling handmade products','Newspapers','Schools','Charities'],a:0},
+{q:'What do heavy users report?',o:['More anxiety and less sleep','Better marks','More friends offline','More exercise'],a:0},
+{q:'What do experts recommend?',o:['Setting a daily limit','Quitting completely','Using two phones','Posting more'],a:0},
+{q:'Where should phones not be at night?',o:['In the bedroom','In the living room','At school','In a bag'],a:0}]},
+
+{em:'🌱',title:'Ecotourism in Viet Nam',tags:['U3-4','Du lịch sinh thái'],
+text:`Ecotourism means travelling to natural areas in a way that protects the environment and benefits local people.
+In Viet Nam, Cat Ba, Cuc Phuong and the Mekong Delta have developed successful ecotourism programmes. Visitors stay in homestays run by local families, eat local food and travel by bicycle or boat instead of by car.
+The money earned gives villagers a reason to protect forests rather than cut them down. In one Mekong commune, household income rose by nearly 40 per cent after a homestay network was set up.
+Still, ecotourism must be managed carefully. Too many visitors can damage exactly what they came to see.`,
+vn:`Du lịch sinh thái nghĩa là đi tới các vùng tự nhiên theo cách bảo vệ môi trường và mang lợi ích cho người dân địa phương. Ở Việt Nam, Cát Bà, Cúc Phương và Đồng bằng sông Cửu Long đã phát triển các chương trình du lịch sinh thái thành công. Du khách ở homestay do gia đình địa phương điều hành, ăn món địa phương và di chuyển bằng xe đạp hoặc thuyền thay vì ô tô. Tiền thu được cho người dân lý do để giữ rừng thay vì chặt phá. Ở một xã miền Tây, thu nhập hộ gia đình tăng gần 40 phần trăm sau khi hình thành mạng lưới homestay. Dù vậy, du lịch sinh thái phải được quản lý cẩn thận. Quá nhiều du khách có thể phá hỏng chính thứ họ đến để ngắm.`,
+qs:[{q:'What does ecotourism protect?',o:['The environment','Only hotels','Only roads','City centres'],a:0},
+{q:'Where do visitors usually stay?',o:['In homestays run by local families','In five-star hotels','In tents in the city','On cruise ships'],a:0},
+{q:'How much did household income rise in one commune?',o:['Nearly 40 per cent','Nearly 4 per cent','Nearly 80 per cent','It did not rise'],a:0},
+{q:'Why do villagers protect forests?',o:['Because ecotourism gives them income','Because of a law','Because of tourists’ complaints','Because of the weather'],a:0},
+{q:'What is the risk of ecotourism?',o:['Too many visitors can damage nature','It is too cheap','It creates no jobs','It needs no rules'],a:0}]},
+
+{em:'⚖️',title:'Gender Equality at Work',tags:['U5-6','Bình đẳng giới'],
+text:`Viet Nam has one of the highest rates of female employment in Asia: about 70 per cent of women take part in the labour force.
+Yet equality is not complete. Women still earn roughly 13 per cent less than men for similar work, and they hold fewer than a third of senior management positions. Many women also do most of the unpaid housework after their paid job ends.
+Progress is being made. The law now guarantees equal pay for equal work, and paternity leave allows fathers to share the care of a new baby.
+Real change, however, depends less on laws than on attitudes inside each family.`,
+vn:`Việt Nam có tỷ lệ phụ nữ đi làm thuộc nhóm cao nhất châu Á: khoảng 70 phần trăm phụ nữ tham gia lực lượng lao động. Tuy vậy bình đẳng vẫn chưa trọn vẹn. Phụ nữ vẫn kiếm ít hơn nam giới khoảng 13 phần trăm cho công việc tương tự, và nắm chưa tới một phần ba vị trí quản lý cấp cao. Nhiều phụ nữ còn làm phần lớn việc nhà không lương sau giờ làm. Đã có tiến bộ. Luật nay bảo đảm trả lương ngang nhau cho công việc như nhau, và chế độ nghỉ thai sản cho người cha giúp các ông bố cùng chăm con nhỏ. Tuy nhiên thay đổi thực sự phụ thuộc vào thái độ trong mỗi gia đình hơn là vào luật.`,
+qs:[{q:'What percentage of women are in the labour force?',o:['About 70 per cent','About 13 per cent','About 30 per cent','About 50 per cent'],a:0},
+{q:'How much less do women earn?',o:['About 13 per cent','About 30 per cent','About 3 per cent','Nothing less'],a:0},
+{q:'How many senior management positions do women hold?',o:['Fewer than a third','More than half','Exactly half','None'],a:0},
+{q:'What does paternity leave allow?',o:['Fathers to share the care of a new baby','Mothers to work longer','Extra pay','Early retirement'],a:0},
+{q:'What does real change depend on most?',o:['Attitudes inside each family','New laws only','Foreign companies','Schools'],a:0}]},
+
+{em:'🎼',title:'Why Music Matters',tags:['U7-8','Âm nhạc & Nghệ thuật'],
+text:`Music is far more than entertainment. Research at several universities has shown that learning an instrument improves memory, concentration and even mathematical thinking.
+Traditional Vietnamese music is also a record of history. Quan ho folk songs from Bac Ninh, recognised by UNESCO in 2009, were sung between villages during spring festivals and carried messages of friendship and courtship.
+Today young Vietnamese artists are mixing these old melodies with rap and electronic sounds. Some older listeners dislike it, but the mix has introduced folk music to a generation that might otherwise never have heard it.
+Whatever the style, music connects people across ages and borders.`,
+vn:`Âm nhạc không chỉ là giải trí. Nghiên cứu ở nhiều trường đại học cho thấy học một nhạc cụ giúp cải thiện trí nhớ, khả năng tập trung và cả tư duy toán học. Âm nhạc truyền thống Việt Nam còn là một bản ghi lịch sử. Dân ca quan họ Bắc Ninh, được UNESCO công nhận năm 2009, được hát giữa các làng trong hội xuân, mang thông điệp tình bạn và tỏ tình. Ngày nay nghệ sĩ trẻ Việt Nam pha trộn những giai điệu xưa với rap và âm thanh điện tử. Một số người lớn tuổi không thích, nhưng sự pha trộn đã đưa dân ca đến với một thế hệ có lẽ chưa từng nghe. Dù ở thể loại nào, âm nhạc vẫn kết nối con người qua các thế hệ và biên giới.`,
+qs:[{q:'What does learning an instrument improve?',o:['Memory, concentration and mathematical thinking','Only hearing','Only speaking','Physical strength'],a:0},
+{q:'When did UNESCO recognise Quan ho?',o:['2009','1999','2019','2000'],a:0},
+{q:'When were Quan ho songs sung?',o:['During spring festivals','At weddings only','At funerals','Every night'],a:0},
+{q:'What are young artists doing?',o:['Mixing old melodies with rap and electronic sounds','Banning folk music','Only singing pop','Writing books'],a:0},
+{q:'What is the benefit of the mix?',o:['It introduces folk music to a new generation','It makes money','It replaces folk music','It pleases older listeners'],a:0}]},
+
+{em:'🎓',title:'Choosing a Career',tags:['U11-12','Giáo dục & Nghề nghiệp'],
+text:`Choosing a career is one of the hardest decisions a Grade 10 student faces, partly because the job market changes so fast.
+Career advisers suggest three questions. What are you good at? What do you enjoy? And what will society need in ten years? A job that satisfies all three is rare, but the overlap is a good place to start.
+It also helps to gain real experience early — through part-time work, volunteering or a school club. Many students discover their interests by doing rather than by reading.
+Finally, remember that few people stay in one career for life. The most useful skill is the ability to keep learning.`,
+vn:`Chọn nghề là một trong những quyết định khó nhất với học sinh lớp 10, một phần vì thị trường lao động thay đổi rất nhanh. Các chuyên gia hướng nghiệp gợi ý ba câu hỏi. Bạn giỏi cái gì? Bạn thích cái gì? Và mười năm nữa xã hội sẽ cần gì? Một công việc thỏa mãn cả ba là hiếm, nhưng phần giao nhau là điểm khởi đầu tốt. Việc có trải nghiệm thực tế sớm cũng hữu ích — qua làm thêm, tình nguyện hay câu lạc bộ ở trường. Nhiều học sinh khám phá sở thích bằng cách làm chứ không phải bằng cách đọc. Cuối cùng, hãy nhớ rất ít người gắn bó một nghề cả đời. Kỹ năng hữu ích nhất là khả năng không ngừng học hỏi.`,
+qs:[{q:'Why is choosing a career hard?',o:['The job market changes fast','There are no jobs','Schools do not help','Parents decide'],a:0},
+{q:'How many questions do advisers suggest?',o:['Three','Two','Five','One'],a:0},
+{q:'How can students gain experience early?',o:['Part-time work, volunteering or a school club','Only by reading','By taking exams','By travelling'],a:0},
+{q:'How do many students discover their interests?',o:['By doing rather than reading','By asking teachers','By searching online','By luck'],a:0},
+{q:'What is the most useful skill?',o:['The ability to keep learning','Typing fast','Speaking loudly','Memorising'],a:0}]}
+]
+};
+
+function pickBankItem(g){
+  const list=RBANK[g]||RBANK[7];
+  if(!window._rbLast)window._rbLast={};
+  let it=rnd(list);
+  if(list.length>1){let n=0;while(it.title===window._rbLast[g]&&n<8){it=rnd(list);n++}}
+  window._rbLast[g]=it.title;
+  return it;
 }
-function genListenData(g){
-  const s=genStory(g);
-  return{em:'✨',title:s.title,hint:s.hint,script:s.lines.map(t=>({text:t})),trans:s.lines,qs:pickN(s.qs,3)};
+function shuffleQs(qs){
+  return qs.map(q=>{
+    const right=q.o[q.a],order=shuffle(q.o);
+    return{q:q.q,o:order,a:order.indexOf(right)};
+  });
 }
 function genReadData(g){
-  const s=genStory(g);
-  return{em:'✨',title:s.title,tags:['Đề ngẫu nhiên','Mỗi lần một bài mới'],text:s.lines.join(' '),vn:s.vn,qs:pickN(s.qs,4)};
+  const it=pickBankItem(g);
+  return{em:it.em,title:it.title,tags:(it.tags||[]).concat(['Bài đọc ngẫu nhiên']),
+    text:it.text,vn:it.vn,qs:pickN(shuffleQs(it.qs),4)};
+}
+function genListenData(g){
+  const it=pickBankItem(g);
+  const lines=it.text.split(/\n|(?<=\.)\s+(?=[A-Z])/).map(s=>s.trim()).filter(Boolean);
+  return{em:it.em,title:it.title,hint:(it.tags&&it.tags[1])?it.tags[1]:'Bài nghe ngẫu nhiên',
+    script:lines.map(t=>({text:t})),trans:lines,qs:pickN(shuffleQs(it.qs),3)};
 }
 /* --- random writing gap items --- */
 function genGap(g){
@@ -6047,7 +6589,7 @@ function checkScramble(){
 }
 
 /* ================= GRAMMAR REVIEW ================= */
-let GR=null,_grDiff='easy';
+let GR=null,_grDiff='all';
 
 const GRAMMAR_TOPICS=[
 /* -------- TỪ SÁCH TỔNG ÔN (mới) -------- */
@@ -6345,97 +6887,852 @@ const GRAMMAR_TOPICS=[
 ]},
 ];
 
-const DIFF_LABELS={easy:'🟢 Dễ',medium:'🟡 Vừa',hard:'🔴 Khó',advanced:'🟠 Nâng cao'};
-const DIFF_ORDER=['easy','medium','hard','advanced'];
+/* ========== BỘ SINH CÂU HỎI NHIỀU DẠNG CHO ÔN NGỮ PHÁP ========== */
+function mkF(q,ans,e,hint){return{t:'fill',q,ans:[].concat(ans),e:e||'',hint:hint||''}}
+function mkO(sent,e,vn){return{t:'order',sent,e:e||'',vn:vn||''}}
+function mkE(sent,wrong,right,e){return{t:'error',sent,wrong,right,e:e||''}}
+function mkT(q,ans,e,hint){return{t:'trans',q,ans:[].concat(ans),e:e||'',hint:hint||''}}
 
+/* ========== LÝ THUYẾT + BÀI TẬP BỔ SUNG THEO CHUYÊN ĐỀ ========== */
+const GR_META={
+
+gr_present:{gr:[4,5,6,7],
+theory:{
+use:['Thói quen, việc lặp đi lặp lại hằng ngày','Sự thật hiển nhiên, chân lí','Lịch trình cố định (tàu, xe, giờ học)','Sở thích, tính cách, cảm nghĩ'],
+form:[['(+)','S + V / V(s-es)','She <b>goes</b> to school every day.'],
+['(−)','S + don’t / doesn’t + V','She <b>doesn’t go</b> to school on Sunday.'],
+['(?)','Do / Does + S + V?','<b>Does</b> she <b>go</b> to school?']],
+sign:'every day / week / month, always, usually, often, sometimes, never, on Mondays, twice a week',
+tips:['He / She / It → thêm <b>-s</b>: <i>plays, reads</i>','Tận cùng <b>-o, -s, -x, -ch, -sh</b> → thêm <b>-es</b>: <i>goes, watches, washes</i>','Phụ âm + <b>y</b> → đổi thành <b>-ies</b>: <i>study → studies</i> (nguyên âm + y giữ nguyên: <i>plays</i>)','Sau <b>don’t / doesn’t / Do / Does</b> luôn dùng động từ NGUYÊN THỂ: <i>She doesn’t <s>goes</s> go.</i>'],
+ex:[['My father works in a hospital.','Bố tôi làm việc ở bệnh viện.'],
+['The sun rises in the east.','Mặt trời mọc ở hướng đông.'],
+['We don’t have school on Sunday.','Chúng tôi không có tiết học vào Chủ nhật.'],
+['Does your sister like ice cream?','Chị gái bạn có thích kem không?'],
+['The train leaves at 6 a.m. every morning.','Tàu khởi hành lúc 6 giờ sáng mỗi ngày.'],
+['She never eats fast food.','Cô ấy không bao giờ ăn đồ ăn nhanh.']]},
+more:[
+()=>mkF('My brother ___ (watch) TV every evening.','watches','watch + es → watches (tận cùng -ch).','Chia động từ watch'),
+()=>mkF('They ___ (not / live) in Ha Noi.',["don't live","do not live"],'They → don’t + V nguyên thể.','Dạng phủ định'),
+()=>mkF('___ your mother ___ (work) at a school?',['does work','Does work'],'Ngôi 3 số ít → Does + S + V nguyên thể. (Viết: does / work)','Viết 2 từ, cách nhau dấu cách'),
+()=>mkO('Nam plays football every Sunday','Trật tự: S + V + O + trạng ngữ thời gian.','Nam chơi bóng đá vào mỗi Chủ nhật.'),
+()=>mkO('My sister does not like coffee','Phủ định: S + does not + V nguyên thể + O.','Chị tôi không thích cà phê.'),
+()=>mkE('She go to school by bus every day.','go','goes','She là ngôi 3 số ít → goes.'),
+()=>mkE('He doesn’t likes vegetables.','likes','like','Sau doesn’t dùng động từ nguyên thể.'),
+()=>mkT('Viết lại ở dạng phủ định: "Lan studies English."',["Lan doesn't study English.","Lan does not study English."],'studies → doesn’t study (V về nguyên thể).','Bắt đầu bằng Lan'),
+()=>mkT('Chuyển thành câu hỏi: "They go to the park."',['Do they go to the park?'],'They → Do + S + V?','Nhớ dấu ?')]},
+
+gr_pronouns:{gr:[4,5,6],
+theory:{
+use:['Thay thế cho danh từ đã nhắc tới, tránh lặp từ','Nói về sở hữu: của tôi, của bạn, của anh ấy...'],
+form:[['Chủ ngữ','I · you · he · she · it · we · they','<b>She</b> is my friend.'],
+['Tân ngữ','me · you · him · her · it · us · them','I know <b>her</b>.'],
+['Tính từ sở hữu + N','my · your · his · her · its · our · their','This is <b>my</b> book.'],
+['Đại từ sở hữu','mine · yours · his · hers · ours · theirs','This book is <b>mine</b>.']],
+sign:'Đứng trước động từ → chủ ngữ · Đứng sau động từ / giới từ → tân ngữ · Đứng trước danh từ → tính từ sở hữu',
+tips:['<b>Tính từ sở hữu</b> LUÔN đi kèm danh từ: <i>her bag</i>. <b>Đại từ sở hữu</b> đứng MỘT MÌNH: <i>The bag is hers.</i>','<b>its</b> = của nó (không dấu nháy) ≠ <b>it’s</b> = it is','Sau giới từ (with, for, to, at) dùng <b>tân ngữ</b>: <i>Come with <s>I</s> me.</i>'],
+ex:[['She is my sister. I love her.','Cô ấy là chị tôi. Tôi yêu chị ấy.'],
+['This is our classroom.','Đây là lớp học của chúng tôi.'],
+['That pen isn’t yours, it’s mine.','Cây bút đó không phải của bạn, nó là của tôi.'],
+['The dog wagged its tail.','Con chó vẫy đuôi của nó.'],
+['Can you help them, please?','Bạn giúp họ được không?'],
+['Their house is bigger than ours.','Nhà của họ to hơn nhà của chúng tôi.']]},
+more:[
+()=>mkF('This is Lan. ___ is my best friend.','she','Thay cho Lan, làm chủ ngữ → She.','Điền 1 từ'),
+()=>mkF('I can’t find my keys. Have you seen ___ ?','them','Thay cho "my keys" (số nhiều), làm tân ngữ → them.','Điền 1 từ'),
+()=>mkF('That bag is not mine. It is ___ . (của cô ấy)','hers','Đại từ sở hữu đứng một mình → hers.','Điền 1 từ'),
+()=>mkO('This is my new English teacher','Tính từ sở hữu đứng trước danh từ.','Đây là cô giáo tiếng Anh mới của tôi.'),
+()=>mkO('Those books are not theirs','Đại từ sở hữu đứng cuối, không có danh từ theo sau.','Những cuốn sách đó không phải của họ.'),
+()=>mkE('Me and my brother go to the same school.','Me','My brother and I','Làm chủ ngữ phải dùng I, và người khác đặt trước.'),
+()=>mkE('This is she bag.','she','her','Trước danh từ dùng tính từ sở hữu: her bag.'),
+()=>mkT('Viết lại dùng đại từ sở hữu: "This is my pen."',['This pen is mine.'],'my + N → N + is mine.','Bắt đầu: This pen...'),
+()=>mkT('Thay từ gạch chân bằng đại từ: "I met Nam and Hoa yesterday." (Nam and Hoa → ?)',['I met them yesterday.'],'Nam and Hoa = tân ngữ số nhiều → them.','Viết cả câu')]},
+
+gr_can:{gr:[4,5,6],
+theory:{
+use:['Nói về khả năng: biết làm / không biết làm','Xin phép và cho phép','Đề nghị giúp đỡ · <b>could</b> = lịch sự hơn, hoặc khả năng trong quá khứ'],
+form:[['(+)','S + can + V','I <b>can swim</b>.'],
+['(−)','S + can’t (cannot) + V','He <b>can’t drive</b>.'],
+['(?)','Can + S + V?','<b>Can</b> you <b>help</b> me?']],
+sign:'Không chia theo ngôi · Không dùng to · Không dùng do/does',
+tips:['Sau <b>can</b> luôn là động từ NGUYÊN THỂ, không thêm -s, không có to: <i>She can <s>sings</s> sing.</i>','Phủ định viết liền: <b>cannot</b> hoặc <b>can’t</b> (không viết "can not" trong bài kiểm tra).','Trả lời ngắn: <i>Yes, I can. / No, I can’t.</i>','<b>Could</b> dùng khi xin phép lịch sự: <i>Could I borrow your pen?</i>'],
+ex:[['I can play the guitar.','Tôi biết chơi ghi-ta.'],
+['She can’t come to the party tonight.','Tối nay cô ấy không đến dự tiệc được.'],
+['Can you speak Chinese? — Yes, a little.','Bạn nói được tiếng Trung không? — Được một chút.'],
+['Could you open the window, please?','Bạn mở giúp cửa sổ được không?'],
+['When he was five, he could already read.','Khi năm tuổi, cậu ấy đã biết đọc.'],
+['Can I go out with my friends?','Con đi chơi với bạn được không ạ?']]},
+more:[
+()=>mkF('My little sister ___ (not / ride) a bike yet.',["can't ride",'cannot ride'],'Phủ định của can → can’t + V nguyên thể.','Viết 2 từ'),
+()=>mkF('___ you help me with this exercise?','can','Câu hỏi đề nghị giúp đỡ → Can + S + V?','Điền 1 từ'),
+()=>mkF('When my father was young, he ___ run very fast.','could','Khả năng trong quá khứ → could.','Điền 1 từ'),
+()=>mkO('Nam can play the piano very well','S + can + V + O + trạng từ.','Nam chơi đàn piano rất giỏi.'),
+()=>mkO('Could you pass me the salt please','Câu xin lịch sự: Could + you + V + O.','Bạn đưa giúp tôi lọ muối được không?'),
+()=>mkE('She can sings a lot of English songs.','sings','sing','Sau can dùng động từ nguyên thể.'),
+()=>mkE('Can you to swim?','to','(bỏ to)','Sau can KHÔNG dùng to.'),
+()=>mkT('Viết lại ở dạng phủ định: "He can cook."',["He can't cook.",'He cannot cook.'],'can → can’t.','Bắt đầu bằng He'),
+()=>mkT('Chuyển thành câu hỏi: "They can swim."',['Can they swim?'],'Đảo can lên trước chủ ngữ.','Nhớ dấu ?')]},
+
+gr_articles:{gr:[4,5,6,7],
+theory:{
+use:['<b>a / an</b>: danh từ đếm được SỐ ÍT, nhắc tới lần đầu','<b>the</b>: vật đã xác định, cả người nói và người nghe đều biết','Không mạo từ (∅): danh từ số nhiều / không đếm được nói chung'],
+form:[['a + phụ âm','a book, a car, a university (/juː/)','I have <b>a</b> new bike.'],
+['an + nguyên âm','an apple, an hour (h câm), an egg','She ate <b>an</b> orange.'],
+['the','đã nhắc tới / duy nhất / có of','<b>The</b> sun is bright.'],
+['∅','danh từ chung, tên riêng','I like ∅ <b>music</b>.']],
+sign:'Nghe ÂM đầu chứ không nhìn chữ cái: an hour, a university, an MP3 player',
+tips:['<b>the</b> dùng với vật duy nhất: <i>the sun, the moon, the Earth</i>','Nhắc lần đầu dùng <b>a/an</b>, nhắc lại dùng <b>the</b>: <i>I saw a cat. The cat was black.</i>','Không dùng mạo từ trước bữa ăn, môn học, môn thể thao: <i>have ∅ breakfast, play ∅ football</i>','Dùng <b>the</b> với sông, biển, dãy núi, tên nước số nhiều: <i>the Mekong, the Philippines</i>'],
+ex:[['I have an umbrella in my bag.','Tôi có một cái ô trong cặp.'],
+['She is a nurse at the city hospital.','Cô ấy là y tá ở bệnh viện thành phố.'],
+['The moon goes around the Earth.','Mặt trăng quay quanh Trái Đất.'],
+['We had breakfast at seven.','Chúng tôi ăn sáng lúc bảy giờ.'],
+['He waited for an hour.','Anh ấy đợi một tiếng đồng hồ.'],
+['The book on the table is mine.','Cuốn sách trên bàn là của tôi.']]},
+more:[
+()=>mkF('My father is ___ engineer.','an','engineer bắt đầu bằng âm nguyên âm /e/ → an.','Điền a / an / the'),
+()=>mkF('I bought a shirt. ___ shirt is blue.','the','Nhắc lại lần hai → the.','Điền a / an / the'),
+()=>mkF('She plays ___ piano beautifully.','the','Nhạc cụ dùng the: play the piano.','Điền a / an / the'),
+()=>mkO('There is a big tree in the garden','There is + a + N + giới từ.','Có một cái cây to trong vườn.'),
+()=>mkO('The sun rises in the east','Vật duy nhất và phương hướng dùng the.','Mặt trời mọc ở hướng đông.'),
+()=>mkE('I waited for a hour at the station.','a','an','hour có h câm, đọc /aʊə/ → an hour.'),
+()=>mkE('We play the football after school.','the','(bỏ the)','Môn thể thao không dùng mạo từ: play football.'),
+()=>mkT('Điền mạo từ rồi viết lại: "She is ___ honest girl."',['She is an honest girl.'],'honest có h câm → an.','Viết cả câu'),
+()=>mkT('Điền mạo từ rồi viết lại: "___ Mekong flows through Viet Nam."',['The Mekong flows through Viet Nam.'],'Tên sông dùng the.','Viết cả câu')]},
+
+gr_pcon_basic:{gr:[4,5,6],
+theory:{
+use:['Hành động ĐANG xảy ra ngay lúc nói','Hành động đang diễn ra trong giai đoạn này','Mô tả tranh ảnh'],
+form:[['(+)','S + am / is / are + V-ing','She <b>is reading</b> a book.'],
+['(−)','S + am / is / are + not + V-ing','They <b>aren’t playing</b> now.'],
+['(?)','Am / Is / Are + S + V-ing?','<b>Is</b> he <b>sleeping</b>?']],
+sign:'now, right now, at the moment, at present, Look!, Listen!',
+tips:['I → <b>am</b> · He/She/It → <b>is</b> · You/We/They → <b>are</b>','Quy tắc thêm -ing: bỏ <b>e</b> (write → writing) · nhân đôi phụ âm cuối khi 1 nguyên âm + 1 phụ âm (run → running, sit → sitting) · ie → y (lie → lying)','Động từ chỉ trạng thái KHÔNG dùng tiếp diễn: <i>like, love, want, know, have (sở hữu)</i>'],
+ex:[['Look! The baby is crying.','Nhìn kìa! Em bé đang khóc.'],
+['We are doing our homework now.','Chúng tôi đang làm bài tập bây giờ.'],
+['She isn’t watching TV at the moment.','Lúc này cô ấy không xem TV.'],
+['Are they swimming in the pool?','Họ đang bơi trong bể à?'],
+['Listen! Someone is singing.','Nghe kìa! Có ai đó đang hát.'],
+['My mother is cooking dinner.','Mẹ tôi đang nấu bữa tối.']]},
+more:[
+()=>mkF('Look! It ___ (rain).','is raining','Look! → hiện tại tiếp diễn: is + V-ing.','Viết 2 từ'),
+()=>mkF('They ___ (not / play) football now.',["aren't playing",'are not playing'],'They → are not + V-ing.','Viết 2-3 từ'),
+()=>mkF('What ___ you ___ (do) at the moment?',['are doing','are do'],'Are + S + V-ing? (Viết: are / doing)','Viết 2 từ cách nhau dấu cách'),
+()=>mkO('The children are playing in the yard','S + are + V-ing + trạng ngữ nơi chốn.','Bọn trẻ đang chơi ngoài sân.'),
+()=>mkO('My mother is not cooking now','Phủ định: S + is + not + V-ing.','Mẹ tôi không nấu ăn lúc này.'),
+()=>mkE('She are reading a book now.','are','is','She là ngôi 3 số ít → is.'),
+()=>mkE('I am runing to school.','runing','running','run: nhân đôi n trước -ing → running.'),
+()=>mkT('Chuyển sang HTTD: "He plays football." (now)',['He is playing football now.','He is playing football.'],'plays → is playing.','Bắt đầu bằng He'),
+()=>mkT('Viết lại ở dạng phủ định: "They are watching TV."',["They aren't watching TV.",'They are not watching TV.'],'Thêm not sau are.','Bắt đầu bằng They')]},
+
+gr_pastsimple:{gr:[5,6,7],
+theory:{
+use:['Hành động đã KẾT THÚC trong quá khứ, có mốc thời gian rõ','Kể chuỗi sự việc trong quá khứ','Thói quen trong quá khứ nay không còn'],
+form:[['(+)','S + V-ed / V2','She <b>visited</b> Hue last year.'],
+['(−)','S + didn’t + V nguyên thể','She <b>didn’t visit</b> Hue.'],
+['(?)','Did + S + V nguyên thể?','<b>Did</b> she <b>visit</b> Hue?'],
+['to be','was (I/he/she/it) · were (you/we/they)','They <b>were</b> tired.']],
+sign:'yesterday, last night / week / year, ago, in 2019, when I was young',
+tips:['Sau <b>didn’t / Did</b> luôn là động từ NGUYÊN THỂ: <i>She didn’t <s>went</s> go.</i>','Quy tắc -ed: thêm <b>-d</b> nếu đã có e (live → lived) · phụ âm + y → <b>-ied</b> (study → studied) · nhân đôi phụ âm cuối (stop → stopped)','Động từ bất quy tắc phải học thuộc: <i>go → went, see → saw, eat → ate, buy → bought</i>','Câu với <b>was/were</b> KHÔNG dùng did: <i>She <s>didn’t was</s> wasn’t happy.</i>'],
+ex:[['I watched a film last night.','Tối qua tôi xem một bộ phim.'],
+['We went to Da Lat two years ago.','Hai năm trước chúng tôi đi Đà Lạt.'],
+['She didn’t finish her homework.','Cô ấy đã không làm xong bài tập.'],
+['Did you see Nam yesterday?','Hôm qua bạn có gặp Nam không?'],
+['The weather was very cold in January.','Thời tiết tháng Một rất lạnh.'],
+['They were at the library this morning.','Sáng nay họ ở thư viện.']]},
+more:[
+()=>mkF('Yesterday I ___ (go) to the zoo with my class.','went','go là động từ bất quy tắc: go → went.','Chia động từ'),
+()=>mkF('She ___ (not / come) to school last Monday.',["didn't come",'did not come'],'Phủ định: didn’t + V nguyên thể.','Viết 2-3 từ'),
+()=>mkF('___ you ___ (watch) the match last night?',['did watch','Did watch'],'Did + S + V nguyên thể? (Viết: did / watch)','Viết 2 từ'),
+()=>mkO('We visited our grandparents last weekend','S + V2 + O + trạng ngữ thời gian quá khứ.','Cuối tuần trước chúng tôi về thăm ông bà.'),
+()=>mkO('She did not buy a new dress','Phủ định quá khứ: S + did not + V nguyên thể.','Cô ấy đã không mua váy mới.'),
+()=>mkE('He didn’t went to the party.','went','go','Sau didn’t dùng động từ nguyên thể.'),
+()=>mkE('They was very happy yesterday.','was','were','They đi với were.'),
+()=>mkT('Viết lại ở dạng phủ định: "Lan studied English last night."',["Lan didn't study English last night.",'Lan did not study English last night.'],'studied → didn’t study.','Giữ nguyên trạng ngữ'),
+()=>mkT('Chuyển thành câu hỏi: "They played football yesterday."',['Did they play football yesterday?'],'Did + S + V nguyên thể?','Nhớ dấu ?')]},
+
+gr_future:{gr:[6,7,8],
+theory:{
+use:['<b>will</b>: quyết định ngay lúc nói, dự đoán, lời hứa','<b>be going to</b>: kế hoạch đã định trước, dự đoán CÓ căn cứ nhìn thấy'],
+form:[['(+) will','S + will + V','I <b>will call</b> you tonight.'],
+['(−) will','S + won’t + V','She <b>won’t come</b>.'],
+['(+) going to','S + am/is/are going to + V','We <b>are going to visit</b> Hue.'],
+['(?)','Will + S + V? / Is + S + going to + V?','<b>Will</b> it <b>rain</b>?']],
+sign:'tomorrow, next week / month / year, soon, in 2030, tonight',
+tips:['Nhìn thấy dấu hiệu rõ ràng → dùng <b>be going to</b>: <i>Look at those clouds! It’s going to rain.</i>','Quyết định ngay lúc nói → dùng <b>will</b>: <i>The phone is ringing. — I’ll answer it.</i>','Sau <b>will</b> luôn là động từ nguyên thể, không thêm to, không chia: <i>He will <s>goes</s> go.</i>','<b>won’t</b> = will not'],
+ex:[['I think it will be sunny tomorrow.','Tôi nghĩ mai trời sẽ nắng.'],
+['We are going to move house next month.','Tháng sau chúng tôi sẽ chuyển nhà.'],
+['She won’t be at home tonight.','Tối nay cô ấy sẽ không ở nhà.'],
+['Look at the sky! It’s going to rain.','Nhìn bầu trời kìa! Trời sắp mưa.'],
+['Will you help me with this box?','Bạn giúp tôi bê cái hộp này nhé?'],
+['They are going to build a new bridge here.','Họ sẽ xây một cây cầu mới ở đây.']]},
+more:[
+()=>mkF('Look at those black clouds! It ___ (rain).','is going to rain','Có dấu hiệu nhìn thấy → be going to.','Viết 3-4 từ'),
+()=>mkF('I promise I ___ (help) you tomorrow.','will help','Lời hứa → will + V.','Viết 2 từ'),
+()=>mkF('She ___ (not / come) to the meeting.',["won't come",'will not come'],'Phủ định của will → won’t + V.','Viết 2-3 từ'),
+()=>mkO('We are going to visit Ha Long Bay','Kế hoạch: S + be going to + V + O.','Chúng tôi sẽ đi thăm vịnh Hạ Long.'),
+()=>mkO('I will send you an email tonight','S + will + V + tân ngữ kép + trạng ngữ.','Tối nay tôi sẽ gửi email cho bạn.'),
+()=>mkE('She will goes to Da Nang next week.','goes','go','Sau will dùng động từ nguyên thể.'),
+()=>mkE('They are going to visiting their uncle.','visiting','visit','Sau going to dùng động từ nguyên thể.'),
+()=>mkT('Viết lại dùng "be going to": "I will buy a new bike next month." (đã lên kế hoạch)',['I am going to buy a new bike next month.',"I'm going to buy a new bike next month."],'will buy → am going to buy.','Bắt đầu bằng I'),
+()=>mkT('Chuyển thành câu hỏi: "He will come tomorrow."',['Will he come tomorrow?'],'Đảo will lên trước chủ ngữ.','Nhớ dấu ?')]},
+
+gr_pcon:{gr:[5,6,7],
+theory:{
+use:['Hành động đang xảy ra lúc nói','Hành động tạm thời trong giai đoạn này (this week, these days)','Kế hoạch chắc chắn ở tương lai gần','Phàn nàn với <b>always</b>'],
+form:[['(+)','S + am / is / are + V-ing','I <b>am studying</b> now.'],
+['(−)','S + am / is / are + not + V-ing','He <b>isn’t working</b> today.'],
+['(?)','Am / Is / Are + S + V-ing?','<b>Are</b> you <b>coming</b>?']],
+sign:'now, at the moment, at present, today, this week, Look!, Listen!',
+tips:['So sánh: <i>She <b>plays</b> tennis every Sunday</i> (thói quen) ≠ <i>She <b>is playing</b> tennis now</i> (đang diễn ra).','Động từ trạng thái không chia tiếp diễn: <i>know, like, want, need, believe, belong</i>.','Dùng cho kế hoạch chắc chắn: <i>I’m meeting Nam at 5 p.m. tomorrow.</i>'],
+ex:[['I’m reading an interesting book these days.','Dạo này tôi đang đọc một cuốn sách hay.'],
+['She is not listening to me.','Cô ấy không nghe tôi nói.'],
+['What are you doing this weekend?','Cuối tuần này bạn làm gì?'],
+['They are having dinner at the moment.','Lúc này họ đang ăn tối.'],
+['He is always coming late!','Cậu ta lúc nào cũng đến muộn!'],
+['We are flying to Da Nang tomorrow morning.','Sáng mai chúng tôi bay đi Đà Nẵng.']]},
+more:[
+()=>mkF('Be quiet! The baby ___ (sleep).','is sleeping','Đang diễn ra → is + V-ing.','Viết 2 từ'),
+()=>mkF('These days my sister ___ (learn) Japanese.','is learning','these days → giai đoạn hiện tại → tiếp diễn.','Viết 2 từ'),
+()=>mkF('We ___ (not / work) today. It is a holiday.',["aren't working",'are not working'],'We → are not + V-ing.','Viết 2-3 từ'),
+()=>mkO('She is writing a letter to her friend','S + is + V-ing + O + giới từ.','Cô ấy đang viết thư cho bạn.'),
+()=>mkO('What are you doing at the moment','Câu hỏi Wh-: Wh + are + S + V-ing?','Bạn đang làm gì lúc này?'),
+()=>mkE('I am knowing the answer.','knowing','know (bỏ luôn "am")','know là động từ chỉ trạng thái, không chia tiếp diễn → I know the answer.'),
+()=>mkE('He is study in his room now.','study','studying','Sau is phải là V-ing.'),
+()=>mkT('Chuyển sang HTTD: "They watch TV." (now)',['They are watching TV now.','They are watching TV.'],'watch → are watching.','Bắt đầu bằng They'),
+()=>mkT('Chuyển thành câu hỏi: "She is cooking dinner."',['Is she cooking dinner?'],'Đảo is lên trước chủ ngữ.','Nhớ dấu ?')]},
+
+gr_compare:{gr:[6,7,8],
+theory:{
+use:['So sánh HƠN giữa hai đối tượng','So sánh NHẤT trong nhóm từ ba đối tượng trở lên','So sánh BẰNG / không bằng'],
+form:[['Ngắn – hơn','S + adj-er + than','He is <b>taller than</b> me.'],
+['Dài – hơn','S + more + adj + than','This is <b>more interesting than</b> that.'],
+['Ngắn – nhất','S + the + adj-est','She is <b>the tallest</b> girl.'],
+['Dài – nhất','S + the most + adj','It is <b>the most expensive</b> car.'],
+['Bằng','as + adj nguyên mẫu + as','She is <b>as tall as</b> me.']],
+sign:'than · the … est · the most · as … as · not as … as',
+tips:['Tính từ ngắn 1 âm tiết kết thúc bằng 1 nguyên âm + 1 phụ âm → <b>nhân đôi</b>: <i>big → bigger, hot → hottest</i>','Kết thúc bằng phụ âm + y → <b>-ier / -iest</b>: <i>happy → happier → the happiest</i>','Bất quy tắc: <i>good → better → the best · bad → worse → the worst · far → farther/further</i>','Giữa <b>as … as</b> dùng tính từ NGUYÊN MẪU: <i>as <s>bigger</s> big as</i>'],
+ex:[['My bag is heavier than yours.','Cặp của tôi nặng hơn của bạn.'],
+['This film is the most exciting of all.','Bộ phim này hấp dẫn nhất trong tất cả.'],
+['Ha Noi is not as hot as Ho Chi Minh City.','Hà Nội không nóng bằng TP. Hồ Chí Minh.'],
+['She sings better than her sister.','Cô ấy hát hay hơn chị mình.'],
+['Fansipan is the highest mountain in Viet Nam.','Fansipan là ngọn núi cao nhất Việt Nam.'],
+['The more you practise, the better you become.','Càng luyện tập, bạn càng giỏi hơn.']]},
+more:[
+()=>mkF('This box is ___ (heavy) than that one.','heavier','heavy → phụ âm + y → heavier.','Chia tính từ'),
+()=>mkF('Mount Everest is ___ (high) mountain in the world.','the highest','So sánh nhất tính từ ngắn: the + adj-est.','Viết 2 từ'),
+()=>mkF('This book is ___ (interesting) than the film.','more interesting','Tính từ dài → more + adj.','Viết 2 từ'),
+()=>mkO('My sister is taller than me','S + be + adj-er + than + tân ngữ.','Chị tôi cao hơn tôi.'),
+()=>mkO('This is the most beautiful beach in Viet Nam','So sánh nhất tính từ dài: the most + adj.','Đây là bãi biển đẹp nhất Việt Nam.'),
+()=>mkE('She is more taller than her brother.','more','bỏ "more" → taller','tall là tính từ ngắn, chỉ thêm -er, không dùng thêm more.'),
+()=>mkE('My bike is as faster as yours.','faster','fast','Giữa as … as dùng tính từ nguyên mẫu.'),
+()=>mkT('Viết lại dùng so sánh hơn: "Nam is 1m70. Minh is 1m65." (Nam / tall)',['Nam is taller than Minh.'],'tall → taller than.','Bắt đầu bằng Nam'),
+()=>mkT('Viết lại dùng "not as … as": "My house is smaller than yours."',['My house is not as big as yours.',"My house isn't as big as yours."],'smaller than → not as big as.','Bắt đầu: My house')]},
+
+gr_modal:{gr:[6,7,8],
+theory:{
+use:['<b>must</b>: bắt buộc do người nói thấy cần thiết','<b>have to</b>: bắt buộc do quy định bên ngoài','<b>should</b>: lời khuyên','<b>mustn’t</b>: cấm · <b>don’t have to</b>: không cần'],
+form:[['must','S + must + V','You <b>must wear</b> a helmet.'],
+['have to','S + have/has to + V','She <b>has to work</b> on Saturday.'],
+['should','S + should + V','You <b>should see</b> a doctor.'],
+['(−)','mustn’t / don’t have to / shouldn’t','You <b>mustn’t smoke</b> here.']],
+sign:'Nội quy, biển báo → must / mustn’t · Lời khuyên → should',
+tips:['<b>mustn’t</b> = CẤM ≠ <b>don’t have to</b> = KHÔNG CẦN. Khác hẳn nhau!','Sau <b>must / should</b> dùng động từ nguyên thể, không có to.','<b>have to</b> chia theo ngôi và thì: <i>has to, had to, will have to</i>; <b>must</b> không chia.','Quá khứ của must là <b>had to</b>.'],
+ex:[['Students must wear uniforms on Monday.','Học sinh phải mặc đồng phục vào thứ Hai.'],
+['You mustn’t use your phone in class.','Bạn không được dùng điện thoại trong lớp.'],
+['She has to get up early every day.','Cô ấy phải dậy sớm mỗi ngày.'],
+['You should drink more water.','Bạn nên uống nhiều nước hơn.'],
+['We don’t have to go to school on Sunday.','Chúng tôi không phải đi học Chủ nhật.'],
+['You shouldn’t eat too much sugar.','Bạn không nên ăn quá nhiều đường.']]},
+more:[
+()=>mkF('You look tired. You ___ go to bed early.','should','Lời khuyên → should + V.','Điền 1 từ'),
+()=>mkF('It is a rule: we ___ wear a helmet when riding a motorbike.','must','Quy định bắt buộc → must.','Điền 1 từ'),
+()=>mkF('Today is Sunday, so she ___ (not / have to) work.',["doesn't have to",'does not have to'],'Không cần thiết → doesn’t have to.','Viết 3 từ'),
+()=>mkO('You must not talk loudly in the library','Cấm: S + must not + V + trạng ngữ.','Bạn không được nói to trong thư viện.'),
+()=>mkO('She has to finish her homework tonight','have to chia theo ngôi: has to + V.','Tối nay cô ấy phải làm xong bài tập.'),
+()=>mkE('You should to see a doctor.','to','(bỏ to)','Sau should dùng động từ nguyên thể, không có to.'),
+()=>mkE('He must to wear a uniform.','to','(bỏ to)','Sau must KHÔNG có to.'),
+()=>mkT('Viết lại dùng "should": "It is a good idea for you to study harder."',['You should study harder.'],'Lời khuyên → You should + V.','Bắt đầu bằng You'),
+()=>mkT('Viết lại dùng "have to": "It is necessary for Lan to get up at 5."',['Lan has to get up at 5.'],'Bắt buộc → has to + V.','Bắt đầu bằng Lan')]},
+
+gr_quant:{gr:[5,6,7],
+theory:{
+use:['Nói về số lượng của danh từ đếm được và không đếm được'],
+form:[['some','câu khẳng định (cả 2 loại)','I have <b>some</b> books / water.'],
+['any','câu phủ định & nghi vấn','I don’t have <b>any</b> money.'],
+['many + N số nhiều','đếm được','<b>many</b> students'],
+['much + N không đếm','không đếm được','<b>much</b> water'],
+['a lot of / lots of','cả 2 loại, mọi câu','<b>a lot of</b> friends / rice']],
+sign:'Đếm được: books, apples, students · Không đếm được: water, rice, money, time, information',
+tips:['<b>some</b> vẫn dùng trong câu hỏi khi MỜI hoặc ĐỀ NGHỊ: <i>Would you like some tea?</i>','<b>How many</b> + N số nhiều? · <b>How much</b> + N không đếm được?','<b>a few</b> + đếm được (một vài) · <b>a little</b> + không đếm được (một chút)','money, information, advice, furniture, news là danh từ KHÔNG đếm được.'],
+ex:[['There are some apples on the table.','Có vài quả táo trên bàn.'],
+['I don’t have any brothers or sisters.','Tôi không có anh chị em nào.'],
+['How much water do you drink a day?','Bạn uống bao nhiêu nước mỗi ngày?'],
+['There aren’t many students in the room.','Không có nhiều học sinh trong phòng.'],
+['She has a lot of homework tonight.','Tối nay cô ấy có rất nhiều bài tập.'],
+['We only have a little time left.','Chúng ta chỉ còn một chút thời gian.']]},
+more:[
+()=>mkF('There isn’t ___ milk in the fridge.','any','Câu phủ định → any.','Điền 1 từ'),
+()=>mkF('How ___ books do you have?','many','books đếm được số nhiều → How many.','Điền 1 từ'),
+()=>mkF('I don’t have ___ time to finish this.','much','time không đếm được, câu phủ định → much.','Điền 1 từ'),
+()=>mkO('There are a lot of trees in the park','There are + a lot of + N số nhiều.','Có rất nhiều cây trong công viên.'),
+()=>mkO('How much sugar do you want','How much + N không đếm + do + S + V?','Bạn muốn bao nhiêu đường?'),
+()=>mkE('There are many water in the bottle.','many','much','water không đếm được → much (và "is", không phải "are").'),
+()=>mkE('I have some informations about the trip.','informations','information','information là danh từ không đếm được, không thêm s.'),
+()=>mkT('Viết lại ở dạng phủ định: "There are some eggs in the box."',["There aren't any eggs in the box.",'There are not any eggs in the box.'],'some → any trong câu phủ định.','Bắt đầu: There'),
+()=>mkT('Đặt câu hỏi cho phần gạch chân: "She drinks TWO LITRES of water a day."',['How much water does she drink a day?'],'Hỏi lượng nước (không đếm được) → How much.','Nhớ dấu ?')]}
+
+};
+Object.assign(GR_META,{
+
+gr_pastcon:{gr:[7,8,9],
+theory:{
+use:['Hành động ĐANG diễn ra tại một thời điểm trong quá khứ','Hành động đang diễn ra thì bị hành động khác cắt ngang','Hai hành động song song trong quá khứ'],
+form:[['(+)','S + was / were + V-ing','I <b>was watching</b> TV at 8 p.m.'],
+['(−)','S + wasn’t / weren’t + V-ing','They <b>weren’t sleeping</b>.'],
+['(?)','Was / Were + S + V-ing?','<b>Were</b> you <b>working</b>?'],
+['Kết hợp','When + QK đơn, QKTD / While + QKTD, QK đơn','<b>While</b> I <b>was cooking</b>, the phone <b>rang</b>.']],
+sign:'at 8 o’clock last night, at this time yesterday, while, when, all morning yesterday',
+tips:['<b>While</b> thường đi với QUÁ KHỨ TIẾP DIỄN (hành động dài); <b>When</b> thường đi với QUÁ KHỨ ĐƠN (hành động ngắn cắt ngang).','Hành động dài dùng QKTD, hành động ngắn xen vào dùng QK đơn.','Hai hành động cùng kéo dài song song → cả hai đều QKTD, nối bằng <b>while</b>.'],
+ex:[['At 7 p.m. yesterday, I was doing my homework.','7 giờ tối qua tôi đang làm bài tập.'],
+['While she was cooking, her phone rang.','Khi cô ấy đang nấu ăn thì điện thoại reo.'],
+['They weren’t watching TV when I came.','Lúc tôi đến họ không xem TV.'],
+['What were you doing at this time last night?','Giờ này tối qua bạn đang làm gì?'],
+['He fell down while he was running.','Cậu ấy ngã khi đang chạy.'],
+['I was reading while my brother was playing games.','Tôi đọc sách trong khi em tôi chơi game.']]},
+more:[
+()=>mkF('At 8 p.m. last night, I ___ (have) dinner with my family.','was having','Thời điểm cụ thể trong QK → was + V-ing.','Viết 2 từ'),
+()=>mkF('While she ___ (walk) home, it started to rain.','was walking','While + QKTD.','Viết 2 từ'),
+()=>mkF('They ___ (not / sleep) when the storm came.',["weren't sleeping",'were not sleeping'],'They → were not + V-ing.','Viết 2-3 từ'),
+()=>mkO('I was watching TV when the lights went out','QKTD + when + QK đơn.','Tôi đang xem TV thì mất điện.'),
+()=>mkO('While my mother was cooking I was studying','Hai hành động song song, cả hai đều QKTD.','Trong khi mẹ tôi nấu ăn thì tôi học bài.'),
+()=>mkE('While she was cook, the phone rang.','cook','cooking','Sau was/were phải là V-ing → was cooking.'),
+()=>mkE('They was playing football at 5 p.m.','was','were','They đi với were.'),
+()=>mkT('Nối 2 câu bằng "when": "I was doing homework. My friend called."',['I was doing homework when my friend called.'],'Hành động dài + when + hành động ngắn.','Viết cả câu'),
+()=>mkT('Nối 2 câu bằng "while": "She was reading. Her brother was playing."',['While she was reading, her brother was playing.','She was reading while her brother was playing.'],'Hai hành động song song → while + cả hai QKTD.','Viết cả câu')]},
+
+gr_past:{gr:[6,7,8],
+theory:{
+use:['Dùng quá khứ đơn nhưng động từ KHÔNG thêm -ed, phải nhớ dạng V2 riêng'],
+form:[['Nhóm giữ nguyên','cut → cut · put → put · let → let · cost → cost','I <b>put</b> it there yesterday.'],
+['Đổi nguyên âm','sing → sang · drink → drank · swim → swam','She <b>sang</b> beautifully.'],
+['Đổi hẳn','go → went · buy → bought · teach → taught','We <b>went</b> to Hue.'],
+['-ought / -aught','think → thought · catch → caught · bring → brought','He <b>thought</b> about it.']],
+sign:'Vẫn là các dấu hiệu của quá khứ đơn: yesterday, last…, ago, in 2020',
+tips:['Bảng động từ bất quy tắc cần học mỗi ngày 5 từ, ôn lại hằng tuần.','Sau <b>didn’t / Did</b> động từ trở về NGUYÊN THỂ, không dùng V2: <i>Did you <s>went</s> go?</i>','Cẩn thận cặp dễ nhầm: <i>lie (nằm) → lay</i> nhưng <i>lay (đặt) → laid</i>; <i>read → read</i> (đọc khác nhau).'],
+ex:[['She bought a new phone last week.','Tuần trước cô ấy mua điện thoại mới.'],
+['We ate pho for breakfast.','Chúng tôi ăn phở bữa sáng.'],
+['He taught me how to swim.','Anh ấy dạy tôi bơi.'],
+['They left the house at six.','Họ rời nhà lúc sáu giờ.'],
+['I saw an interesting film yesterday.','Hôm qua tôi xem một bộ phim hay.'],
+['The children drank all the milk.','Bọn trẻ uống hết sữa rồi.']]},
+more:[
+()=>mkF('She ___ (write) a letter to her friend last night.','wrote','write → wrote (bất quy tắc).','Chia động từ'),
+()=>mkF('We ___ (take) a lot of photos in Da Lat.','took','take → took.','Chia động từ'),
+()=>mkF('He ___ (not / bring) his umbrella yesterday.',["didn't bring",'did not bring'],'Phủ định → didn’t + V nguyên thể (bring, không phải brought).','Viết 2-3 từ'),
+()=>mkO('My father taught me how to ride a bike','S + V2 + O + how to + V.','Bố dạy tôi cách đi xe đạp.'),
+()=>mkO('They left the party very early last night','S + V2 + O + trạng ngữ.','Tối qua họ rời bữa tiệc rất sớm.'),
+()=>mkE('Did you saw the new film?','saw','see','Sau Did dùng động từ nguyên thể.'),
+()=>mkE('She buyed a beautiful dress.','buyed','bought','buy là động từ bất quy tắc → bought.'),
+()=>mkT('Chia động từ rồi viết lại: "Last year we (go) to Sa Pa."',['Last year we went to Sa Pa.'],'go → went.','Viết cả câu'),
+()=>mkT('Chuyển thành câu hỏi: "He drank coffee this morning."',['Did he drink coffee this morning?'],'Did + S + V nguyên thể (drink).','Nhớ dấu ?')]},
+
+gr_passive:{gr:[7,8,9,10],
+theory:{
+use:['Nhấn mạnh HÀNH ĐỘNG và ĐỐI TƯỢNG chịu tác động, không phải người làm','Khi không biết hoặc không cần nói ai làm','Văn phong khoa học, báo chí, thông báo'],
+form:[['HT đơn','am / is / are + V3','Rice <b>is grown</b> here.'],
+['QK đơn','was / were + V3','It <b>was built</b> in 1990.'],
+['HT tiếp diễn','is / are being + V3','A bridge <b>is being built</b>.'],
+['HT hoàn thành','has / have been + V3','It <b>has been finished</b>.'],
+['Tương lai / modal','will be / must be / can be + V3','It <b>will be sent</b> tomorrow.']],
+sign:'by + tác nhân (chỉ giữ khi cần) · Chủ ngữ chịu tác động chứ không thực hiện',
+tips:['Công thức chuyển: tân ngữ câu chủ động → chủ ngữ câu bị động; chia <b>be</b> đúng thì; động từ chính → <b>V3</b>.','Giữ nguyên thì của câu chủ động: <i>made → was made</i>, <i>has made → has been made</i>.','Bỏ <b>by + người</b> khi là people, someone, they (không xác định).','Câu 2 tân ngữ có 2 cách bị động: <i>She gave me a book → I was given a book / A book was given to me.</i>','Đặc biệt: <i>make sb do → be made TO do</i>; <i>have + O + V3</i> = nhờ ai làm gì.'],
+ex:[['This bridge was built in 1985.','Cây cầu này được xây năm 1985.'],
+['English is spoken all over the world.','Tiếng Anh được nói khắp thế giới.'],
+['The report hasn’t been finished yet.','Bản báo cáo vẫn chưa được hoàn thành.'],
+['Helmets must be worn on a motorbike.','Phải đội mũ bảo hiểm khi đi xe máy.'],
+['A new school is being built in our village.','Một ngôi trường mới đang được xây ở làng tôi.'],
+['She had her hair cut yesterday.','Hôm qua cô ấy đi cắt tóc.']]},
+more:[
+()=>mkF('Coffee ___ (grow) in the Central Highlands.','is grown','HT đơn bị động: is/are + V3.','Viết 2 từ'),
+()=>mkF('The letters ___ (send) last Monday.','were sent','QK đơn bị động, chủ ngữ số nhiều → were + V3.','Viết 2 từ'),
+()=>mkF('The homework ___ (not / finish) yet.',["hasn't been finished",'has not been finished'],'yet → HTHT bị động: has not been + V3.','Viết 3-4 từ'),
+()=>mkO('This song was written by a young musician','S + was + V3 + by + tác nhân.','Bài hát này do một nhạc sĩ trẻ sáng tác.'),
+()=>mkO('Plastic bags must not be used in this shop','Modal bị động phủ định: must not be + V3.','Không được dùng túi ni lông trong cửa hàng này.'),
+()=>mkE('The house was build in 1990.','build','built','Bị động dùng V3: built.'),
+()=>mkE('English is speak in many countries.','speak','spoken','be + V3 → is spoken.'),
+()=>mkT('Chuyển sang bị động: "They clean the classroom every day."',['The classroom is cleaned every day.'],'HT đơn bị động: is + V3.','Bắt đầu: The classroom'),
+()=>mkT('Chuyển sang bị động: "Someone stole my bike last night."',['My bike was stolen last night.'],'Someone không xác định → bỏ by; QK đơn bị động.','Bắt đầu: My bike')]},
+
+gr_gerund:{gr:[7,8,9,10],
+theory:{
+use:['Chọn V-ing hay to V tuỳ theo động từ đứng trước','Sau giới từ luôn dùng V-ing','V-ing/to V làm chủ ngữ của câu'],
+form:[['+ V-ing','enjoy, like, love, hate, mind, avoid, finish, practise, suggest, keep, give up','I <b>enjoy reading</b>.'],
+['+ to V','want, decide, hope, promise, agree, plan, need, learn, offer, refuse','She <b>decided to leave</b>.'],
+['Sau giới từ','in / on / at / of / about / for + V-ing','He is good <b>at singing</b>.'],
+['V + O + to V','ask / tell / want / advise / encourage sb to V','They <b>asked me to help</b>.']],
+sign:'Nhìn ĐỘNG TỪ hoặc GIỚI TỪ đứng ngay trước chỗ trống để quyết định',
+tips:['Sau <b>look forward to / be used to / object to</b> thì <b>to</b> là giới từ → dùng <b>V-ing</b>: <i>I look forward to <s>see</s> seeing you.</i>','<b>stop + V-ing</b> = dừng hẳn việc đó ≠ <b>stop + to V</b> = dừng lại ĐỂ làm việc khác.','<b>remember/forget + V-ing</b> = nhớ/quên việc ĐÃ làm ≠ <b>+ to V</b> = nhớ/quên việc PHẢI làm.','Sau <b>make / let sb</b> dùng động từ nguyên thể không to: <i>She made me <s>to cry</s> cry.</i>'],
+ex:[['I enjoy listening to music.','Tôi thích nghe nhạc.'],
+['She decided to study abroad.','Cô ấy quyết định đi du học.'],
+['Thank you for helping me.','Cảm ơn bạn đã giúp tôi.'],
+['He stopped smoking last year.','Năm ngoái anh ấy bỏ hút thuốc.'],
+['Remember to lock the door.','Nhớ khoá cửa nhé.'],
+['My parents want me to become a doctor.','Bố mẹ muốn tôi trở thành bác sĩ.']]},
+more:[
+()=>mkF('She is interested in ___ (learn) new languages.','learning','Sau giới từ in → V-ing.','Chia động từ'),
+()=>mkF('They agreed ___ (help) us with the project.','to help','agree + to V.','Viết 2 từ'),
+()=>mkF('Would you mind ___ (close) the window?','closing','mind + V-ing.','Chia động từ'),
+()=>mkO('I look forward to hearing from you','look forward to + V-ing (to là giới từ).','Tôi mong sớm nhận được hồi âm từ bạn.'),
+()=>mkO('My teacher encouraged me to join the club','V + O + to V.','Cô giáo khuyến khích tôi tham gia câu lạc bộ.'),
+()=>mkE('I enjoy play badminton.','play','playing','enjoy + V-ing.'),
+()=>mkE('He is good at draw pictures.','draw','drawing','Sau giới từ at dùng V-ing.'),
+()=>mkT('Viết lại: "I am looking forward to ___ (meet) you."',['I am looking forward to meeting you.',"I'm looking forward to meeting you."],'look forward to + V-ing.','Viết cả câu'),
+()=>mkT('Nối thành một câu: "She wants. She becomes a teacher."',['She wants to become a teacher.'],'want + to V.','Bắt đầu bằng She')]},
+
+gr_perfect:{gr:[7,8,9,10],
+theory:{
+use:['Việc xảy ra trong quá khứ nhưng CÒN liên quan tới hiện tại','Kinh nghiệm, trải nghiệm (đã từng)','Việc bắt đầu trong quá khứ và KÉO DÀI tới hiện tại','Việc vừa mới xảy ra'],
+form:[['(+)','S + have / has + V3','I <b>have finished</b> my homework.'],
+['(−)','S + haven’t / hasn’t + V3','She <b>hasn’t called</b> me.'],
+['(?)','Have / Has + S + V3?','<b>Have</b> you <b>eaten</b> yet?']],
+sign:'since, for, already, yet, never, ever, just, recently, so far, up to now, this week',
+tips:['<b>since</b> + MỐC thời gian (since 2020, since Monday) · <b>for</b> + KHOẢNG thời gian (for 3 years).','KHÔNG dùng HTHT với mốc quá khứ xác định (yesterday, last year, ago) — phải dùng quá khứ đơn.','<b>already</b> đứng giữa have và V3 (câu khẳng định); <b>yet</b> đứng cuối câu phủ định/nghi vấn.','<b>gone to</b> = đã đi và CHƯA về ≠ <b>been to</b> = đã từng đến và đã về.'],
+ex:[['I have lived here for ten years.','Tôi đã sống ở đây mười năm rồi.'],
+['She has just finished her report.','Cô ấy vừa hoàn thành báo cáo.'],
+['Have you ever been to Da Nang?','Bạn đã từng đến Đà Nẵng chưa?'],
+['They haven’t arrived yet.','Họ vẫn chưa đến.'],
+['We have known each other since 2019.','Chúng tôi quen nhau từ năm 2019.'],
+['He has already read that book.','Anh ấy đã đọc cuốn sách đó rồi.']]},
+more:[
+()=>mkF('I ___ (live) in this city since 2018.','have lived','since → HTHT: have + V3.','Viết 2 từ'),
+()=>mkF('She ___ (not / finish) her homework yet.',["hasn't finished",'has not finished'],'yet → HTHT phủ định.','Viết 2-3 từ'),
+()=>mkF('___ you ever ___ (be) to Ha Long Bay?',['have been','Have been'],'Have + S + ever + been? (Viết: have / been)','Viết 2 từ'),
+()=>mkO('We have known each other for five years','S + have + V3 + tân ngữ + for + khoảng thời gian.','Chúng tôi quen nhau được năm năm rồi.'),
+()=>mkO('She has already sent the email','already đứng giữa has và V3.','Cô ấy đã gửi email rồi.'),
+()=>mkE('I have seen that film yesterday.','have','bỏ "have" → I saw','yesterday là mốc quá khứ xác định nên phải dùng quá khứ đơn: I saw that film yesterday.'),
+()=>mkE('She has lived here since five years.','since','for','five years là khoảng thời gian → dùng for.'),
+()=>mkT('Viết lại dùng "for": "I started learning English in 2020." (nay là 2026)',['I have learnt English for six years.','I have learned English for six years.'],'Bắt đầu QK, kéo dài tới nay → have + V3 + for.','Bắt đầu bằng I have'),
+()=>mkT('Chuyển thành câu hỏi: "They have visited the museum."',['Have they visited the museum?'],'Đảo have lên trước chủ ngữ.','Nhớ dấu ?')]},
+
+gr_conditional:{gr:[8,9,10],
+theory:{
+use:['<b>Loại 0</b>: chân lí, sự thật luôn đúng','<b>Loại 1</b>: điều CÓ THỂ xảy ra ở hiện tại/tương lai','<b>Loại 2</b>: giả định TRÁI với hiện tại, khó xảy ra','<b>Loại 3</b>: giả định TRÁI với quá khứ, không thể thay đổi'],
+form:[['Loại 0','If + HT đơn, HT đơn','If you heat ice, it <b>melts</b>.'],
+['Loại 1','If + HT đơn, will + V','If it <b>rains</b>, we <b>will stay</b> home.'],
+['Loại 2','If + QK đơn, would + V','If I <b>were</b> you, I <b>would study</b> harder.'],
+['Loại 3','If + had + V3, would have + V3','If I <b>had known</b>, I <b>would have come</b>.']],
+sign:'If · Unless (= if … not) · As long as · Provided that',
+tips:['Loại 2 dùng <b>were</b> cho MỌI ngôi: <i>If I were you…</i>','<b>Unless</b> = If … not, nên sau Unless KHÔNG dùng phủ định nữa: <i>Unless you hurry (= If you don’t hurry)…</i>','Mệnh đề If đứng trước thì có dấu phẩy; đứng sau thì không cần.','KHÔNG dùng <b>will</b> trong mệnh đề If của loại 1: <i>If it <s>will rain</s> rains…</i>'],
+ex:[['If you mix red and blue, you get purple.','Nếu trộn đỏ với xanh, bạn được màu tím.'],
+['If she studies hard, she will pass the exam.','Nếu chăm học, cô ấy sẽ đỗ kì thi.'],
+['If I had more money, I would travel the world.','Nếu có nhiều tiền hơn, tôi sẽ đi khắp thế giới.'],
+['If we had left earlier, we wouldn’t have missed the bus.','Nếu đi sớm hơn, chúng tôi đã không lỡ xe buýt.'],
+['Unless you water the plants, they will die.','Nếu bạn không tưới cây, chúng sẽ chết.'],
+['If I were you, I would apologise.','Nếu tôi là bạn, tôi sẽ xin lỗi.']]},
+more:[
+()=>mkF('If it ___ (rain) tomorrow, we will cancel the trip.','rains','Loại 1: If + HT đơn (không dùng will).','Chia động từ'),
+()=>mkF('If I ___ (be) you, I would take that job.','were','Loại 2 dùng were cho mọi ngôi.','Điền 1 từ'),
+()=>mkF('If she had studied, she ___ (pass) the exam.','would have passed','Loại 3: would have + V3.','Viết 3 từ'),
+()=>mkO('If you practise every day you will improve quickly','Loại 1: If + HT đơn, S + will + V.','Nếu luyện tập mỗi ngày, bạn sẽ tiến bộ nhanh.'),
+()=>mkO('Unless we protect the forest many animals will disappear','Unless + HT đơn (không phủ định), will + V.','Nếu không bảo vệ rừng, nhiều loài vật sẽ biến mất.'),
+()=>mkE('If it will rain, we will stay at home.','will','bỏ "will" → If it rains','Mệnh đề If loại 1 dùng hiện tại đơn, không dùng will.'),
+()=>mkE('Unless you don’t hurry, you will be late.','don’t','bỏ "don’t" → Unless you hurry','Unless đã mang nghĩa phủ định rồi, không dùng thêm don’t.'),
+()=>mkT('Viết lại dùng "Unless": "If you don’t study, you will fail."',['Unless you study, you will fail.'],'If … not = Unless.','Bắt đầu: Unless'),
+()=>mkT('Viết câu điều kiện loại 2: "I am not rich, so I don’t buy a car."',['If I were rich, I would buy a car.'],'Trái hiện tại → loại 2: If + were, would + V.','Bắt đầu: If I')]},
+
+gr_cond1:{gr:[7,8,9],
+theory:{
+use:['Điều kiện CÓ THẬT, có khả năng xảy ra ở hiện tại hoặc tương lai','Lời cảnh báo, lời hứa, lời đe doạ','Đưa ra đề nghị hoặc điều kiện trao đổi'],
+form:[['(+)','If + S + V(s/es), S + will + V','If it <b>rains</b>, I <b>will stay</b> home.'],
+['Đảo vế','S + will + V + if + S + V(s/es)','I <b>will stay</b> home <b>if it rains</b>.'],
+['Biến thể','can / may / should / imperative thay cho will','If you see Nam, <b>tell</b> him to call me.']],
+sign:'if, unless, as long as, provided that, in case',
+tips:['Mệnh đề If dùng HIỆN TẠI ĐƠN, KHÔNG dùng will: <i>If she <s>will come</s> comes…</i>','Có thể thay <b>will</b> bằng <b>can / may / must / should</b> tuỳ ý nghĩa.','Mệnh đề If đứng đầu → có dấu phẩy; đứng sau → không dấu phẩy.','<b>Unless</b> = If … not.'],
+ex:[['If you hurry, you will catch the bus.','Nếu nhanh lên, bạn sẽ bắt kịp xe buýt.'],
+['If it is sunny tomorrow, we will go swimming.','Nếu mai trời nắng, chúng ta sẽ đi bơi.'],
+['She won’t pass if she doesn’t revise.','Cô ấy sẽ không đỗ nếu không ôn bài.'],
+['If you need help, just call me.','Nếu cần giúp, cứ gọi tôi.'],
+['Unless it stops raining, the match will be cancelled.','Nếu trời không tạnh mưa, trận đấu sẽ bị huỷ.'],
+['If you finish early, you can go home.','Nếu xong sớm, bạn có thể về.']]},
+more:[
+()=>mkF('If you ___ (not / hurry), you will miss the train.',["don't hurry",'do not hurry'],'Mệnh đề If dùng hiện tại đơn.','Viết 2-3 từ'),
+()=>mkF('If he calls me, I ___ (tell) him the news.','will tell','Vế chính loại 1 dùng will + V.','Viết 2 từ'),
+()=>mkF('___ you study hard, you will get good marks.','if','Điều kiện có thật → If.','Điền 1 từ'),
+()=>mkO('If it is cold we will wear warm clothes','If + HT đơn, S + will + V.','Nếu trời lạnh, chúng ta sẽ mặc áo ấm.'),
+()=>mkO('You will be tired if you sleep late','Vế chính trước, mệnh đề if sau, không dấu phẩy.','Bạn sẽ mệt nếu ngủ muộn.'),
+()=>mkE('If she will come, we will start the meeting.','will','bỏ "will" → If she comes','Mệnh đề If loại 1 dùng hiện tại đơn.'),
+()=>mkE('If you don’t hurry, you miss the bus.','miss','will miss','Vế chính loại 1 dùng will + V.'),
+()=>mkT('Nối thành câu điều kiện loại 1: "You practise a lot. You will speak English well."',['If you practise a lot, you will speak English well.'],'If + HT đơn, will + V.','Bắt đầu: If'),
+()=>mkT('Viết lại dùng "Unless": "If you don’t wear a coat, you will catch a cold."',['Unless you wear a coat, you will catch a cold.'],'If … not = Unless.','Bắt đầu: Unless')]},
+
+gr_cond2:{gr:[8,9,10],
+theory:{
+use:['Giả định TRÁI NGƯỢC với thực tế ở hiện tại','Điều khó hoặc không thể xảy ra','Đưa lời khuyên lịch sự với "If I were you…"'],
+form:[['(+)','If + S + V2 / were, S + would + V','If I <b>had</b> money, I <b>would travel</b>.'],
+['Lời khuyên','If I were you, I would + V','<b>If I were you, I would</b> see a doctor.'],
+['Biến thể','could / might thay cho would','If she tried, she <b>might succeed</b>.']],
+sign:'If + quá khứ đơn · were (mọi ngôi) · would / could / might',
+tips:['Dùng <b>were</b> cho TẤT CẢ các ngôi trong văn viết chuẩn: <i>If he <b>were</b> here…</i>','Mệnh đề If dùng QUÁ KHỨ ĐƠN nhưng mang nghĩa HIỆN TẠI, không phải chuyện đã xảy ra.','KHÔNG dùng <b>would</b> trong mệnh đề If: <i>If I <s>would have</s> had…</i>','So sánh: loại 1 = có thể xảy ra · loại 2 = trái thực tế hiện tại.'],
+ex:[['If I were rich, I would buy a big house.','Nếu tôi giàu, tôi sẽ mua ngôi nhà lớn.'],
+['If she spoke English, she would get the job.','Nếu cô ấy nói được tiếng Anh, cô ấy sẽ nhận được việc.'],
+['If I were you, I wouldn’t do that.','Nếu tôi là bạn, tôi sẽ không làm vậy.'],
+['What would you do if you won the lottery?','Bạn sẽ làm gì nếu trúng số?'],
+['If we lived near the sea, we could swim every day.','Nếu sống gần biển, chúng tôi có thể bơi mỗi ngày.'],
+['If he had more time, he would learn the guitar.','Nếu có nhiều thời gian hơn, anh ấy sẽ học ghi-ta.']]},
+more:[
+()=>mkF('If I ___ (have) a car, I would drive to work.','had','Loại 2: If + quá khứ đơn.','Điền 1 từ'),
+()=>mkF('If she were here, she ___ (help) us.','would help','Vế chính loại 2: would + V.','Viết 2 từ'),
+()=>mkF('If I ___ you, I would apologise.','were','Lời khuyên: If I were you.','Điền 1 từ'),
+()=>mkO('If I had more free time I would learn Japanese','If + QK đơn, S + would + V.','Nếu có nhiều thời gian rảnh hơn, tôi sẽ học tiếng Nhật.'),
+()=>mkO('What would you do if you were the president','Câu hỏi loại 2: What would + S + V + if + QK đơn?','Bạn sẽ làm gì nếu là tổng thống?'),
+()=>mkE('If I would have money, I would buy a house.','would','bỏ "would" → If I had money','Mệnh đề If loại 2 dùng quá khứ đơn, không dùng would.'),
+()=>mkE('If he was you, he would accept the offer.','was','were','Loại 2 dùng were cho mọi ngôi.'),
+()=>mkT('Viết câu điều kiện loại 2: "I don’t have a bike, so I walk to school."',['If I had a bike, I would not walk to school.',"If I had a bike, I wouldn't walk to school."],'Trái hiện tại → If + QK đơn, would + V.','Bắt đầu: If I had'),
+()=>mkT('Viết lại thành lời khuyên: "You should see a doctor." (dùng If I were you)',['If I were you, I would see a doctor.'],'Lời khuyên lịch sự → If I were you, I would + V.','Bắt đầu: If I were you')]},
+
+gr_relative:{gr:[8,9,10],
+theory:{
+use:['Nối hai câu, bổ nghĩa cho danh từ đứng trước','Tránh lặp lại danh từ','Cung cấp thêm thông tin về người, vật, nơi chốn, thời gian'],
+form:[['who','người – chủ ngữ hoặc tân ngữ','The man <b>who</b> called is my uncle.'],
+['whom','người – tân ngữ (trang trọng)','The girl <b>whom</b> you met is Lan.'],
+['which','vật, sự việc','The book <b>which</b> I read was great.'],
+['that','người hoặc vật (chỉ MĐQH xác định)','The car <b>that</b> he bought is red.'],
+['whose','sở hữu, luôn + danh từ','The boy <b>whose</b> father is a doctor…'],
+['where / when','nơi chốn / thời gian','This is the town <b>where</b> I grew up.']],
+sign:'Ngay sau danh từ cần bổ nghĩa · Có dấu phẩy = mệnh đề không xác định',
+tips:['Sau dấu PHẨY KHÔNG được dùng <b>that</b>: <i>My mother, <s>that</s> who is a nurse, …</i>','Dùng <b>that</b> bắt buộc sau: <i>all, everything, something, nothing, the only, so sánh nhất</i>.','Có thể LƯỢC BỎ đại từ quan hệ khi nó làm TÂN NGỮ: <i>The book (which) I read…</i>','<b>which</b> có thể thay cho cả mệnh đề đứng trước: <i>He failed, which surprised us.</i>','Rút gọn: <i>who is standing → standing</i> (chủ động) · <i>which was built → built</i> (bị động).'],
+ex:[['The woman who lives next door is a teacher.','Người phụ nữ sống cạnh nhà là giáo viên.'],
+['This is the phone which I bought yesterday.','Đây là chiếc điện thoại tôi mua hôm qua.'],
+['I know a boy whose mother is a singer.','Tôi biết một cậu bé có mẹ là ca sĩ.'],
+['Hue, which is an ancient capital, attracts many tourists.','Huế, vốn là cố đô, thu hút nhiều du khách.'],
+['That is the school where my father studied.','Đó là ngôi trường bố tôi từng học.'],
+['I will never forget the day when we first met.','Tôi sẽ không bao giờ quên ngày chúng ta gặp nhau.']]},
+more:[
+()=>mkF('The man ___ is wearing a blue shirt is my teacher.','who','Người, làm chủ ngữ → who.','Điền 1 từ'),
+()=>mkF('This is the village ___ my grandparents live.','where','Nơi chốn → where.','Điền 1 từ'),
+()=>mkF('I met a girl ___ brother plays for the school team.','whose','Sở hữu → whose + N.','Điền 1 từ'),
+()=>mkO('The book which I borrowed was very interesting','N + which + S + V + be + adj.','Cuốn sách tôi mượn rất thú vị.'),
+()=>mkO('Da Nang which is a coastal city has beautiful beaches','MĐQH không xác định nằm giữa hai dấu phẩy.','Đà Nẵng, một thành phố ven biển, có những bãi biển đẹp.'),
+()=>mkE('My mother, that is a nurse, works very hard.','that','who','Sau dấu phẩy không dùng that; người → who.'),
+()=>mkE('The boy who father is a doctor studies well.','who','whose','Sở hữu (cha của cậu bé) → whose.'),
+()=>mkT('Nối 2 câu bằng đại từ quan hệ: "The girl is my sister. She is singing."',['The girl who is singing is my sister.'],'Người, làm chủ ngữ → who.','Bắt đầu: The girl'),
+()=>mkT('Nối 2 câu: "This is the house. My family lived there."',['This is the house where my family lived.'],'Nơi chốn → where.','Bắt đầu: This is the house')]},
+
+gr_reported:{gr:[8,9,10],
+theory:{
+use:['Thuật lại lời người khác nói mà không dùng nguyên văn','Thuật lại câu hỏi, câu mệnh lệnh, lời khuyên'],
+form:[['Câu kể','S + said (that) + S + V (lùi thì)','She said (that) she <b>was</b> tired.'],
+['Câu hỏi Yes/No','S + asked + if / whether + S + V','He asked <b>if</b> I <b>could</b> help.'],
+['Câu hỏi Wh-','S + asked + Wh- + S + V','She asked <b>where I lived</b>.'],
+['Mệnh lệnh','S + told / asked + O + (not) to V','He told me <b>not to be</b> late.']],
+sign:'said, told, asked, wanted to know, wondered',
+tips:['Lùi một thì: <i>am/is → was · are → were · V(s) → V-ed · will → would · can → could · have → had · V-ed → had V3</i>','Đổi đại từ và trạng ngữ: <i>I → he/she · here → there · now → then · today → that day · tomorrow → the next day · yesterday → the day before · this → that</i>','Câu hỏi khi tường thuật trở về TRẬT TỰ KHẲNG ĐỊNH (S + V), bỏ do/does/did và dấu ?','<b>say to sb</b> = <b>tell sb</b>. Sau <b>tell</b> bắt buộc có tân ngữ: <i>He told <b>me</b> that…</i>'],
+ex:[['"I am busy." → She said she was busy.','"Tôi bận." → Cô ấy nói cô ấy bận.'],
+['"I will come." → He said he would come.','"Tôi sẽ đến." → Anh ấy nói anh ấy sẽ đến.'],
+['"Where do you live?" → She asked where I lived.','"Bạn sống ở đâu?" → Cô ấy hỏi tôi sống ở đâu.'],
+['"Don’t touch it!" → He told me not to touch it.','"Đừng chạm vào!" → Anh ấy bảo tôi đừng chạm vào.'],
+['"Can you swim?" → She asked if I could swim.','"Bạn biết bơi không?" → Cô ấy hỏi tôi có biết bơi không.'],
+['"I saw him yesterday." → She said she had seen him the day before.','"Tôi gặp anh ấy hôm qua." → Cô ấy nói đã gặp anh ấy hôm trước.']]},
+more:[
+()=>mkF('"I am hungry," she said. → She said she ___ hungry.','was','am → was (lùi thì).','Điền 1 từ'),
+()=>mkF('"I will call you," he said. → He said he ___ call me.','would','will → would.','Điền 1 từ'),
+()=>mkF('"Where do you work?" she asked. → She asked where I ___ .','worked','Câu hỏi Wh- về trật tự khẳng định, lùi thì: worked.','Điền 1 từ'),
+()=>mkO('She said that she was very tired that day','S + said that + S + V lùi thì + trạng ngữ đã đổi.','Cô ấy nói hôm đó cô ấy rất mệt.'),
+()=>mkO('He told me not to open the door','told + O + not to + V.','Anh ấy bảo tôi đừng mở cửa.'),
+()=>mkE('She asked me where did I live.','did','bỏ "did" → where I lived','Câu hỏi khi tường thuật trở về trật tự khẳng định, bỏ do/does/did.'),
+()=>mkE('He said me that he was busy.','said','told','said to me hoặc told me; "said me" là sai.'),
+()=>mkT('Chuyển sang câu tường thuật: "I like this song," Lan said.',['Lan said that she liked that song.','Lan said she liked that song.'],'like → liked; this → that; I → she.','Bắt đầu: Lan said'),
+()=>mkT('Chuyển sang câu tường thuật: "Close the window," the teacher said to us.',['The teacher told us to close the window.'],'Mệnh lệnh → told + O + to V.','Bắt đầu: The teacher told us')]}
+
+});
+
+
+/* ===== Gộp chuyên đề trùng id + gắn lý thuyết, nhãn lớp, bài tập bổ sung ===== */
+(function mergeGrammar(){
+  const seen={},out=[];
+  GRAMMAR_TOPICS.forEach(t=>{
+    if(seen[t.id]){seen[t.id].qs=seen[t.id].qs.concat(t.qs);}
+    else{seen[t.id]=t;out.push(t);}
+  });
+  GRAMMAR_TOPICS.length=0;out.forEach(t=>GRAMMAR_TOPICS.push(t));
+  GRAMMAR_TOPICS.forEach(t=>{
+    const m=GR_META[t.id];
+    if(m){t.gr=m.gr;t.theory=m.theory;t.more=m.more||[];}
+    else{t.gr=[6,7,8];t.theory=null;t.more=[];}
+  });
+})();
+
+const DIFF_LABELS={easy:'🟢 Dễ',medium:'🟡 Vừa',hard:'🔴 Khó',advanced:'🟠 Nâng cao'};
+const DIFF_SHORT={easy:'Dễ',medium:'Vừa',hard:'Khó',advanced:'Nâng cao'};
+const DIFF_ORDER=['easy','medium','hard','advanced'];
+const GR_GRADES=[4,5,6,7,8,9,10];
+let _grGrade='all';
+const TYPE_LABEL={mcq:'🔘 Trắc nghiệm',fill:'✍️ Điền từ',order:'🔤 Sắp xếp câu',error:'🔍 Tìm lỗi sai',trans:'🔁 Viết lại câu'};
+
+function grNorm(s){
+  return String(s||'').toLowerCase()
+    .replace(/[‘’ʼ]/g,"'").replace(/[“”]/g,'"')
+    .replace(/[.,!?;:]+$/,'').replace(/\s+/g,' ').trim();
+}
+function grMatch(input,answers){
+  const n=grNorm(input);
+  return answers.some(a=>grNorm(a)===n);
+}
+
+/* ================= MÀN HÌNH CHỦ ĐỀ ================= */
 function grammarHome(){
-  const card=$('grammarCard');
-  card.innerHTML=`
+  $('grammarCard').innerHTML=`
     <h2>📝 Ôn Tập Ngữ Pháp</h2>
     <a href="grammar.html" style="display:flex;align-items:center;gap:14px;text-decoration:none;background:linear-gradient(135deg,#312e81,#6d28d9 60%,#a21caf);border-radius:18px;padding:14px 18px;margin-bottom:14px;border:3px solid rgba(255,255,255,.25);box-shadow:0 6px 0 rgba(0,0,0,.18)">
       <span style="font-size:40px">🧠</span>
       <span style="flex:1">
-        <b style="font-family:'Baloo 2';color:#fff;font-size:17px">MỚI! Ngữ Pháp Master — 20 chuyên đề chuyên sâu 🏔️</b>
-        <span style="display:block;color:#ddd6fe;font-size:12.5px;margin-top:2px">Lý thuyết trực quan → Ví dụ có dịch → Luyện tập 4 mức độ → Thi lấy huy chương 🥇 (400 câu hỏi theo sách Tổng ôn Ngữ pháp)</span>
+        <b style="font-family:'Baloo 2';color:#fff;font-size:17px">Ngữ Pháp Master — 20 chuyên đề chuyên sâu 🏔️</b>
+        <span style="display:block;color:#ddd6fe;font-size:12.5px;margin-top:2px">400 câu hỏi theo sách Tổng ôn Ngữ pháp · Thi lấy huy chương 🥇</span>
       </span>
       <span style="background:#ffd23f;color:#5b3500;font-family:'Baloo 2';font-weight:800;border-radius:30px;padding:8px 16px;font-size:14px;white-space:nowrap">Vào học ➜</span>
     </a>
-    <p class="sub">…hoặc luyện nhanh tại đây: chọn mức độ, rồi chọn chủ đề. Mỗi câu đúng +12 XP 🎯</p>
+    <p class="sub"><b>Mỗi chuyên đề có: 📖 Lý thuyết → 💡 Ví dụ có dịch → 🎯 Luyện tập 5 dạng bài.</b> Mỗi câu đúng +12 XP.</p>
+    <div class="gr-filter-lb">🎒 Chọn lớp:</div>
+    <div class="gr-grade-bar">
+      <button class="gr-grade-btn${_grGrade==='all'?' on':''}" data-g="all" onclick="grSetGrade('all')">📚 Tất cả</button>
+      ${GR_GRADES.map(g=>`<button class="gr-grade-btn${_grGrade===g?' on':''}" data-g="${g}" onclick="grSetGrade(${g})">Lớp ${g}</button>`).join('')}
+    </div>
+    <div class="gr-filter-lb">🎚️ Mức độ:</div>
     <div class="gr-diff-bar">
+      <button class="gr-diff-btn${_grDiff==='all'?' on':''}" data-d="all" onclick="grSetDiff('all')">🌈 Tất cả</button>
       ${DIFF_ORDER.map(d=>`<button class="gr-diff-btn${d===_grDiff?' on':''}" data-d="${d}" onclick="grSetDiff('${d}')">${DIFF_LABELS[d]}</button>`).join('')}
     </div>
     <div class="gr-topic-grid" id="grTopicGrid"></div>`;
   grRenderTopics();
 }
-
-function grSetDiff(d){
-  _grDiff=d;
+function grSetGrade(g){_grGrade=g;sndClick();
+  document.querySelectorAll('.gr-grade-btn').forEach(b=>b.classList.toggle('on',String(b.dataset.g)===String(g)));
+  grRenderTopics();}
+function grSetDiff(d){_grDiff=d;sndClick();
   document.querySelectorAll('.gr-diff-btn').forEach(b=>b.classList.toggle('on',b.dataset.d===d));
-  grRenderTopics();
-}
+  grRenderTopics();}
 
+function grTopicList(){
+  return GRAMMAR_TOPICS.filter(t=>
+    (_grDiff==='all'||t.diff===_grDiff) &&
+    (_grGrade==='all'||(t.gr||[]).indexOf(+_grGrade)>=0));
+}
 function grRenderTopics(){
-  const topics=GRAMMAR_TOPICS.filter(t=>t.diff===_grDiff);
+  const topics=grTopicList();
+  if(!topics.length){
+    $('grTopicGrid').innerHTML='<p class="sub">😅 Không có chuyên đề nào khớp bộ lọc này. Thử chọn <b>Tất cả</b> ở mức độ xem sao nhé!</p>';
+    return;
+  }
   $('grTopicGrid').innerHTML=topics.map(t=>`
-    <button class="gr-topic-card diff-${t.diff}" onclick="startGrammarReview('${t.id}')">
-      <span class="gr-diff-badge">${DIFF_LABELS[t.diff].split(' ')[0]} ${t.diff==='easy'?'Dễ':t.diff==='medium'?'Vừa':t.diff==='hard'?'Khó':'Nâng cao'}</span>
+    <button class="gr-topic-card diff-${t.diff}" onclick="openGrTopic('${t.id}')">
+      <span class="gr-diff-badge">${DIFF_LABELS[t.diff].split(' ')[0]} ${DIFF_SHORT[t.diff]}</span>
       <span class="gt-em">${t.em}</span>
       <div class="gt-name">${esc(t.name)}</div>
       <div class="gt-sub">${esc(t.sub)}</div>
-      <span class="gt-cnt">10 câu · +12 XP/câu</span>
+      <div class="gt-grades">${(t.gr||[]).map(g=>`<span class="gt-gchip">Lớp ${g}</span>`).join('')}</div>
+      <span class="gt-cnt">📖 Lý thuyết · 🎯 10 câu · 5 dạng bài</span>
     </button>`).join('');
 }
 
+/* ================= TRANG LÝ THUYẾT + VÍ DỤ ================= */
+function openGrTopic(id){
+  const t=GRAMMAR_TOPICS.find(x=>x.id===id);
+  if(!t)return;
+  sndClick();
+  const th=t.theory;
+  let body='';
+  if(th){
+    body=`
+    <div class="gr-theory">
+      <div class="th-sec"><h4>🎯 Khi nào dùng?</h4><ul>${th.use.map(u=>`<li>${u}</li>`).join('')}</ul></div>
+      <div class="th-sec"><h4>🧱 Công thức</h4>
+        <div class="th-tablewrap"><table class="th-table">
+          <tr><th>Dạng</th><th>Cấu trúc</th><th>Ví dụ</th></tr>
+          ${th.form.map(f=>`<tr><td class="th-k">${f[0]}</td><td class="th-f">${f[1]}</td><td class="th-e">${f[2]}</td></tr>`).join('')}
+        </table></div>
+      </div>
+      <div class="th-sec"><h4>🔎 Dấu hiệu nhận biết</h4><div class="th-sign">${th.sign}</div></div>
+      <div class="th-sec"><h4>⚠️ Lưu ý &amp; lỗi hay gặp</h4><ul class="th-tips">${th.tips.map(u=>`<li>${u}</li>`).join('')}</ul></div>
+      <div class="th-sec"><h4>💡 Ví dụ có dịch</h4>
+        ${th.ex.map(e=>`<div class="th-exrow"><b>${esc(e[0])}</b><span>${esc(e[1])}</span></div>`).join('')}
+      </div>
+    </div>`;
+  }else{
+    body='<p class="sub">Chuyên đề này chưa có phần lý thuyết chi tiết — em vào luyện tập luôn nhé!</p>';
+  }
+  $('grammarCard').innerHTML=`
+    <div class="row" style="justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+      <button class="btn ghost sm" onclick="grammarHome()">← Chủ đề</button>
+      <span style="font-family:'Baloo 2';font-weight:800;color:var(--violet);font-size:16px">${t.em} ${esc(t.name)}</span>
+      <span class="gr-diff-badge diff-${t.diff}" style="position:static">${DIFF_LABELS[t.diff]}</span>
+    </div>
+    <div class="gr-subtitle">${esc(t.sub)} · ${(t.gr||[]).map(g=>'Lớp '+g).join(' · ')}</div>
+    ${body}
+    <div class="center mt">
+      <button class="btn teal" onclick="startGrammarReview('${t.id}')">🎯 Luyện tập ngay (10 câu · 5 dạng)</button>
+      <button class="btn ghost" onclick="speakTheory('${t.id}')">🔊 Nghe ví dụ</button>
+    </div>`;
+}
+function speakTheory(id){
+  const t=GRAMMAR_TOPICS.find(x=>x.id===id);
+  if(!t||!t.theory)return;
+  try{speak(t.theory.ex.map(e=>e[0]).join(' '),1)}catch(e){}
+}
+
+/* ================= LUYỆN TẬP 5 DẠNG ================= */
 function startGrammarReview(topicId){
   const topic=GRAMMAR_TOPICS.find(t=>t.id===topicId);
   if(!topic)return;
-  const qs=shuffle(topic.qs.map(fn=>fn())).slice(0,10);
+  sndClick();
+  const mcq=shuffle(topic.qs.map(fn=>fn())).slice(0,4).map(q=>Object.assign({t:'mcq'},q));
+  const extra=shuffle((topic.more||[]).map(fn=>fn())).slice(0,6);
+  let qs=shuffle(mcq.concat(extra));
+  if(qs.length<6)qs=shuffle(topic.qs.map(fn=>fn())).slice(0,10).map(q=>Object.assign({t:'mcq'},q));
   GR={topic,qs,i:0,right:0};
   streak=0;
   renderGRQ();
 }
 
-function renderGRQ(){
+function grHead(){
   const q=GR.qs[GR.i];
-  const order=shuffle(q.o.map((t,idx)=>({t,idx})));
-  $('grammarCard').innerHTML=`
-    <div class="row" style="justify-content:space-between;margin-bottom:14px">
-      <button class="btn ghost sm" onclick="grammarHome()">← Chủ đề</button>
+  return `
+    <div class="row" style="justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+      <button class="btn ghost sm" onclick="openGrTopic('${GR.topic.id}')">← Lý thuyết</button>
       <span style="font-family:'Baloo 2';font-weight:800;color:var(--violet)">${GR.topic.em} ${esc(GR.topic.name)}</span>
-      <span class="gr-diff-badge diff-${GR.topic.diff}" style="position:static">${DIFF_LABELS[GR.topic.diff]}</span>
+      <span class="gr-type-badge">${TYPE_LABEL[q.t]||''}</span>
     </div>
     <div class="qbar">
       <span class="qcount">Câu ${GR.i+1}/${GR.qs.length}</span>
       <div class="qprog"><i style="width:${GR.i/GR.qs.length*100}%"></i></div>
       <span class="streak">🔥 ${streak}</span>
-    </div>
-    <div class="qq">${esc(q.q)}</div>
-    <div class="opts">${order.map((o,k)=>`<button class="opt" id="grop${k}" onclick="answerGR(${o.idx},${k})">\
-<span class="ab">${'ABCDEFGH'[k]||(k+1)}</span>${esc(o.t)}</button>`).join('')}</div>
-    <div class="feedback" id="grfb"></div>
+    </div>`;
+}
+function grTail(){
+  return `<div class="feedback" id="grfb"></div>
     <div class="center mt hidden" id="grnextRow"><button class="btn teal" onclick="nextGRQ()">Câu tiếp theo ➜</button></div>`;
-  window._grOrder=order;
 }
 
+function renderGRQ(){
+  const q=GR.qs[GR.i];
+  if(q.t==='fill'||q.t==='trans')return renderGRText(q);
+  if(q.t==='order')return renderGROrder(q);
+  if(q.t==='error')return renderGRError(q);
+  return renderGRMcq(q);
+}
+
+/* --- 1. Trắc nghiệm --- */
+function renderGRMcq(q){
+  const order=shuffle(q.o.map((t,idx)=>({t,idx})));
+  $('grammarCard').innerHTML=grHead()+
+    `<div class="qq">${esc(q.q)}</div>
+     <div class="opts">${order.map((o,k)=>`<button class="opt" id="grop${k}" onclick="answerGR(${o.idx},${k})"><span class="ab">${'ABCDEFGH'[k]||(k+1)}</span>${esc(o.t)}</button>`).join('')}</div>`+grTail();
+  window._grOrder=order;
+}
 function answerGR(realIdx,btnK){
   const q=GR.qs[GR.i];
   document.querySelectorAll('#grammarCard .opt').forEach(b=>b.disabled=true);
-  const correct=realIdx===q.a;
   window._grOrder.forEach((o,k)=>{
     const b=$('grop'+k);
     if(o.idx===q.a)b.classList.add('right');
     else if(k===btnK)b.classList.add('wrong');
     else b.classList.add('dim');
   });
+  grJudge(realIdx===q.a,esc(q.o[q.a]),q.e);
+}
+
+/* --- 2 & 5. Điền từ / Viết lại câu --- */
+function renderGRText(q){
+  const isT=q.t==='trans';
+  $('grammarCard').innerHTML=grHead()+
+    `<div class="qq">${esc(q.q)}</div>
+     ${q.hint?`<div class="gr-hint">💡 Gợi ý: ${esc(q.hint)}</div>`:''}
+     <div class="gr-inputrow">
+       <input class="gr-input" id="grInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+         placeholder="${isT?'Viết lại cả câu tiếng Anh…':'Gõ đáp án…'}">
+       <button class="btn teal" id="grChk" onclick="answerGRText()">✔️ Kiểm tra</button>
+     </div>`+grTail();
+  const el=$('grInput');
+  el.addEventListener('keydown',e=>{if(e.key==='Enter')answerGRText()});
+  setTimeout(()=>el.focus(),80);
+}
+function answerGRText(){
+  const q=GR.qs[GR.i],el=$('grInput');
+  if(!el||el.disabled)return;
+  const val=el.value.trim();
+  if(!val){toast('✏️ Em gõ đáp án đã nha!');return}
+  const ok=grMatch(val,q.ans);
+  el.disabled=true;$('grChk').disabled=true;
+  el.classList.add(ok?'right':'wrong');
+  grJudge(ok,esc(q.ans[0]),q.e);
+}
+
+/* --- 3. Sắp xếp câu --- */
+function renderGROrder(q){
+  const words=q.sent.split(' ');
+  window._grOrd={pool:shuffle(words.map((w,i)=>({w,i}))),built:[],done:false};
+  $('grammarCard').innerHTML=grHead()+
+    `<div class="qq">🔤 Sắp xếp các từ thành câu đúng:</div>
+     ${q.vn?`<div class="gr-hint">💡 Nghĩa: ${esc(q.vn)}</div>`:''}
+     <div class="gr-built" id="grBuilt"></div>
+     <div class="gr-pool" id="grPool"></div>
+     <div class="center" style="margin-top:10px">
+       <button class="btn sun sm" onclick="grOrdReset()">↩️ Làm lại</button>
+       <button class="btn teal sm" id="grChk" onclick="answerGROrder()">✔️ Kiểm tra</button>
+     </div>`+grTail();
+  grOrdPaint();
+}
+function grOrdPaint(){
+  const S=window._grOrd;
+  $('grBuilt').innerHTML=S.built.length
+    ? S.built.map((t,k)=>`<button class="gr-tile built" ${S.done?'disabled':''} onclick="grOrdBack(${k})">${esc(t.w)}</button>`).join('')
+    : '<span class="gr-built-ph">Bấm các từ bên dưới để xếp câu…</span>';
+  $('grPool').innerHTML=S.pool.map((t,k)=>`<button class="gr-tile" ${S.done?'disabled':''} onclick="grOrdPick(${k})">${esc(t.w)}</button>`).join('');
+}
+function grOrdPick(k){const S=window._grOrd;if(S.done)return;S.built.push(S.pool.splice(k,1)[0]);sndClick();grOrdPaint()}
+function grOrdBack(k){const S=window._grOrd;if(S.done)return;S.pool.push(S.built.splice(k,1)[0]);sndClick();grOrdPaint()}
+function grOrdReset(){const S=window._grOrd;if(S.done)return;S.pool=shuffle(S.pool.concat(S.built));S.built=[];sndClick();grOrdPaint()}
+function answerGROrder(){
+  const q=GR.qs[GR.i],S=window._grOrd;
+  if(S.done)return;
+  if(!S.built.length){toast('🔤 Em xếp câu đã nha!');return}
+  S.done=true;grOrdPaint();
+  $('grChk').disabled=true;
+  const ok=grNorm(S.built.map(t=>t.w).join(' '))===grNorm(q.sent);
+  grJudge(ok,esc(q.sent+'.'),q.e);
+}
+
+/* --- 4. Tìm lỗi sai --- */
+function renderGRError(q){
+  const words=q.sent.split(' ');
+  window._grErr={done:false,words};
+  $('grammarCard').innerHTML=grHead()+
+    `<div class="qq">🔍 Bấm vào TỪ bị sai trong câu:</div>
+     <div class="gr-words" id="grWords">${words.map((w,k)=>`<button class="gr-word" id="grw${k}" onclick="answerGRError(${k})">${esc(w)}</button>`).join('')}</div>`+grTail();
+}
+function answerGRError(k){
+  const q=GR.qs[GR.i],S=window._grErr;
+  if(S.done)return;
+  S.done=true;
+  const strip=s=>grNorm(s).replace(/[.,!?;:]/g,'');
+  let target=S.words.findIndex(w=>strip(w)===strip(q.wrong));
+  if(target<0)target=S.words.findIndex(w=>strip(w).indexOf(strip(q.wrong))>=0);
+  document.querySelectorAll('#grWords .gr-word').forEach(b=>b.disabled=true);
+  if(target>=0)$('grw'+target).classList.add('right');
+  if(k!==target)$('grw'+k).classList.add('wrong');
+  grJudge(k===target,esc(q.wrong)+' ➜ <b>'+esc(q.right)+'</b>',q.e);
+}
+
+/* --- Chấm điểm chung --- */
+function grJudge(ok,answerHtml,explain){
   const fb=$('grfb');
-  if(correct){
+  if(ok){
     GR.right++;P.correct++;hitStreak();
-    const bonus=streakBonus();
-    gainXP(12+bonus);sndOK();
-    fb.className='feedback ok';fb.innerHTML='🎉 <b>Chính xác!</b> '+esc(q.e||'');
+    gainXP(12+streakBonus());sndOK();
+    fb.className='feedback ok';
+    fb.innerHTML='🎉 <b>Chính xác!</b> '+(explain?esc(explain):'');
   }else{
     missStreak();sndNo();
-    fb.className='feedback no';fb.innerHTML='😅 <b>Chưa đúng.</b> Đáp án: <b>'+esc(q.o[q.a])+'</b>. '+esc(q.e||'');
+    fb.className='feedback no';
+    fb.innerHTML='😅 <b>Chưa đúng.</b> Đáp án: <b>'+answerHtml+'</b>. '+(explain?esc(explain):'');
   }
   persist();
   $('grnextRow').classList.remove('hidden');
@@ -6457,10 +7754,10 @@ function nextGRQ(){
         <h3>${msg}</h3>
         <div class="scoreline">Bạn đúng <b>${GR.right}/${GR.qs.length}</b> câu</div>
         <div class="xpgain">⭐ +${GR.right*12} XP</div>
-        <div class="row" style="justify-content:center">
+        <div class="row" style="justify-content:center;flex-wrap:wrap">
           <button class="btn" onclick="startGrammarReview('${GR.topic.id}')">🔄 Luyện lại</button>
+          <button class="btn ghost" onclick="openGrTopic('${GR.topic.id}')">📖 Xem lại lý thuyết</button>
           <button class="btn sun" onclick="grammarHome()">📋 Đổi chủ đề</button>
-          <button class="btn ghost" onclick="go('theory')">📖 Xem lý thuyết</button>
         </div>
       </div>`;
   }
