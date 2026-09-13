@@ -7446,6 +7446,287 @@ more:[
 });
 
 
+/* ===== BÀI TẬP BỔ SUNG ĐỢT 2 — đủ 5 câu cho mỗi dạng ===== */
+const GR_MORE2={
+
+gr_present:[
+()=>mkF('My parents ___ (go) to work by motorbike.','go','Chủ ngữ số nhiều → giữ nguyên: go.','Chia động từ'),
+()=>mkF('Water ___ (boil) at 100 degrees.','boils','Chân lí, chủ ngữ số ít → boils.','Chia động từ'),
+()=>mkO('We often visit our grandparents at weekends','Trạng từ tần suất often đứng trước động từ thường.','Chúng tôi thường về thăm ông bà vào cuối tuần.'),
+()=>mkO('My teacher always comes to class early','always + V(s) với ngôi 3 số ít.','Cô giáo tôi luôn đến lớp sớm.'),
+()=>mkO('Do your friends like playing football','Do + S + V nguyên thể + O?','Bạn của bạn có thích chơi bóng đá không?'),
+()=>mkE('My sister wash the dishes every evening.','wash','washes','My sister là ngôi 3 số ít → washes.'),
+()=>mkE('Do she live in Hue?','Do','Does','Ngôi 3 số ít dùng Does.'),
+()=>mkE('He studys English every day.','studys','studies','Phụ âm + y → đổi y thành ies: studies.'),
+()=>mkT('Viết lại ở dạng phủ định: "They watch TV every night."',["They don't watch TV every night.",'They do not watch TV every night.'],'They → don’t + V nguyên thể.','Giữ nguyên trạng ngữ'),
+()=>mkT('Chuyển thành câu hỏi: "She plays the piano."',['Does she play the piano?'],'Ngôi 3 số ít → Does + S + V nguyên thể?','Nhớ dấu ?'),
+()=>mkT('Chia động từ rồi viết lại: "Nam (not / like) coffee."',["Nam doesn't like coffee.",'Nam does not like coffee.'],'Ngôi 3 số ít phủ định → doesn’t like.','Viết cả câu')],
+
+gr_pronouns:[
+()=>mkF('My parents love me and I love ___ too.','them','Thay "my parents", làm tân ngữ → them.','Điền 1 từ'),
+()=>mkF('This is ___ classroom. (của chúng tôi)','our','Trước danh từ dùng tính từ sở hữu → our.','Điền 1 từ'),
+()=>mkO('Her brother is taller than mine','mine đứng một mình, không có danh từ theo sau.','Anh trai cô ấy cao hơn anh trai tôi.'),
+()=>mkO('Can you give me your phone number','give + tân ngữ gián tiếp + tính từ sở hữu + N.','Bạn cho mình số điện thoại của bạn được không?'),
+()=>mkO('We always help each other in class','each other = lẫn nhau.','Chúng tôi luôn giúp đỡ nhau trong lớp.'),
+()=>mkE('The cat licked it’s paw.','it’s','its','its = của nó (không có dấu nháy); it’s = it is.'),
+()=>mkE('Please come with we.','we','us','Sau giới từ with dùng tân ngữ: us.'),
+()=>mkE('This book is my.','my','mine','Đứng một mình phải dùng đại từ sở hữu: mine.'),
+()=>mkT('Thay bằng đại từ: "Lan and I are going to the park."',['We are going to the park.',"We're going to the park."],'Lan and I = chủ ngữ số nhiều → We.','Viết cả câu'),
+()=>mkT('Viết lại dùng đại từ sở hữu: "These are our books."',['These books are ours.'],'our + N → N + are ours.','Bắt đầu: These books'),
+()=>mkT('Thay bằng đại từ: "I gave the letter to Nam."',['I gave it to him.'],'the letter → it; Nam → him.','Viết cả câu')],
+
+gr_can:[
+()=>mkF('___ I borrow your pen, please?','Could','Xin phép lịch sự → Could (hoặc Can).','Điền 1 từ'),
+()=>mkF('My grandmother ___ (not / see) very well without glasses.',["can't see",'cannot see'],'Phủ định: can’t + V nguyên thể.','Viết 2 từ'),
+()=>mkO('I can speak English and a little Chinese','S + can + V + O.','Tôi nói được tiếng Anh và một chút tiếng Trung.'),
+()=>mkO('She could not swim when she was five','Quá khứ: could not + V nguyên thể.','Cô ấy chưa biết bơi khi lên năm.'),
+()=>mkO('Can your brother play the guitar','Can + S + V nguyên thể + O?','Anh trai bạn biết chơi ghi-ta không?'),
+()=>mkE('He cans ride a bike.','cans','can','can không bao giờ thêm s.'),
+()=>mkE('They can not to come tonight.','to','(bỏ to)','Sau can không dùng to.'),
+()=>mkE('Could you helping me, please?','helping','help','Sau could dùng động từ nguyên thể.'),
+()=>mkT('Viết lại dùng "can": "She knows how to swim."',['She can swim.'],'know how to V → can + V.','Bắt đầu bằng She'),
+()=>mkT('Viết lại ở dạng phủ định: "I can play chess."',["I can't play chess.",'I cannot play chess.'],'can → can’t.','Bắt đầu bằng I'),
+()=>mkT('Chuyển thành câu hỏi: "He could read at four."',['Could he read at four?'],'Đảo could lên trước chủ ngữ.','Nhớ dấu ?')],
+
+gr_articles:[
+()=>mkF('I had ___ egg and ___ glass of milk for breakfast.',['an a','an / a'],'egg → an (âm nguyên âm); glass → a. (Viết: an a)','Viết 2 mạo từ, cách nhau dấu cách'),
+()=>mkF('She is ___ best student in our class.','the','So sánh nhất luôn có the.','Điền a / an / the'),
+()=>mkO('There is an old tree in front of my house','There is + an + adj + N + giới từ.','Có một cây cổ thụ trước nhà tôi.'),
+()=>mkO('The book on the table is very interesting','the vì đã xác định rõ cuốn nào.','Cuốn sách trên bàn rất thú vị.'),
+()=>mkO('My mother is a nurse at a big hospital','Nghề nghiệp dùng a/an.','Mẹ tôi là y tá ở một bệnh viện lớn.'),
+()=>mkE('She is an teacher.','an','a','teacher bắt đầu bằng âm phụ âm /t/ → a.'),
+()=>mkE('I have breakfast at the seven o’clock.','the','(bỏ the)','Giờ giấc không dùng mạo từ.'),
+()=>mkE('The Earth goes around a sun.','a','the','Vật duy nhất → the sun.'),
+()=>mkT('Điền mạo từ rồi viết lại: "He is ___ engineer."',['He is an engineer.'],'engineer bắt đầu bằng âm nguyên âm → an.','Viết cả câu'),
+()=>mkT('Điền mạo từ rồi viết lại: "I saw ___ cat. ___ cat was white."',['I saw a cat. The cat was white.'],'Lần đầu a, nhắc lại the.','Viết cả 2 câu'),
+()=>mkT('Điền mạo từ rồi viết lại: "She plays ___ violin every day."',['She plays the violin every day.'],'Nhạc cụ dùng the.','Viết cả câu')],
+
+gr_pcon_basic:[
+()=>mkF('Listen! Someone ___ (sing) in the next room.','is singing','Listen! → đang diễn ra → is + V-ing.','Viết 2 từ'),
+()=>mkF('The children ___ (swim) in the pool now.','are swimming','swim nhân đôi m → are swimming.','Viết 2 từ'),
+()=>mkO('My father is washing the car now','S + is + V-ing + O + now.','Bố tôi đang rửa xe.'),
+()=>mkO('Are you doing your homework at the moment','Are + S + V-ing + O?','Bạn đang làm bài tập à?'),
+()=>mkO('They are not playing football today','Phủ định: are not + V-ing.','Hôm nay họ không chơi bóng đá.'),
+()=>mkE('She is write a letter.','write','writing','Sau is phải là V-ing.'),
+()=>mkE('We is watching TV.','is','are','We đi với are.'),
+()=>mkE('He is siting on the chair.','siting','sitting','sit nhân đôi t trước -ing.'),
+()=>mkT('Chuyển sang HTTD: "I read a book." (now)',['I am reading a book now.',"I'm reading a book now.",'I am reading a book.'],'read → am reading.','Bắt đầu bằng I'),
+()=>mkT('Chuyển thành câu hỏi: "She is cooking."',['Is she cooking?'],'Đảo is lên trước chủ ngữ.','Nhớ dấu ?'),
+()=>mkT('Viết lại ở dạng phủ định: "The baby is sleeping."',["The baby isn't sleeping.",'The baby is not sleeping.'],'Thêm not sau is.','Bắt đầu: The baby')],
+
+gr_pastsimple:[
+()=>mkF('Last summer we ___ (visit) our grandparents in Hue.','visited','Động từ có quy tắc → thêm -ed.','Chia động từ'),
+()=>mkF('The film ___ (be) very boring last night.','was','Chủ ngữ số ít trong quá khứ → was.','Điền 1 từ'),
+()=>mkO('She studied very hard for the last exam','S + V-ed + trạng ngữ.','Cô ấy đã học rất chăm cho kỳ thi vừa rồi.'),
+()=>mkO('Did you go to the cinema yesterday','Did + S + V nguyên thể + O?','Hôm qua bạn có đi xem phim không?'),
+()=>mkO('They were at home last Sunday evening','were + trạng ngữ nơi chốn + thời gian.','Tối Chủ nhật tuần trước họ ở nhà.'),
+()=>mkE('I goed to school late yesterday.','goed','went','go là động từ bất quy tắc → went.'),
+()=>mkE('She wasn’t go to the party.','wasn’t','didn’t','Động từ thường ở phủ định quá khứ dùng didn’t + V, không dùng wasn’t.'),
+()=>mkE('We studyed English last year.','studyed','studied','Phụ âm + y → đổi thành -ied.'),
+()=>mkT('Chia động từ rồi viết lại: "He (buy) a new bike last week."',['He bought a new bike last week.'],'buy → bought.','Viết cả câu'),
+()=>mkT('Chuyển thành câu hỏi: "She was at school yesterday."',['Was she at school yesterday?'],'Đảo was lên trước chủ ngữ.','Nhớ dấu ?'),
+()=>mkT('Viết lại ở dạng phủ định: "They visited the museum."',["They didn't visit the museum.",'They did not visit the museum.'],'visited → didn’t visit.','Bắt đầu bằng They')],
+
+gr_future:[
+()=>mkF('Don’t worry, I ___ (help) you with your bags.','will help','Quyết định ngay lúc nói → will + V.','Viết 2 từ'),
+()=>mkF('They ___ (visit) Ha Noi next month. They booked the tickets already.','are going to visit','Đã lên kế hoạch → be going to.','Viết 4 từ'),
+()=>mkO('I will call you as soon as I arrive','will + V, mệnh đề thời gian dùng hiện tại đơn.','Tôi sẽ gọi cho bạn ngay khi tôi đến.'),
+()=>mkO('She is going to study abroad next year','be going to + V nguyên thể.','Năm sau cô ấy sẽ đi du học.'),
+()=>mkO('Will it be sunny tomorrow morning','Will + S + V nguyên thể?','Sáng mai trời có nắng không?'),
+()=>mkE('She will to come tomorrow.','to','(bỏ to)','Sau will không dùng to.'),
+()=>mkE('We are going to visited the zoo.','visited','visit','Sau going to dùng động từ nguyên thể.'),
+()=>mkE('He will not comes to the party.','comes','come','Sau will not dùng động từ nguyên thể.'),
+()=>mkT('Viết lại ở dạng phủ định: "It will rain tomorrow."',["It won't rain tomorrow.",'It will not rain tomorrow.'],'will → won’t.','Bắt đầu bằng It'),
+()=>mkT('Chuyển thành câu hỏi: "They are going to move house."',['Are they going to move house?'],'Đảo are lên trước chủ ngữ.','Nhớ dấu ?'),
+()=>mkT('Viết lại dùng "will": "I am going to send you an email." (quyết định ngay)',['I will send you an email.',"I'll send you an email."],'am going to send → will send.','Bắt đầu bằng I')],
+
+gr_pcon:[
+()=>mkF('Where is Nam? He ___ (have) lunch in the canteen.','is having','Đang diễn ra → is + V-ing.','Viết 2 từ'),
+()=>mkF('This week my class ___ (prepare) for the school festival.','is preparing','this week → giai đoạn hiện tại → tiếp diễn.','Viết 2 từ'),
+()=>mkO('My brother is playing games in his room','S + is + V-ing + O + nơi chốn.','Em trai tôi đang chơi game trong phòng.'),
+()=>mkO('We are meeting our teacher tomorrow afternoon','Kế hoạch chắc chắn dùng hiện tại tiếp diễn.','Chiều mai chúng tôi sẽ gặp cô giáo.'),
+()=>mkO('Why are you laughing so loudly','Wh- + are + S + V-ing?','Sao bạn lại cười to thế?'),
+()=>mkE('I am wanting a new phone.','am wanting','want','want là động từ trạng thái, không chia tiếp diễn.'),
+()=>mkE('She are reading a novel.','are','is','She đi với is.'),
+()=>mkE('They are studing for the test.','studing','studying','study giữ nguyên y, thêm -ing → studying.'),
+()=>mkT('Chuyển sang HTTD: "He writes an email." (at the moment)',['He is writing an email at the moment.','He is writing an email.'],'writes → is writing.','Bắt đầu bằng He'),
+()=>mkT('Viết lại ở dạng phủ định: "We are waiting for the bus."',["We aren't waiting for the bus.",'We are not waiting for the bus.'],'Thêm not sau are.','Bắt đầu bằng We'),
+()=>mkT('Chuyển thành câu hỏi: "They are having dinner."',['Are they having dinner?'],'Đảo are lên trước chủ ngữ.','Nhớ dấu ?')],
+
+gr_compare:[
+()=>mkF('My house is ___ (big) than yours.','bigger','big nhân đôi g → bigger.','Chia tính từ'),
+()=>mkF('Lan is ___ (intelligent) student in her class.','the most intelligent','Tính từ dài, so sánh nhất → the most + adj.','Viết 3 từ'),
+()=>mkO('This exercise is easier than the last one','adj-er + than.','Bài tập này dễ hơn bài trước.'),
+()=>mkO('She is the youngest girl in the group','the + adj-est + N + in + nhóm.','Cô ấy là bạn nữ nhỏ tuổi nhất nhóm.'),
+()=>mkO('My phone is as expensive as his','as + adj nguyên mẫu + as.','Điện thoại của tôi đắt bằng của anh ấy.'),
+()=>mkE('This is the most tallest building in the city.','most','(bỏ most)','tall là tính từ ngắn, chỉ dùng the tallest.'),
+()=>mkE('He is more clever than his brother.','more','(bỏ more) → cleverer','clever là tính từ ngắn 2 âm tiết → cleverer.'),
+()=>mkE('She sings more good than me.','good','well (→ better)','Bổ nghĩa cho động từ phải dùng trạng từ: sings better.'),
+()=>mkT('Viết lại dùng so sánh nhất: "No mountain in Viet Nam is higher than Fansipan."',['Fansipan is the highest mountain in Viet Nam.'],'Chuyển sang the highest.','Bắt đầu: Fansipan'),
+()=>mkT('Viết lại dùng "as … as": "My bag and your bag are the same weight."',['My bag is as heavy as yours.','My bag is as heavy as your bag.'],'Bằng nhau → as + adj + as.','Bắt đầu: My bag'),
+()=>mkT('Viết lại dùng so sánh hơn: "This film is boring. That film is more boring." (that film)',['That film is more boring than this film.','That film is more boring than this one.'],'Tính từ dài → more + adj + than.','Bắt đầu: That film')],
+
+gr_modal:[
+()=>mkF('You ___ (not / should) stay up late before an exam.','shouldn’t','Lời khuyên phủ định → shouldn’t.','Viết 1 từ'),
+()=>mkF('In the library we ___ keep quiet. It is a rule.','must','Nội quy → must.','Điền 1 từ'),
+()=>mkO('Students must wear uniforms on Monday','Nội quy: S + must + V + O + thời gian.','Học sinh phải mặc đồng phục vào thứ Hai.'),
+()=>mkO('You should drink more water every day','Lời khuyên: S + should + V + O.','Bạn nên uống nhiều nước hơn mỗi ngày.'),
+()=>mkO('We do not have to go to school tomorrow','Không cần thiết: do not have to + V.','Ngày mai chúng tôi không phải đi học.'),
+()=>mkE('She musts finish her homework.','musts','must','must không bao giờ thêm s.'),
+()=>mkE('He have to wake up early.','have','has','He là ngôi 3 số ít → has to.'),
+()=>mkE('You mustn’t to be late.','to','(bỏ to)','Sau mustn’t dùng động từ nguyên thể.'),
+()=>mkT('Viết lại dùng "must": "It is necessary for you to wear a helmet."',['You must wear a helmet.'],'Bắt buộc → must + V.','Bắt đầu bằng You'),
+()=>mkT('Viết lại dùng "shouldn’t": "It is not a good idea to eat too much sugar."',["You shouldn't eat too much sugar."],'Khuyên không nên → shouldn’t + V.','Bắt đầu bằng You'),
+()=>mkT('Viết lại dùng "doesn’t have to": "It is not necessary for Lan to come early."',["Lan doesn't have to come early."],'Không cần → doesn’t have to + V.','Bắt đầu bằng Lan')],
+
+gr_quant:[
+()=>mkF('Would you like ___ tea?','some','Câu mời dùng some dù là câu hỏi.','Điền 1 từ'),
+()=>mkF('There are only ___ (a few / a little) eggs left.','a few','eggs đếm được → a few.','Viết 2 từ'),
+()=>mkO('There is a lot of rice in the kitchen','There is + a lot of + N không đếm được.','Có rất nhiều gạo trong bếp.'),
+()=>mkO('How many students are there in your class','How many + N số nhiều + are there?','Lớp bạn có bao nhiêu học sinh?'),
+()=>mkO('We do not have any milk today','Phủ định dùng any.','Hôm nay chúng tôi không có sữa.'),
+()=>mkE('How much apples do you want?','much','many','apples đếm được → How many.'),
+()=>mkE('There are a little chairs in the room.','little','few','chairs đếm được → a few.'),
+()=>mkE('I have some moneys in my pocket.','moneys','money','money là danh từ không đếm được, không thêm s.'),
+()=>mkT('Viết lại ở dạng phủ định: "There is some sugar in the cup."',["There isn't any sugar in the cup.",'There is not any sugar in the cup.'],'some → any trong câu phủ định.','Bắt đầu: There'),
+()=>mkT('Đặt câu hỏi cho phần gạch chân: "There are TWENTY students in my class."',['How many students are there in your class?','How many students are there in my class?'],'Hỏi số lượng đếm được → How many.','Nhớ dấu ?'),
+()=>mkT('Viết lại dùng "a lot of": "There is much rain in this season."',['There is a lot of rain in this season.'],'Câu khẳng định nên dùng a lot of thay much.','Viết cả câu')]
+
+};
+Object.assign(GR_MORE2,{
+
+gr_pastcon:[
+()=>mkF('This time yesterday I ___ (travel) to Da Nang.',['was travelling','was traveling'],'Thời điểm cụ thể trong QK → was + V-ing.','Viết 2 từ'),
+()=>mkF('While the teacher ___ (explain) the lesson, some students were talking.','was explaining','While + QKTD.','Viết 2 từ'),
+()=>mkO('The children were sleeping when their mother came home','QKTD + when + QK đơn.','Bọn trẻ đang ngủ khi mẹ về nhà.'),
+()=>mkO('What were you doing at nine last night','Wh- + were + S + V-ing?','Chín giờ tối qua bạn đang làm gì?'),
+()=>mkO('It was raining heavily all afternoon yesterday','all afternoon → hành động kéo dài → QKTD.','Chiều qua trời mưa to suốt.'),
+()=>mkE('I was cook dinner when he called.','cook','cooking','Sau was phải là V-ing.'),
+()=>mkE('While she was walking, she was seeing an accident.','was','saw','Hành động ngắn xen vào dùng quá khứ đơn: saw.'),
+()=>mkE('We were watch TV at eight o’clock.','watch','watching','were + V-ing.'),
+()=>mkT('Nối 2 câu bằng "when": "She was cooking. The phone rang."',['She was cooking when the phone rang.'],'Hành động dài + when + hành động ngắn.','Viết cả câu'),
+()=>mkT('Chia động từ rồi viết lại: "At 7 p.m. yesterday, they (play) football."',['At 7 p.m. yesterday, they were playing football.'],'Mốc thời gian QK → were playing.','Viết cả câu'),
+()=>mkT('Chuyển thành câu hỏi: "He was reading a book."',['Was he reading a book?'],'Đảo was lên trước chủ ngữ.','Nhớ dấu ?')],
+
+gr_past:[
+()=>mkF('She ___ (leave) the house at six this morning.','left','leave → left.','Chia động từ'),
+()=>mkF('They ___ (drink) all the juice yesterday.','drank','drink → drank.','Chia động từ'),
+()=>mkO('He caught the last bus home last night','S + V2 + O + trạng ngữ.','Tối qua anh ấy bắt kịp chuyến xe buýt cuối.'),
+()=>mkO('We saw a beautiful rainbow after the rain','see → saw.','Chúng tôi thấy một cầu vồng đẹp sau cơn mưa.'),
+()=>mkO('She put the keys on the table yesterday','put giữ nguyên ở quá khứ.','Hôm qua cô ấy để chìa khoá trên bàn.'),
+()=>mkE('I teached my brother to swim.','teached','taught','teach → taught.'),
+()=>mkE('He bringed his umbrella to school.','bringed','brought','bring → brought.'),
+()=>mkE('Did she wrote the letter?','wrote','write','Sau Did dùng động từ nguyên thể.'),
+()=>mkT('Chia động từ rồi viết lại: "They (eat) pho for breakfast yesterday."',['They ate pho for breakfast yesterday.'],'eat → ate.','Viết cả câu'),
+()=>mkT('Viết lại ở dạng phủ định: "She found her wallet."',["She didn't find her wallet.",'She did not find her wallet.'],'found → didn’t find (về nguyên thể).','Bắt đầu bằng She'),
+()=>mkT('Chuyển thành câu hỏi: "He took a lot of photos."',['Did he take a lot of photos?'],'Did + S + V nguyên thể (take).','Nhớ dấu ?')],
+
+gr_passive:[
+()=>mkF('The windows ___ (clean) every week.','are cleaned','HT đơn bị động số nhiều → are + V3.','Viết 2 từ'),
+()=>mkF('This song ___ (write) by Trinh Cong Son.','was written','QK đơn bị động: was + V3.','Viết 2 từ'),
+()=>mkO('The classroom is cleaned by the students every day','S + is + V3 + by + tác nhân + thời gian.','Lớp học được học sinh dọn mỗi ngày.'),
+()=>mkO('A lot of trees have been planted in our school','HTHT bị động: have been + V3.','Rất nhiều cây đã được trồng trong trường tôi.'),
+()=>mkO('These shoes must be washed by hand','Modal bị động: must be + V3.','Đôi giày này phải giặt bằng tay.'),
+()=>mkE('The letter was write yesterday.','write','written','Bị động dùng V3: written.'),
+()=>mkE('The room is being clean now.','clean','cleaned','is being + V3 → is being cleaned.'),
+()=>mkE('My bike were stolen last night.','were','was','My bike là số ít → was.'),
+()=>mkT('Chuyển sang bị động: "People speak English in many countries."',['English is spoken in many countries.'],'People không xác định → bỏ by; HT đơn bị động.','Bắt đầu: English'),
+()=>mkT('Chuyển sang bị động: "They will finish the project next week."',['The project will be finished next week.'],'Tương lai bị động: will be + V3.','Bắt đầu: The project'),
+()=>mkT('Chuyển sang bị động: "My mother is cooking dinner."',['Dinner is being cooked by my mother.'],'HTTD bị động: is being + V3.','Bắt đầu: Dinner')],
+
+gr_gerund:[
+()=>mkF('He avoided ___ (answer) my question.','answering','avoid + V-ing.','Chia động từ'),
+()=>mkF('We hope ___ (see) you again soon.','to see','hope + to V.','Viết 2 từ'),
+()=>mkO('She is good at solving difficult problems','Sau giới từ at dùng V-ing.','Cô ấy giỏi giải những bài khó.'),
+()=>mkO('They decided to move to a new city','decide + to V.','Họ quyết định chuyển tới thành phố mới.'),
+()=>mkO('I am used to getting up early now','be used to + V-ing.','Giờ tôi đã quen dậy sớm.'),
+()=>mkE('I look forward to meet you.','meet','meeting','look forward to + V-ing (to là giới từ).'),
+()=>mkE('She practises to play the piano every day.','to','(bỏ to) → playing','practise + V-ing.'),
+()=>mkE('My mother made me to clean my room.','to','(bỏ to)','make sb + V nguyên thể, không có to.'),
+()=>mkT('Nối thành một câu: "She enjoys. She reads novels."',['She enjoys reading novels.'],'enjoy + V-ing.','Bắt đầu bằng She'),
+()=>mkT('Nối thành một câu: "They promised. They will come early."',['They promised to come early.'],'promise + to V.','Bắt đầu bằng They'),
+()=>mkT('Viết lại: "He is interested in ___ (learn) about history."',['He is interested in learning about history.'],'Sau giới từ in dùng V-ing.','Viết cả câu')],
+
+gr_perfect:[
+()=>mkF('They ___ (know) each other since childhood.','have known','since → HTHT: have + V3.','Viết 2 từ'),
+()=>mkF('My brother ___ just ___ (arrive) home.',['has arrived','has just arrived'],'just → has + V3. (Viết: has / arrived)','Viết 2 từ cách nhau dấu cách'),
+()=>mkO('I have never been to Japan before','have never been to + nơi chốn.','Tôi chưa từng đến Nhật Bản.'),
+()=>mkO('She has worked here for three years','have/has + V3 + for + khoảng thời gian.','Cô ấy làm việc ở đây được ba năm rồi.'),
+()=>mkO('Have you finished your homework yet','Have + S + V3 + yet?','Bạn làm xong bài tập chưa?'),
+()=>mkE('He has went to school already.','went','gone','HTHT dùng V3: has gone.'),
+()=>mkE('They have lived here since ten years.','since','for','ten years là khoảng thời gian → for.'),
+()=>mkE('She have finished her report.','have','has','She là ngôi 3 số ít → has.'),
+()=>mkT('Viết lại dùng "since": "She started working here in 2020."',['She has worked here since 2020.','She has been working here since 2020.'],'Bắt đầu QK, kéo dài tới nay → has worked since.','Bắt đầu bằng She has'),
+()=>mkT('Viết lại ở dạng phủ định: "I have seen that film."',["I haven't seen that film.",'I have not seen that film.'],'Thêm not sau have.','Bắt đầu bằng I'),
+()=>mkT('Chuyển thành câu hỏi: "She has visited Ha Long Bay."',['Has she visited Ha Long Bay?'],'Đảo has lên trước chủ ngữ.','Nhớ dấu ?')],
+
+gr_conditional:[
+()=>mkF('If you ___ (not / hurry), you will be late for school.',["don't hurry",'do not hurry'],'Loại 1: mệnh đề If dùng hiện tại đơn.','Viết 2-3 từ'),
+()=>mkF('If we ___ (live) near the sea, we would swim every day.','lived','Loại 2: If + quá khứ đơn.','Chia động từ'),
+()=>mkO('If you mix blue and yellow you get green','Loại 0: chân lí, cả hai vế hiện tại đơn.','Nếu trộn xanh dương với vàng, bạn được màu xanh lá.'),
+()=>mkO('If I were a bird I would fly everywhere','Loại 2: If + were, would + V.','Nếu tôi là chim, tôi sẽ bay khắp nơi.'),
+()=>mkO('She would have passed if she had studied harder','Loại 3 đảo vế: would have V3 + if + had V3.','Cô ấy đã đỗ nếu học chăm hơn.'),
+()=>mkE('If it rains tomorrow, we cancel the trip.','cancel','will cancel','Vế chính loại 1 dùng will + V.'),
+()=>mkE('If I was you, I would tell the truth.','was','were','Loại 2 dùng were cho mọi ngôi.'),
+()=>mkE('If he had studied, he would passed the exam.','would','would have','Loại 3: would have + V3.'),
+()=>mkT('Nối thành câu điều kiện loại 1: "You leave now. You will catch the bus."',['If you leave now, you will catch the bus.'],'If + HT đơn, will + V.','Bắt đầu: If'),
+()=>mkT('Viết câu điều kiện loại 2: "I don’t know his address, so I don’t write to him."',["If I knew his address, I would write to him."],'Trái hiện tại → If + QK đơn, would + V.','Bắt đầu: If I knew'),
+()=>mkT('Viết lại dùng "Unless": "If it doesn’t rain, we will go camping."',['Unless it rains, we will go camping.'],'If … not = Unless (bỏ phủ định).','Bắt đầu: Unless')],
+
+gr_cond1:[
+()=>mkF('If the weather ___ (be) nice tomorrow, we will have a picnic.','is','Mệnh đề If loại 1 dùng hiện tại đơn.','Điền 1 từ'),
+()=>mkF('If you finish early, you ___ (can) go home.','can','Có thể thay will bằng can.','Điền 1 từ'),
+()=>mkO('If you eat too much you will feel sick','If + HT đơn, will + V.','Nếu ăn quá nhiều, bạn sẽ thấy khó chịu.'),
+()=>mkO('We will stay at home if it rains','Vế chính trước, mệnh đề if sau.','Chúng tôi sẽ ở nhà nếu trời mưa.'),
+()=>mkO('If you see Nam tell him to call me','Vế chính có thể là câu mệnh lệnh.','Nếu gặp Nam, bảo bạn ấy gọi cho mình nhé.'),
+()=>mkE('If she will study hard, she will pass.','will','(bỏ will) → studies','Mệnh đề If loại 1 dùng hiện tại đơn.'),
+()=>mkE('If it is cold, we wear warm clothes tomorrow.','wear','will wear','Vế chính loại 1 dùng will + V.'),
+()=>mkE('Unless you don’t practise, you will not improve.','don’t','(bỏ don’t)','Unless đã mang nghĩa phủ định.'),
+()=>mkT('Nối thành câu điều kiện loại 1: "It is sunny. We will go swimming."',['If it is sunny, we will go swimming.'],'If + HT đơn, will + V.','Bắt đầu: If'),
+()=>mkT('Viết lại dùng "Unless": "If you don’t study, you won’t pass the exam."',["Unless you study, you won't pass the exam.",'Unless you study, you will not pass the exam.'],'If … not = Unless.','Bắt đầu: Unless'),
+()=>mkT('Nối thành câu điều kiện loại 1: "You get up late. You will miss the bus."',['If you get up late, you will miss the bus.'],'If + HT đơn, will + V.','Bắt đầu: If')],
+
+gr_cond2:[
+()=>mkF('If she ___ (not / be) so busy, she would join us.',["weren't",'were not'],'Loại 2 dùng were cho mọi ngôi.','Viết 1-2 từ'),
+()=>mkF('If they lived closer, we ___ (meet) more often.','would meet','Vế chính loại 2: would + V.','Viết 2 từ'),
+()=>mkO('If I spoke Japanese I would work in Tokyo','If + QK đơn, would + V.','Nếu tôi nói được tiếng Nhật, tôi sẽ làm việc ở Tokyo.'),
+()=>mkO('She would buy that house if she had enough money','Vế chính trước, mệnh đề if sau.','Cô ấy sẽ mua căn nhà đó nếu có đủ tiền.'),
+()=>mkO('If I were you I would not say that','Lời khuyên: If I were you, I would not + V.','Nếu tôi là bạn, tôi sẽ không nói vậy.'),
+()=>mkE('If I was rich, I would travel the world.','was','were','Loại 2 dùng were cho mọi ngôi.'),
+()=>mkE('If he had more time, he will learn the guitar.','will','would','Vế chính loại 2 dùng would + V.'),
+()=>mkE('If she would know the answer, she would tell us.','would','(bỏ would) → knew','Mệnh đề If loại 2 dùng quá khứ đơn.'),
+()=>mkT('Viết câu điều kiện loại 2: "I am not tall, so I don’t play basketball."',['If I were tall, I would play basketball.'],'Trái hiện tại → If + were, would + V.','Bắt đầu: If I were'),
+()=>mkT('Viết lại thành lời khuyên: "You should apologise to her." (dùng If I were you)',['If I were you, I would apologise to her.'],'If I were you, I would + V.','Bắt đầu: If I were you'),
+()=>mkT('Viết câu điều kiện loại 2: "She doesn’t have a car, so she takes the bus."',['If she had a car, she would not take the bus.',"If she had a car, she wouldn't take the bus."],'Trái hiện tại → If + QK đơn, would + V.','Bắt đầu: If she had')],
+
+gr_relative:[
+()=>mkF('The film ___ we watched last night was excellent.',['which','that'],'Vật, làm tân ngữ → which / that.','Điền 1 từ'),
+()=>mkF('I still remember the summer ___ we first met.','when','Thời gian → when.','Điền 1 từ'),
+()=>mkO('The woman who is standing there is my aunt','N + who + V + be + tân ngữ.','Người phụ nữ đang đứng đằng kia là cô tôi.'),
+()=>mkO('This is the restaurant where we had dinner','Nơi chốn → where.','Đây là nhà hàng chúng tôi đã ăn tối.'),
+()=>mkO('I have a friend whose mother is a famous singer','whose + N (sở hữu).','Tôi có một người bạn có mẹ là ca sĩ nổi tiếng.'),
+()=>mkE('Ha Noi, that is the capital, is very old.','that','which','Sau dấu phẩy không dùng that; vật → which.'),
+()=>mkE('The man which lives next door is a doctor.','which','who','Người → who.'),
+()=>mkE('This is the house where I bought last year.','where','which','Ở đây house là tân ngữ của bought → dùng which/that, không phải where.'),
+()=>mkT('Nối 2 câu: "The book is interesting. I borrowed it from the library."',['The book which I borrowed from the library is interesting.','The book that I borrowed from the library is interesting.'],'Vật, làm tân ngữ → which/that.','Bắt đầu: The book'),
+()=>mkT('Nối 2 câu: "I know a girl. Her father is a pilot."',['I know a girl whose father is a pilot.'],'Sở hữu → whose.','Bắt đầu: I know a girl'),
+()=>mkT('Nối 2 câu: "That is the park. We played there when we were children."',['That is the park where we played when we were children.'],'Nơi chốn → where.','Bắt đầu: That is the park')],
+
+gr_reported:[
+()=>mkF('"We are busy," they said. → They said they ___ busy.','were','are → were.','Điền 1 từ'),
+()=>mkF('"I have finished," she said. → She said she ___ finished.','had','have → had.','Điền 1 từ'),
+()=>mkO('He said that he would come the next day','will → would; tomorrow → the next day.','Anh ấy nói hôm sau sẽ đến.'),
+()=>mkO('She asked me if I liked Vietnamese food','Câu hỏi Yes/No → asked + if + S + V.','Cô ấy hỏi tôi có thích món Việt không.'),
+()=>mkO('The teacher told us to open our books','told + O + to V.','Cô giáo bảo chúng tôi mở sách ra.'),
+()=>mkE('She said me that she was tired.','said','told','said to me hoặc told me.'),
+()=>mkE('He asked me what did I want.','did','(bỏ did) → what I wanted','Câu hỏi tường thuật về trật tự khẳng định.'),
+()=>mkE('She told me don’t be late.','don’t','not to','Mệnh lệnh phủ định → told me not to be late.'),
+()=>mkT('Chuyển sang câu tường thuật: "I am watching TV," he said.',['He said that he was watching TV.','He said he was watching TV.'],'am watching → was watching; I → he.','Bắt đầu: He said'),
+()=>mkT('Chuyển sang câu tường thuật: "Do you like coffee?" she asked me.',['She asked me if I liked coffee.','She asked me whether I liked coffee.'],'Câu hỏi Yes/No → asked + if/whether + S + V lùi thì.','Bắt đầu: She asked me'),
+()=>mkT('Chuyển sang câu tường thuật: "Don’t open the window," he told me.',['He told me not to open the window.'],'Mệnh lệnh phủ định → told + O + not to V.','Bắt đầu: He told me')]
+
+});
+
 /* ===== Gộp chuyên đề trùng id + gắn lý thuyết, nhãn lớp, bài tập bổ sung ===== */
 (function mergeGrammar(){
   const seen={},out=[];
@@ -7456,7 +7737,7 @@ more:[
   GRAMMAR_TOPICS.length=0;out.forEach(t=>GRAMMAR_TOPICS.push(t));
   GRAMMAR_TOPICS.forEach(t=>{
     const m=GR_META[t.id];
-    if(m){t.gr=m.gr;t.theory=m.theory;t.more=m.more||[];}
+    if(m){t.gr=m.gr;t.theory=m.theory;t.more=(m.more||[]).concat(GR_MORE2[t.id]||[]);}
     else{t.gr=[6,7,8];t.theory=null;t.more=[];}
   });
 })();
@@ -7466,6 +7747,7 @@ const DIFF_SHORT={easy:'Dễ',medium:'Vừa',hard:'Khó',advanced:'Nâng cao'};
 const DIFF_ORDER=['easy','medium','hard','advanced'];
 const GR_GRADES=[4,5,6,7,8,9,10];
 let _grGrade='all';
+const GR_TYPES=['mcq','fill','order','error','trans'];
 const TYPE_LABEL={mcq:'🔘 Trắc nghiệm',fill:'✍️ Điền từ',order:'🔤 Sắp xếp câu',error:'🔍 Tìm lỗi sai',trans:'🔁 Viết lại câu'};
 
 function grNorm(s){
@@ -7490,7 +7772,7 @@ function grammarHome(){
       </span>
       <span style="background:#ffd23f;color:#5b3500;font-family:'Baloo 2';font-weight:800;border-radius:30px;padding:8px 16px;font-size:14px;white-space:nowrap">Vào học ➜</span>
     </a>
-    <p class="sub"><b>Mỗi chuyên đề có: 📖 Lý thuyết → 💡 Ví dụ có dịch → 🎯 Luyện tập 5 dạng bài.</b> Mỗi câu đúng +12 XP.</p>
+    <p class="sub"><b>Mỗi chuyên đề có: 📖 Lý thuyết → 💡 Ví dụ có dịch → 🎯 Luyện tập 25 câu (5 dạng × 5 câu).</b> Mỗi câu đúng +12 XP.</p>
     <div class="gr-filter-lb">🎒 Chọn lớp:</div>
     <div class="gr-grade-bar">
       <button class="gr-grade-btn${_grGrade==='all'?' on':''}" data-g="all" onclick="grSetGrade('all')">📚 Tất cả</button>
@@ -7529,7 +7811,7 @@ function grRenderTopics(){
       <div class="gt-name">${esc(t.name)}</div>
       <div class="gt-sub">${esc(t.sub)}</div>
       <div class="gt-grades">${(t.gr||[]).map(g=>`<span class="gt-gchip">Lớp ${g}</span>`).join('')}</div>
-      <span class="gt-cnt">📖 Lý thuyết · 🎯 10 câu · 5 dạng bài</span>
+      <span class="gt-cnt">📖 Lý thuyết · 🎯 25 câu · 5 dạng × 5 câu</span>
     </button>`).join('');
 }
 
@@ -7568,7 +7850,7 @@ function openGrTopic(id){
     <div class="gr-subtitle">${esc(t.sub)} · ${(t.gr||[]).map(g=>'Lớp '+g).join(' · ')}</div>
     ${body}
     <div class="center mt">
-      <button class="btn teal" onclick="startGrammarReview('${t.id}')">🎯 Luyện tập ngay (10 câu · 5 dạng)</button>
+      <button class="btn teal" onclick="startGrammarReview('${t.id}')">🎯 Luyện tập ngay (25 câu · 5 dạng × 5)</button>
       <button class="btn ghost" onclick="speakTheory('${t.id}')">🔊 Nghe ví dụ</button>
     </div>`;
 }
@@ -7583,10 +7865,14 @@ function startGrammarReview(topicId){
   const topic=GRAMMAR_TOPICS.find(t=>t.id===topicId);
   if(!topic)return;
   sndClick();
-  const mcq=shuffle(topic.qs.map(fn=>fn())).slice(0,4).map(q=>Object.assign({t:'mcq'},q));
-  const extra=shuffle((topic.more||[]).map(fn=>fn())).slice(0,6);
-  let qs=shuffle(mcq.concat(extra));
-  if(qs.length<6)qs=shuffle(topic.qs.map(fn=>fn())).slice(0,10).map(q=>Object.assign({t:'mcq'},q));
+  const PER=5;
+  const byType={mcq:[],fill:[],order:[],error:[],trans:[]};
+  shuffle(topic.qs.map(fn=>fn())).forEach(q=>byType.mcq.push(Object.assign({t:'mcq'},q)));
+  shuffle((topic.more||[]).map(fn=>fn())).forEach(q=>{if(byType[q.t])byType[q.t].push(q)});
+  let qs=[];
+  GR_TYPES.forEach(ty=>{qs=qs.concat(byType[ty].slice(0,PER))});
+  qs=shuffle(qs);
+  if(!qs.length)qs=shuffle(topic.qs.map(fn=>fn())).slice(0,10).map(q=>Object.assign({t:'mcq'},q));
   GR={topic,qs,i:0,right:0};
   streak=0;
   renderGRQ();
