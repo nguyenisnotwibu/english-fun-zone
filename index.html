@@ -4136,6 +4136,28 @@ function td2Save(manual){
   return true;
 }
 function td2ClearSave(){try{localStorage.removeItem(TD_SAVE_KEY)}catch(e){}}
+/* ===== 🔄 MỐC ĐẦU ĐỢT — để thua rồi đánh lại chính đợt đó, không phải làm lại từ đợt 1 =====
+   Chụp đúng lúc bấm "Bắt đầu đợt": vàng, máu thành, và toàn bộ trụ với cấp/sao/máu lúc đó. */
+const TD_CKPT_KEY='efz_td_ckpt';
+let TD_CK=null;
+function td2Ckpt(){
+  const s=td2Snapshot(); if(!s)return;
+  TD_CK=s;
+  try{localStorage.setItem(TD_CKPT_KEY,JSON.stringify(s))}catch(e){}
+}
+function td2CkptGet(){
+  if(TD_CK&&TD_CK.round)return TD_CK;
+  try{const d=JSON.parse(localStorage.getItem(TD_CKPT_KEY));return (d&&d.round)?d:null}catch(e){return null}
+}
+function td2CkptClear(){TD_CK=null;try{localStorage.removeItem(TD_CKPT_KEY)}catch(e){}}
+function td2Replay(){
+  const d=td2CkptGet();
+  if(!d){sndNo();toast('Không còn mốc đợt nào để đánh lại — bắt đầu ván mới nhé!');startTower('normal');return}
+  td2Restore(d);
+  td2Shell(d.mode==='survival');
+  sndOK();confetti(40);
+  toast('🔄 Đánh lại đợt '+d.round+' — đã trả lại '+(d.towers||[]).length+' trụ và 🪙'+(d.gold||0).toLocaleString('vi'));
+}
 function td2TimeAgo(ts){
   const m=Math.round((Date.now()-ts)/60000);
   if(m<1)return 'vừa xong';
@@ -4185,29 +4207,46 @@ function td2ImportCode(){
   td2Enter(d.mode==='survival'?'survival':'normal');
 }
 /* ---- màn hình vào game: Chơi tiếp / Chơi mới ---- */
+function td2CardBox(ico,tit,body,btns,note){
+  return `<div style="background:linear-gradient(135deg,#eef2ff,#fdf4ff);border:2px solid #ddd6fe;border-radius:16px;padding:16px;text-align:center;margin-bottom:12px">
+      <div style="font-size:34px;line-height:1">${ico}</div>
+      <h3 style="margin:6px 0 2px">${tit}</h3>
+      <p class="sub" style="margin:0 0 10px">${body}</p>
+      <div class="row" style="gap:8px;justify-content:center;flex-wrap:wrap">${btns}</div>
+      ${note?`<p style="font-size:11.5px;color:var(--muted);font-weight:600;margin:10px 0 0">${note}</p>`:''}
+    </div>`;
+}
 function td2Enter(mode){
-  const d=td2SaveMeta();
+  const d=td2SaveMeta(), ck=td2CkptGet();
   sndClick();
-  if(!d){startTower(mode);return}
-  const surv=(d.mode==='survival');
+  /* Không còn gì để tiếp tục -> vào thẳng ván mới */
+  if(!d&&!ck){startTower(mode);return}
+  const surv=((d&&d.mode)||(ck&&ck.mode))==='survival';
+  const nm=surv?'survival':'normal';
+  let boxes='';
+  if(d){
+    boxes+=td2CardBox('💾','Có một ván đang chơi dở',
+      `${d.mode==='survival'?'🔥 Sinh Tồn':'🏰 Thường'} · <b>Đợt ${d.round}</b> · ❤️ ${d.lives} · 🪙 ${(d.gold||0).toLocaleString('vi')} ·
+       <b>${(d.towers||[]).length} trụ</b><br>
+       <span style="font-size:12px">Lưu ${td2TimeAgo(d.ts)}${d.who?' · người chơi <b>'+esc(d.who)+'</b>':''}</span>`,
+      `<button class="btn" onclick="td2Continue()">▶️ Chơi tiếp đợt ${d.round}</button>
+       <button class="btn ghost" onclick="td2NewGame('${d.mode==='survival'?'survival':'normal'}')">🆕 Chơi ván mới</button>`,
+      '⚠️ Bấm "Chơi ván mới" sẽ <b>xoá</b> ván đang lưu.');
+  }
+  /* 🔄 Mốc đầu đợt — tự ghi mỗi lần bấm "Bắt đầu đợt", KHÔNG cần bấm Lưu.
+     Chỉ hiện khi nó khác với bản lưu, kẻo hai thẻ giống hệt nhau gây rối. */
+  if(ck&&(!d||ck.round!==d.round||ck.ts>(d.ts||0)+1000)){
+    boxes+=td2CardBox('🔄','Đợt gần nhất em vừa đánh',
+      `${ck.mode==='survival'?'🔥 Sinh Tồn':'🏰 Thường'} · <b>Đợt ${ck.round}</b> · ❤️ ${ck.lives} · 🪙 ${(ck.gold||0).toLocaleString('vi')} ·
+       <b>${(ck.towers||[]).length} trụ</b><br>
+       <span style="font-size:12px">Ghi lúc vào đợt · ${td2TimeAgo(ck.ts)}</span>`,
+      `<button class="btn teal" onclick="td2Replay()">🔄 Đánh lại đợt ${ck.round}</button>`,
+      'Mốc này <b>tự ghi</b> mỗi lần bấm "Bắt đầu đợt" — quên bấm Lưu vẫn đánh lại được.');
+  }
+  if(!d&&!boxes){startTower(mode);return}
   $('gamesCard').innerHTML=gameTop('🏰 Thủ thành','<span class="streak">'+poolLabel()+'</span>')+
    `<div style="max-width:560px;margin:0 auto">
-      <div style="background:linear-gradient(135deg,#eef2ff,#fdf4ff);border:2px solid #ddd6fe;border-radius:16px;padding:16px;text-align:center">
-        <div style="font-size:34px;line-height:1">💾</div>
-        <h3 style="margin:6px 0 2px">Có một ván đang chơi dở</h3>
-        <p class="sub" style="margin:0 0 10px">
-          ${surv?'🔥 Sinh Tồn':'🏰 Thường'} · <b>Đợt ${d.round}</b> · ❤️ ${d.lives} · 🪙 ${(d.gold||0).toLocaleString('vi')} ·
-          <b>${(d.towers||[]).length} trụ</b><br>
-          <span style="font-size:12px">Lưu ${td2TimeAgo(d.ts)}${d.who?' · người chơi <b>'+esc(d.who)+'</b>':''}</span>
-        </p>
-        <div class="row" style="gap:8px;justify-content:center;flex-wrap:wrap">
-          <button class="btn" onclick="td2Continue()">▶️ Chơi tiếp đợt ${d.round}</button>
-          <button class="btn ghost" onclick="td2NewGame('${surv?'survival':'normal'}')">🆕 Chơi ván mới</button>
-        </div>
-        <p style="font-size:11.5px;color:var(--muted);font-weight:600;margin:10px 0 0">
-          ⚠️ Bấm "Chơi ván mới" sẽ <b>xoá</b> ván đang lưu.
-        </p>
-      </div>
+      ${boxes}
       <div id="td2qmode" style="margin-top:12px">${td2QModeBar()}</div>
       <div style="margin-top:12px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:12px">
         <div style="font-weight:800;font-size:13px;margin-bottom:6px">📋 Mã sao lưu — dùng để chuyển sang máy/trình duyệt khác</div>
@@ -4233,6 +4272,7 @@ function td2NewGame(mode){
   td2ClearSave();startTower(mode);
 }
 function startTower(mode){
+  td2CkptClear();   /* ván mới: bỏ mốc của ván trước */
   const surv=(mode==='survival');
   const M=rnd(TD_MAPS);
   GM={type:'tower2',mode:surv?'survival':'normal',map:M,gold:180,lives:25,round:1,kills:0,bossKills:0,
@@ -4550,6 +4590,84 @@ function td2GrName(){
   const t=td2GrList().find(x=>x.id===TDQM.gr);
   return t?t.name:'tất cả chuyên đề';
 }
+/* ===== 🎒 KHO CÂU HỎI NGỮ PHÁP CHO GAME =====
+   Mỗi chuyên đề vốn chỉ có ~10 câu trắc nghiệm nên chơi một lúc là gặp lại.
+   Mục "Ôn Ngữ Pháp" còn 20 câu nữa mỗi chuyên đề (chia từ · tìm lỗi sai ·
+   sắp xếp · dịch). Hai dạng ĐẦU chuyển được sang trắc nghiệm mà vẫn đúng
+   tuyệt đối, nên gộp thêm vào — số câu mỗi chuyên đề tăng gần gấp đôi.
+   (Sắp xếp và dịch thì không gộp: muốn thành trắc nghiệm phải bịa câu sai,
+   dễ dạy nhầm cho học sinh.) */
+const TD_GRQ={};
+function td2GrQs(tp){
+  if(TD_GRQ[tp.id])return TD_GRQ[tp.id];
+  const out=[];
+  for(const fn of (tp.qs||[])) out.push(fn);
+  let raw=[];
+  for(const fn of (tp.more||[])){try{const q=fn();if(q)raw.push(q)}catch(e){}}
+  /* ✏️ "chia đúng dạng từ" -> trắc nghiệm. Mồi nhử lấy từ đáp án các câu khác
+     CÙNG chuyên đề nên luôn sai rõ ràng (đề đã ghi sẵn từ gốc trong ngoặc). */
+  const fills=raw.filter(q=>q.t==='fill'&&q.ans&&q.ans[0]&&q.q);
+  /* gộp theo CHỮ THƯỜNG: "could" và "Could" là một đáp án, không được
+     biến thành hai lựa chọn cùng đúng trong một câu */
+  const uniq={};
+  for(const x of fills){const a=String(x.ans[0]).trim();if(a&&!uniq[a.toLowerCase()])uniq[a.toLowerCase()]=a}
+  const ansAll=Object.values(uniq);
+  for(const q0 of fills){
+    const right=String(q0.ans[0]).trim();
+    const mồi=ansAll.filter(a=>a.toLowerCase()!==right.toLowerCase());
+    if(mồi.length<3)continue;
+    out.push((function(q0,right,mồi){return function(){
+      const o=shuffle([right,...pickN(mồi,3)]);
+      return {q:'✏️ Chia đúng dạng từ — '+q0.q, o:o, a:o.indexOf(right), e:q0.e||''};
+    }})(q0,right,mồi));
+  }
+  /* ❗ "tìm lỗi sai" -> trắc nghiệm chọn đúng từ bị sai trong câu */
+  for(const q0 of raw){
+    if(q0.t!=='error'||!q0.sent||!q0.wrong)continue;
+    const toks=String(q0.sent).split(/\s+/).map(w=>w.replace(/^["'(]+|[.,!?;:"')]+$/g,'')).filter(Boolean);
+    const w=String(q0.wrong).trim();
+    if(toks.indexOf(w)<0)continue;
+    /* gộp theo CHỮ THƯỜNG: câu "He said he was busy" có cả He và he —
+       nếu để cả hai làm lựa chọn thì hoá ra hai đáp án cùng đúng */
+    const u={};
+    for(const t of toks){
+      const k=t.toLowerCase();
+      if(t.length<2||k===w.toLowerCase()||u[k])continue;
+      u[k]=t;
+    }
+    const khac=Object.values(u);
+    if(khac.length<3)continue;
+    out.push((function(q0,w,khac){return function(){
+      const o=shuffle([w,...pickN(khac,3)]);
+      return {q:'❗ Câu sau SAI ở từ nào? — "'+q0.sent+'"', o:o, a:o.indexOf(w),
+              e:(q0.right?('Sửa: '+q0.right+'. '):'')+(q0.e||'')};
+    }})(q0,w,khac));
+  }
+  TD_GRQ[tp.id]=out;
+  return out;
+}
+/* 🎲 Bốc thăm KHÔNG LẶP: phải đi hết mọi câu trong kho rồi mới quay vòng,
+   và câu đầu vòng mới không được trùng câu vừa ra. */
+let TD_GRBAG=[], TD_GRBAGKEY='', TD_GRLAST='';
+function td2GrDraw(pool){
+  const key=pool.map(t=>t.id).join(',');
+  if(!TD_GRBAG.length||TD_GRBAGKEY!==key){
+    TD_GRBAGKEY=key;
+    const all=[];
+    for(const tp of pool){const qs=td2GrQs(tp);for(let i=0;i<qs.length;i++)all.push([tp,i])}
+    if(!all.length)return null;
+    TD_GRBAG=shuffle(all);
+    if(TD_GRBAG.length>1){
+      const cuoi=TD_GRBAG[TD_GRBAG.length-1];
+      if(cuoi[0].id+'#'+cuoi[1]===TD_GRLAST)TD_GRBAG.unshift(TD_GRBAG.pop());
+    }
+  }
+  const pick=TD_GRBAG.pop();
+  if(!pick)return null;
+  TD_GRLAST=pick[0].id+'#'+pick[1];
+  const fns=td2GrQs(pick[0]);
+  return [pick[0], fns[pick[1]]];
+}
 /* 📚 ngữ pháp — theo chuyên đề đã chọn, hoặc khó dần theo đợt nếu chọn "tất cả" */
 function td2QGrammar(){
   const L=td2GrList(); if(!L.length)return null;
@@ -4565,9 +4683,13 @@ function td2QGrammar(){
     if(!pool.length)pool=L;
   }
   if(!pool.length)return null;
-  const tp=rnd(pool);let q;
-  try{q=rnd(tp.qs)()}catch(e){return null}
+  const drawn=td2GrDraw(pool);
+  if(!drawn||!drawn[1])return null;
+  const tp=drawn[0];let q;
+  try{q=drawn[1]()}catch(e){return null}
   if(!q||!q.o)return null;
+  /* chốt chặn: không bao giờ để lọt hai lựa chọn giống nhau (dù khác hoa/thường) */
+  {const th={};for(const o of q.o){const k=String(o).trim().toLowerCase();if(th[k])return null;th[k]=1}}
   return {prompt:`<div class="prompt-card"><div style="font-size:11px;color:var(--violet);font-weight:800">📚 NGỮ PHÁP · ${esc(tp.name)}</div>
       <b style="font-size:14px;line-height:1.5;display:block;margin:4px 0">${esc(q.q)}</b>
       <div style="font-size:12px;color:var(--muted);font-weight:600">Chọn đáp án đúng</div></div>`,
@@ -4747,6 +4869,7 @@ function td2Ans(k){
 function td2StartRound(){
   if(!GM||GM.running)return;
   if(GM.pickPhase){toast('🎖️ Hãy chọn đội hình trước khi đánh tiếp!');return}
+  td2Ckpt();   /* 🔄 ghi mốc để thua còn đánh lại đúng đợt này */
   const r=GM.round,star=td2Star(r),base=Math.round(td2BaseHP(r)*td2Mod('ehp',1)*td2StarHp(r)),sp=td2BaseSpeed(r)*td2Mod('espd',1),rew=td2Reward(r);
   const ks=Object.keys(TD_KIND).filter(k=>r>=TD_KIND[k].from);
   const n=Math.min(60,Math.round((6+r*2.1)*(.55+.45*td2Warm(r))));
@@ -5740,11 +5863,24 @@ function td2GameOver(){
   }
   persist();checkBadges();
   const again=surv?'startTowerSurvival()':'startTower()';
+  /* 🔄 cho đánh lại ĐÚNG đợt vừa thua, giữ nguyên trụ và vàng lúc vào đợt */
+  const ck=td2CkptGet();
+  const lost=GM.lives<=0;
+  const replay=(ck&&lost)
+    ? `<button class="btn teal" onclick="td2Replay()">🔄 Đánh lại đợt ${ck.round}</button>`
+    : '';
+  const replayNote=(ck&&lost)
+    ? `<div style="font-size:12px;color:var(--muted);font-weight:600;margin:8px 0 2px">
+         Đánh lại đợt ${ck.round} sẽ trả em về đúng lúc vừa bấm "Bắt đầu đợt ${ck.round}":
+         <b>${(ck.towers||[]).length} trụ</b> · <b>🪙 ${(ck.gold||0).toLocaleString('vi')}</b> · <b>❤️ ${ck.lives}</b>.
+         Lần này thử đặt trụ khác xem sao!
+       </div>` : '';
   $('gamesCard').innerHTML=gameTop(surv?'🔥 Thủ thành Sinh Tồn':'🏰 Thủ thành')+
     `<div class="result"><div class="face">${GM.lives<=0?'💥':'🏆'}</div>
      <h3>${GM.lives<=0?'Thành đã thất thủ!':'Đã hoàn thành!'}</h3>
      <div class="scoreline">${M.em} ${M.name} · Qua <b>${rounds}</b> đợt · hạ <b>${GM.kills}</b> quái · 👹 <b>${GM.bossKills||0}</b> boss · ⭐ +${xp} XP</div>${rec}
-     <div class="row" style="justify-content:center"><button class="btn" onclick="${again}">🔄 Chơi lại${surv?' (địa hình mới)':''}</button><button class="btn ghost" onclick="gamesHome()">← Games</button></div></div>`;
+     ${replayNote}
+     <div class="row" style="justify-content:center">${replay}<button class="btn" onclick="${again}">🆕 Ván mới${surv?' (địa hình mới)':''}</button><button class="btn ghost" onclick="gamesHome()">← Games</button></div></div>`;
 }
 
 /* ================= 🏆 GOLD QUEST ================= */
