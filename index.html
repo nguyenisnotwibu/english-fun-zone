@@ -14,6 +14,8 @@
   --teal:#22d3aa; --blue:#38bdf8; --red:#ff4d6d; --green:#2dd573;
   --g4a:#65a30d; --g4b:#a3e635;
   --g10a:#1d4ed8; --g10b:#60a5fa;
+  --g11a:#9333ea; --g11b:#c084fc;
+  --g12a:#be123c; --g12b:#fb7185;
   --g8a:#c2410c; --g8b:#fb923c;
   --g9a:#4338ca; --g9b:#818cf8;
   --g5a:#ff9f1c; --g5b:#ffd23f;
@@ -63,6 +65,8 @@ header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 0 4p
 .gpill small{display:block;font-family:'Be Vietnam Pro';font-weight:600;font-size:11px;opacity:.9;margin-top:2px}
 .gpill.g4{background:linear-gradient(135deg,var(--g4a),var(--g4b));color:#1a4700}
 .gpill.g10{background:linear-gradient(135deg,var(--g10a),var(--g10b));color:#fff}
+.gpill.g11{background:linear-gradient(135deg,var(--g11a),var(--g11b));color:#fff}
+.gpill.g12{background:linear-gradient(135deg,var(--g12a),var(--g12b));color:#fff}
 .gpill.g5{background:linear-gradient(135deg,var(--g5a),var(--g5b));color:#5b3500}
 .gpill.g6{background:linear-gradient(135deg,var(--g6a),var(--g6b));color:#03483a}
 .gpill.g7{background:linear-gradient(135deg,var(--g7a),var(--g7b))}
@@ -559,7 +563,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
       <span class="rocket">🚀</span>
       <div>
         <h1>English <span>Fun Zone</span></h1>
-        <p>Luyện tiếng Anh lớp 4·5·6·7·8·9·10 — học mà chơi, chơi mà giỏi!</p>
+        <p>Luyện tiếng Anh lớp 4 → 12 — học mà chơi, chơi mà giỏi!</p>
       </div>
     </div>
     <div class="player-chip" id="playerChip" style="cursor:pointer" title="Đổi tên / avatar">
@@ -581,6 +585,8 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
     <button class="gpill g8" data-g="8" onclick="setGrade(8)">🎋 Lớp 8<small>Global Success 8</small></button>
     <button class="gpill g9" data-g="9" onclick="setGrade(9)">🚀 Lớp 9<small>Global Success 9</small></button>
     <button class="gpill g10" data-g="10" onclick="setGrade(10)">🎓 Lớp 10<small>Global S. / Friends G.</small></button>
+    <button class="gpill g11" data-g="11" onclick="setGrade(11)">🏅 Lớp 11<small>Global Success 11</small></button>
+    <button class="gpill g12" data-g="12" onclick="setGrade(12)">🎖️ Lớp 12<small>Global Success 12</small></button>
     <button class="gpill gi" id="gpillIELTS" onclick="goIELTS()">📝 IELTS<small>Vocab · Paraphrase</small></button>
   </div>
 
@@ -1488,6 +1494,320 @@ topics:[
 {id:'g10u10',em:'🏞️',name:'U10: Ecotourism',vocab:[['ecotourism','du lịch sinh thái'],['tourist','khách du lịch'],['tourism','ngành du lịch'],['destination','điểm đến'],['local community','cộng đồng địa phương'],['nature reserve','khu bảo tồn thiên nhiên'],['national park','vườn quốc gia'],['wildlife','động vật hoang dã'],['landscape','phong cảnh'],['scenery','cảnh đẹp'],['trek','đi bộ đường dài'],['homestay','ở nhà dân'],['guided tour','chuyến tham quan có hướng dẫn'],['tour guide','hướng dẫn viên'],['responsible travel','du lịch có trách nhiệm'],['mass tourism','du lịch đại trà'],['overcrowded','quá đông đúc'],['litter','xả rác, rác vứt bừa'],['respect local culture','tôn trọng văn hoá bản địa'],['souvenir','đồ lưu niệm'],['accommodation','chỗ ở'],['itinerary','lịch trình'],['breathtaking','đẹp ngoạn mục'],['unspoilt','còn nguyên sơ']]},
 {id:'g10x1',em:'🏥',name:'Bổ trợ: Sức khoẻ & Lối sống',vocab:[['mental health','sức khoẻ tâm thần'],['well-being','sự khoẻ mạnh, an lạc'],['nutrition','dinh dưỡng'],['balanced diet','chế độ ăn cân bằng'],['immune system','hệ miễn dịch'],['symptom','triệu chứng'],['diagnosis','sự chẩn đoán'],['prescription','đơn thuốc'],['therapy','liệu pháp'],['treatment','sự điều trị'],['epidemic','dịch bệnh'],['insomnia','chứng mất ngủ'],['sedentary','ít vận động'],['meditation','thiền định'],['anxiety','sự lo âu'],['self-esteem','lòng tự trọng'],['stress','sự căng thẳng'],['relieve','làm dịu, giảm bớt'],['obesity','bệnh béo phì'],['fitness','thể lực'],['work out','tập thể dục'],['hygiene','vệ sinh'],['vaccine','vắc-xin'],['recover','hồi phục']]},
 {id:'g10x2',em:'🎓',name:'Bổ trợ: Nghề nghiệp & Hướng nghiệp',vocab:[['career path','con đường sự nghiệp'],['qualification','bằng cấp, trình độ'],['internship','kỳ thực tập'],['apprenticeship','việc học nghề'],['vocational','thuộc hướng nghiệp, dạy nghề'],['graduate','tốt nghiệp'],['achievement','thành tích'],['entrepreneurship','tinh thần khởi nghiệp'],['start-up','công ty khởi nghiệp'],['employer','người sử dụng lao động'],['employee','người lao động'],['apply for','nộp đơn xin'],['application','đơn xin việc'],['CV','sơ yếu lý lịch'],['interview','buổi phỏng vấn'],['candidate','ứng viên'],['recruit','tuyển dụng'],['salary','tiền lương'],['full-time','toàn thời gian'],['part-time','bán thời gian'],['experience','kinh nghiệm'],['teamwork','làm việc nhóm'],['time management','quản lý thời gian'],['soft skills','kỹ năng mềm']]},
+],
+},
+/* ---------------- GRADE 11 (Global Success 11) ---------------- */
+11:{
+theory:[
+{em:'🔁',t:'Hiện tại hoàn thành & Quá khứ đơn (ôn sâu)',h:`
+<div class="rule"><b>Quá khứ đơn</b>: hành động đã KẾT THÚC, có mốc thời gian rõ: <b>yesterday, ago, last, in 2020</b>.</div>
+<div class="rule"><b>Hiện tại hoàn thành</b>: hành động còn liên quan tới hiện tại: <b>just, already, yet, ever, never, since, for, so far, recently</b>.</div>
+<table><tr><th>Câu</th><th>Thì</th><th>Vì sao</th></tr>
+<tr><td>I <b>visited</b> Hue in 2019.</td><td>QK đơn</td><td>có mốc in 2019</td></tr>
+<tr><td>I <b>have visited</b> Hue twice.</td><td>HT hoàn thành</td><td>kinh nghiệm, không nói khi nào</td></tr>
+<tr><td>She <b>has lived</b> here <b>since</b> 2020.</td><td>HT hoàn thành</td><td>since + mốc</td></tr></table>
+<div class="tip">💡 Thấy <b>since/for</b> + hiện tại → hoàn thành. Thấy <b>ago/last/in + năm</b> → quá khứ đơn.</div>`},
+{em:'⚖️',t:'So sánh & Động từ nối (Comparison & Linking verbs)',h:`
+<div class="rule">Adj ngắn: <b>adj-er than</b> · Adj dài: <b>more + adj + than</b> · Nhất: <b>the + adj-est / the most + adj</b>.</div>
+<div class="rule">Bằng nhau: <b>as + adj nguyên mẫu + as</b>. Càng ngày càng: <b>adj-er and adj-er</b>. So sánh kép: <b>The + comparative, the + comparative</b>.</div>
+<div class="rule">Sau động từ nối <b>be, seem, look, feel, taste, smell, sound, become, get</b> → dùng <b>TÍNH TỪ</b>, không dùng trạng từ.</div>
+<table><tr><th>Đúng</th><th>Sai</th></tr>
+<tr><td>The soup tastes <b>good</b>.</td><td>tastes well</td></tr>
+<tr><td>She looks <b>tired</b>.</td><td>looks tiredly</td></tr></table>
+<div class="tip">⚠️ Bất quy tắc: good → better → the best; bad → worse → the worst; far → further → the furthest.</div>`},
+{em:'🔮',t:'Tương lai tiếp diễn & Tương lai hoàn thành',h:`
+<div class="rule"><b>Tương lai tiếp diễn</b>: <b>will be + V-ing</b> — đang xảy ra tại một thời điểm trong tương lai.<br>Dấu hiệu: <b>at this time tomorrow, at 8 p.m. next Sunday</b>.</div>
+<div class="rule"><b>Tương lai hoàn thành</b>: <b>will have + V3</b> — hoàn tất TRƯỚC một mốc tương lai.<br>Dấu hiệu: <b>by + mốc tương lai, by the time + hiện tại đơn</b>.</div>
+<table><tr><th>Câu</th><th>Nghĩa</th></tr>
+<tr><td>At 9 p.m. tomorrow I <b>will be studying</b>.</td><td>lúc đó đang học</td></tr>
+<tr><td>By next June I <b>will have graduated</b>.</td><td>trước tháng 6 đã tốt nghiệp</td></tr></table>
+<div class="tip">💡 Sau <b>by the time</b> dùng hiện tại đơn, mệnh đề chính dùng will have + V3.</div>`},
+{em:'🧩',t:'Mệnh đề quan hệ xác định & không xác định',h:`
+<div class="rule"><b>Xác định</b> (không dấu phẩy): cần thiết để hiểu danh từ. Dùng who/which/that.</div>
+<div class="rule"><b>Không xác định</b> (có dấu phẩy): chỉ bổ sung thông tin. <b>KHÔNG dùng that</b>, không lược bỏ đại từ.</div>
+<table><tr><th>Loại</th><th>Ví dụ</th></tr>
+<tr><td>Xác định</td><td>The man <b>who</b> lives next door is a doctor.</td></tr>
+<tr><td>Không xác định</td><td>My father, <b>who</b> is 50, still plays football.</td></tr>
+<tr><td>whose</td><td>The boy <b>whose</b> bike was stolen is crying.</td></tr>
+<tr><td>where / when</td><td>This is the school <b>where</b> I studied.</td></tr></table>
+<div class="tip">⚠️ Lược bỏ được đại từ quan hệ khi nó làm TÂN NGỮ trong mệnh đề xác định: The book (which) I bought...</div>`},
+{em:'🌦️',t:'Câu điều kiện loại 2 & Câu ước (wish)',h:`
+<div class="rule"><b>Loại 2</b>: <b>If + S + V2/V-ed, S + would/could + V</b> — không có thật ở hiện tại. Dùng <b>were</b> cho mọi ngôi.</div>
+<div class="rule"><b>Wish hiện tại</b>: <b>S + wish + S + V2/were</b> — ước điều trái hiện tại.<br><b>Wish quá khứ</b>: <b>S + wish + S + had + V3</b> — tiếc chuyện đã rồi.</div>
+<table><tr><th>Câu</th><th>Nghĩa</th></tr>
+<tr><td>If I <b>were</b> you, I <b>would</b> apologise.</td><td>Nếu tôi là bạn...</td></tr>
+<tr><td>I wish I <b>had</b> more free time.</td><td>Ước gì có nhiều thời gian hơn</td></tr>
+<tr><td>I wish I <b>had studied</b> harder.</td><td>Ước gì đã học chăm hơn</td></tr></table>
+<div class="tip">💡 wish + <b>would</b> + V dùng để phàn nàn: I wish you would stop shouting.</div>`},
+{em:'📰',t:'Câu tường thuật (Reported Speech)',h:`
+<div class="rule">Lùi thì một bậc: HT đơn → QK đơn · HT tiếp diễn → QK tiếp diễn · QK đơn/HTHT → QK hoàn thành · will → would · can → could · must → had to.</div>
+<div class="rule">Đổi đại từ và trạng từ: now → then · today → that day · tomorrow → the next day · yesterday → the day before · here → there · this → that.</div>
+<table><tr><th>Trực tiếp</th><th>Gián tiếp</th></tr>
+<tr><td>"I am tired," he said.</td><td>He said (that) he <b>was</b> tired.</td></tr>
+<tr><td>"Where do you live?" she asked.</td><td>She asked where I <b>lived</b>.</td></tr>
+<tr><td>"Close the door," he said.</td><td>He <b>told</b> me <b>to close</b> the door.</td></tr></table>
+<div class="tip">⚠️ Câu hỏi gián tiếp KHÔNG đảo ngữ và không dùng do/does/did.</div>`},
+{em:'🅰️',t:'Mạo từ & Danh động từ (Articles & Gerunds)',h:`
+<div class="rule"><b>a/an</b>: danh từ đếm được số ít, lần đầu nhắc tới. <b>an</b> trước nguyên âm.</div>
+<div class="rule"><b>the</b>: đã nhắc tới, duy nhất, có bổ nghĩa xác định, trước so sánh nhất, trước tên sông/biển/dãy núi.</div>
+<div class="rule">Không mạo từ: danh từ số nhiều/không đếm được mang nghĩa chung, tên người, tên nước (trừ the USA, the UK).</div>
+<div class="rule"><b>V-ing</b> làm chủ ngữ, sau giới từ, sau enjoy/avoid/mind/finish/suggest/consider.</div>
+<div class="tip">💡 Nhớ nhóm: enjoy, avoid, mind, finish, practise, suggest, consider, admit → + <b>V-ing</b>.</div>`},
+{em:'🎯',t:'To V hay V-ing sau động từ',h:`
+<div class="rule">+ <b>to V</b>: want, decide, hope, plan, promise, agree, refuse, manage, offer, afford, learn.</div>
+<div class="rule">+ <b>V-ing</b>: enjoy, avoid, finish, mind, practise, suggest, consider, deny, admit, imagine.</div>
+<div class="rule">Dùng được cả hai nhưng <b>khác nghĩa</b>:</div>
+<table><tr><th>Cấu trúc</th><th>Nghĩa</th></tr>
+<tr><td>stop <b>to V</b> / stop <b>V-ing</b></td><td>dừng lại ĐỂ làm / dừng hẳn việc đang làm</td></tr>
+<tr><td>remember <b>to V</b> / remember <b>V-ing</b></td><td>nhớ phải làm / nhớ đã làm</td></tr>
+<tr><td>try <b>to V</b> / try <b>V-ing</b></td><td>cố gắng / thử xem sao</td></tr></table>
+<div class="tip">⚠️ Sau <b>make/let + O</b> dùng V nguyên mẫu; sau <b>allow/advise + O</b> dùng to V.</div>`},
+{em:'💡',t:'Câu chẻ nhấn mạnh (Cleft sentences)',h:`
+<div class="rule">Nhấn mạnh chủ ngữ/tân ngữ/trạng ngữ: <b>It is/was + phần nhấn mạnh + that/who + phần còn lại</b>.</div>
+<table><tr><th>Câu gốc: Nam bought this book yesterday.</th></tr>
+<tr><td>Nhấn chủ ngữ: <b>It was Nam who</b> bought this book yesterday.</td></tr>
+<tr><td>Nhấn tân ngữ: <b>It was this book that</b> Nam bought yesterday.</td></tr>
+<tr><td>Nhấn thời gian: <b>It was yesterday that</b> Nam bought this book.</td></tr></table>
+<div class="rule">Dạng What-cleft: <b>What + S + V + is/was + ...</b> — What I need is a holiday.</div>
+<div class="tip">💡 Người → who/that · vật → that/which · thời gian, nơi chốn → that. Dùng <b>that</b> luôn an toàn.</div>`},
+{em:'⏮️',t:'Câu điều kiện loại 3 & hỗn hợp',h:`
+<div class="rule"><b>Loại 3</b>: <b>If + S + had + V3, S + would have + V3</b> — tiếc nuối chuyện đã rồi trong quá khứ.</div>
+<div class="rule"><b>Hỗn hợp</b>: <b>If + S + had + V3, S + would + V</b> — quá khứ ảnh hưởng tới hiện tại.</div>
+<table><tr><th>Câu</th><th>Nghĩa</th></tr>
+<tr><td>If I <b>had studied</b>, I <b>would have passed</b>.</td><td>Nếu đã học thì đã đỗ (loại 3)</td></tr>
+<tr><td>If I <b>had taken</b> the job, I <b>would be</b> rich now.</td><td>Nếu đã nhận việc thì giờ đã giàu (hỗn hợp)</td></tr></table>
+<div class="tip">💡 Bỏ If thì đảo ngữ: <b>Had I known</b>, I would have told you.</div>`},
+{em:'✂️',t:'Rút gọn mệnh đề quan hệ',h:`
+<div class="rule">Chủ động → <b>V-ing</b>: The man <s>who is standing</s> → The man <b>standing</b> there is my uncle.</div>
+<div class="rule">Bị động → <b>V3</b>: The letter <s>which was written</s> → The letter <b>written</b> by Lan.</div>
+<div class="rule">Sau <b>the first/the last/the only/so sánh nhất</b> → <b>to V</b>: He was the first <b>to arrive</b>.</div>
+<div class="tip">💡 Hỏi nhanh: danh từ đứng trước TỰ làm hành động → V-ing; BỊ tác động → V3.</div>`},
+{em:'🔗',t:'Từ nối & Mệnh đề trạng ngữ',h:`
+<div class="rule">Theo sau là <b>MỆNH ĐỀ</b> (S + V): although, though, even though, because, since, as, while, whereas.</div>
+<div class="rule">Theo sau là <b>CỤM DANH TỪ</b>: despite, in spite of, because of, due to, owing to.</div>
+<table><tr><th>Mục đích</th><th>so that / in order that + mệnh đề · so as to / in order to + V</th></tr>
+<tr><td>Kết quả</td><td>so + adj + that · such + a/an + adj + N + that</td></tr></table>
+<div class="tip">⚠️ Tiếng Việt nói "Tuy... nhưng..." nhưng tiếng Anh CHỈ dùng một: Although he is poor, he is happy.</div>`},
+],
+quiz:[
+{q:"She ___ in this company since 2018.",o:["works", "worked", "has worked", "is working"],a:2,e:"since + mốc → hiện tại hoàn thành."},
+{q:"I ___ my grandparents last summer.",o:["visit", "visited", "have visited", "had visited"],a:1,e:"last summer → quá khứ đơn."},
+{q:"At this time tomorrow, we ___ on the beach.",o:["lie", "will lie", "will be lying", "have lain"],a:2,e:"at this time tomorrow → tương lai tiếp diễn."},
+{q:"By 2030, scientists ___ a cure for this disease.",o:["find", "will find", "will have found", "have found"],a:2,e:"By + mốc tương lai → tương lai hoàn thành."},
+{q:"The woman ___ lives next door is a nurse.",o:["which", "who", "whose", "whom"],a:1,e:"Người, làm chủ ngữ → who."},
+{q:"My brother, ___ works in Ha Noi, is coming home.",o:["that", "who", "which", "whom"],a:1,e:"Có dấu phẩy → không dùng that; người → who."},
+{q:"If I ___ you, I would take that job.",o:["am", "was", "were", "will be"],a:2,e:"Điều kiện loại 2 dùng were cho mọi ngôi."},
+{q:"I wish I ___ more time to relax.",o:["have", "had", "will have", "had had"],a:1,e:"Ước ở hiện tại → wish + V quá khứ."},
+{q:"He said he ___ tired that day.",o:["is", "was", "has been", "will be"],a:1,e:"Tường thuật lùi thì: am → was."},
+{q:"She asked me where I ___.",o:["live", "lived", "do live", "did live"],a:1,e:"Câu hỏi gián tiếp: lùi thì, không đảo ngữ."},
+{q:"The soup tastes ___.",o:["well", "good", "goodly", "better than"],a:1,e:"Sau động từ nối taste → tính từ."},
+{q:"Today is ___ than yesterday.",o:["hot", "hotter", "hottest", "more hot"],a:1,e:"Adj ngắn + er + than."},
+{q:"I enjoy ___ to classical music.",o:["listen", "to listen", "listening", "listened"],a:2,e:"enjoy + V-ing."},
+{q:"She decided ___ abroad next year.",o:["study", "to study", "studying", "studied"],a:1,e:"decide + to V."},
+{q:"Remember ___ the door before leaving.",o:["lock", "to lock", "locking", "locked"],a:1,e:"remember to V = nhớ phải làm."},
+{q:"___ it was raining, we went camping.",o:["Despite", "Because of", "Although", "Due to"],a:2,e:"Theo sau là mệnh đề → Although."},
+{q:"___ the heavy rain, the match was cancelled.",o:["Although", "Because of", "Even though", "While"],a:1,e:"Theo sau là cụm danh từ → Because of."},
+{q:"It was Lan ___ won the first prize.",o:["which", "who", "whose", "whom"],a:1,e:"Câu chẻ nhấn mạnh người → who."},
+{q:"If he ___ harder, he would have passed the exam.",o:["studies", "studied", "had studied", "would study"],a:2,e:"Điều kiện loại 3: If + had + V3."},
+{q:"___ I known about the traffic, I would have left earlier.",o:["If", "Had", "Have", "Did"],a:1,e:"Đảo ngữ điều kiện loại 3: Had + S + V3."},
+{q:"The book ___ by my teacher is very useful.",o:["writing", "written", "wrote", "writes"],a:1,e:"Rút gọn bị động → V3."},
+{q:"The man ___ over there is my father.",o:["stand", "standing", "stood", "stands"],a:1,e:"Rút gọn chủ động → V-ing."},
+{q:"He was the first student ___ the answer.",o:["knowing", "known", "to know", "knew"],a:2,e:"Sau the first → to V."},
+{q:"She speaks English ___ than her sister.",o:["fluent", "more fluent", "more fluently", "fluently"],a:2,e:"Bổ nghĩa cho động từ speaks → trạng từ so sánh hơn."},
+{q:"What I need most ___ a good night's sleep.",o:["are", "is", "were", "have been"],a:1,e:"What-cleft làm chủ ngữ → động từ số ít."},
+],
+readings:[
+{em:'🌡️',title:"Global Warming: A Shared Responsibility",tags:["Environment", "B1"],text:"Global warming is no longer a distant threat. Average temperatures have risen by about one degree Celsius since the late nineteenth century, and the pace is accelerating. The main cause is the burning of fossil fuels, which releases carbon dioxide and other greenhouse gases into the atmosphere. These gases trap heat and gradually warm the planet.\nThe consequences are already visible. Glaciers are melting, sea levels are rising, and coastal cities face a growing risk of flooding. Farmers in many regions report longer droughts and more unpredictable rainfall, which leads to crop failure and food shortages. Wildlife suffers too, as many species cannot adapt quickly enough to their changing habitats.\nHowever, individuals are not powerless. Simple choices such as using public transport, saving electricity, reducing meat consumption and avoiding single-use plastic can lower a person's carbon footprint significantly. Governments can also act by investing in renewable energy and setting strict limits on emissions. Scientists agree that the next decade will be decisive. If serious action is taken now, the worst outcomes can still be avoided.",vn:"Nóng lên toàn cầu không còn là mối đe doạ xa xôi. Nhiệt độ trung bình đã tăng khoảng một độ C từ cuối thế kỷ 19 và đang tăng nhanh hơn. Nguyên nhân chính là việc đốt nhiên liệu hoá thạch, thải ra khí các-bô-níc và các khí nhà kính khác. Hậu quả đã thấy rõ: băng tan, nước biển dâng, hạn hán kéo dài, mất mùa, động vật hoang dã không kịp thích nghi. Tuy vậy mỗi người đều có thể góp phần bằng những lựa chọn đơn giản, và chính phủ có thể đầu tư vào năng lượng tái tạo. Các nhà khoa học cho rằng thập kỷ tới mang tính quyết định.",qs:[{q:"What is identified as the main cause of global warming?",o:["Melting glaciers", "The burning of fossil fuels", "Unpredictable rainfall", "Rising sea levels"],a:1},{q:"According to the text, why does wildlife suffer?",o:["It is hunted more often", "It cannot adapt quickly enough to habitat changes", "It is moved to zoos", "It eats fewer plants"],a:1},{q:"Which action is NOT mentioned as something individuals can do?",o:["Using public transport", "Reducing meat consumption", "Planting a tree in every garden", "Avoiding single-use plastic"],a:2},{q:"What do scientists say about the next decade?",o:["It will be too late to act", "It will be decisive", "Temperatures will fall", "Emissions will stop naturally"],a:1}]},
+{em:'👨‍👩‍👦',title:"Bridging the Generation Gap",tags:["Family", "Society", "B1"],text:"In many Vietnamese families, three generations live under one roof. This arrangement brings warmth and support, but it can also create tension. Parents who grew up in a time of hardship often value saving money, academic success and obedience. Their children, raised with smartphones and social media, tend to value independence, self-expression and personal choice.\nConflicts usually appear in everyday matters: how late a teenager may stay out, how much time is spent online, what clothes are acceptable, or which career to follow. Teenagers often complain that their parents interfere too much, while parents worry that too much freedom leads to poor decisions.\nExperts suggest that the solution is not for one side to win, but for both to listen. Setting aside regular time to talk without criticism helps. So does explaining reasons rather than giving orders. When parents share stories from their own youth, children often realise that their worries are not so different. Mutual respect, not agreement on everything, is what keeps a family close.",vn:"Ở nhiều gia đình Việt, ba thế hệ sống chung một mái nhà, vừa ấm áp vừa dễ nảy sinh căng thẳng. Cha mẹ lớn lên trong thời khó khăn thường coi trọng tiết kiệm, thành tích học tập và sự vâng lời; con cái lớn lên cùng điện thoại và mạng xã hội lại coi trọng sự độc lập và quyền tự quyết. Mâu thuẫn thường nảy sinh từ chuyện giờ giấc, thời gian lên mạng, quần áo hay chọn nghề. Chuyên gia khuyên hai bên nên lắng nghe nhau, giải thích thay vì ra lệnh. Tôn trọng lẫn nhau mới là thứ giữ gia đình gắn bó.",qs:[{q:"What do parents in the text tend to value?",o:["Self-expression and personal choice", "Saving money, academic success and obedience", "Social media and smartphones", "Travelling and fashion"],a:1},{q:"Which is given as an example of everyday conflict?",o:["Choosing a holiday destination", "How late a teenager may stay out", "Which newspaper to read", "How to cook dinner"],a:1},{q:"What do experts recommend?",o:["One side should win the argument", "Both sides should listen to each other", "Teenagers should move out", "Parents should give more orders"],a:1},{q:"According to the text, what keeps a family close?",o:["Agreeing on everything", "Living in separate houses", "Mutual respect", "Avoiding all discussion"],a:2}]},
+{em:'🎓',title:"Life After School: More Paths Than You Think",tags:["Education", "B1"],text:"For decades, Vietnamese school-leavers believed that university was the only respectable route to a good life. That belief is changing. Each year thousands of students choose vocational schools, where courses are shorter, tuition fees are lower and training is closely linked to real jobs. Graduates of these programmes often find work in areas such as mechanics, hospitality, nursing and information technology.\nAnother option is an apprenticeship, in which a young person learns a trade while earning a modest wage. Some students take a gap year to work, volunteer or travel before deciding on a major. Others enrol in online courses offered by universities abroad, gaining certificates without leaving home.\nCareer counsellors advise students to start by examining their own aptitudes and interests rather than following friends. They also point out that the job market now changes quickly: the skills that matter most are communication, problem-solving and a willingness to keep learning. A degree still opens doors, but it is no longer the only key.",vn:"Suốt nhiều thập kỷ, học sinh tốt nghiệp phổ thông tin rằng đại học là con đường duy nhất. Niềm tin đó đang thay đổi. Hằng năm hàng nghìn em chọn trường nghề: học ngắn hơn, học phí thấp hơn, gắn với việc làm thực tế. Ngoài ra còn có học nghề vừa học vừa hưởng lương, năm tạm nghỉ để đi làm hoặc tình nguyện, hay các khoá học trực tuyến của đại học nước ngoài. Chuyên gia hướng nghiệp khuyên nên bắt đầu từ năng khiếu và sở thích của chính mình. Kỹ năng quan trọng nhất hiện nay là giao tiếp, giải quyết vấn đề và tinh thần học hỏi liên tục.",qs:[{q:"What is one advantage of vocational schools mentioned in the text?",o:["They are more prestigious", "Tuition fees are lower", "They last longer than university", "They guarantee a high salary"],a:1},{q:"What happens during an apprenticeship?",o:["Students study abroad for free", "A young person learns a trade while earning a wage", "Students only attend online classes", "Students take a year off to travel"],a:1},{q:"What do career counsellors advise students to do first?",o:["Follow their friends' choices", "Examine their own aptitudes and interests", "Apply to as many universities as possible", "Start a business"],a:1},{q:"What does the text say about a degree?",o:["It is now worthless", "It still opens doors but is not the only key", "It is the only key to success", "It is required for all jobs"],a:1}]},
+],
+listenings:[
+{em:'💪',title:"Talking about a healthy lifestyle",hint:"Hai bạn nói về thói quen sống khoẻ.",script:[{text:"So, Minh, you look really fit these days. What's your secret?"},{text:"Nothing special, really. I just started cycling to school instead of taking the bus.",pitch:1.15},{text:"Every day? That's about five kilometres, isn't it?"},{text:"Yes, and it takes me twenty-five minutes. I also sleep earlier now, around half past ten.",pitch:1.15},{text:"I wish I could do that. I usually stay up watching videos until midnight."},{text:"That's the hard part. I keep my phone in another room after ten. It really helps.",pitch:1.15}],trans:["Mai: Minh này, dạo này trông cậu khoẻ hẳn. Bí quyết là gì thế?", "Minh: Chẳng có gì đặc biệt. Mình bắt đầu đạp xe đi học thay vì đi xe buýt.", "Mai: Ngày nào cũng đạp à? Chắc phải năm cây số nhỉ?", "Minh: Ừ, mất khoảng hai lăm phút. Mình cũng ngủ sớm hơn, khoảng mười rưỡi.", "Mai: Ước gì mình làm được vậy. Mình hay thức xem video tới nửa đêm.", "Minh: Chỗ đó mới khó. Mình để điện thoại ở phòng khác sau mười giờ, hiệu quả lắm."],qs:[{q:"How does Minh get to school now?",o:["By bus", "By cycling", "On foot", "By motorbike"],a:1},{q:"How long does the journey take him?",o:["Fifteen minutes", "Twenty minutes", "Twenty-five minutes", "Half an hour"],a:2},{q:"What does Minh do to sleep earlier?",o:["He takes medicine", "He keeps his phone in another room", "He exercises at night", "He drinks tea"],a:1}]},
+{em:'🏙️',title:"A city of the future",hint:"Nghe hai bạn bàn về thành phố thông minh.",script:[{text:"Our project is about cities of the future. What should we focus on?"},{text:"I think smart transport. Imagine self-driving buses that never get stuck in traffic.",pitch:1.15},{text:"Good idea. And what about energy? Every rooftop could have solar panels."},{text:"Exactly. Some cities already produce more electricity than they use.",pitch:1.15},{text:"Should we mention green space too? People need parks, not just technology."},{text:"Definitely. A liveable city has to be green, not only smart.",pitch:1.15}],trans:["Nam: Bài nhóm mình về thành phố tương lai. Nên tập trung vào gì nhỉ?", "Hoa: Mình nghĩ là giao thông thông minh. Tưởng tượng xe buýt tự lái không bao giờ tắc đường.", "Nam: Hay đấy. Thế còn năng lượng? Mái nhà nào cũng có thể lắp pin mặt trời.", "Hoa: Đúng rồi. Vài thành phố còn sản xuất điện nhiều hơn mức họ dùng.", "Nam: Có nên nhắc tới không gian xanh không? Người ta cần công viên chứ không chỉ công nghệ.", "Hoa: Chắc chắn rồi. Thành phố đáng sống phải xanh chứ không chỉ thông minh."],qs:[{q:"What is the first idea they agree to focus on?",o:["Green space", "Smart transport", "Solar panels", "Tall buildings"],a:1},{q:"What does Hoa say some cities already do?",o:["Ban all cars", "Produce more electricity than they use", "Build vertical farms", "Remove all parks"],a:1},{q:"What does Hoa conclude about a liveable city?",o:["It must be the biggest", "It must be green, not only smart", "It must have no traffic", "It must be the richest"],a:1}]},
+{em:'🏯',title:"Visiting a heritage site",hint:"Hướng dẫn viên giới thiệu một di sản.",script:[{text:"Welcome to the Imperial Citadel. This site was recognised by UNESCO in two thousand and ten."},{text:"How old are the oldest parts?",pitch:1.2},{text:"Some foundations date back more than a thousand years, to the Ly dynasty."},{text:"Are the buildings original, or have they been restored?",pitch:1.2},{text:"Most have been carefully restored, using traditional materials and methods."},{text:"And please remember: do not touch the carvings, and keep your voice low inside the halls."}],trans:["Hướng dẫn viên: Chào mừng tới Hoàng thành. Di tích này được UNESCO công nhận năm 2010.", "Khách: Phần cổ nhất có từ bao giờ ạ?", "Hướng dẫn viên: Một số nền móng có từ hơn một nghìn năm trước, thời nhà Lý.", "Khách: Các công trình là nguyên bản hay đã được phục dựng?", "Hướng dẫn viên: Phần lớn đã được phục dựng cẩn thận bằng vật liệu và kỹ thuật truyền thống.", "Hướng dẫn viên: Và xin lưu ý: không chạm vào các hoạ tiết chạm khắc, và nói nhỏ khi ở trong điện."],qs:[{q:"When was the site recognised by UNESCO?",o:["In 1010", "In 2010", "In 2001", "In 1910"],a:1},{q:"What does the guide say about the buildings?",o:["They are all original", "Most have been carefully restored", "They were rebuilt last year", "They are copies made of concrete"],a:1},{q:"Which rule does the guide mention?",o:["Do not take photographs", "Do not touch the carvings", "Do not enter the halls", "Do not bring water"],a:1}]},
+],
+writing:[
+{type:'order',words:["Global", "warming", "is", "caused", "mainly", "by", "human", "activities", "."],vn:"Nóng lên toàn cầu chủ yếu do hoạt động của con người gây ra."},
+{type:'order',words:["The", "man", "standing", "at", "the", "gate", "is", "our", "new", "teacher", "."],vn:"Người đàn ông đang đứng ở cổng là thầy giáo mới của chúng tôi."},
+{type:'order',words:["If", "I", "were", "you", "I", "would", "apply", "for", "that", "scholarship", "."],vn:"Nếu tôi là bạn, tôi sẽ nộp đơn xin học bổng đó."},
+{type:'order',words:["By", "next", "year", "she", "will", "have", "finished", "her", "degree", "."],vn:"Đến năm sau cô ấy sẽ đã học xong bằng đại học."},
+{type:'order',words:["Many", "students", "choose", "vocational", "schools", "because", "of", "lower", "fees", "."],vn:"Nhiều học sinh chọn trường nghề vì học phí thấp hơn."},
+{type:'gap',sent:"She has lived in Ha Noi ___ 2019.",a:"since",hintvn:"since + mốc thời gian; for + khoảng thời gian."},
+{type:'gap',sent:"The book ___ (write) by Nam won a prize.",a:"written",hintvn:"Rút gọn mệnh đề bị động → V3."},
+{type:'gap',sent:"If he had left earlier, he ___ (catch) the train.",a:"would have caught",hintvn:"Điều kiện loại 3: would have + V3."},
+{type:'gap',sent:"___ the bad weather, the trip was cancelled.",a:"Because of",hintvn:"Theo sau là cụm danh từ → Because of / Due to."},
+{type:'gap',sent:"I wish I ___ (have) more free time.",a:"had",hintvn:"Ước ở hiện tại → wish + V quá khứ."},
+{type:'gap',sent:"At 8 p.m. tomorrow we ___ (have) dinner.",a:"will be having",hintvn:"at 8 p.m. tomorrow → tương lai tiếp diễn."},
+{type:'write',prompt:"Viết lại dùng câu chẻ nhấn mạnh chủ ngữ: \"Lan broke the window.\"",check:["it", "was", "lan", "who", "broke"],sample:"It was Lan who broke the window.",vn:"Câu chẻ: It was + người + who + phần còn lại."},
+{type:'write',prompt:"Viết lại dùng mệnh đề quan hệ: \"I met a man. His car was stolen.\"",check:["whose", "car", "was", "stolen"],sample:"I met a man whose car was stolen.",vn:"Sở hữu → whose + danh từ."},
+{type:'write',prompt:"Viết lại dùng Although: \"Despite the rain, we went out.\"",check:["although", "it", "was", "raining", "we", "went"],sample:"Although it was raining, we went out.",vn:"Although + mệnh đề (S + V)."},
+{type:'write',prompt:"Viết lại dùng đảo ngữ: \"If I had known, I would have helped.\"",check:["had", "i", "known", "i", "would", "have", "helped"],sample:"Had I known, I would have helped.",vn:"Bỏ If → Had + S + V3."},
+],
+topics:[
+{id:'g11u1',em:'💪',name:"U1: A long and healthy life",vocab:[["life expectancy","tuổi thọ trung bình"],["longevity","sự trường thọ"],["well-being","sự khoẻ mạnh, an lạc"],["balanced diet","chế độ ăn cân bằng"],["nutrient","chất dinh dưỡng"],["calorie","calo"],["obesity","bệnh béo phì"],["malnutrition","suy dinh dưỡng"],["immune system","hệ miễn dịch"],["chronic disease","bệnh mãn tính"],["cardiovascular","thuộc tim mạch"],["diabetes","bệnh tiểu đường"],["mental health","sức khoẻ tâm thần"],["stress","sự căng thẳng"],["anxiety","sự lo âu"],["insomnia","chứng mất ngủ"],["meditation","thiền định"],["mindfulness","sự chú tâm, tỉnh thức"],["physical activity","hoạt động thể chất"],["sedentary lifestyle","lối sống ít vận động"],["stamina","sức bền"],["hygiene","vệ sinh"],["vaccination","sự tiêm chủng"],["prevention","sự phòng ngừa"],["life span","tuổi thọ"],["ageing population","dân số già hoá"],["herbal remedy","bài thuốc thảo dược"],["check-up","việc khám sức khoẻ định kỳ"]]},
+{id:'g11u2',em:'👨‍👩‍👦',name:"U2: The generation gap",vocab:[["generation gap","khoảng cách thế hệ"],["conflict","mâu thuẫn"],["viewpoint","quan điểm"],["attitude","thái độ"],["norm","chuẩn mực"],["value","giá trị"],["tradition","truyền thống"],["nuclear family","gia đình hạt nhân"],["extended family","gia đình nhiều thế hệ"],["upbringing","sự nuôi dạy"],["obedient","biết vâng lời"],["rebellious","nổi loạn, chống đối"],["privacy","sự riêng tư"],["curfew","giờ giới nghiêm"],["self-expression","sự thể hiện bản thân"],["mutual respect","sự tôn trọng lẫn nhau"],["compromise","sự thoả hiệp"],["misunderstanding","sự hiểu lầm"],["criticise","chỉ trích"],["impose","áp đặt"],["interfere","can thiệp"],["flexible","linh hoạt"],["conservative","bảo thủ"],["open-minded","cởi mở"],["peer pressure","áp lực bạn bè"],["role model","hình mẫu"],["household chores","việc nhà"],["table manners","phép tắc ăn uống"]]},
+{id:'g11u3',em:'🏙️',name:"U3: Cities of the future",vocab:[["smart city","thành phố thông minh"],["infrastructure","cơ sở hạ tầng"],["skyscraper","toà nhà chọc trời"],["urban planning","quy hoạch đô thị"],["sustainable","bền vững"],["liveable","đáng sống"],["renewable energy","năng lượng tái tạo"],["solar panel","tấm pin mặt trời"],["self-driving car","xe tự lái"],["public transport","giao thông công cộng"],["traffic congestion","tắc nghẽn giao thông"],["commute","đi lại hằng ngày"],["overcrowding","tình trạng quá tải dân số"],["slum","khu ổ chuột"],["green space","không gian xanh"],["vertical farm","trang trại thẳng đứng"],["waste treatment","xử lý rác thải"],["air quality","chất lượng không khí"],["resident","cư dân"],["facility","tiện ích, cơ sở vật chất"],["automation","sự tự động hoá"],["sensor","cảm biến"],["digital network","mạng lưới số"],["efficiency","hiệu quả"],["affordable housing","nhà ở giá hợp lý"],["inhabitant","người dân sinh sống"],["futuristic","mang tính tương lai"],["quality of life","chất lượng cuộc sống"]]},
+{id:'g11u4',em:'🤝',name:"U4: ASEAN and Viet Nam",vocab:[["ASEAN","Hiệp hội các quốc gia Đông Nam Á"],["member state","quốc gia thành viên"],["regional","thuộc khu vực"],["integration","sự hội nhập"],["cooperation","sự hợp tác"],["summit","hội nghị thượng đỉnh"],["charter","hiến chương"],["declaration","bản tuyên bố"],["treaty","hiệp ước"],["solidarity","tình đoàn kết"],["stability","sự ổn định"],["prosperity","sự thịnh vượng"],["free trade","thương mại tự do"],["tariff","thuế quan"],["investment","sự đầu tư"],["economic growth","tăng trưởng kinh tế"],["exchange programme","chương trình trao đổi"],["youth forum","diễn đàn thanh niên"],["cultural diversity","đa dạng văn hoá"],["mutual benefit","lợi ích chung"],["dialogue","đối thoại"],["negotiate","đàm phán"],["sign an agreement","ký kết thoả thuận"],["headquarters","trụ sở chính"],["founding member","thành viên sáng lập"],["sustainable development","phát triển bền vững"],["ASEAN Games","Đại hội thể thao ASEAN"],["diplomatic relations","quan hệ ngoại giao"]]},
+{id:'g11u5',em:'🌡️',name:"U5: Global warming",vocab:[["global warming","sự nóng lên toàn cầu"],["climate change","biến đổi khí hậu"],["greenhouse gas","khí nhà kính"],["greenhouse effect","hiệu ứng nhà kính"],["carbon dioxide","khí các-bô-níc"],["emission","khí thải"],["fossil fuel","nhiên liệu hoá thạch"],["deforestation","nạn phá rừng"],["industrialisation","sự công nghiệp hoá"],["sea level","mực nước biển"],["glacier","sông băng"],["melt","tan chảy"],["drought","hạn hán"],["heatwave","đợt nắng nóng"],["natural disaster","thiên tai"],["extreme weather","thời tiết cực đoan"],["crop failure","mất mùa"],["food shortage","thiếu lương thực"],["ozone layer","tầng ô-dôn"],["coastal erosion","xói mòn bờ biển"],["habitat loss","mất môi trường sống"],["carbon footprint","lượng khí thải các-bon"],["offset","bù đắp, trung hoà"],["reduce","giảm bớt"],["alternative energy","năng lượng thay thế"],["energy-saving","tiết kiệm năng lượng"],["awareness campaign","chiến dịch nâng cao nhận thức"],["consequence","hậu quả"]]},
+{id:'g11u6',em:'🏯',name:"U6: Preserving our heritage",vocab:[["heritage","di sản"],["cultural heritage","di sản văn hoá"],["world heritage site","di sản thế giới"],["preserve","bảo tồn, gìn giữ"],["conservation","sự bảo tồn"],["restore","phục dựng"],["monument","tượng đài, công trình tưởng niệm"],["relic","di tích, cổ vật"],["architecture","kiến trúc"],["temple","đền, chùa"],["citadel","thành cổ"],["pagoda","chùa tháp"],["craft village","làng nghề"],["handicraft","đồ thủ công"],["artisan","nghệ nhân"],["folk song","làn điệu dân ca"],["festival","lễ hội"],["ritual","nghi lễ"],["custom","phong tục"],["intangible","phi vật thể"],["tangible","vật thể"],["recognise","công nhận"],["UNESCO","Tổ chức Giáo dục, Khoa học và Văn hoá LHQ"],["authenticity","tính nguyên bản"],["deteriorate","xuống cấp"],["neglect","bỏ bê, lơ là"],["funding","nguồn kinh phí"],["pass down","truyền lại"]]},
+{id:'g11u7',em:'🎓',name:"U7: Education options for school-leavers",vocab:[["school-leaver","học sinh tốt nghiệp phổ thông"],["higher education","giáo dục đại học"],["vocational school","trường nghề"],["college","trường cao đẳng"],["university","trường đại học"],["degree","bằng đại học"],["diploma","bằng cao đẳng, chứng chỉ"],["certificate","chứng chỉ"],["qualification","bằng cấp, trình độ"],["entrance exam","kỳ thi tuyển sinh"],["admission","việc tuyển sinh, nhập học"],["enrol","ghi danh, nhập học"],["major","chuyên ngành"],["curriculum","chương trình học"],["tuition fee","học phí"],["scholarship","học bổng"],["apprenticeship","việc học nghề"],["internship","kỳ thực tập"],["on-the-job training","đào tạo tại nơi làm việc"],["gap year","năm tạm nghỉ trước đại học"],["career counselling","tư vấn hướng nghiệp"],["aptitude","năng khiếu, tố chất"],["prospect","triển vọng"],["job market","thị trường việc làm"],["graduate","tốt nghiệp"],["undergraduate","sinh viên đại học"],["distance learning","học từ xa"],["soft skills","kỹ năng mềm"]]},
+{id:'g11u8',em:'🧳',name:"U8: Becoming independent",vocab:[["independent","độc lập"],["independence","sự độc lập"],["self-reliant","tự lực"],["life skills","kỹ năng sống"],["decision-making","việc ra quyết định"],["problem-solving","việc giải quyết vấn đề"],["time management","quản lý thời gian"],["budgeting","việc lập ngân sách"],["expense","khoản chi tiêu"],["savings","tiền tiết kiệm"],["part-time job","việc làm bán thời gian"],["earn a living","kiếm sống"],["responsibility","trách nhiệm"],["self-discipline","tính kỷ luật tự giác"],["confidence","sự tự tin"],["self-esteem","lòng tự trọng"],["adapt","thích nghi"],["cope with","đối phó với"],["cook for oneself","tự nấu ăn"],["do the laundry","giặt giũ"],["move out","dọn ra ở riêng"],["rent an apartment","thuê căn hộ"],["roommate","bạn cùng phòng"],["homesick","nhớ nhà"],["priority","việc ưu tiên"],["goal-setting","việc đặt mục tiêu"],["resilience","sự kiên cường"],["support network","mạng lưới hỗ trợ"]]},
+{id:'g11u9',em:'⚖️',name:"U9: Social issues",vocab:[["social issue","vấn đề xã hội"],["poverty","sự nghèo đói"],["unemployment","tình trạng thất nghiệp"],["inequality","sự bất bình đẳng"],["discrimination","sự phân biệt đối xử"],["homelessness","tình trạng vô gia cư"],["child labour","lao động trẻ em"],["illiteracy","nạn mù chữ"],["drug abuse","lạm dụng ma tuý"],["crime rate","tỷ lệ tội phạm"],["juvenile delinquency","tội phạm vị thành niên"],["domestic violence","bạo lực gia đình"],["cyberbullying","bắt nạt trên mạng"],["overpopulation","tình trạng bùng nổ dân số"],["migration","sự di cư"],["the disadvantaged","người thiệt thòi"],["welfare","phúc lợi xã hội"],["charity","tổ chức từ thiện"],["volunteer","tình nguyện viên"],["raise awareness","nâng cao nhận thức"],["tackle","giải quyết"],["campaign","chiến dịch"],["policy","chính sách"],["regulation","quy định"],["community service","công tác phục vụ cộng đồng"],["donate","quyên góp"],["rehabilitation","sự phục hồi, tái hoà nhập"],["social media addiction","nghiện mạng xã hội"]]},
+{id:'g11u10',em:'🌿',name:"U10: The ecosystem",vocab:[["ecosystem","hệ sinh thái"],["biodiversity","đa dạng sinh học"],["food chain","chuỗi thức ăn"],["habitat","môi trường sống"],["organism","sinh vật"],["species","loài"],["predator","động vật săn mồi"],["prey","con mồi"],["herbivore","động vật ăn cỏ"],["mangrove","rừng ngập mặn"],["coral reef","rạn san hô"],["wetland","vùng đất ngập nước"],["rainforest","rừng mưa nhiệt đới"],["endangered species","loài có nguy cơ tuyệt chủng"],["extinction","sự tuyệt chủng"],["poaching","nạn săn trộm"],["overfishing","đánh bắt quá mức"],["pollution","sự ô nhiễm"],["nature reserve","khu bảo tồn thiên nhiên"],["national park","vườn quốc gia"],["balance","sự cân bằng"],["disrupt","làm xáo trộn"],["wildlife corridor","hành lang động vật hoang dã"],["sustainable use","sử dụng bền vững"],["photosynthesis","sự quang hợp"],["decomposer","sinh vật phân huỷ"],["conservation effort","nỗ lực bảo tồn"],["food web","lưới thức ăn"]]},
+],
+},
+/* ---------------- GRADE 12 (Global Success 12) ---------------- */
+12:{
+theory:[
+{em:'⏮️',t:'Quá khứ đơn & Quá khứ hoàn thành',h:`
+<div class="rule"><b>Quá khứ hoàn thành</b> (<b>had + V3</b>): việc xảy ra TRƯỚC một việc khác trong quá khứ.</div>
+<div class="rule"><b>Quá khứ đơn</b>: việc xảy ra SAU, hoặc việc duy nhất.</div>
+<table><tr><th>Câu</th><th>Thứ tự</th></tr>
+<tr><td>When I <b>arrived</b>, the film <b>had started</b>.</td><td>phim chiếu trước, tôi đến sau</td></tr>
+<tr><td>After she <b>had finished</b> work, she <b>went</b> home.</td><td>xong việc trước, về sau</td></tr></table>
+<div class="tip">💡 Dấu hiệu: <b>before, after, by the time, when, already, just</b> + hai hành động quá khứ.</div>`},
+{em:'🅰️',t:'Mạo từ & Danh từ ghép',h:`
+<div class="rule"><b>a/an</b> + danh từ đếm được số ít, nhắc lần đầu · <b>the</b> khi đã xác định, duy nhất, có bổ nghĩa.</div>
+<div class="rule">Không mạo từ trước: tên riêng, bữa ăn (have breakfast), môn thể thao, ngôn ngữ, danh từ chung số nhiều.</div>
+<div class="rule"><b>Danh từ ghép</b>: danh từ đứng trước bổ nghĩa cho danh từ sau, thường giữ dạng SỐ ÍT: a <b>five-year</b> plan, a <b>ten-minute</b> break, a <b>shoe</b> shop.</div>
+<div class="tip">⚠️ "a two-hour film" (có gạch nối, hour số ít) chứ không phải "a two-hours film".</div>`},
+{em:'🔄',t:'Bị động với động từ khuyết thiếu & Bị động kép',h:`
+<div class="rule">Bị động với modal: <b>modal + be + V3</b> — The work <b>must be finished</b> today.</div>
+<div class="rule">Bị động hoàn thành: <b>modal + have been + V3</b> — It <b>should have been done</b> yesterday.</div>
+<div class="rule"><b>Bị động kép</b> với say/think/believe/report:<br>People say that he is rich → <b>It is said that</b> he is rich. / <b>He is said to be</b> rich.</div>
+<table><tr><th>Chủ động</th><th>Bị động</th></tr>
+<tr><td>They think he stole it.</td><td>He <b>is thought to have stolen</b> it.</td></tr></table>
+<div class="tip">💡 Nếu việc trong mệnh đề sau xảy ra TRƯỚC thì dùng <b>to have + V3</b>.</div>`},
+{em:'🧩',t:'Mệnh đề quan hệ & Rút gọn',h:`
+<div class="rule">Không xác định (có phẩy): KHÔNG dùng <b>that</b>, không lược bỏ đại từ.</div>
+<div class="rule">Rút gọn: chủ động → <b>V-ing</b> · bị động → <b>V3</b> · sau the first/only/so sánh nhất → <b>to V</b>.</div>
+<table><tr><th>Đầy đủ</th><th>Rút gọn</th></tr>
+<tr><td>The man who is waiting outside</td><td>The man <b>waiting</b> outside</td></tr>
+<tr><td>The car which was repaired yesterday</td><td>The car <b>repaired</b> yesterday</td></tr></table>
+<div class="rule"><b>Giới từ + which/whom</b> trong văn trang trọng: the house <b>in which</b> I grew up.</div>
+<div class="tip">⚠️ Sau giới từ KHÔNG dùng that và không dùng who: "the man to <b>whom</b> I spoke".</div>`},
+{em:'🌦️',t:'Câu điều kiện (đủ 4 loại) & Đảo ngữ',h:`
+<div class="rule">Loại 0: If + HT đơn, HT đơn — chân lý. Loại 1: If + HT đơn, will + V.</div>
+<div class="rule">Loại 2: If + QK đơn, would + V. Loại 3: If + had + V3, would have + V3.</div>
+<div class="rule"><b>Đảo ngữ bỏ If</b>: <b>Were I</b> you... · <b>Had I known</b>... · <b>Should you</b> need help...</div>
+<table><tr><th>Loại</th><th>Ví dụ</th></tr>
+<tr><td>Hỗn hợp</td><td>If I <b>had slept</b> well, I <b>would not be</b> tired now.</td></tr>
+<tr><td>unless</td><td><b>Unless</b> you hurry (= If you do not hurry), you will be late.</td></tr></table>
+<div class="tip">💡 unless = if... not, nên KHÔNG dùng thêm "not" sau unless.</div>`},
+{em:'📰',t:'Câu tường thuật nâng cao',h:`
+<div class="rule">Lùi thì, đổi đại từ và trạng từ như thường lệ.</div>
+<div class="rule"><b>Động từ tường thuật + to V</b>: agree, offer, promise, refuse, threaten, decide.</div>
+<div class="rule"><b>+ O + to V</b>: tell, ask, advise, remind, warn, encourage, invite, order.</div>
+<div class="rule"><b>+ V-ing</b>: admit, deny, suggest, recommend · <b>+ giới từ + V-ing</b>: accuse sb of, apologise for, insist on.</div>
+<table><tr><th>Trực tiếp</th><th>Gián tiếp</th></tr>
+<tr><td>"I will help you," he said.</td><td>He <b>offered to help</b> me.</td></tr>
+<tr><td>"Don't touch it," she said.</td><td>She <b>told</b> me <b>not to touch</b> it.</td></tr></table>
+<div class="tip">⚠️ Phủ định mệnh lệnh gián tiếp: <b>not to V</b>, đặt "not" TRƯỚC to.</div>`},
+{em:'🔄',t:'Đảo ngữ (Inversion)',h:`
+<div class="rule">Cụm phủ định đầu câu → <b>trợ động từ + S + V</b>: Never, Rarely, Seldom, Hardly, Little, Not only, Not until, No sooner, Only when, Under no circumstances.</div>
+<table><tr><th>Thường</th><th>Đảo ngữ</th></tr>
+<tr><td>I have never seen that.</td><td><b>Never have I</b> seen that.</td></tr>
+<tr><td>He rarely complains.</td><td><b>Rarely does he</b> complain.</td></tr>
+<tr><td>She realised the truth only then.</td><td><b>Only then did she</b> realise the truth.</td></tr></table>
+<div class="rule">Cặp cố định: <b>No sooner ... than</b> · <b>Hardly/Scarcely ... when</b>.</div>
+<div class="tip">⚠️ Đã đảo thì động từ chính giữ nguyên mẫu: "Never did I <b>see</b>", không phải "did I saw".</div>`},
+{em:'💡',t:'Câu chẻ & Cấu trúc nhấn mạnh',h:`
+<div class="rule"><b>It is/was + phần nhấn mạnh + that/who + phần còn lại</b>.</div>
+<div class="rule"><b>What-cleft</b>: What + S + V + is/was + ... — What I want is a holiday.</div>
+<div class="rule"><b>All-cleft</b>: All + S + V + is/was + V nguyên mẫu — All he did was apologise.</div>
+<div class="rule">Nhấn mạnh bằng <b>do/does/did</b>: I <b>do</b> understand your point.</div>
+<div class="tip">💡 Động từ sau "What ... is" luôn chia SỐ ÍT, dù phần sau là số nhiều.</div>`},
+{em:'🔗',t:'Từ nối & Liên kết văn bản',h:`
+<div class="rule">Thêm ý: moreover, furthermore, in addition, besides. Tương phản: however, nevertheless, on the other hand, in contrast.</div>
+<div class="rule">Kết quả: therefore, consequently, as a result, thus. Ví dụ: for example, for instance, such as.</div>
+<div class="rule">Tổng kết: in conclusion, to sum up, overall, all in all.</div>
+<table><tr><th>Theo sau là mệnh đề</th><th>Theo sau là cụm danh từ</th></tr>
+<tr><td>although, because, while</td><td>despite, in spite of, because of, due to</td></tr></table>
+<div class="tip">💡 Trạng từ liên kết (however, therefore) đứng đầu câu và có dấu phẩy, KHÔNG nối hai mệnh đề bằng dấu phẩy.</div>`},
+{em:'🎯',t:'Động từ + giới từ & Cụm từ cố định',h:`
+<div class="rule">Hay gặp trong đề thi: depend <b>on</b>, succeed <b>in</b>, believe <b>in</b>, take part <b>in</b>, be good <b>at</b>, be interested <b>in</b>, be responsible <b>for</b>, be aware <b>of</b>, be capable <b>of</b>.</div>
+<div class="rule">Cụm động từ hay dùng: <b>look after</b> (chăm sóc), <b>look for</b> (tìm), <b>look forward to + V-ing</b> (mong chờ), <b>put off</b> (hoãn), <b>give up</b> (từ bỏ), <b>take up</b> (bắt đầu một sở thích), <b>carry out</b> (tiến hành).</div>
+<div class="tip">⚠️ Sau <b>to</b> trong "look forward to", "be used to", "object to" dùng <b>V-ing</b>, không dùng V nguyên mẫu.</div>`},
+{em:'📊',t:'So sánh nâng cao',h:`
+<div class="rule">So sánh kép: <b>The + comparative, the + comparative</b> — The more you practise, the better you get.</div>
+<div class="rule">Càng ngày càng: <b>comparative + and + comparative</b> — It is getting hotter and hotter.</div>
+<div class="rule">Gấp bội: <b>twice/three times + as + adj + as</b> hoặc <b>twice the + N + of</b>.</div>
+<div class="rule">Nhấn mạnh so sánh hơn: <b>much, far, a lot, slightly</b> + comparative (KHÔNG dùng very).</div>
+<div class="tip">⚠️ Đếm được dùng <b>fewer</b>, không đếm được dùng <b>less</b>: fewer mistakes, less time.</div>`},
+{em:'🧠',t:'Thức giả định & Cấu trúc trang trọng',h:`
+<div class="rule">Sau <b>suggest, recommend, insist, demand, request, propose, require</b> + that + S + <b>V nguyên mẫu</b> (mọi ngôi).</div>
+<div class="rule">Sau tính từ <b>It is essential/important/necessary/vital that</b> + S + <b>V nguyên mẫu</b>.</div>
+<table><tr><th>Câu</th></tr>
+<tr><td>The doctor recommended that he <b>take</b> more exercise.</td></tr>
+<tr><td>It is essential that every student <b>be</b> present.</td></tr></table>
+<div class="rule"><b>would rather</b> + S + V quá khứ · <b>It is high time</b> + S + V quá khứ.</div>
+<div class="tip">💡 Thức giả định không chia theo ngôi: "that he <b>take</b>", không phải "takes".</div>`},
+],
+quiz:[
+{q:"When we arrived, the concert ___ already ___.",o:["has / started", "had / started", "was / starting", "is / started"],a:1,e:"Việc xảy ra trước một mốc quá khứ → quá khứ hoàn thành."},
+{q:"The report must ___ before Friday.",o:["finish", "be finished", "finished", "being finished"],a:1,e:"Bị động với modal: modal + be + V3."},
+{q:"He is said ___ a fortune in the stock market.",o:["make", "to make", "to have made", "making"],a:2,e:"Việc xảy ra trước → to have + V3."},
+{q:"My uncle, ___ lives in Da Nang, is a journalist.",o:["that", "who", "which", "whom"],a:1,e:"Có dấu phẩy → không dùng that; người → who."},
+{q:"The house ___ I grew up has been sold.",o:["which", "that", "in which", "where in"],a:2,e:"Giới từ + which: the house in which I grew up."},
+{q:"___ I known earlier, I would have told you.",o:["If", "Had", "Have", "Did"],a:1,e:"Đảo ngữ điều kiện loại 3: Had + S + V3."},
+{q:"___ you need any help, please call me.",o:["Should", "Would", "Had", "Were"],a:0,e:"Đảo ngữ điều kiện loại 1: Should + S + V."},
+{q:"He offered ___ me with my homework.",o:["help", "to help", "helping", "helped"],a:1,e:"offer + to V."},
+{q:"She told me ___ the machine.",o:["not touch", "not to touch", "to not touch", "don't touch"],a:1,e:"Mệnh lệnh phủ định gián tiếp: not to V."},
+{q:"Never ___ such a beautiful sunset.",o:["I have seen", "have I seen", "did I saw", "I saw"],a:1,e:"Never đầu câu → đảo trợ động từ."},
+{q:"No sooner had he arrived ___ the phone rang.",o:["when", "than", "that", "then"],a:1,e:"Cặp cố định: No sooner ... than."},
+{q:"Only then ___ the truth.",o:["she realised", "did she realise", "she did realise", "realised she"],a:1,e:"Only then đầu câu → đảo ngữ với did."},
+{q:"What she needs most ___ encouragement.",o:["are", "is", "were", "have been"],a:1,e:"What-cleft làm chủ ngữ → động từ số ít."},
+{q:"It was in 2015 ___ they got married.",o:["when", "that", "which", "who"],a:1,e:"Câu chẻ nhấn mạnh thời gian → that."},
+{q:"___ the heavy traffic, we arrived on time.",o:["Although", "Despite", "Because", "However"],a:1,e:"Theo sau là cụm danh từ → Despite."},
+{q:"He failed the exam; ___, he was not discouraged.",o:["therefore", "however", "because", "despite"],a:1,e:"Hai ý trái ngược → however."},
+{q:"I am looking forward to ___ from you.",o:["hear", "hearing", "heard", "be heard"],a:1,e:"look forward to + V-ing."},
+{q:"The success of the project depends ___ teamwork.",o:["in", "at", "on", "for"],a:2,e:"depend on."},
+{q:"The more you practise, ___ you become.",o:["the good", "the better", "better", "the best"],a:1,e:"So sánh kép: the + comparative, the + comparative."},
+{q:"This laptop is ___ more expensive than that one.",o:["very", "too", "much", "so"],a:2,e:"Nhấn mạnh so sánh hơn dùng much/far, không dùng very."},
+{q:"We made ___ mistakes than the other team.",o:["less", "fewer", "fewest", "little"],a:1,e:"mistakes đếm được → fewer."},
+{q:"The manager insisted that the report ___ submitted today.",o:["is", "was", "be", "will be"],a:2,e:"Thức giả định: insist that + S + V nguyên mẫu (bị động: be + V3)."},
+{q:"It is essential that every candidate ___ on time.",o:["arrives", "arrive", "arrived", "will arrive"],a:1,e:"It is essential that + S + V nguyên mẫu."},
+{q:"I would rather you ___ me the truth.",o:["tell", "told", "will tell", "telling"],a:1,e:"would rather + S + V quá khứ."},
+{q:"We had a ___ break between the two sessions.",o:["ten-minutes", "ten minute", "ten-minute", "ten minutes"],a:2,e:"Danh từ ghép giữ dạng số ít và có gạch nối."},
+],
+readings:[
+{em:'🤖',title:"Artificial Intelligence at Work",tags:["Technology", "AI", "B1-B2"],text:"Artificial intelligence has moved from research laboratories into ordinary workplaces faster than most people expected. Banks use algorithms to detect fraud within seconds. Hospitals rely on image recognition to spot early signs of disease. Even small shops now use chatbots to answer customer questions at midnight.\nSupporters argue that AI removes dull, repetitive tasks and frees people to do more creative work. A factory worker who once checked thousands of identical parts can be retrained to supervise the system that does the checking. Productivity rises, and so, in theory, do wages.\nCritics are less optimistic. They warn of job displacement, especially for workers whose tasks are easy to automate. They also point to bias: if an algorithm is trained on unfair data, it will repeat that unfairness at enormous speed. Questions of privacy and accountability remain unsolved. Who is responsible when a self-driving car causes an accident?\nMost experts now agree that the answer is neither to ban AI nor to accept it blindly. What matters is regulation, transparency, and above all education: workers who keep learning will adapt, while those who do not may be left behind.",vn:"Trí tuệ nhân tạo đã đi từ phòng thí nghiệm vào nơi làm việc nhanh hơn nhiều người tưởng. Ngân hàng dùng thuật toán phát hiện gian lận, bệnh viện dùng nhận diện hình ảnh để phát hiện bệnh sớm, cửa hàng nhỏ dùng chatbot trả lời khách lúc nửa đêm. Người ủng hộ cho rằng AI giải phóng con người khỏi việc lặp đi lặp lại. Người phản đối lo ngại mất việc, thuật toán thiên lệch, quyền riêng tư và trách nhiệm pháp lý. Phần lớn chuyên gia cho rằng câu trả lời nằm ở quy định, sự minh bạch và trên hết là giáo dục.",qs:[{q:"How do small shops use AI according to the text?",o:["To detect fraud", "To answer customer questions at midnight", "To spot signs of disease", "To drive delivery cars"],a:1},{q:"What do supporters say about the factory worker?",o:["He will lose his job immediately", "He can be retrained to supervise the system", "He must work longer hours", "He will earn less money"],a:1},{q:"What problem do critics raise about algorithms trained on unfair data?",o:["They run too slowly", "They repeat unfairness at enormous speed", "They cost too much", "They cannot be switched off"],a:1},{q:"What do most experts agree on?",o:["AI should be banned", "AI should be accepted blindly", "Regulation, transparency and education matter", "AI will disappear soon"],a:2}]},
+{em:'🐘',title:"Saving the Last Elephants",tags:["Environment", "Wildlife", "B1-B2"],text:"A century ago, millions of elephants roamed across Africa and Asia. Today fewer than half a million remain. The greatest threat is poaching: elephants are killed for their ivory, which is sold illegally for high prices. Habitat loss is almost as serious. As farmland expands and roads cut through forests, the land available to elephants shrinks and herds become isolated.\nConservation efforts have had mixed results. International bans on the ivory trade have reduced demand in some countries, and rangers now use drones and hidden cameras to track poachers. Breeding programmes in sanctuaries have helped a few populations recover. However, enforcement is expensive, and in regions affected by poverty or conflict, patrols are rare.\nScientists stress that protecting elephants is not only about the animals themselves. Elephants shape their ecosystems: they open paths through dense forest, spread seeds over long distances and dig water holes that other species depend on. Losing them would change entire landscapes. For that reason, many biologists call the elephant a keystone species.",vn:"Một thế kỷ trước có hàng triệu con voi ở châu Phi và châu Á; nay còn chưa tới nửa triệu. Mối đe doạ lớn nhất là nạn săn trộm lấy ngà, kế đó là mất môi trường sống khi đất nông nghiệp mở rộng và đường cắt ngang rừng. Nỗ lực bảo tồn có kết quả lẫn lộn: lệnh cấm buôn ngà giúp giảm nhu cầu, kiểm lâm dùng máy bay không người lái và camera ẩn, chương trình nhân giống giúp vài quần thể hồi phục; nhưng việc thực thi tốn kém. Các nhà khoa học nhấn mạnh voi định hình cả hệ sinh thái nên được gọi là loài chủ chốt.",qs:[{q:"What is described as the greatest threat to elephants?",o:["Disease", "Poaching for ivory", "Climate change", "Tourism"],a:1},{q:"What technology do rangers now use to track poachers?",o:["Satellites and radios", "Drones and hidden cameras", "Boats and helicopters", "Dogs and horses"],a:1},{q:"Why is enforcement often rare in some regions?",o:["Elephants have already gone", "It is expensive and areas are affected by poverty or conflict", "Local people object", "The law does not allow it"],a:1},{q:"Why do biologists call the elephant a keystone species?",o:["It is the largest animal", "It shapes ecosystems that other species depend on", "It lives the longest", "It is the most popular in zoos"],a:1}]},
+{em:'📚',title:"Why Learning Never Stops",tags:["Education", "B1-B2"],text:"For earlier generations, education followed a simple pattern: study hard until your early twenties, then work in the same field until retirement. That pattern no longer fits. Technology changes the skills employers need every few years, and many of today's school students will eventually do jobs that do not yet exist.\nThis is why lifelong learning has become essential rather than optional. It does not always mean returning to university. It can mean taking a short online course, watching tutorials, attending a webinar, reading widely, or simply learning from colleagues. What matters is the habit, not the format.\nResearch suggests that adults learn best when they can apply new knowledge immediately. A nurse who studies a new procedure and uses it the following week will remember far more than one who studies it in theory alone. Motivation matters too: learners who choose their own goals persist much longer than those who are told what to study.\nEmployers increasingly value this attitude. In many interviews, candidates are now asked what they have taught themselves recently. The answer reveals curiosity and adaptability, two qualities that no certificate can guarantee.",vn:"Với các thế hệ trước, học hành theo một lộ trình đơn giản: học tới đầu hai mươi rồi làm một nghề tới lúc nghỉ hưu. Lộ trình đó không còn phù hợp vì công nghệ thay đổi kỹ năng cần có sau vài năm. Vì thế học tập suốt đời trở thành bắt buộc chứ không phải tuỳ chọn, và không nhất thiết phải quay lại đại học. Nghiên cứu cho thấy người lớn học tốt nhất khi áp dụng được ngay, và động lực tự thân giúp họ kiên trì hơn. Nhà tuyển dụng ngày càng coi trọng thái độ này.",qs:[{q:"Why does the old pattern of education no longer fit?",o:["Universities have closed", "Technology changes required skills every few years", "People retire earlier", "Students study longer"],a:1},{q:"What does the text say lifelong learning can mean?",o:["Only returning to university", "Short online courses, tutorials, reading or learning from colleagues", "Only formal degrees", "Only attending webinars"],a:1},{q:"According to research, when do adults learn best?",o:["When they study in groups", "When they can apply new knowledge immediately", "When they study at night", "When they are told what to study"],a:1},{q:"What do employers learn from asking what candidates taught themselves?",o:["Their salary expectations", "Their curiosity and adaptability", "Their exam results", "Their work experience"],a:1}]},
+],
+listenings:[
+{em:'💼',title:"A job interview",hint:"Nghe một buổi phỏng vấn xin việc.",script:[{text:"Good morning. Thank you for coming. Could you tell me a little about yourself?"},{text:"Good morning. I graduated in marketing two years ago and have worked as an assistant since then.",pitch:1.15},{text:"What would you say is your greatest strength?"},{text:"Probably teamwork. I enjoy working with people from different departments.",pitch:1.15},{text:"And a weakness?"},{text:"I used to take on too many tasks at once, but I have learned to set priorities.",pitch:1.15},{text:"Thank you. We will contact you by the end of the week."}],trans:["Người phỏng vấn: Chào buổi sáng. Cảm ơn bạn đã tới. Bạn giới thiệu đôi chút về bản thân nhé?", "Ứng viên: Chào buổi sáng. Em tốt nghiệp ngành marketing hai năm trước và làm trợ lý từ đó tới nay.", "Người phỏng vấn: Điểm mạnh nhất của bạn là gì?", "Ứng viên: Có lẽ là làm việc nhóm. Em thích làm việc với người ở các phòng ban khác nhau.", "Người phỏng vấn: Còn điểm yếu?", "Ứng viên: Trước đây em hay ôm quá nhiều việc cùng lúc, nhưng giờ em đã biết sắp xếp ưu tiên.", "Người phỏng vấn: Cảm ơn bạn. Chúng tôi sẽ liên hệ trước cuối tuần."],qs:[{q:"What did the candidate study?",o:["Accounting", "Marketing", "Engineering", "Nursing"],a:1},{q:"What does the candidate say is the greatest strength?",o:["Time management", "Teamwork", "Public speaking", "Writing"],a:1},{q:"When will the company contact the candidate?",o:["Tomorrow", "By the end of the week", "Next month", "In two days"],a:1}]},
+{em:'♻️',title:"Going green at home",hint:"Hai bạn bàn cách sống xanh.",script:[{text:"Our class is starting a green living challenge. Are you joining?"},{text:"Of course. I have already stopped buying bottled water. I carry a reusable bottle now.",pitch:1.2},{text:"Nice. I am trying to cut down on plastic bags at the market."},{text:"My family started composting food waste last month. The garden looks much better.",pitch:1.2},{text:"That is clever. What about electricity?"},{text:"We switched to LED bulbs and the bill dropped by about fifteen per cent.",pitch:1.2}],trans:["An: Lớp mình đang phát động thử thách sống xanh. Cậu tham gia chứ?", "Bình: Tất nhiên. Mình bỏ hẳn nước đóng chai rồi, giờ mang bình dùng lại.", "An: Hay đấy. Mình đang cố giảm túi ni lông khi đi chợ.", "Bình: Nhà mình bắt đầu ủ rác thực phẩm từ tháng trước, vườn tốt hẳn lên.", "An: Khéo thật. Thế còn điện thì sao?", "Bình: Nhà mình đổi sang bóng LED, hoá đơn giảm khoảng mười lăm phần trăm."],qs:[{q:"What has Binh stopped buying?",o:["Plastic bags", "Bottled water", "LED bulbs", "Compost"],a:1},{q:"What did Binh's family start doing last month?",o:["Cycling to work", "Composting food waste", "Growing rice", "Collecting rainwater"],a:1},{q:"By how much did the electricity bill drop?",o:["Five per cent", "Ten per cent", "Fifteen per cent", "Fifty per cent"],a:2}]},
+{em:'📺',title:"Checking the news",hint:"Nghe hai bạn nói về tin giả.",script:[{text:"Did you see that story about the new school rule? It is everywhere on social media."},{text:"I saw it, but I do not think it is true. There was no official announcement.",pitch:1.2},{text:"How do you check something like that?"},{text:"I look for the original source. If only unknown pages report it, I am careful.",pitch:1.2},{text:"That makes sense. A lot of people share things without reading them."},{text:"Exactly. Headlines are written to be shocking, not accurate.",pitch:1.2}],trans:["Linh: Cậu thấy tin về quy định mới của trường chưa? Mạng xã hội đầy rẫy.", "Khoa: Mình thấy rồi, nhưng mình không tin. Chẳng có thông báo chính thức nào cả.", "Linh: Thế cậu kiểm tra kiểu gì?", "Khoa: Mình tìm nguồn gốc. Nếu chỉ mấy trang lạ đưa tin thì mình phải cẩn thận.", "Linh: Hợp lý. Nhiều người chia sẻ mà có đọc đâu.", "Khoa: Chuẩn. Tiêu đề viết ra để gây sốc chứ không phải để chính xác."],qs:[{q:"Why does Khoa doubt the story?",o:["It was on television", "There was no official announcement", "A teacher denied it", "It was very old"],a:1},{q:"How does Khoa check a story?",o:["He asks his parents", "He looks for the original source", "He counts the likes", "He waits a week"],a:1},{q:"What does Khoa say about headlines?",o:["They are always accurate", "They are written to be shocking, not accurate", "They are too long", "They are written by students"],a:1}]},
+],
+writing:[
+{type:'order',words:["Artificial", "intelligence", "is", "changing", "the", "way", "we", "work", "."],vn:"Trí tuệ nhân tạo đang thay đổi cách chúng ta làm việc."},
+{type:'order',words:["The", "report", "must", "be", "finished", "before", "Friday", "."],vn:"Bản báo cáo phải được hoàn thành trước thứ Sáu."},
+{type:'order',words:["Never", "have", "I", "seen", "such", "a", "beautiful", "landscape", "."],vn:"Chưa bao giờ tôi thấy phong cảnh đẹp đến thế."},
+{type:'order',words:["The", "more", "you", "practise", "the", "better", "you", "become", "."],vn:"Càng luyện tập nhiều, bạn càng giỏi lên."},
+{type:'order',words:["Elephants", "are", "killed", "for", "their", "ivory", "every", "year", "."],vn:"Hằng năm voi bị giết để lấy ngà."},
+{type:'gap',sent:"When we arrived, the film ___ already started.",a:"had",hintvn:"Việc xảy ra trước một mốc quá khứ → had + V3."},
+{type:'gap',sent:"He is said ___ (make) a fortune abroad.",a:"to have made",hintvn:"Việc xảy ra trước → to have + V3."},
+{type:'gap',sent:"___ you need any help, please call me.",a:"Should",hintvn:"Đảo ngữ điều kiện loại 1: Should + S + V."},
+{type:'gap',sent:"I am looking forward to ___ (hear) from you.",a:"hearing",hintvn:"look forward to + V-ing."},
+{type:'gap',sent:"The doctor recommended that he ___ (take) more exercise.",a:"take",hintvn:"Thức giả định: V nguyên mẫu cho mọi ngôi."},
+{type:'gap',sent:"We made ___ mistakes than the other team.",a:"fewer",hintvn:"Danh từ đếm được → fewer."},
+{type:'write',prompt:"Viết lại dùng bị động: \"People believe that he is honest.\"",check:["he", "is", "believed", "to", "be", "honest"],sample:"He is believed to be honest.",vn:"Bị động kép: S + be + V3 + to be + adj."},
+{type:'write',prompt:"Viết lại dùng đảo ngữ: \"I have never met such a kind person.\"",check:["never", "have", "i", "met"],sample:"Never have I met such a kind person.",vn:"Never đầu câu → đảo trợ động từ have."},
+{type:'write',prompt:"Viết lại dùng câu chẻ nhấn mạnh thời gian: \"They got married in 2015.\"",check:["it", "was", "in", "2015", "that", "they", "got", "married"],sample:"It was in 2015 that they got married.",vn:"It was + trạng ngữ + that + phần còn lại."},
+{type:'write',prompt:"Viết lại dùng Despite: \"Although it rained heavily, we went out.\"",check:["despite", "the", "heavy", "rain", "we", "went"],sample:"Despite the heavy rain, we went out.",vn:"Despite + cụm danh từ."},
+],
+topics:[
+{id:'g12u1',em:'🌟',name:"U1: Life stories we admire",vocab:[["biography","tiểu sử"],["autobiography","tự truyện"],["admire","ngưỡng mộ"],["inspiration","nguồn cảm hứng"],["inspire","truyền cảm hứng"],["role model","hình mẫu"],["achievement","thành tựu"],["accomplish","hoàn thành, đạt được"],["contribution","sự đóng góp"],["dedication","sự tận tâm"],["perseverance","sự kiên trì"],["determination","sự quyết tâm"],["overcome","vượt qua"],["obstacle","trở ngại"],["hardship","gian khổ"],["humble","khiêm tốn"],["generous","hào phóng"],["courageous","dũng cảm"],["devote oneself to","cống hiến cho"],["legacy","di sản để lại"],["influence","ảnh hưởng"],["outstanding","xuất sắc"],["remarkable","đáng chú ý"],["award","giải thưởng"],["honour","vinh danh"],["pioneer","người tiên phong"],["milestone","cột mốc"],["turning point","bước ngoặt"]]},
+{id:'g12u2',em:'🌏',name:"U2: A multicultural world",vocab:[["multicultural","đa văn hoá"],["cultural diversity","sự đa dạng văn hoá"],["cultural identity","bản sắc văn hoá"],["ethnic group","dân tộc, nhóm sắc tộc"],["minority","nhóm thiểu số"],["custom","phong tục"],["tradition","truyền thống"],["belief","tín ngưỡng, niềm tin"],["religion","tôn giáo"],["festival","lễ hội"],["cuisine","ẩm thực"],["costume","trang phục truyền thống"],["integrate","hoà nhập"],["assimilate","đồng hoá"],["adapt","thích nghi"],["culture shock","sốc văn hoá"],["stereotype","định kiến"],["prejudice","thành kiến"],["tolerance","sự khoan dung"],["respect","tôn trọng"],["open-minded","cởi mở"],["misunderstanding","sự hiểu lầm"],["coexist","chung sống"],["harmony","sự hoà hợp"],["immigrant","người nhập cư"],["bilingual","song ngữ"],["cross-cultural","liên văn hoá"],["heritage","di sản"]]},
+{id:'g12u3',em:'♻️',name:"U3: Green living",vocab:[["green living","lối sống xanh"],["eco-friendly","thân thiện với môi trường"],["sustainable","bền vững"],["carbon footprint","lượng khí thải các-bon"],["renewable","có thể tái tạo"],["solar energy","năng lượng mặt trời"],["wind power","điện gió"],["energy-efficient","tiết kiệm năng lượng"],["recycle","tái chế"],["reuse","tái sử dụng"],["reduce","giảm bớt"],["waste","rác thải"],["single-use plastic","nhựa dùng một lần"],["biodegradable","phân huỷ sinh học"],["compost","phân hữu cơ"],["organic food","thực phẩm hữu cơ"],["local produce","nông sản địa phương"],["vegetarian","ăn chay"],["public transport","giao thông công cộng"],["cycle","đi xe đạp"],["conserve water","tiết kiệm nước"],["pollution","sự ô nhiễm"],["landfill","bãi chôn lấp rác"],["emission","khí thải"],["awareness","nhận thức"],["eco-label","nhãn sinh thái"],["second-hand","đồ đã qua sử dụng"],["minimalism","lối sống tối giản"]]},
+{id:'g12u4',em:'🏗️',name:"U4: Urbanisation",vocab:[["urbanisation","sự đô thị hoá"],["urban area","khu vực thành thị"],["rural area","khu vực nông thôn"],["migration","sự di cư"],["rural-to-urban migration","di cư từ nông thôn ra thành thị"],["population density","mật độ dân số"],["overcrowding","tình trạng quá tải"],["slum","khu ổ chuột"],["housing shortage","thiếu nhà ở"],["infrastructure","cơ sở hạ tầng"],["public service","dịch vụ công"],["sanitation","điều kiện vệ sinh"],["traffic congestion","tắc nghẽn giao thông"],["air pollution","ô nhiễm không khí"],["noise pollution","ô nhiễm tiếng ồn"],["unemployment","tình trạng thất nghiệp"],["living standard","mức sống"],["cost of living","chi phí sinh hoạt"],["job opportunity","cơ hội việc làm"],["industrial zone","khu công nghiệp"],["suburb","vùng ngoại ô"],["expand","mở rộng"],["development","sự phát triển"],["urban planning","quy hoạch đô thị"],["green space","không gian xanh"],["commute","đi lại hằng ngày"],["skyscraper","toà nhà chọc trời"],["social problem","vấn đề xã hội"]]},
+{id:'g12u5',em:'💼',name:"U5: The world of work",vocab:[["workplace","nơi làm việc"],["employer","người sử dụng lao động"],["employee","người lao động"],["colleague","đồng nghiệp"],["recruit","tuyển dụng"],["application","đơn xin việc"],["CV","sơ yếu lý lịch"],["cover letter","thư xin việc"],["interview","buổi phỏng vấn"],["candidate","ứng viên"],["qualification","bằng cấp, trình độ"],["experience","kinh nghiệm"],["salary","tiền lương"],["wage","tiền công"],["bonus","tiền thưởng"],["promotion","sự thăng chức"],["full-time","toàn thời gian"],["part-time","bán thời gian"],["freelance","làm tự do"],["remote work","làm việc từ xa"],["flexible hours","giờ làm linh hoạt"],["deadline","hạn chót"],["workload","khối lượng công việc"],["teamwork","làm việc nhóm"],["work-life balance","cân bằng công việc và cuộc sống"],["resign","từ chức, xin nghỉ"],["redundancy","việc cắt giảm nhân sự"],["professional","chuyên nghiệp"]]},
+{id:'g12u6',em:'🤖',name:"U6: Artificial intelligence",vocab:[["artificial intelligence","trí tuệ nhân tạo"],["machine learning","học máy"],["algorithm","thuật toán"],["data","dữ liệu"],["database","cơ sở dữ liệu"],["automation","sự tự động hoá"],["robot","người máy"],["robotics","ngành chế tạo người máy"],["chatbot","chatbot, trợ lý ảo"],["virtual assistant","trợ lý ảo"],["facial recognition","nhận diện khuôn mặt"],["self-driving","tự lái"],["programme","lập trình"],["software","phần mềm"],["device","thiết bị"],["simulate","mô phỏng"],["predict","dự đoán"],["accuracy","độ chính xác"],["efficiency","hiệu quả"],["innovation","sự đổi mới"],["replace","thay thế"],["job displacement","mất việc do máy thay thế"],["privacy","quyền riêng tư"],["ethical","thuộc đạo đức"],["neural network","mạng nơ-ron"],["cybersecurity","an ninh mạng"],["breakthrough","bước đột phá"],["human intervention","sự can thiệp của con người"]]},
+{id:'g12u7',em:'📺',name:"U7: The world of mass media",vocab:[["mass media","truyền thông đại chúng"],["the press","báo chí"],["broadcast","phát sóng"],["journalist","nhà báo"],["reporter","phóng viên"],["headline","tiêu đề báo"],["article","bài báo"],["editorial","bài xã luận"],["coverage","sự đưa tin"],["documentary","phim tài liệu"],["talk show","chương trình đối thoại"],["commercial","quảng cáo truyền hình"],["advertisement","mẩu quảng cáo"],["audience","khán giả, độc giả"],["viewer","người xem"],["social network","mạng xã hội"],["influencer","người có sức ảnh hưởng"],["viral","lan truyền nhanh"],["fake news","tin giả"],["misinformation","thông tin sai lệch"],["censorship","sự kiểm duyệt"],["freedom of the press","tự do báo chí"],["bias","sự thiên lệch"],["reliable source","nguồn đáng tin cậy"],["entertainment","sự giải trí"],["subscribe","đăng ký theo dõi"],["livestream","phát trực tiếp"],["public opinion","dư luận"]]},
+{id:'g12u8',em:'🐘',name:"U8: Wildlife conservation",vocab:[["wildlife","động vật hoang dã"],["conservation","sự bảo tồn"],["conserve","bảo tồn"],["endangered species","loài có nguy cơ tuyệt chủng"],["extinct","tuyệt chủng"],["extinction","sự tuyệt chủng"],["habitat","môi trường sống"],["habitat loss","mất môi trường sống"],["biodiversity","đa dạng sinh học"],["poaching","nạn săn trộm"],["poacher","kẻ săn trộm"],["illegal trade","buôn bán trái phép"],["ivory","ngà voi"],["captivity","tình trạng nuôi nhốt"],["in the wild","trong tự nhiên"],["breeding programme","chương trình nhân giống"],["nature reserve","khu bảo tồn thiên nhiên"],["sanctuary","khu trú ẩn an toàn"],["national park","vườn quốc gia"],["ranger","kiểm lâm"],["rescue","cứu hộ"],["release","thả về tự nhiên"],["ban","lệnh cấm"],["enforce","thực thi"],["ecosystem","hệ sinh thái"],["deforestation","nạn phá rừng"],["population decline","sự suy giảm số lượng"],["protected area","khu vực được bảo vệ"]]},
+{id:'g12u9',em:'🧭',name:"U9: Career paths",vocab:[["career path","con đường sự nghiệp"],["career choice","lựa chọn nghề nghiệp"],["vocation","nghề, thiên hướng"],["profession","nghề chuyên môn"],["occupation","nghề nghiệp"],["ambition","hoài bão"],["aspiration","khát vọng"],["aptitude","năng khiếu, tố chất"],["strength","điểm mạnh"],["weakness","điểm yếu"],["skill set","bộ kỹ năng"],["expertise","chuyên môn"],["training course","khoá đào tạo"],["mentor","người cố vấn"],["networking","việc xây dựng quan hệ"],["entrepreneurship","tinh thần khởi nghiệp"],["start-up","công ty khởi nghiệp"],["self-employed","tự kinh doanh"],["job satisfaction","sự hài lòng với công việc"],["prospect","triển vọng"],["advancement","sự thăng tiến"],["competitive","có tính cạnh tranh"],["demanding","đòi hỏi cao"],["rewarding","đáng công, xứng đáng"],["pursue","theo đuổi"],["switch careers","chuyển nghề"],["portfolio","hồ sơ năng lực"],["long-term goal","mục tiêu dài hạn"]]},
+{id:'g12u10',em:'📚',name:"U10: Lifelong learning",vocab:[["lifelong learning","học tập suốt đời"],["self-study","việc tự học"],["self-improvement","sự hoàn thiện bản thân"],["knowledge","kiến thức"],["skill","kỹ năng"],["competence","năng lực"],["online course","khoá học trực tuyến"],["e-learning","học trực tuyến"],["webinar","hội thảo trực tuyến"],["tutorial","bài hướng dẫn"],["platform","nền tảng"],["certificate","chứng chỉ"],["accreditation","sự công nhận chất lượng"],["upskill","nâng cao tay nghề"],["retrain","đào tạo lại"],["adaptable","có khả năng thích nghi"],["curiosity","sự tò mò, ham hiểu biết"],["motivation","động lực"],["discipline","tính kỷ luật"],["goal-setting","việc đặt mục tiêu"],["time management","quản lý thời gian"],["critical thinking","tư duy phản biện"],["collaboration","sự hợp tác"],["flexible","linh hoạt"],["keep up with","theo kịp"],["broaden one's horizons","mở rộng tầm hiểu biết"],["personal development","phát triển bản thân"],["informal learning","học không chính quy"]]},
 ],
 },
 /* ---------------- GRADE 4 ---------------- */
@@ -7099,6 +7419,426 @@ const GRAMMAR_TOPICS=[
   ()=>mkQ('"I am studying." → He said he ___ studying.','was',['is','were','has been'],'am/is/are + V-ing → was/were + V-ing'),
   ()=>mkQ('"Close the window." → He asked her ___ the window.','to close',['close','closing','not to close'],'Câu mệnh lệnh → asked + O + to V'),
 ]},
+{id:"gr_nouns",em:"📦",name:"Danh Từ",sub:"Đếm được · không đếm được · số nhiều",diff:"easy",
+ qs:[
+  ()=>mkQ("There are five ___ in my family.","people",["peoples", "person", "persons"],"people là dạng số nhiều của person, không thêm s."),
+  ()=>mkQ("She bought three ___ at the market.","tomatoes",["tomatos", "tomatoies", "tomato"],"Danh từ tận cùng phụ âm + o → thêm es."),
+  ()=>mkQ("I brush my ___ twice a day.","teeth",["tooths", "tooth", "teeths"],"tooth → teeth, số nhiều bất quy tắc."),
+  ()=>mkQ("Can you give me some ___, please?","water",["waters", "a water", "waters of"],"water không đếm được → không thêm s."),
+  ()=>mkQ("There are many ___ on the tree.","leaves",["leafs", "leafes", "leave"],"Danh từ tận cùng f → đổi thành ves."),
+  ()=>mkQ("My father has two ___.","watches",["watchs", "watchies", "watch"],"Tận cùng ch → thêm es."),
+  ()=>mkQ("How many ___ are there in your class?","students",["student", "studentes", "studentss"],"Danh từ đếm được số nhiều → thêm s."),
+  ()=>mkQ("We saw three ___ in the field.","sheep",["sheeps", "sheepes", "sheepies"],"sheep giữ nguyên ở dạng số nhiều."),
+  ()=>mkQ("He gave me a useful piece of ___.","advice",["advices", "an advice", "advice's"],"advice không đếm được → mượn \"a piece of\"."),
+  ()=>mkQ("There is too much ___ in this room.","furniture",["furnitures", "a furniture", "furnitury"],"furniture không đếm được."),
+  ()=>mkQ("The ___ about the earthquake was shocking.","news",["new", "newses", "news'"],"news là một danh từ không đếm được, luôn có s."),
+  ()=>mkQ("She has a lot of ___ to finish tonight.","homework",["homeworks", "a homework", "homeworkes"],"homework không đếm được."),
+  ()=>mkQ("I packed my ___ before the flight.","luggage",["luggages", "a luggage", "luggagies"],"luggage không đếm được."),
+  ()=>mkQ("There are two ___ standing at the gate.","women",["womans", "womens", "woman"],"woman → women."),
+  ()=>mkQ("He walked ten ___ to school every day.","kilometres",["kilometre", "kilometres'", "kilometreses"],"Danh từ đếm được chỉ đơn vị đo → số nhiều bình thường."),
+  ()=>mkQ("We need three ___ of paper for the test.","sheets",["sheet", "sheetes", "sheeties"],"paper không đếm được → mượn đơn vị sheet, ở đây số nhiều."),
+  ()=>mkQ("The police ___ looking for the thief at the moment.","are",["is", "was", "has been"],"police luôn được coi là danh từ số nhiều → are."),
+  ()=>mkQ("Mathematics ___ my favourite subject.","is",["are", "were", "have been"],"Tên môn học tận cùng -ics chia động từ số ít."),
+  ()=>mkQ("The number of tourists ___ increased sharply.","has",["have", "are", "were"],"\"The number of\" → chủ ngữ là number (số ít) → has."),
+  ()=>mkQ("A number of students ___ absent today.","are",["is", "has", "was"],"\"A number of + N số nhiều\" → động từ số nhiều."),
+  ()=>mkQ("I would like two ___ of coffee, please.","cups",["cup", "coffees", "cupes"],"coffee ở đây là chất lỏng → mượn đơn vị cup, số nhiều cups."),
+  ()=>mkQ("There is little ___ left in the jar.","sugar",["sugars", "a sugar", "sugares"],"little + danh từ không đếm được; sugar không thêm s."),
+  ()=>mkQ("My ___ are too small for these shoes.","feet",["foots", "foot", "feets"],"foot → feet."),
+  ()=>mkQ("All the ___ in the laboratory was damaged.","equipment",["equipments", "equipmentes", "an equipment"],"equipment không đếm được → động từ cũng chia số ít (was)."),
+  ()=>mkQ("The scissors ___ on the table.","are",["is", "was", "has been"],"Vật gồm hai phần (scissors, trousers, glasses) luôn chia số nhiều."),
+  ()=>mkQ("Ten thousand dollars ___ a large sum for them.","is",["are", "were", "have been"],"Số tiền/khoảng cách/thời gian coi là một khối → động từ số ít."),
+  ()=>mkQ("Neither of the two reports ___ accurate.","is",["are", "were", "have been"],"Neither of + N số nhiều → động từ chia số ít trong văn viết trang trọng."),
+  ()=>mkQ("The committee ___ divided on the issue.","are",["is", "was", "has"],"Khi nhấn mạnh các thành viên bất đồng với nhau, danh từ tập hợp chia số nhiều."),
+  ()=>mkQ("He gave us several ___ of valuable information.","pieces",["piece", "informations", "peices"],"information không đếm được → đếm bằng pieces (số nhiều sau several)."),
+  ()=>mkQ("Physics ___ considered a difficult subject by many students.","is",["are", "were", "have been"],"Physics là tên môn học → động từ số ít."),
+  ()=>mkQ("The Vietnamese ___ famous for their hospitality.","are",["is", "was", "has been"],"\"The + tính từ chỉ dân tộc\" chỉ toàn bộ dân tộc → động từ số nhiều."),
+  ()=>mkQ("Two-thirds of the land ___ been flooded.","has",["have", "are", "were"],"Phân số + danh từ không đếm được (land) → động từ số ít.")
+ ]},
+{id:"gr_adjadv",em:"🎨",name:"Tính Từ & Trạng Từ",sub:"Vị trí · trật tự · cách tạo trạng từ",diff:"medium",
+ qs:[
+  ()=>mkQ("She sings very ___.","beautifully",["beautiful", "beauty", "beautify"],"Bổ nghĩa cho động từ sings → trạng từ."),
+  ()=>mkQ("He is a ___ student.","good",["well", "goodly", "best"],"Trước danh từ student → tính từ good."),
+  ()=>mkQ("The children played ___ in the garden.","happily",["happy", "happyly", "happiness"],"Bổ nghĩa cho động từ played → trạng từ; happy → happily."),
+  ()=>mkQ("This cake smells ___.","nice",["nicely", "nicer", "nicest"],"Sau động từ giác quan smell → tính từ."),
+  ()=>mkQ("Please drive ___ on this road.","carefully",["careful", "care", "careless"],"Bổ nghĩa cho động từ drive → trạng từ."),
+  ()=>mkQ("My brother runs very ___.","fast",["fastly", "faster", "fastest"],"fast là trạng từ bất quy tắc, không thêm -ly."),
+  ()=>mkQ("She looks ___ today.","tired",["tiredly", "tiring", "tire"],"Sau look mang nghĩa \"trông có vẻ\" → tính từ."),
+  ()=>mkQ("He speaks English ___.","well",["good", "goodly", "best"],"Bổ nghĩa cho động từ speaks → trạng từ của good là well."),
+  ()=>mkQ("She is a ___ driver; she has never had an accident.","careful",["carefully", "care", "carefulness"],"Trước danh từ driver → tính từ."),
+  ()=>mkQ("They arrived ___ for the meeting.","late",["lately", "later", "latest"],"late = muộn; lately = gần đây, sai nghĩa ở đây."),
+  ()=>mkQ("I have ___ seen him these days.","hardly",["hard", "harder", "hardest"],"hardly = hầu như không, hợp với nghĩa câu."),
+  ()=>mkQ("It was a ___ long journey.","terribly",["terrible", "terror", "terrify"],"Bổ nghĩa cho tính từ long → dùng trạng từ terribly."),
+  ()=>mkQ("He gave me a ___ answer.","polite",["politely", "politeness", "impolitely"],"Trước danh từ answer → tính từ."),
+  ()=>mkQ("She dances as ___ as a professional.","gracefully",["graceful", "grace", "gracefulness"],"as + trạng từ + as vì bổ nghĩa cho động từ dances."),
+  ()=>mkQ("The test was ___ difficult for us.","too",["so", "such", "very much"],"too + tính từ = quá đến mức không làm được."),
+  ()=>mkQ("This is an ___ old Vietnamese painting.","interesting",["interestingly", "interest", "interested"],"Đứng trong chuỗi tính từ bổ nghĩa cho painting → tính từ opinion đứng đầu."),
+  ()=>mkQ("She bought a ___ handbag.","small black leather",["leather black small", "black leather small", "small leather black"],"Trật tự OSASCOMP: Size - Colour - Material."),
+  ()=>mkQ("He was ___ to answer all the questions.","clever enough",["enough clever", "too clever", "clever too"],"enough đứng SAU tính từ: adj + enough + to V."),
+  ()=>mkQ("The film was so ___ that I fell asleep.","boring",["bored", "bore", "boredom"],"Mô tả tính chất của bộ phim → đuôi -ing."),
+  ()=>mkQ("I was ___ with the result of the exam.","disappointed",["disappointing", "disappoint", "disappointment"],"Cảm xúc của người → đuôi -ed."),
+  ()=>mkQ("___ had he left when the phone rang.","Hardly",["Hard", "Hardly ever", "Almost"],"Cấu trúc đảo ngữ: Hardly + had + S + V3 ... when + QK đơn."),
+  ()=>mkQ("The higher we climbed, the ___ it became.","colder",["cold", "coldest", "more cold"],"So sánh kép: The + comparative, the + comparative."),
+  ()=>mkQ("He is ___ the best student in this class.","easily",["easy", "ease", "easiness"],"easily ở đây nghĩa \"rõ ràng, chắc chắn\", bổ nghĩa cho cụm the best."),
+  ()=>mkQ("She works ___ than her colleagues.","harder",["hardlier", "more hard", "hardest"],"hard → harder, không dùng more hard."),
+  ()=>mkQ("Seldom ___ such a beautiful sunset.","have I seen",["I have seen", "did I saw", "I saw"],"Trạng từ phủ định Seldom đầu câu → đảo trợ động từ lên trước chủ ngữ."),
+  ()=>mkQ("The project proved ___ more complex than expected.","far",["very", "too", "so"],"far/much/a lot dùng để nhấn mạnh so sánh hơn; very không dùng được."),
+  ()=>mkQ("He spoke ___ enough for everyone to hear.","loudly",["loud", "louder", "loudest"],"Bổ nghĩa cho động từ spoke → trạng từ, rồi mới tới enough."),
+  ()=>mkQ("It is ___ a difficult problem that nobody can solve it.","such",["so", "too", "very"],"such + a/an + adj + N + that; so chỉ đi trực tiếp với tính từ."),
+  ()=>mkQ("Only after the meeting ___ the truth.","did we learn",["we learned", "we did learn", "learned we"],"\"Only + cụm trạng ngữ\" đầu câu → đảo ngữ với trợ động từ did."),
+  ()=>mkQ("The more carefully you read, the ___ mistakes you will make.","fewer",["less", "fewest", "least"],"mistakes đếm được → dùng fewer, không dùng less."),
+  ()=>mkQ("She is by far ___ candidate for the job.","the most suitable",["more suitable", "most suitable", "the more suitable"],"by far + so sánh nhất, bắt buộc có \"the\"."),
+  ()=>mkQ("Not until he apologised ___ to speak to him again.","did she agree",["she agreed", "she did agree", "agreed she"],"\"Not until ...\" đứng đầu câu → mệnh đề chính đảo ngữ.")
+ ]},
+{id:"gr_questions",em:"❓",name:"Câu Hỏi",sub:"Yes-No · Wh- · hỏi chủ ngữ · gián tiếp",diff:"easy",
+ qs:[
+  ()=>mkQ("___ do you go to school? — By bike.","How",["What", "Where", "Who"],"Hỏi phương tiện → How."),
+  ()=>mkQ("___ is your birthday? — On the fifth of May.","When",["Where", "What", "Which"],"Hỏi thời gian → When."),
+  ()=>mkQ("___ are you from? — I am from Hue.","Where",["When", "What", "Who"],"Hỏi nơi chốn → Where."),
+  ()=>mkQ("___ you like coffee?","Do",["Are", "Is", "Does"],"Chủ ngữ you, động từ thường → trợ động từ Do."),
+  ()=>mkQ("___ books do you have? — About twenty.","How many",["How much", "How long", "How often"],"books đếm được → How many."),
+  ()=>mkQ("___ is that girl? — She is my cousin.","Who",["What", "Whose", "Which"],"Hỏi người là ai → Who."),
+  ()=>mkQ("___ does your mother work? — In a hospital.","Where",["When", "Why", "How"],"Hỏi nơi làm việc → Where."),
+  ()=>mkQ("___ old are you?","How",["What", "Which", "Who"],"Hỏi tuổi → How old."),
+  ()=>mkQ("___ broke the window yesterday?","Who",["Who did", "Whom did", "Who does"],"Hỏi chủ ngữ → không dùng trợ động từ, không đảo."),
+  ()=>mkQ("___ did you meet at the party?","Who",["Who was", "Whose", "Which"],"Hỏi tân ngữ → có did, chủ ngữ you đứng sau."),
+  ()=>mkQ("___ water do you drink every day?","How much",["How many", "How long", "How often"],"water không đếm được → How much."),
+  ()=>mkQ("___ do you go swimming? — Twice a week.","How often",["How long", "How much", "How far"],"Hỏi mức độ thường xuyên → How often."),
+  ()=>mkQ("___ is it from here to the beach?","How far",["How long", "How much", "How many"],"Hỏi khoảng cách → How far."),
+  ()=>mkQ("Where ___ he go last Sunday?","did",["does", "was", "has"],"last Sunday → quá khứ, động từ thường → did."),
+  ()=>mkQ("___ T-shirt do you prefer, the red one or the blue one?","Which",["What", "Who", "Whose"],"Lựa chọn có giới hạn (hai cái) → Which."),
+  ()=>mkQ("___ were you late for class?","Why",["What", "When", "How"],"Hỏi lý do → Why."),
+  ()=>mkQ("Can you tell me where ___?","the post office is",["is the post office", "does the post office", "is the post office located at"],"Câu hỏi gián tiếp → giữ trật tự chủ ngữ + động từ."),
+  ()=>mkQ("I wonder if ___ the meeting tomorrow.","she will attend",["will she attend", "does she attend", "will attend she"],"Sau I wonder if → trật tự câu kể, không đảo."),
+  ()=>mkQ("___ happened to your car?","What",["What did", "What was", "Which did"],"What làm chủ ngữ → không dùng trợ động từ."),
+  ()=>mkQ("Do you know ___ he arrived yesterday?","what time",["what time did", "when did", "at what time did"],"Câu hỏi gián tiếp → bỏ trợ động từ did."),
+  ()=>mkQ("___ of these two books is more interesting?","Which",["What", "Who", "Whose"],"Chọn giữa hai → Which + of."),
+  ()=>mkQ("___ does it take you to get to school?","How long",["How far", "How much", "How often"],"Hỏi thời gian cần để làm gì → How long does it take."),
+  ()=>mkQ("To ___ should I address this letter?","whom",["who", "whose", "which"],"Sau giới từ To → dùng whom trong văn trang trọng."),
+  ()=>mkQ("___ was the film like? — It was fantastic.","What",["How", "Which", "Why"],"Hỏi đặc điểm, cảm nhận → What ... like."),
+  ()=>mkQ("You have met him before, ___?","haven't you",["have you", "didn't you", "don't you"],"Câu hỏi đuôi: mệnh đề khẳng định với have (HTHT) → đuôi phủ định haven't you."),
+  ()=>mkQ("___ do you think will win the match?","Who",["Whom", "Who do", "Whose"],"\"do you think\" xen vào giữa, Who vẫn làm chủ ngữ của will win."),
+  ()=>mkQ("I would like to know ___ the project by Friday.","whether they can finish",["can they finish", "whether can they finish", "if can they finish"],"Câu hỏi gián tiếp sau know → whether + S + V."),
+  ()=>mkQ("Never before ___ such a beautiful city.","have I visited",["I have visited", "did I visited", "I visited"],"\"Never before\" đầu câu → đảo trợ động từ lên trước chủ ngữ."),
+  ()=>mkQ("___ is it that you are looking for?","What",["Which", "Who", "Whose"],"Cấu trúc nhấn mạnh câu hỏi: What is it that + S + V."),
+  ()=>mkQ("He asked me ___ I had finished the report.","if",["that", "what", "whether or no"],"Tường thuật câu hỏi Yes/No → dùng if hoặc whether."),
+  ()=>mkQ("___ of the applicants has the best qualifications?","Which",["What", "Who", "Whom"],"Chọn trong một nhóm xác định (the applicants) → Which."),
+  ()=>mkQ("Hardly ever ___ to the cinema these days.","do we go",["we go", "go we", "we do go"],"\"Hardly ever\" đầu câu → đảo ngữ với trợ động từ do.")
+ ]},
+{id:"gr_there",em:"🏠",name:"There Is - There Are & It",sub:"Cấu trúc tồn tại · it giả chủ ngữ",diff:"easy",
+ qs:[
+  ()=>mkQ("___ a book on the table.","There is",["There are", "It is", "They are"],"a book số ít → There is."),
+  ()=>mkQ("___ four seasons in a year.","There are",["There is", "It is", "It has"],"four seasons số nhiều → There are."),
+  ()=>mkQ("___ is cold today.","It",["There", "They", "That"],"Nói về thời tiết → It."),
+  ()=>mkQ("___ any milk in the fridge?","Is there",["Are there", "Is it", "Has there"],"milk không đếm được → Is there."),
+  ()=>mkQ("___ is half past six now.","It",["There", "This", "They"],"Nói về giờ giấc → It."),
+  ()=>mkQ("There ___ two cats in the garden.","are",["is", "was", "has"],"two cats số nhiều, hiện tại → are."),
+  ()=>mkQ("___ five kilometres from my house to the market.","It is",["There is", "There are", "It has"],"Nói về khoảng cách → It is."),
+  ()=>mkQ("There ___ not any sugar left.","is",["are", "were", "have"],"sugar không đếm được → is."),
+  ()=>mkQ("There ___ a lot of people at the concert last night.","were",["was", "are", "is"],"people số nhiều + last night → were."),
+  ()=>mkQ("___ takes me an hour to finish my homework.","It",["There", "This", "That"],"Cấu trúc It takes + thời gian + to V."),
+  ()=>mkQ("There ___ a heavy rain yesterday afternoon.","was",["were", "is", "are"],"a heavy rain số ít + yesterday → was."),
+  ()=>mkQ("There ___ a meeting tomorrow morning.","will be",["will have", "is going", "will been"],"Tương lai sau There → will be."),
+  ()=>mkQ("___ is dangerous to swim in this river.","It",["There", "That", "This"],"It giả chủ ngữ thay cho \"to swim in this river\"."),
+  ()=>mkQ("There ___ a pen and two notebooks in my bag.","is",["are", "were", "have"],"Khi liệt kê, động từ chia theo danh từ đầu tiên (a pen)."),
+  ()=>mkQ("How many chairs ___ in the room?","are there",["there are", "is there", "there is"],"Câu hỏi → đảo: are there."),
+  ()=>mkQ("___ seems that he has forgotten our appointment.","It",["There", "This", "He"],"It seems that + mệnh đề."),
+  ()=>mkQ("There ___ been several accidents on this road.","have",["has", "was", "is"],"several accidents số nhiều + hoàn thành → have been."),
+  ()=>mkQ("There ___ to be a bookshop on this corner.","used",["use", "using", "uses"],"There used to be = trước đây từng có."),
+  ()=>mkQ("___ is no use crying over spilt milk.","It",["There", "That", "This"],"Thành ngữ: It is no use + V-ing."),
+  ()=>mkQ("There ___ to be a solution to this problem.","seems",["seem", "is seeming", "seemed to"],"a solution số ít → seems."),
+  ()=>mkQ("___ was not until midnight that he came home.","It",["There", "That", "This"],"Cấu trúc nhấn mạnh: It was not until ... that ..."),
+  ()=>mkQ("There ___ little hope of finding the missing boy.","is",["are", "were", "have"],"hope không đếm được → is."),
+  ()=>mkQ("___ is said that he is the richest man in town.","It",["There", "They", "People"],"It is said that + mệnh đề (bị động với động từ tường thuật)."),
+  ()=>mkQ("There ___ hardly any water left in the tank.","is",["are", "were", "have been"],"water không đếm được → is."),
+  ()=>mkQ("There ___ no point in arguing with him.","is",["are", "was being", "has"],"Thành ngữ: There is no point in + V-ing."),
+  ()=>mkQ("___ appears to have been a misunderstanding.","There",["It", "That", "This"],"There + appear/seem + to have been = dường như đã có."),
+  ()=>mkQ("___ is high time we left for the airport.","It",["There", "That", "This"],"Thành ngữ: It is high time + S + V quá khứ."),
+  ()=>mkQ("There being no bus, ___ to walk home.","we had",["we have", "there had", "it had"],"Mệnh đề phân từ \"There being no bus\" làm trạng ngữ lý do, mệnh đề chính có chủ ngữ riêng."),
+  ()=>mkQ("___ was reported that the typhoon had caused heavy damage.","It",["There", "They", "That"],"It was reported that + mệnh đề."),
+  ()=>mkQ("There ___ to be no way out of this situation.","appears",["appear", "is appearing", "appeared to"],"no way số ít → appears."),
+  ()=>mkQ("___ takes a great deal of patience to teach young children.","It",["There", "This", "That"],"It takes + danh từ chỉ phẩm chất + to V."),
+  ()=>mkQ("Were there ___ problems during the installation?","any",["some", "much", "a"],"Câu hỏi với danh từ đếm được số nhiều → any.")
+ ]},
+{id:"gr_advclause",em:"🔗",name:"Mệnh Đề Trạng Ngữ",sub:"Thời gian · lý do · mục đích · nhượng bộ",diff:"medium",
+ qs:[
+  ()=>mkQ("___ it was late, we went home.","Because",["Despite", "Because of", "In spite of"],"Theo sau là mệnh đề it was late → dùng Because."),
+  ()=>mkQ("We stayed inside ___ the heavy rain.","because of",["because", "although", "though"],"Theo sau là cụm danh từ the heavy rain → because of."),
+  ()=>mkQ("___ he is young, he is very responsible.","Although",["Despite", "Because of", "So"],"Hai vế trái nghĩa, theo sau là mệnh đề → Although."),
+  ()=>mkQ("I will wait here ___ you come back.","until",["while", "because", "so that"],"Chờ cho tới khi ai đó quay lại → until."),
+  ()=>mkQ("___ I was cooking, the phone rang.","While",["Because", "Although", "So that"],"Hai hành động, một cái xen ngang → While."),
+  ()=>mkQ("He went to bed early ___ he was tired.","because",["so that", "although", "despite"],"Chỉ lý do, theo sau là mệnh đề → because."),
+  ()=>mkQ("Turn off the lights ___ you leave the room.","when",["so that", "because of", "although"],"Chỉ thời điểm → when."),
+  ()=>mkQ("She was ___ tired that she fell asleep immediately.","so",["such", "such a", "very"],"so + tính từ + that."),
+  ()=>mkQ("___ his illness, he still came to class.","In spite of",["Although", "Because", "Even though"],"Theo sau là cụm danh từ his illness → In spite of."),
+  ()=>mkQ("It was ___ an interesting book that I read it twice.","such",["so", "very", "too"],"such + a/an + adj + N + that."),
+  ()=>mkQ("He saved money ___ he could buy a new laptop.","so that",["so", "such that", "because"],"Chỉ mục đích, có could → so that."),
+  ()=>mkQ("___ we had finished dinner, we watched a film.","After",["Until", "While", "Because of"],"Hành động xảy ra trước → After."),
+  ()=>mkQ("I have known her ___ we were children.","since",["for", "when", "until"],"since + mốc thời gian/mệnh đề quá khứ."),
+  ()=>mkQ("___ the bad weather, the flight was cancelled.","Owing to",["Although", "Because", "Even though"],"Theo sau là cụm danh từ → Owing to."),
+  ()=>mkQ("She kept working ___ she was exhausted.","even though",["despite", "in spite of", "because of"],"Theo sau là mệnh đề she was exhausted → even though."),
+  ()=>mkQ("Wait here ___ I get back.","until",["during", "so that", "because of"],"until + mệnh đề chỉ thời điểm kết thúc."),
+  ()=>mkQ("___ that you have finished school, what will you do?","Now",["Although", "Despite", "So"],"Now that = bởi vì bây giờ, chỉ lý do."),
+  ()=>mkQ("He speaks English well ___ he has never been abroad.","although",["despite", "because of", "so that"],"Ý trái ngược, theo sau là mệnh đề → although."),
+  ()=>mkQ("___ being very tired, she finished the report.","Despite",["Although", "Because", "Even though"],"Despite + V-ing (coi như cụm danh từ)."),
+  ()=>mkQ("My sister likes pop music ___ I prefer classical music.","whereas",["because", "so that", "unless"],"whereas dùng để đối chiếu hai vế trái nhau."),
+  ()=>mkQ("The test was ___ difficult that few students passed.","so",["such", "such a", "too"],"so + adj + that."),
+  ()=>mkQ("He left early ___ to catch the first train.","in order",["so that", "because", "despite"],"in order + to V chỉ mục đích."),
+  ()=>mkQ("___ hard he tried, he could not solve the puzzle.","However",["Although", "Despite", "Because"],"However + adj/adv + S + V = dù ... đến đâu."),
+  ()=>mkQ("They moved to the countryside ___ the air is fresher.","because",["because of", "despite", "so that"],"Theo sau là mệnh đề the air is fresher → because."),
+  ()=>mkQ("___ he may be rich, he is not happy.","Though",["Despite", "Because of", "Owing to"],"Though + mệnh đề; \"may be\" cho thấy đây là mệnh đề đầy đủ."),
+  ()=>mkQ("No sooner had he sat down ___ the bell rang.","than",["when", "that", "then"],"Cấu trúc cố định: No sooner ... than ..."),
+  ()=>mkQ("___ as he was, he refused to give up.","Tired",["Although tired", "Despite tired", "Because tired"],"Cấu trúc nhượng bộ đảo: Adj + as + S + V."),
+  ()=>mkQ("She worked overtime ___ finish the project on time.","so as to",["so that", "in order that", "because of"],"so as to + V nguyên mẫu chỉ mục đích."),
+  ()=>mkQ("___ the heavy traffic, we arrived on time.","Notwithstanding",["Although", "Even though", "Because"],"Notwithstanding + cụm danh từ = mặc dù, văn trang trọng."),
+  ()=>mkQ("He had scarcely entered the room ___ the lights went out.","when",["than", "that", "then"],"Cấu trúc: had scarcely ... when ..."),
+  ()=>mkQ("___ much he earns, he never saves any money.","No matter how",["However that", "Although how", "Despite how"],"No matter how + adv + S + V."),
+  ()=>mkQ("The instructions were ___ complicated that nobody could follow them.","so",["such", "such a", "too"],"so + adj + that, dù có \"the instructions\" vì complicated là tính từ đứng một mình.")
+ ]},
+{id:"gr_nounclause",em:"💬",name:"Mệnh Đề Danh Ngữ",sub:"That · Wh- · if-whether",diff:"hard",
+ qs:[
+  ()=>mkQ("I think ___ he is a good teacher.","that",["what", "which", "whether"],"Mệnh đề đầy đủ làm tân ngữ của think → that."),
+  ()=>mkQ("I do not know ___ she lives.","where",["that", "which", "whether"],"Hỏi nơi chốn → where."),
+  ()=>mkQ("___ he said was not true.","What",["That", "Which", "Whether"],"Làm chủ ngữ, nghĩa \"điều mà\" → What."),
+  ()=>mkQ("She asked me ___ I liked coffee.","if",["that", "what", "which"],"Tường thuật câu hỏi Yes/No → if."),
+  ()=>mkQ("Nobody knows ___ the meeting will start.","when",["that", "what", "which"],"Hỏi thời gian → when."),
+  ()=>mkQ("I hope ___ you will come to my party.","that",["what", "whether", "which"],"Mệnh đề đầy đủ sau hope → that."),
+  ()=>mkQ("Can you tell me ___ this word means?","what",["that", "which", "whether"],"Hỏi nghĩa → what."),
+  ()=>mkQ("I am sure ___ he will pass the exam.","that",["what", "whether", "which"],"be sure + that-clause."),
+  ()=>mkQ("Do you know ___?","where he works",["where does he work", "where he does work", "where work he"],"Câu hỏi gián tiếp → trật tự câu kể."),
+  ()=>mkQ("___ they need most is money.","What",["That", "Which", "Whether"],"Làm chủ ngữ, nghĩa \"cái mà\" → What."),
+  ()=>mkQ("I am not sure about ___ he is coming.","whether",["if", "that", "what"],"Sau giới từ about chỉ dùng whether."),
+  ()=>mkQ("He told me ___ he had finished the report.","that",["what", "which", "whether"],"Mệnh đề đầy đủ sau tell sb → that."),
+  ()=>mkQ("I wonder ___ the train has left yet.","whether",["that", "what", "which"],"Hỏi liệu có hay không → whether/if; ở đây whether."),
+  ()=>mkQ("___ worries me is his health.","What",["That", "Which", "It"],"Làm chủ ngữ, nghĩa \"điều làm tôi lo\" → What."),
+  ()=>mkQ("She explained ___ the machine worked.","how",["what", "that", "which"],"Hỏi cách thức → how."),
+  ()=>mkQ("Please tell me ___ you prefer, tea or coffee.","which",["what", "that", "whether"],"Chọn giữa hai thứ xác định → which."),
+  ()=>mkQ("___ he will accept the job remains unclear.","Whether",["If", "That what", "What if"],"Mệnh đề làm chủ ngữ đầu câu → dùng Whether, không dùng If."),
+  ()=>mkQ("What they decided ___ a surprise to us all.","was",["were", "are", "have been"],"Mệnh đề danh ngữ làm chủ ngữ → động từ chia số ít."),
+  ()=>mkQ("It is surprising ___ he passed the test so easily.","that",["what", "whether", "which"],"It giả chủ ngữ + that-clause thật."),
+  ()=>mkQ("I have no idea ___ she is so angry.","why",["that", "what", "which"],"Hỏi lý do → why."),
+  ()=>mkQ("The question is ___ we can afford it.","whether",["that", "what", "which"],"Bổ ngữ sau be, nghĩa \"liệu có\" → whether."),
+  ()=>mkQ("He insisted ___ the report be submitted by Friday.","that",["what", "whether", "which"],"insist that + S + V nguyên mẫu (thức giả định)."),
+  ()=>mkQ("___ the money came from is still a mystery.","Where",["That", "What", "Whether"],"Làm chủ ngữ, hỏi nguồn gốc → Where."),
+  ()=>mkQ("She was worried about ___ her son had arrived safely.","whether",["if", "that", "what"],"Sau giới từ about → whether."),
+  ()=>mkQ("___ causes the disease is not yet known.","What",["That", "Which", "Whether"],"Làm chủ ngữ và đồng thời là chủ ngữ của causes → What."),
+  ()=>mkQ("The fact ___ he lied shocked everyone.","that",["what", "which", "whether"],"the fact + that-clause đồng vị ngữ, không dùng which."),
+  ()=>mkQ("It was suggested ___ the meeting be postponed.","that",["what", "whether", "which"],"Thức giả định bị động: It was suggested that + S + be + V3."),
+  ()=>mkQ("___ he comes or not makes no difference.","Whether",["If", "That", "What"],"Cấu trúc whether ... or not làm chủ ngữ."),
+  ()=>mkQ("I do not doubt ___ he is capable of doing it.","that",["what", "whether", "which"],"Câu khẳng định với doubt phủ định → dùng that."),
+  ()=>mkQ("___ matters most is how you treat other people.","What",["That", "Which", "Whether"],"What + V làm chủ ngữ, theo sau là is."),
+  ()=>mkQ("He gave no explanation as to ___ he had been absent.","why",["that", "what", "whether"],"as to + từ để hỏi, ở đây hỏi lý do → why."),
+  ()=>mkQ("That he survived the crash ___ a miracle.","is",["are", "were", "have been"],"That-clause làm chủ ngữ → động từ chia số ít.")
+ ]},
+{id:"gr_inversion",em:"🔄",name:"Đảo Ngữ",sub:"Never · Not until · No sooner · bỏ If",diff:"advanced",
+ qs:[
+  ()=>mkQ("Never ___ such a delicious meal.","have I eaten",["I have eaten", "did I ate", "I ate"],"Never đầu câu → đảo have lên trước I."),
+  ()=>mkQ("Seldom ___ to the cinema.","does he go",["he goes", "he does go", "goes he"],"Seldom + does + S + V nguyên mẫu."),
+  ()=>mkQ("Rarely ___ late for school.","is she",["she is", "does she is", "she does be"],"Có động từ be → đưa be lên trước chủ ngữ."),
+  ()=>mkQ("Hardly ever ___ television.","do they watch",["they watch", "they do watch", "watch they"],"Hardly ever + do + S + V."),
+  ()=>mkQ("Never ___ him before.","had I met",["I had met", "did I met", "I met"],"Never + had + S + V3."),
+  ()=>mkQ("Little ___ that he was lying.","did I know",["I knew", "I did know", "knew I"],"Little mang nghĩa phủ định → đảo với did."),
+  ()=>mkQ("Not only ___ English but she also speaks French.","does she speak",["she speaks", "she does speak", "speaks she"],"Not only đầu câu → đảo với does."),
+  ()=>mkQ("Seldom ___ such kindness.","have we seen",["we have seen", "did we saw", "we saw"],"Seldom + have + S + V3."),
+  ()=>mkQ("Not until midnight ___ home.","did he come",["he came", "he did come", "came he"],"Not until + mốc thời gian → mệnh đề chính đảo với did."),
+  ()=>mkQ("Only when it rained ___ the match.","did they cancel",["they cancelled", "they did cancel", "cancelled they"],"Mệnh đề \"it rained\" giữ nguyên, mệnh đề chính đảo."),
+  ()=>mkQ("No sooner had the bell rung ___ the students ran out.","than",["when", "that", "then"],"Cấu trúc cố định No sooner ... than."),
+  ()=>mkQ("Hardly had she sat down ___ the doorbell rang.","when",["than", "that", "then"],"Cấu trúc Hardly ... when."),
+  ()=>mkQ("So tired ___ that he fell asleep at once.","was he",["he was", "did he", "he did be"],"So + adj + be + S + that."),
+  ()=>mkQ("Only after the exam ___ relaxed.","did we feel",["we felt", "we did feel", "felt we"],"Only after + cụm danh từ → mệnh đề chính đảo."),
+  ()=>mkQ("Were I rich, ___ around the world.","I would travel",["I will travel", "would I travel", "I travelled"],"Mệnh đề chính của câu điều kiện loại 2 giữ trật tự bình thường."),
+  ()=>mkQ("Not a single word ___ during the meeting.","did he say",["he said", "he did say", "said he"],"Cụm phủ định \"Not a single word\" đầu câu → đảo."),
+  ()=>mkQ("Had I known about the traffic, ___ earlier.","I would have left",["I would leave", "would I have left", "I had left"],"Câu điều kiện loại 3 bỏ If → Had + S + V3; mệnh đề chính không đảo."),
+  ()=>mkQ("Should you need any help, ___ me.","call",["you call", "do you call", "will you call"],"Should + S + V = If + S + should V; mệnh đề chính là câu mệnh lệnh."),
+  ()=>mkQ("Such ___ his anger that he slammed the door.","was",["is", "did", "had"],"Such + be + S + that."),
+  ()=>mkQ("In no circumstances ___ to leave the room.","are you allowed",["you are allowed", "do you allowed", "you do allow"],"Cụm phủ định + be → đưa be lên trước chủ ngữ."),
+  ()=>mkQ("Only by working hard ___ succeed.","can you",["you can", "do you can", "you do"],"Only by + V-ing → đảo động từ khuyết thiếu can."),
+  ()=>mkQ("Scarcely ___ the house when it began to rain.","had we left",["we had left", "did we leave", "we left"],"Scarcely + had + S + V3 ... when."),
+  ()=>mkQ("At no time ___ aware of the danger.","was he",["he was", "did he", "he did be"],"At no time mang nghĩa phủ định → đảo be."),
+  ()=>mkQ("Not only did he win the race, ___ he broke the record.","but",["and", "so", "or"],"Cấu trúc Not only ... but also."),
+  ()=>mkQ("Under no circumstances ___ this document to anyone.","should you show",["you should show", "do you show", "you do show"],"Cụm phủ định + động từ khuyết thiếu should → đảo should lên trước."),
+  ()=>mkQ("So rapidly ___ that few people can keep up.","is technology advancing",["technology is advancing", "does technology advance", "technology does advance"],"So + trạng từ + trợ động từ is + S + V-ing."),
+  ()=>mkQ("Only after he had left ___ what he really meant.","did I realise",["I realised", "I did realise", "realised I"],"Mệnh đề \"he had left\" giữ nguyên; mệnh đề chính đảo với did."),
+  ()=>mkQ("Were it not for your help, ___ this project.","I could not have finished",["could I not have finished", "I can not finish", "I had not finished"],"Were it not for = If it were not for; mệnh đề chính không đảo."),
+  ()=>mkQ("Nowhere in the world ___ such a strange custom.","will you find",["you will find", "do you will find", "find you will"],"Cụm trạng ngữ phủ định Nowhere → đảo will."),
+  ()=>mkQ("On no account ___ the machine unattended.","must you leave",["you must leave", "do you must leave", "must leave you"],"On no account + must + S + V."),
+  ()=>mkQ("Not until she read the letter ___ the truth.","did she learn",["she learned", "she did learn", "learned she"],"Not until + mệnh đề → mệnh đề chính đảo."),
+  ()=>mkQ("Had it not been for the rain, ___ the match.","we would have won",["would we have won", "we had won", "we would win"],"Điều kiện loại 3 đảo; mệnh đề chính giữ trật tự thường.")
+ ]},
+{id:"gr_usedto",em:"⏳",name:"Used To & Be Used To",sub:"Thói quen quá khứ · quen với việc gì",diff:"medium",
+ qs:[
+  ()=>mkQ("I ___ go swimming every weekend when I was young.","used to",["am used to", "get used to", "use to"],"Thói quen quá khứ → used to + V."),
+  ()=>mkQ("She is used to ___ up early.","getting",["get", "got", "gets"],"be used to + V-ing."),
+  ()=>mkQ("There ___ be a cinema here.","used to",["use to", "is used to", "gets used to"],"There used to be = trước đây từng có."),
+  ()=>mkQ("He ___ smoke, but he quit last year.","used to",["is used to", "uses to", "was used to"],"Thói quen đã chấm dứt → used to."),
+  ()=>mkQ("I am used to ___ in a big city.","living",["live", "lived", "lives"],"be used to + V-ing."),
+  ()=>mkQ("Did you ___ have long hair?","use to",["used to", "using to", "uses to"],"Sau Did → use to, bỏ d."),
+  ()=>mkQ("My father ___ to drink coffee every morning.","used",["use", "using", "uses"],"Thói quen quá khứ → used to."),
+  ()=>mkQ("She is not used to ___ spicy food.","eating",["eat", "ate", "eats"],"be used to + V-ing."),
+  ()=>mkQ("I did not ___ to like classical music.","use",["used", "using", "uses"],"Sau did not → use to."),
+  ()=>mkQ("After a month, he got used to ___ in the dormitory.","living",["live", "lived", "lives"],"get used to + V-ing."),
+  ()=>mkQ("They ___ to the noise of the traffic now.","are used",["used", "use", "were using"],"Hiện tại đã quen → are used to."),
+  ()=>mkQ("When I was a child, I ___ climb trees.","would",["am used to", "was used to", "get used to"],"Hành động lặp lại trong quá khứ → would thay được used to."),
+  ()=>mkQ("It took her a while to get used to ___ on the left.","driving",["drive", "drove", "drives"],"get used to + V-ing."),
+  ()=>mkQ("This house ___ belong to my grandparents.","used to",["is used to", "was used to", "uses to"],"Trạng thái sở hữu trong quá khứ → used to."),
+  ()=>mkQ("Are you used to ___ the new software yet?","using",["use", "used", "uses"],"be used to + V-ing."),
+  ()=>mkQ("He ___ be very shy, but now he is confident.","used to",["is used to", "gets used to", "was used to"],"Trạng thái quá khứ nay đã thay đổi → used to."),
+  ()=>mkQ("I am slowly ___ used to the cold weather here.","getting",["being", "used", "having"],"Đang dần quen → getting used to."),
+  ()=>mkQ("She ___ used to working night shifts, so she never complains.","is",["used", "did", "was used"],"Hiện tại đã quen → is used to."),
+  ()=>mkQ("My grandmother ___ tell us stories every evening.","would",["is used to", "gets used to", "would be used to"],"Hành động lặp lại trong quá khứ → would."),
+  ()=>mkQ("He could not get used to ___ so far from home.","being",["be", "been", "is"],"get used to + V-ing, ở đây là being."),
+  ()=>mkQ("We ___ have a big garden when we lived in the village.","used to",["would", "are used to", "were used to"],"Sở hữu là trạng thái → chỉ dùng used to, không dùng would."),
+  ()=>mkQ("It did not take him long to ___ used to the new routine.","get",["be", "being", "used"],"Sau to trong \"take long to\" → động từ nguyên mẫu get."),
+  ()=>mkQ("I am not used to ___ treated like that.","being",["be", "been", "am"],"be used to + being + V3 (bị động)."),
+  ()=>mkQ("___ you use to walk to school?","Did",["Do", "Were", "Have"],"Nghi vấn của used to → Did + S + use to."),
+  ()=>mkQ("By the end of the year, she will ___ used to the climate.","have got",["get", "be getting", "have been"],"Tương lai hoàn thành: will have got used to."),
+  ()=>mkQ("He is no longer used to ___ long hours.","working",["work", "worked", "works"],"be used to + V-ing dù có \"no longer\"."),
+  ()=>mkQ("Living abroad, I had to get used to ___ by strangers.","being greeted",["greeted", "greet", "be greeted"],"get used to + being + V3 (dạng bị động)."),
+  ()=>mkQ("There ___ to be far fewer cars on this street.","used",["use", "is used", "was used"],"There used to be; sau There chỉ dùng used to."),
+  ()=>mkQ("She said she ___ used to such rude behaviour.","was not",["did not", "has not", "used not"],"Tường thuật \"I am not used to\" → was not used to."),
+  ()=>mkQ("I would rather you ___ used to doing things on your own.","got",["get", "getting", "had got"],"would rather + S + V quá khứ → got."),
+  ()=>mkQ("Not until he moved to Hanoi ___ used to the traffic.","did he get",["he got", "he did get", "got he"],"Not until đầu câu → mệnh đề chính đảo ngữ."),
+  ()=>mkQ("He used to be a teacher, ___ he?","didn't",["usedn't", "wasn't", "doesn't"],"Câu hỏi đuôi của used to dùng didn't.")
+ ]},
+{id:"gr_imperative",em:"📣",name:"Câu Mệnh Lệnh & Đề Nghị",sub:"Let's · Why don't we · How about",diff:"easy",
+ qs:[
+  ()=>mkQ("___ the window, please.","Open",["Opening", "To open", "Opens"],"Câu mệnh lệnh → động từ nguyên mẫu đứng đầu."),
+  ()=>mkQ("___ be late for school.","Don't",["Not", "No", "Doesn't"],"Mệnh lệnh phủ định → Don't + V."),
+  ()=>mkQ("Let's ___ a cup of tea.","have",["having", "to have", "had"],"Let's + V nguyên mẫu."),
+  ()=>mkQ("How about ___ to the beach this weekend?","going",["go", "to go", "went"],"How about + V-ing."),
+  ()=>mkQ("Why don't we ___ a film tonight?","watch",["watching", "to watch", "watched"],"Why don't we + V nguyên mẫu."),
+  ()=>mkQ("Shall we ___ now?","begin",["beginning", "to begin", "began"],"Shall we + V nguyên mẫu."),
+  ()=>mkQ("___ quiet in the library.","Be",["Being", "To be", "Are"],"Mệnh lệnh với động từ be → Be."),
+  ()=>mkQ("Would you like ___ with us?","to come",["coming", "come", "came"],"Would you like + to V."),
+  ()=>mkQ("What about ___ the museum tomorrow?","visiting",["visit", "to visit", "visited"],"What about + V-ing."),
+  ()=>mkQ("Would you mind ___ me a hand?","giving",["give", "to give", "gave"],"Would you mind + V-ing."),
+  ()=>mkQ("Let's not ___ about it anymore.","talk",["talking", "to talk", "talked"],"Phủ định của Let's → Let's not + V."),
+  ()=>mkQ("I suggest ___ an early train.","taking",["to take", "take", "took"],"suggest + V-ing, không dùng to V."),
+  ()=>mkQ("Let's go out tonight, ___?","shall we",["will we", "do we", "don't we"],"Câu hỏi đuôi của Let's là shall we."),
+  ()=>mkQ("Open the door, ___?","will you",["shall we", "do you", "don't you"],"Câu hỏi đuôi của câu mệnh lệnh là will you."),
+  ()=>mkQ("Why not ___ her the truth?","tell",["telling", "to tell", "told"],"Why not + V nguyên mẫu."),
+  ()=>mkQ("___ forget to lock the door.","Don't",["Not", "No", "Doesn't"],"Mệnh lệnh phủ định."),
+  ()=>mkQ("He suggested that we ___ the meeting until Monday.","postpone",["postponed", "to postpone", "postponing"],"suggest that + S + V nguyên mẫu (thức giả định)."),
+  ()=>mkQ("Would you mind if I ___ the window?","opened",["open", "opening", "to open"],"Would you mind if + S + V quá khứ."),
+  ()=>mkQ("\"Would you mind waiting?\" — \"___\"","No, not at all.",["Yes, of course not.", "Yes, I would like.", "No, I would mind."],"Trả lời \"No, not at all\" nghĩa là đồng ý, không phiền."),
+  ()=>mkQ("I would rather you ___ smoke in here.","didn't",["don't", "not", "wouldn't"],"would rather + S + didn't + V."),
+  ()=>mkQ("It is time we ___ home.","went",["go", "going", "to go"],"It is time + S + V quá khứ."),
+  ()=>mkQ("___ we discuss this after lunch?","Shall",["Will", "Do", "Would"],"Đề nghị cùng làm → Shall we."),
+  ()=>mkQ("How about we ___ the party on Saturday?","hold",["holding", "to hold", "held"],"Khi How about theo sau là mệnh đề thì dùng động từ chia bình thường."),
+  ()=>mkQ("Do you mind ___ me the salt?","passing",["to pass", "pass", "passed"],"Do you mind + V-ing."),
+  ()=>mkQ("The doctor recommended that he ___ more exercise.","take",["takes", "took", "taking"],"recommend that + S + V nguyên mẫu (thức giả định)."),
+  ()=>mkQ("It was suggested that the rule ___ changed.","be",["was", "is", "were"],"Thức giả định bị động: that + S + be + V3."),
+  ()=>mkQ("I insist that she ___ present at the ceremony.","be",["is", "was", "will be"],"insist that + S + be (thức giả định)."),
+  ()=>mkQ("Let us not ___ hasty conclusions.","draw",["drawing", "to draw", "drew"],"Let us not + V nguyên mẫu."),
+  ()=>mkQ("Would you be so kind as ___ me the document?","to send",["sending", "send", "sent"],"so kind as + to V."),
+  ()=>mkQ("He proposed ___ the budget before the deadline.","reviewing",["to review", "review", "reviewed"],"propose + V-ing khi không dùng mệnh đề that."),
+  ()=>mkQ("Supposing you ___ the lottery, what would you do?","won",["win", "will win", "have won"],"Supposing + S + V quá khứ, giả định không có thật."),
+  ()=>mkQ("You had better ___ late again.","not be",["not to be", "to not be", "be not"],"had better + not + V nguyên mẫu.")
+ ]},
+{id:"gr_cleft",em:"💡",name:"Câu Chẻ (Nhấn Mạnh)",sub:"It is ... that · What ... is",diff:"advanced",
+ qs:[
+  ()=>mkQ("___ was Nam who won the first prize.","It",["That", "There", "He"],"Câu chẻ bắt đầu bằng It."),
+  ()=>mkQ("It was my sister ___ cooked this meal.","who",["which", "what", "whose"],"Nhấn mạnh người → who."),
+  ()=>mkQ("It is this song ___ I like best.","that",["who", "whose", "whom"],"Nhấn mạnh vật → that."),
+  ()=>mkQ("___ I want is a cup of coffee.","What",["That", "Which", "It"],"What-cleft làm chủ ngữ."),
+  ()=>mkQ("It was in Hue ___ we first met.","that",["who", "what", "whose"],"Nhấn mạnh nơi chốn → that (hoặc where)."),
+  ()=>mkQ("All I need ___ your support.","is",["are", "were", "have"],"All-cleft chia động từ số ít."),
+  ()=>mkQ("It was last year ___ they moved here.","that",["who", "which one", "what"],"Nhấn mạnh thời gian → that."),
+  ()=>mkQ("What she bought ___ a new laptop.","was",["were", "are", "have been"],"What-cleft → động từ số ít was."),
+  ()=>mkQ("___ was the heavy rain that caused the flood.","It",["There", "That", "What"],"Câu chẻ nhấn mạnh nguyên nhân."),
+  ()=>mkQ("It is my parents ___ always support me.","who",["which", "what", "whose"],"Nhấn mạnh người số nhiều → who."),
+  ()=>mkQ("What I dislike ___ his rudeness.","is",["are", "were", "have been"],"What-cleft → động từ số ít."),
+  ()=>mkQ("It was the noise ___ woke me up.","that",["who", "what", "whose"],"Nhấn mạnh vật làm chủ ngữ → that."),
+  ()=>mkQ("All he did ___ apologise.","was",["were", "is to", "did"],"All ... was + V nguyên mẫu không to."),
+  ()=>mkQ("It was because of the storm ___ the flight was delayed.","that",["which", "what", "when"],"Nhấn mạnh cụm lý do → that."),
+  ()=>mkQ("What they need most ___ more time.","is",["are", "were", "have"],"What-cleft → is."),
+  ()=>mkQ("It is not the money ___ matters, but the gesture.","that",["which it", "what", "who"],"Nhấn mạnh chủ ngữ là vật → that."),
+  ()=>mkQ("It was not until he left ___ I realised the truth.","that",["when", "then", "which"],"Cấu trúc It was not until ... that ..."),
+  ()=>mkQ("What he said ___ everyone in the room.","shocked",["shock", "were shocking", "have shocked"],"What-clause làm chủ ngữ → động từ số ít, quá khứ shocked."),
+  ()=>mkQ("It is the students ___ suffer most from this policy.","who",["whom", "which", "what"],"Nhấn mạnh người làm chủ ngữ → who."),
+  ()=>mkQ("All that is needed ___ a little patience.","is",["are", "were", "have been"],"All that ... → động từ số ít."),
+  ()=>mkQ("It was to his mother ___ he told the secret.","that",["who", "whom", "which"],"Nhấn mạnh cụm giới từ → that."),
+  ()=>mkQ("What surprised me ___ how calm she remained.","was",["were", "are", "have been"],"What-cleft → was."),
+  ()=>mkQ("It was only after the exam ___ he relaxed.","that",["when", "then", "which"],"It was only after ... that ..."),
+  ()=>mkQ("The thing ___ worries me is the deadline.","that",["what", "who", "whose"],"Sau danh từ the thing → mệnh đề quan hệ với that."),
+  ()=>mkQ("It is the quality of teaching, not the facilities, ___ makes a good school.","that",["which it", "what", "who"],"Nhấn mạnh chủ ngữ, dù có cụm xen giữa vẫn dùng that."),
+  ()=>mkQ("What the committee decided ___ never announced publicly.","was",["were", "are", "have been"],"What-clause làm chủ ngữ → động từ số ít, bị động was announced."),
+  ()=>mkQ("It was not I ___ started the argument.","who",["whom", "which", "that it"],"Nhấn mạnh chủ ngữ là người → who; sau be dùng đại từ chủ ngữ I."),
+  ()=>mkQ("All you have to do ___ sign here.","is",["is to signing", "are", "were"],"All ... is + V nguyên mẫu không to."),
+  ()=>mkQ("It is precisely this attitude ___ I find unacceptable.","that",["which it", "what", "who"],"Nhấn mạnh tân ngữ → that."),
+  ()=>mkQ("What matters in the end ___ the results.","is",["are", "were", "have been"],"What-clause làm chủ ngữ → động từ số ít, dù bổ ngữ số nhiều."),
+  ()=>mkQ("It was with great reluctance ___ she accepted the offer.","that",["which", "when", "who"],"Nhấn mạnh cụm trạng ngữ cách thức → that."),
+  ()=>mkQ("Rarely is it the teacher ___ is to blame.","who",["whom", "which", "what"],"Câu chẻ lồng trong đảo ngữ; nhấn mạnh người → who.")
+ ]},
+{id:"gr_sosuch",em:"⚖️",name:"So · Such · Too · Enough",sub:"Bốn cấu trúc chỉ mức độ",diff:"medium",
+ qs:[
+  ()=>mkQ("The film was ___ boring that I left early.","so",["such", "too", "very"],"so + tính từ đứng một mình + that."),
+  ()=>mkQ("It was ___ a hot day that we stayed inside.","such",["so", "too", "very"],"such + a + adj + danh từ + that."),
+  ()=>mkQ("He is ___ tired to continue working.","too",["so", "such", "enough"],"too + adj + to V, nghĩa không thể làm được."),
+  ()=>mkQ("She is tall ___ to reach the shelf.","enough",["too", "so", "such"],"adj + enough + to V."),
+  ()=>mkQ("We have ___ time to finish the test.","enough",["too", "so", "such"],"enough đứng trước danh từ time."),
+  ()=>mkQ("The coffee is ___ hot to drink.","too",["so", "such", "enough"],"too + adj + to V."),
+  ()=>mkQ("There were ___ many students in the hall.","so",["such", "too much", "enough"],"so many + danh từ đếm được số nhiều."),
+  ()=>mkQ("He speaks ___ quickly that I cannot follow.","so",["such", "too", "enough"],"so + trạng từ + that."),
+  ()=>mkQ("It was ___ an interesting lecture that nobody left.","such",["so", "too", "very much"],"such + a/an + adj + N + that."),
+  ()=>mkQ("The test was not easy ___ for us to pass.","enough",["too", "so", "such"],"adj + enough + for sb + to V."),
+  ()=>mkQ("She had ___ little money that she could not buy food.","so",["such", "too", "enough"],"so + little (từ chỉ lượng) + that."),
+  ()=>mkQ("He was ___ weak to carry the suitcase.","too",["so", "such", "enough"],"too + adj + to V."),
+  ()=>mkQ("There is not ___ sugar in my tea.","enough",["too", "so", "such"],"enough + danh từ không đếm được."),
+  ()=>mkQ("They were ___ good players that they won easily.","such",["so", "too", "very"],"such + adj + danh từ số nhiều (không có a) + that."),
+  ()=>mkQ("The room was ___ small for ten people.","too",["so", "such", "enough"],"too + adj + for sb, nghĩa quá nhỏ."),
+  ()=>mkQ("He did not run fast ___ to catch the bus.","enough",["too", "so", "such"],"trạng từ + enough + to V."),
+  ()=>mkQ("It was ___ bad weather that the match was cancelled.","such",["so", "too", "very"],"weather không đếm được → such + adj + N, không có a."),
+  ()=>mkQ("She was ___ exhausted that she fell asleep at her desk.","so",["such", "too", "enough"],"so + tính từ đứng một mình + that."),
+  ()=>mkQ("He is too stubborn ___ to anyone.","to listen",["listening", "listen", "for listening"],"too + adj + to V nguyên mẫu."),
+  ()=>mkQ("There was ___ much noise that we had to leave.","so",["such", "too", "enough"],"so much + danh từ không đếm được + that."),
+  ()=>mkQ("The problem is ___ complicated for a beginner to solve.","too",["so", "such", "enough"],"too + adj + for sb + to V."),
+  ()=>mkQ("He is not experienced ___ for this position.","enough",["too", "so", "such"],"adj + enough + for + danh từ."),
+  ()=>mkQ("It was ___ a long walk that we were all exhausted.","such",["so", "too", "very"],"such + a + adj + N + that."),
+  ()=>mkQ("She spoke ___ softly that nobody could hear her.","so",["such", "too", "enough"],"so + trạng từ + that."),
+  ()=>mkQ("So heavy ___ the rain that the roads were flooded.","was",["it was", "did it", "had"],"So + adj đầu câu → đảo ngữ: So + adj + be + S + that."),
+  ()=>mkQ("Such ___ his determination that he never gave up.","was",["it was", "did", "had been it"],"Such + be + S + that, dạng đảo ngữ."),
+  ()=>mkQ("The lecture was so dull ___ half the audience left.","that",["so that", "such that", "in order that"],"so + adj + that chỉ kết quả."),
+  ()=>mkQ("He had ___ few friends that he often felt lonely.","so",["such", "too", "enough"],"so few + danh từ đếm được + that."),
+  ()=>mkQ("The instructions were not clear ___ for us to follow.","enough",["too", "so", "such"],"adj + enough + for sb + to V."),
+  ()=>mkQ("It is ___ an honour to be invited here tonight.","such",["so", "too", "very much"],"such + a/an + danh từ (có thể không cần tính từ) để nhấn mạnh."),
+  ()=>mkQ("She is far ___ sensible to believe such a rumour.","too",["so", "such", "enough"],"far too + adj + to V, far nhấn mạnh too."),
+  ()=>mkQ("There was hardly ___ evidence to convict him.","enough",["too", "so", "such"],"enough + danh từ không đếm được evidence.")
+ ]},
+{id:"gr_reduced",em:"✂️",name:"Rút Gọn Mệnh Đề",sub:"V-ing · V3 · Having + V3",diff:"advanced",
+ qs:[
+  ()=>mkQ("The boy ___ football is my brother.","playing",["played", "plays", "to play"],"who is playing → playing (chủ động)."),
+  ()=>mkQ("The book ___ by my father is interesting.","written",["writing", "wrote", "to write"],"which was written → written (bị động)."),
+  ()=>mkQ("The girl ___ in the corner looks sad.","sitting",["sat", "sits", "to sit"],"who is sitting → sitting."),
+  ()=>mkQ("The car ___ last week was expensive.","bought",["buying", "buys", "to buy"],"which was bought → bought."),
+  ()=>mkQ("She was the only person ___ the answer.","to know",["knowing", "known", "knew"],"Sau the only → to V."),
+  ()=>mkQ("The students ___ in the library are very quiet.","studying",["studied", "study", "to study"],"who are studying → studying."),
+  ()=>mkQ("___ tired, he went to bed early.","Feeling",["Felt", "Feel", "To feel"],"Chủ ngữ he tự cảm thấy → V-ing."),
+  ()=>mkQ("The window ___ by the storm has been repaired.","broken",["breaking", "broke", "to break"],"which was broken → broken."),
+  ()=>mkQ("___ the news, she burst into tears.","Hearing",["Heard", "Hear", "To hear"],"Chủ ngữ she tự nghe → V-ing."),
+  ()=>mkQ("___ in 1990, the factory still works well.","Built",["Building", "Build", "To build"],"Nhà máy được xây → V3."),
+  ()=>mkQ("___ his work, he went home.","Having finished",["Finishing", "Finished", "To finish"],"Hành động xảy ra trước hành động chính → Having + V3."),
+  ()=>mkQ("___ what to do, he asked his teacher.","Not knowing",["Not know", "Knowing not", "Not to know"],"Phủ định của phân từ → Not + V-ing."),
+  ()=>mkQ("The man ___ to the police is my neighbour.","talking",["talked", "talks", "to talk"],"who is talking → talking."),
+  ()=>mkQ("The questions ___ in the exam were quite easy.","asked",["asking", "ask", "to ask"],"which were asked → asked."),
+  ()=>mkQ("He was the last person ___ the building.","to leave",["leaving", "left", "leave"],"Sau the last → to V."),
+  ()=>mkQ("___ by the noise, the baby started crying.","Disturbed",["Disturbing", "Disturb", "To disturb"],"Em bé bị quấy rầy → V3."),
+  ()=>mkQ("___ for three hours, we finally reached the top.","Having walked",["Walking", "Walked", "To walk"],"Nhấn mạnh hành động kéo dài và hoàn tất trước → Having + V3."),
+  ()=>mkQ("The road ___ the two cities is under repair.","connecting",["connected", "connects", "to connect"],"Con đường tự nối hai thành phố → V-ing (chủ động)."),
+  ()=>mkQ("___ twice, he did not want to try again.","Having failed",["Failing", "Failed", "To fail"],"Thất bại hai lần trước đó → Having + V3."),
+  ()=>mkQ("The information ___ on the website is not accurate.","posted",["posting", "posts", "to post"],"Thông tin được đăng → V3."),
+  ()=>mkQ("___ no money, he had to walk home.","Having",["Had", "To have", "Being had"],"Chủ động, cùng thời điểm → V-ing (Having ở đây là V-ing của have)."),
+  ()=>mkQ("There are many students ___ to join the club.","wanting",["wanted", "want", "to wanting"],"who want → wanting."),
+  ()=>mkQ("___ the exam, she felt very relieved.","Having passed",["Passing", "Passed", "To pass"],"Thi đỗ rồi mới nhẹ nhõm → Having + V3."),
+  ()=>mkQ("The man ___ the award is a famous scientist.","receiving",["received", "receives", "to receive"],"who is receiving → receiving."),
+  ()=>mkQ("___ carefully, the instructions are easy to follow.","Read",["Reading", "Having read", "To read"],"Chủ ngữ là the instructions, chúng được đọc → V3."),
+  ()=>mkQ("___ by his failure, he decided to try once more.","Not discouraged",["Not discouraging", "Discouraging not", "Not to discourage"],"Anh ấy không bị nản → Not + V3."),
+  ()=>mkQ("___ all the evidence, the jury reached a verdict.","Having considered",["Considering", "Considered", "To consider"],"Xem xét xong rồi mới đưa ra phán quyết → Having + V3."),
+  ()=>mkQ("The proposal ___ at yesterday meeting will be revised.","discussed",["discussing", "discusses", "to discuss"],"Đề xuất được thảo luận → V3."),
+  ()=>mkQ("___ that he was innocent, the judge released him.","Convinced",["Convincing", "Having convinced", "To convince"],"Quan toà được thuyết phục → V3 (be convinced that)."),
+  ()=>mkQ("___ for hours, the children were fast asleep.","Having played",["Playing", "Played", "To play"],"Chơi suốt nhiều giờ trước đó → Having + V3."),
+  ()=>mkQ("Weather ___, we will go camping this weekend.","permitting",["permitted", "permits", "to permit"],"Mệnh đề phân từ độc lập có chủ ngữ riêng: Weather permitting."),
+  ()=>mkQ("___ in simple language, the book appeals to young readers.","Written",["Writing", "Having written", "To write"],"Cuốn sách được viết → V3.")
+ ]},
 ];
 
 /* ========== BỘ SINH CÂU HỎI NHIỀU DẠNG CHO ÔN NGỮ PHÁP ========== */
@@ -7760,7 +8500,7 @@ gr_pcon:[
 ()=>mkO('My brother is playing games in his room','S + is + V-ing + O + nơi chốn.','Em trai tôi đang chơi game trong phòng.'),
 ()=>mkO('We are meeting our teacher tomorrow afternoon','Kế hoạch chắc chắn dùng hiện tại tiếp diễn.','Chiều mai chúng tôi sẽ gặp cô giáo.'),
 ()=>mkO('Why are you laughing so loudly','Wh- + are + S + V-ing?','Sao bạn lại cười to thế?'),
-()=>mkE('I am wanting a new phone.','am wanting','want','want là động từ trạng thái, không chia tiếp diễn.'),
+()=>mkE('I am wanting a new phone.','wanting','I want (bỏ am)','want là động từ trạng thái, không chia tiếp diễn.'),
 ()=>mkE('She are reading a novel.','are','is','She đi với is.'),
 ()=>mkE('They are studing for the test.','studing','studying','study giữ nguyên y, thêm -ing → studying.'),
 ()=>mkT('Chuyển sang HTTD: "He writes an email." (at the moment)',['He is writing an email at the moment.','He is writing an email.'],'writes → is writing.','Bắt đầu bằng He'),
@@ -7941,6 +8681,235 @@ gr_reported:[
 
 });
 
+/* ===== Lý thuyết · nhãn lớp · bài tập bổ sung cho 12 chuyên đề mới ===== */
+Object.assign(GR_META,{
+gr_nouns:{gr:[4, 5, 6, 7],
+ theory:{use:["Phân biệt danh từ đếm được và không đếm được để chọn đúng từ chỉ lượng", "Chia đúng số nhiều và chia đúng động từ theo danh từ"],form:[["Đếm được", "a book → two books", "I have <b>two books</b>."], ["Không đếm được", "water, music, advice (không có số nhiều)", "I need <b>some water</b>."], ["+ es", "s, ss, sh, ch, x, o + es", "box → <b>boxes</b>, potato → <b>potatoes</b>"], ["phụ âm + y → ies", "city → cities", "There are many <b>cities</b>."], ["f / fe → ves", "leaf → leaves, knife → knives", "The <b>leaves</b> are falling."], ["Bất quy tắc", "man→men · child→children · foot→feet · tooth→teeth · person→people", "Three <b>children</b> are playing."]],sign:"Đếm được dùng many/few/a few · Không đếm được dùng much/little/a little · Cả hai dùng some/any/a lot of",tips:["Các từ sau KHÔNG đếm được dù tiếng Việt nghe như đếm được: <b>advice, information, news, furniture, luggage, equipment, homework, money</b>", "<b>news</b> có đuôi s nhưng chia động từ <b>số ít</b>: The news <b>is</b> good.", "<b>people</b> và <b>police</b> luôn chia <b>số nhiều</b>: People <b>are</b>... / The police <b>are</b>...", "Muốn đếm danh từ không đếm được thì mượn đơn vị: <b>a piece of advice</b>, <b>two glasses of water</b>"],ex:[["I need some information about the course.", "Tôi cần một ít thông tin về khoá học."], ["She gave me two useful pieces of advice.", "Cô ấy cho tôi hai lời khuyên hữu ích."], ["There are three children in the garden.", "Có ba đứa trẻ trong vườn."], ["The news was very surprising.", "Tin tức đó rất đáng ngạc nhiên."], ["How many loaves of bread do you want?", "Bạn muốn mấy ổ bánh mì?"]]},
+ more:[
+  ()=>({t:'fill',q:"I would like two ___ of coffee, please.",ans:["cups"],e:"coffee ở đây là chất lỏng → mượn đơn vị cup, số nhiều cups.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"The Vietnamese ___ famous for their hospitality.",ans:["are"],e:"\"The + tính từ chỉ dân tộc\" chỉ toàn bộ dân tộc → động từ số nhiều.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"Ten thousand dollars ___ a large sum for them.",ans:["is"],e:"Số tiền/khoảng cách/thời gian coi là một khối → động từ số ít.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"Two-thirds of the land ___ been flooded.",ans:["has"],e:"Phân số + danh từ không đếm được (land) → động từ số ít.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"There is little ___ left in the jar.",ans:["sugar"],e:"little + danh từ không đếm được; sugar không thêm s.",hint:"Điền 1 từ"}),
+  ()=>({t:'error',sent:"I would like two cup of coffee, please.",wrong:"cup",right:"cups",e:"coffee ở đây là chất lỏng → mượn đơn vị cup, số nhiều cups."}),
+  ()=>({t:'error',sent:"The Vietnamese is famous for their hospitality.",wrong:"is",right:"are",e:"\"The + tính từ chỉ dân tộc\" chỉ toàn bộ dân tộc → động từ số nhiều."}),
+  ()=>({t:'error',sent:"Ten thousand dollars are a large sum for them.",wrong:"are",right:"is",e:"Số tiền/khoảng cách/thời gian coi là một khối → động từ số ít."}),
+  ()=>({t:'error',sent:"Two-thirds of the land have been flooded.",wrong:"have",right:"has",e:"Phân số + danh từ không đếm được (land) → động từ số ít."}),
+  ()=>({t:'error',sent:"There is little sugars left in the jar.",wrong:"sugars",right:"sugar",e:"little + danh từ không đếm được; sugar không thêm s."}),
+  ()=>({t:'order',sent:"The Vietnamese are famous for their hospitality",e:"\"The + tính từ chỉ dân tộc\" chỉ toàn bộ dân tộc → động từ số nhiều.",vn:""}),
+  ()=>({t:'order',sent:"Ten thousand dollars is a large sum for them",e:"Số tiền/khoảng cách/thời gian coi là một khối → động từ số ít.",vn:""}),
+  ()=>({t:'order',sent:"Two-thirds of the land has been flooded",e:"Phân số + danh từ không đếm được (land) → động từ số ít.",vn:""}),
+  ()=>({t:'order',sent:"There is little sugar left in the jar",e:"little + danh từ không đếm được; sugar không thêm s.",vn:""}),
+  ()=>({t:'order',sent:"She bought three tomatoes at the market",e:"Danh từ tận cùng phụ âm + o → thêm es.",vn:""})
+ ]},
+gr_adjadv:{gr:[6, 7, 8, 9],
+ theory:{use:["Tính từ bổ nghĩa cho danh từ; trạng từ bổ nghĩa cho động từ, tính từ, cả câu", "Sắp xếp nhiều tính từ đứng trước một danh từ cho đúng trật tự"],form:[["Tính từ", "đứng trước N; đứng sau be/seem/look", "a <b>careful</b> driver · She is <b>careful</b>."], ["Trạng từ", "đứng sau động từ thường", "He drives <b>carefully</b>."], ["+ ly", "quick → quickly", "Please come <b>quickly</b>."], ["phụ âm + y → ily", "happy → happily", "They played <b>happily</b>."], ["ic → ically", "automatic → automatically", "The door opens <b>automatically</b>."], ["Bất quy tắc", "good → <b>well</b> · fast → fast · hard → hard", "He speaks English <b>well</b>."]],sign:"Trật tự tính từ OSASCOMP: Opinion → Size → Age → Shape → Colour → Origin → Material → Purpose",tips:["Sau <b>be, seem, look, feel, taste, smell, sound, become, get</b> dùng <b>TÍNH TỪ</b>: It tastes <b>good</b> (không phải well)", "<b>hard</b> = chăm chỉ ≠ <b>hardly</b> = hầu như không", "<b>late</b> = muộn ≠ <b>lately</b> = gần đây · <b>near</b> = gần ≠ <b>nearly</b> = gần như", "Từ tận cùng -ly chưa chắc là trạng từ: <b>friendly, lovely, lonely, silly</b> là TÍNH TỪ"],ex:[["He speaks English very fluently.", "Anh ấy nói tiếng Anh rất trôi chảy."], ["This soup tastes delicious.", "Món súp này ngon."], ["She bought a beautiful small round wooden table.", "Cô ấy mua một cái bàn gỗ tròn nhỏ xinh."], ["He works hard but earns little.", "Anh ấy làm việc chăm chỉ mà kiếm được ít."], ["I hardly know him.", "Tôi hầu như không quen anh ta."]]},
+ more:[
+  ()=>({t:'fill',q:"This is an ___ old Vietnamese painting.",ans:["interesting"],e:"Đứng trong chuỗi tính từ bổ nghĩa cho painting → tính từ opinion đứng đầu.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"Not until he apologised ___ to speak to him again.",ans:["did she agree"],e:"\"Not until ...\" đứng đầu câu → mệnh đề chính đảo ngữ.",hint:"Điền 3 từ"}),
+  ()=>({t:'fill',q:"It is ___ a difficult problem that nobody can solve it.",ans:["such"],e:"such + a/an + adj + N + that; so chỉ đi trực tiếp với tính từ.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"The children played ___ in the garden.",ans:["happily"],e:"Bổ nghĩa cho động từ played → trạng từ; happy → happily.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"The higher we climbed, the ___ it became.",ans:["colder"],e:"So sánh kép: The + comparative, the + comparative.",hint:"Điền 1 từ"}),
+  ()=>({t:'error',sent:"This is an interestingly old Vietnamese painting.",wrong:"interestingly",right:"interesting",e:"Đứng trong chuỗi tính từ bổ nghĩa cho painting → tính từ opinion đứng đầu."}),
+  ()=>({t:'error',sent:"It is too a difficult problem that nobody can solve it.",wrong:"too",right:"such",e:"such + a/an + adj + N + that; so chỉ đi trực tiếp với tính từ."}),
+  ()=>({t:'error',sent:"The children played happy in the garden.",wrong:"happy",right:"happily",e:"Bổ nghĩa cho động từ played → trạng từ; happy → happily."}),
+  ()=>({t:'error',sent:"The higher we climbed, the cold it became.",wrong:"cold",right:"colder",e:"So sánh kép: The + comparative, the + comparative."}),
+  ()=>({t:'error',sent:"She looks tiredly today.",wrong:"tiredly",right:"tired",e:"Sau look mang nghĩa \"trông có vẻ\" → tính từ."}),
+  ()=>({t:'order',sent:"This is an interesting old Vietnamese painting",e:"Đứng trong chuỗi tính từ bổ nghĩa cho painting → tính từ opinion đứng đầu.",vn:""}),
+  ()=>({t:'order',sent:"She works harder than her colleagues",e:"hard → harder, không dùng more hard.",vn:""}),
+  ()=>({t:'order',sent:"The test was too difficult for us",e:"too + tính từ = quá đến mức không làm được.",vn:""}),
+  ()=>({t:'order',sent:"He gave me a polite answer",e:"Trước danh từ answer → tính từ.",vn:""}),
+  ()=>({t:'order',sent:"She bought a small black leather handbag",e:"Trật tự OSASCOMP: Size - Colour - Material.",vn:""})
+ ]},
+gr_questions:{gr:[4, 5, 6, 7],
+ theory:{use:["Đặt câu hỏi Yes/No và câu hỏi Wh- đúng trật tự", "Phân biệt hỏi chủ ngữ với hỏi tân ngữ, và dùng câu hỏi gián tiếp cho lịch sự"],form:[["Yes/No", "Trợ ĐT + S + V?", "<b>Do you</b> like tea?"], ["Wh- hỏi tân ngữ", "Wh- + trợ ĐT + S + V?", "What <b>did you</b> buy?"], ["Wh- hỏi chủ ngữ", "Wh- + V? (KHÔNG đảo)", "Who <b>broke</b> the window?"], ["Câu hỏi gián tiếp", "... + Wh-/if + S + V", "Can you tell me where <b>he lives</b>?"]],sign:"What/Who/Which/Whose/When/Where/Why · How long (thời gian) · How often (tần suất) · How far (khoảng cách) · How much/many (số lượng)",tips:["Thử trả lời: nếu câu trả lời đứng ĐẦU câu thì là hỏi chủ ngữ → <b>không đảo</b>, không dùng do/does/did", "Câu hỏi gián tiếp <b>KHÔNG đảo ngữ</b>: Do you know where <b>the station is</b>?", "Đã có <b>did</b> thì động từ chính giữ nguyên mẫu: Where <b>did</b> he <b>go</b>?", "<b>What ... like?</b> hỏi về tính chất, đặc điểm: What is your teacher <b>like</b>?"],ex:[["Who teaches you English?", "Ai dạy em tiếng Anh?"], ["Who do you admire most?", "Em ngưỡng mộ ai nhất?"], ["How long have you lived here?", "Em sống ở đây bao lâu rồi?"], ["Could you tell me where the museum is?", "Bạn chỉ giúp bảo tàng ở đâu được không?"], ["Whose bag is this?", "Cái cặp này của ai?"]]},
+ more:[
+  ()=>({t:'fill',q:"Hardly ever ___ to the cinema these days.",ans:["do we go"],e:"\"Hardly ever\" đầu câu → đảo ngữ với trợ động từ do.",hint:"Điền 3 từ"}),
+  ()=>({t:'fill',q:"___ do you go swimming? — Twice a week.",ans:["How often"],e:"Hỏi mức độ thường xuyên → How often.",hint:"Điền 2 từ"}),
+  ()=>({t:'fill',q:"___ is it from here to the beach?",ans:["How far"],e:"Hỏi khoảng cách → How far.",hint:"Điền 2 từ"}),
+  ()=>({t:'fill',q:"___ were you late for class?",ans:["Why"],e:"Hỏi lý do → Why.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"___ did you meet at the party?",ans:["Who"],e:"Hỏi tân ngữ → có did, chủ ngữ you đứng sau.",hint:"Điền 1 từ"}),
+  ()=>({t:'error',sent:"What were you late for class?",wrong:"What",right:"Why",e:"Hỏi lý do → Why."}),
+  ()=>({t:'error',sent:"Whose did you meet at the party?",wrong:"Whose",right:"Who",e:"Hỏi tân ngữ → có did, chủ ngữ you đứng sau."}),
+  ()=>({t:'error',sent:"Are you like coffee?",wrong:"Are",right:"Do",e:"Chủ ngữ you, động từ thường → trợ động từ Do."}),
+  ()=>({t:'error',sent:"Where does he go last Sunday?",wrong:"does",right:"did",e:"last Sunday → quá khứ, động từ thường → did."}),
+  ()=>({t:'error',sent:"What T-shirt do you prefer, the red one or the blue one?",wrong:"What",right:"Which",e:"Lựa chọn có giới hạn (hai cái) → Which."}),
+  ()=>({t:'order',sent:"Never before have I visited such a beautiful city",e:"\"Never before\" đầu câu → đảo trợ động từ lên trước chủ ngữ.",vn:""}),
+  ()=>({t:'order',sent:"I wonder if she will attend the meeting tomorrow",e:"Sau I wonder if → trật tự câu kể, không đảo.",vn:""}),
+  ()=>({t:'order',sent:"He asked me if I had finished the report",e:"Tường thuật câu hỏi Yes/No → dùng if hoặc whether.",vn:""})
+ ]},
+gr_there:{gr:[4, 5, 6],
+ theory:{use:["Nói về sự tồn tại: có cái gì đó ở đâu đó", "Dùng It cho thời tiết, thời gian, khoảng cách và thay cho mệnh đề dài"],form:[["Số ít / không đếm được", "There <b>is</b> + N", "<b>There is</b> a book on the desk."], ["Số nhiều", "There <b>are</b> + N", "<b>There are</b> two books."], ["Quá khứ", "There was / There were", "<b>There were</b> many guests."], ["Tương lai / hoàn thành", "There will be · There has been · There used to be", "<b>There used to be</b> a cinema here."], ["It giả chủ ngữ", "It is + adj + to V / that + mệnh đề", "<b>It is</b> important <b>to protect</b> nature."], ["It takes", "It takes + (sb) + thời gian + to V", "<b>It takes</b> me 20 minutes to walk."]],sign:"There = giới thiệu sự tồn tại · It = thời tiết, giờ giấc, khoảng cách, hoặc thay cho mệnh đề",tips:["Động từ sau There chia theo <b>danh từ đứng sau</b>, không chia theo there", "Khi liệt kê, chia theo <b>danh từ đầu tiên</b>: There <b>is</b> a pen and two books.", "Đừng lẫn <b>It takes 2 hours</b> (mất 2 tiếng) với <b>There are 2 hours</b> (có 2 tiếng)", "Thành ngữ hay gặp: <b>There is no point in + V-ing</b> · <b>It is no use + V-ing</b>"],ex:[["There is a big tree in front of my house.", "Có một cái cây to trước nhà tôi."], ["There are thirty students in my class.", "Lớp tôi có ba mươi học sinh."], ["It is very hot in summer.", "Mùa hè trời rất nóng."], ["It takes me twenty minutes to walk to school.", "Tôi mất hai mươi phút đi bộ đến trường."], ["There used to be a cinema here.", "Trước đây ở đây từng có một rạp chiếu phim."]]},
+ more:[
+  ()=>({t:'fill',q:"___ is dangerous to swim in this river.",ans:["It"],e:"It giả chủ ngữ thay cho \"to swim in this river\".",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"There ___ to be no way out of this situation.",ans:["appears"],e:"no way số ít → appears.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"___ is high time we left for the airport.",ans:["It"],e:"Thành ngữ: It is high time + S + V quá khứ.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"___ four seasons in a year.",ans:["There are"],e:"four seasons số nhiều → There are.",hint:"Điền 2 từ"}),
+  ()=>({t:'fill',q:"___ takes a great deal of patience to teach young children.",ans:["It"],e:"It takes + danh từ chỉ phẩm chất + to V.",hint:"Điền 1 từ"}),
+  ()=>({t:'error',sent:"There is dangerous to swim in this river.",wrong:"There",right:"It",e:"It giả chủ ngữ thay cho \"to swim in this river\"."}),
+  ()=>({t:'error',sent:"There appear to be no way out of this situation.",wrong:"appear",right:"appears",e:"no way số ít → appears."}),
+  ()=>({t:'error',sent:"There is high time we left for the airport.",wrong:"There",right:"It",e:"Thành ngữ: It is high time + S + V quá khứ."}),
+  ()=>({t:'error',sent:"There takes a great deal of patience to teach young children.",wrong:"There",right:"It",e:"It takes + danh từ chỉ phẩm chất + to V."}),
+  ()=>({t:'error',sent:"There are little hope of finding the missing boy.",wrong:"are",right:"is",e:"hope không đếm được → is."}),
+  ()=>({t:'order',sent:"It is dangerous to swim in this river",e:"It giả chủ ngữ thay cho \"to swim in this river\".",vn:""}),
+  ()=>({t:'order',sent:"It is high time we left for the airport",e:"Thành ngữ: It is high time + S + V quá khứ.",vn:""}),
+  ()=>({t:'order',sent:"There are four seasons in a year",e:"four seasons số nhiều → There are.",vn:""}),
+  ()=>({t:'order',sent:"There is little hope of finding the missing boy",e:"hope không đếm được → is.",vn:""}),
+  ()=>({t:'order',sent:"There will be a meeting tomorrow morning",e:"Tương lai sau There → will be.",vn:""})
+ ]},
+gr_advclause:{gr:[8, 9, 10, 11],
+ theory:{use:["Nối hai mệnh đề để chỉ thời gian, lý do, mục đích, kết quả hoặc sự tương phản"],form:[["Thời gian", "when, while, as, before, after, until, as soon as, since", "<b>As soon as</b> he arrives, call me."], ["Lý do", "because, since, as, now that", "She stayed home <b>because</b> it rained."], ["Mục đích", "so that, in order that + mệnh đề", "He studies hard <b>so that</b> he can pass."], ["Kết quả", "so + adj + that · such + a + adj + N + that", "It was <b>so</b> cold <b>that</b> we stayed in."], ["Nhượng bộ", "although, though, even though, while, whereas", "<b>Although</b> he is poor, he is happy."]],sign:"Theo sau là MỆNH ĐỀ (S+V): although, because · Theo sau là CỤM DANH TỪ: despite, in spite of, because of, due to",tips:["Nhìn ngay sau chỗ trống: thấy <b>S + V</b> chọn although/because; thấy <b>danh từ hoặc V-ing</b> chọn despite/because of", "Tiếng Việt nói \"Tuy... nhưng...\" nhưng tiếng Anh CHỈ dùng một: Although he is poor, he is happy.", "Sau <b>when / as soon as / until</b> chỉ tương lai thì dùng <b>hiện tại đơn</b>, không dùng will", "<b>so</b> đi với tính từ đứng một mình; <b>such</b> đi với cụm có danh từ"],ex:[["Although it was raining, we went out.", "Mặc dù trời mưa, chúng tôi vẫn ra ngoài."], ["Despite the rain, we went out.", "Dù trời mưa, chúng tôi vẫn ra ngoài."], ["He failed because of his carelessness.", "Anh ấy trượt vì sự bất cẩn của mình."], ["I will call you as soon as I arrive.", "Tôi sẽ gọi bạn ngay khi tôi đến."], ["It was such a boring film that I fell asleep.", "Bộ phim chán đến mức tôi ngủ gật."]]},
+ more:[
+  ()=>({t:'fill',q:"___ much he earns, he never saves any money.",ans:["No matter how"],e:"No matter how + adv + S + V.",hint:"Điền 3 từ"}),
+  ()=>({t:'fill',q:"___ he is young, he is very responsible.",ans:["Although"],e:"Hai vế trái nghĩa, theo sau là mệnh đề → Although.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"It was ___ an interesting book that I read it twice.",ans:["such"],e:"such + a/an + adj + N + that.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"___ being very tired, she finished the report.",ans:["Despite"],e:"Despite + V-ing (coi như cụm danh từ).",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"___ he may be rich, he is not happy.",ans:["Though"],e:"Though + mệnh đề; \"may be\" cho thấy đây là mệnh đề đầy đủ.",hint:"Điền 1 từ"}),
+  ()=>({t:'error',sent:"Despite he is young, he is very responsible.",wrong:"Despite",right:"Although",e:"Hai vế trái nghĩa, theo sau là mệnh đề → Although."}),
+  ()=>({t:'error',sent:"It was so an interesting book that I read it twice.",wrong:"so",right:"such",e:"such + a/an + adj + N + that."}),
+  ()=>({t:'error',sent:"Although being very tired, she finished the report.",wrong:"Although",right:"Despite",e:"Despite + V-ing (coi như cụm danh từ)."}),
+  ()=>({t:'error',sent:"Despite he may be rich, he is not happy.",wrong:"Despite",right:"Though",e:"Though + mệnh đề; \"may be\" cho thấy đây là mệnh đề đầy đủ."}),
+  ()=>({t:'error',sent:"Although that you have finished school, what will you do?",wrong:"Although",right:"Now",e:"Now that = bởi vì bây giờ, chỉ lý do."}),
+  ()=>({t:'order',sent:"I have known her since we were children",e:"since + mốc thời gian/mệnh đề quá khứ.",vn:""}),
+  ()=>({t:'order',sent:"I will wait here until you come back",e:"Chờ cho tới khi ai đó quay lại → until.",vn:""}),
+  ()=>({t:'order',sent:"Wait here until I get back",e:"until + mệnh đề chỉ thời điểm kết thúc.",vn:""}),
+  ()=>({t:'order',sent:"We stayed inside because of the heavy rain",e:"Theo sau là cụm danh từ the heavy rain → because of.",vn:""}),
+  ()=>({t:'order',sent:"The test was so difficult that few students passed",e:"so + adj + that.",vn:""})
+ ]},
+gr_nounclause:{gr:[10, 11, 12],
+ theory:{use:["Dùng cả một mệnh đề làm chủ ngữ, tân ngữ hoặc bổ ngữ trong câu"],form:[["That-clause", "that + S + V", "I know <b>that he is honest</b>."], ["Wh-clause", "what, who, where, when, why, how + S + V", "I do not know <b>where he lives</b>."], ["If/Whether", "if / whether + S + V", "I wonder <b>whether she will come</b>."], ["Làm chủ ngữ", "Mệnh đề + động từ SỐ ÍT", "<b>What he said</b> surprised everyone."], ["Sau giới từ", "chỉ dùng whether", "I am not sure about <b>whether</b> he will come."]],sign:"Trật tự bên trong mệnh đề danh ngữ luôn là CÂU KỂ (S + V), không bao giờ đảo ngữ",tips:["Sau <b>giới từ</b> chỉ dùng <b>whether</b>, không dùng if", "Mệnh đề danh ngữ làm chủ ngữ luôn chia động từ <b>số ít</b>: What they need <b>is</b> money.", "Phân biệt <b>what</b> (không có danh từ đi trước) với <b>that</b> (nối sau danh từ là mệnh đề quan hệ)", "Mệnh đề làm chủ ngữ đầu câu dùng <b>Whether</b>, không dùng If"],ex:[["I know that he is telling the truth.", "Tôi biết rằng anh ấy đang nói thật."], ["What she said made everyone laugh.", "Điều cô ấy nói làm mọi người bật cười."], ["I wonder whether he will agree.", "Tôi tự hỏi liệu anh ấy có đồng ý không."], ["The problem is that we have no time.", "Vấn đề là chúng ta không có thời gian."], ["Can you tell me where the bank is?", "Bạn chỉ giúp ngân hàng ở đâu không?"]]},
+ more:[
+  ()=>({t:'fill',q:"He insisted ___ the report be submitted by Friday.",ans:["that"],e:"insist that + S + V nguyên mẫu (thức giả định).",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"She explained ___ the machine worked.",ans:["how"],e:"Hỏi cách thức → how.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"___ he will accept the job remains unclear.",ans:["Whether"],e:"Mệnh đề làm chủ ngữ đầu câu → dùng Whether, không dùng If.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"___ worries me is his health.",ans:["What"],e:"Làm chủ ngữ, nghĩa \"điều làm tôi lo\" → What.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"I think ___ he is a good teacher.",ans:["that"],e:"Mệnh đề đầy đủ làm tân ngữ của think → that.",hint:"Điền 1 từ"}),
+  ()=>({t:'error',sent:"He insisted what the report be submitted by Friday.",wrong:"what",right:"that",e:"insist that + S + V nguyên mẫu (thức giả định)."}),
+  ()=>({t:'error',sent:"She explained what the machine worked.",wrong:"what",right:"how",e:"Hỏi cách thức → how."}),
+  ()=>({t:'error',sent:"If he will accept the job remains unclear.",wrong:"If",right:"Whether",e:"Mệnh đề làm chủ ngữ đầu câu → dùng Whether, không dùng If."}),
+  ()=>({t:'error',sent:"That worries me is his health.",wrong:"That",right:"What",e:"Làm chủ ngữ, nghĩa \"điều làm tôi lo\" → What."}),
+  ()=>({t:'error',sent:"I think what he is a good teacher.",wrong:"what",right:"that",e:"Mệnh đề đầy đủ làm tân ngữ của think → that."}),
+  ()=>({t:'order',sent:"He insisted that the report be submitted by Friday",e:"insist that + S + V nguyên mẫu (thức giả định).",vn:""}),
+  ()=>({t:'order',sent:"She explained how the machine worked",e:"Hỏi cách thức → how.",vn:""}),
+  ()=>({t:'order',sent:"Whether he will accept the job remains unclear",e:"Mệnh đề làm chủ ngữ đầu câu → dùng Whether, không dùng If.",vn:""}),
+  ()=>({t:'order',sent:"What worries me is his health",e:"Làm chủ ngữ, nghĩa \"điều làm tôi lo\" → What.",vn:""}),
+  ()=>({t:'order',sent:"I think that he is a good teacher",e:"Mệnh đề đầy đủ làm tân ngữ của think → that.",vn:""})
+ ]},
+gr_inversion:{gr:[11, 12],
+ theory:{use:["Đảo trợ động từ lên trước chủ ngữ để nhấn mạnh, hay gặp trong đề thi học sinh giỏi"],form:[["Có trợ động từ sẵn", "Never + <b>have + S + V3</b>", "<b>Never have I</b> seen that."], ["Không có trợ động từ", "mượn do/does/did", "<b>Rarely does he</b> complain."], ["Có động từ be", "đưa be lên trước S", "<b>Seldom is she</b> late."], ["Not until", "Not until + mốc + <b>trợ ĐT + S</b>", "Not until midnight <b>did he</b> come home."], ["No sooner ... than", "No sooner + had + S + V3 + than", "<b>No sooner had</b> he left <b>than</b> it rained."], ["Điều kiện bỏ If", "Were I / Had I known / Should you", "<b>Had I known</b>, I would have helped."]],sign:"Các cụm gây đảo ngữ: Never, Rarely, Seldom, Hardly, Little, Not only, Not until, No sooner, Only when, Under no circumstances",tips:["Đã đảo thì <b>không chia lại động từ chính</b>: Never <b>did I see</b>, không phải did I saw", "Với <b>Only when he came did I leave</b>: mệnh đề \"he came\" KHÔNG đảo, chỉ mệnh đề chính đảo", "Cặp cố định: <b>No sooner ... than</b> · <b>Hardly/Scarcely ... when</b>", "<b>So + adj + be + S + that</b>: So difficult <b>was</b> the test that nobody passed."],ex:[["Never have I seen such a beautiful sunset.", "Chưa bao giờ tôi thấy hoàng hôn đẹp như vậy."], ["Rarely does he go out at night.", "Anh ấy hiếm khi ra ngoài buổi tối."], ["Not until he apologised did she forgive him.", "Mãi đến khi anh xin lỗi cô mới tha thứ."], ["No sooner had we sat down than the film started.", "Chúng tôi vừa ngồi xuống thì phim bắt đầu."], ["Were I you, I would accept the offer.", "Nếu tôi là bạn, tôi sẽ nhận lời."]]},
+ more:[
+  ()=>({t:'fill',q:"In no circumstances ___ to leave the room.",ans:["are you allowed"],e:"Cụm phủ định + be → đưa be lên trước chủ ngữ.",hint:"Điền 3 từ"}),
+  ()=>({t:'fill',q:"Rarely ___ late for school.",ans:["is she"],e:"Có động từ be → đưa be lên trước chủ ngữ.",hint:"Điền 2 từ"}),
+  ()=>({t:'fill',q:"On no account ___ the machine unattended.",ans:["must you leave"],e:"On no account + must + S + V.",hint:"Điền 3 từ"}),
+  ()=>({t:'fill',q:"Not a single word ___ during the meeting.",ans:["did he say"],e:"Cụm phủ định \"Not a single word\" đầu câu → đảo.",hint:"Điền 3 từ"}),
+  ()=>({t:'fill',q:"Little ___ that he was lying.",ans:["did I know"],e:"Little mang nghĩa phủ định → đảo với did.",hint:"Điền 3 từ"}),
+  ()=>({t:'error',sent:"Such did his anger that he slammed the door.",wrong:"did",right:"was",e:"Such + be + S + that."}),
+  ()=>({t:'error',sent:"No sooner had the bell rung when the students ran out.",wrong:"when",right:"than",e:"Cấu trúc cố định No sooner ... than."}),
+  ()=>({t:'error',sent:"Hardly had she sat down than the doorbell rang.",wrong:"than",right:"when",e:"Cấu trúc Hardly ... when."}),
+  ()=>({t:'error',sent:"Not only did he win the race, and he broke the record.",wrong:"and",right:"but",e:"Cấu trúc Not only ... but also."}),
+  ()=>({t:'order',sent:"Rarely is she late for school",e:"Có động từ be → đưa be lên trước chủ ngữ.",vn:""}),
+  ()=>({t:'order',sent:"On no account must you leave the machine unattended",e:"On no account + must + S + V.",vn:""}),
+  ()=>({t:'order',sent:"Little did I know that he was lying",e:"Little mang nghĩa phủ định → đảo với did.",vn:""}),
+  ()=>({t:'order',sent:"Hardly ever do they watch television",e:"Hardly ever + do + S + V.",vn:""}),
+  ()=>({t:'order',sent:"Never had I met him before",e:"Never + had + S + V3.",vn:""})
+ ]},
+gr_usedto:{gr:[8, 9, 10, 11],
+ theory:{use:["Nói về thói quen trong quá khứ nay không còn, và nói về việc đã quen với điều gì"],form:[["used to + V", "thói quen quá khứ, nay không còn", "I <b>used to play</b> football."], ["be used to + V-ing / N", "đã quen với việc gì", "I <b>am used to getting</b> up early."], ["get used to + V-ing / N", "đang dần quen", "He <b>is getting used to</b> the weather."], ["Phủ định", "did not <b>use to</b> + V (bỏ chữ d)", "I <b>didn't use to</b> like coffee."], ["Nghi vấn", "<b>Did</b> + S + <b>use to</b> + V?", "<b>Did</b> you <b>use to</b> swim?"]],sign:"Sau to là ĐỘNG TỪ NGUYÊN MẪU → used to (đã từng) · Sau to là V-ing hoặc DANH TỪ → be/get used to (quen với)",tips:["Sau <b>did</b> phải dùng <b>use to</b>, bỏ chữ d", "<b>would</b> thay được used to với hành động lặp lại, nhưng KHÔNG thay được với trạng thái: không nói \"I would have a bike\"", "Câu hỏi đuôi của used to dùng <b>didn't</b>: He used to be a teacher, <b>didn't he</b>?", "Dạng bị động: be used to <b>being</b> + V3 — I am not used to <b>being treated</b> like that."],ex:[["I used to live in the countryside.", "Tôi từng sống ở quê."], ["She is used to working at night.", "Cô ấy đã quen làm việc ban đêm."], ["He is getting used to the new school.", "Cậu ấy đang dần quen với trường mới."], ["I did not use to like vegetables.", "Trước đây tôi không thích rau."], ["Did you use to play the piano?", "Bạn từng chơi piano à?"]]},
+ more:[
+  ()=>({t:'fill',q:"It took her a while to get used to ___ on the left.",ans:["driving"],e:"get used to + V-ing.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"It did not take him long to ___ used to the new routine.",ans:["get"],e:"Sau to trong \"take long to\" → động từ nguyên mẫu get.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"Living abroad, I had to get used to ___ by strangers.",ans:["being greeted"],e:"get used to + being + V3 (dạng bị động).",hint:"Điền 2 từ"}),
+  ()=>({t:'fill',q:"I ___ go swimming every weekend when I was young.",ans:["used to"],e:"Thói quen quá khứ → used to + V.",hint:"Điền 2 từ"}),
+  ()=>({t:'fill',q:"Not until he moved to Hanoi ___ used to the traffic.",ans:["did he get"],e:"Not until đầu câu → mệnh đề chính đảo ngữ.",hint:"Điền 3 từ"}),
+  ()=>({t:'error',sent:"It took her a while to get used to drive on the left.",wrong:"drive",right:"driving",e:"get used to + V-ing."}),
+  ()=>({t:'error',sent:"It did not take him long to be used to the new routine.",wrong:"be",right:"get",e:"Sau to trong \"take long to\" → động từ nguyên mẫu get."}),
+  ()=>({t:'error',sent:"Living abroad, I had to get used to greeted by strangers.",wrong:"greeted",right:"being greeted",e:"get used to + being + V3 (dạng bị động)."}),
+  ()=>({t:'error',sent:"I did not used to like classical music.",wrong:"used",right:"use",e:"Sau did not → use to."}),
+  ()=>({t:'error',sent:"She did used to working night shifts, so she never complains.",wrong:"did",right:"is",e:"Hiện tại đã quen → is used to."}),
+  ()=>({t:'order',sent:"I did not use to like classical music",e:"Sau did not → use to.",vn:""}),
+  ()=>({t:'order',sent:"She is not used to eating spicy food",e:"be used to + V-ing.",vn:""}),
+  ()=>({t:'order',sent:"I am used to living in a big city",e:"be used to + V-ing.",vn:""}),
+  ()=>({t:'order',sent:"I am not used to being treated like that",e:"be used to + being + V3 (bị động).",vn:""}),
+  ()=>({t:'order',sent:"She is used to getting up early",e:"be used to + V-ing.",vn:""})
+ ]},
+gr_imperative:{gr:[4, 5, 6, 7],
+ theory:{use:["Ra lệnh, nhắc nhở, rủ rê và đưa ra lời đề nghị"],form:[["Mệnh lệnh", "V nguyên mẫu + ...", "<b>Open</b> the door."], ["Phủ định", "Do not / Don't + V", "<b>Don't be</b> late."], ["Rủ cùng làm", "Let's + V", "<b>Let's go</b> out tonight."], ["Why don't we / Shall we", "+ V nguyên mẫu", "<b>Why don't we go</b> swimming?"], ["How about / What about", "+ V-ing", "<b>How about going</b> out?"], ["Would you mind", "+ V-ing", "<b>Would you mind opening</b> the window?"], ["suggest", "+ V-ing hoặc that + S + V", "I suggest <b>taking</b> a taxi."]],sign:"Let's / Why don't we / Shall we → V nguyên mẫu · How about / What about / mind / suggest → V-ing",tips:["Câu hỏi đuôi của <b>Let's</b> là <b>shall we?</b>, của câu mệnh lệnh là <b>will you?</b>", "Trả lời \"Would you mind...?\" bằng <b>No, not at all</b> nghĩa là ĐỒNG Ý", "Sau <b>suggest</b> KHÔNG dùng to V: I suggest <b>going</b>, không phải suggest to go", "Phủ định của Let's: <b>Let's not</b> + V"],ex:[["Don't touch that wire!", "Đừng chạm vào sợi dây đó!"], ["Let's go to the cinema tonight.", "Tối nay đi xem phim đi."], ["How about having dinner at that new restaurant?", "Hay là ăn tối ở nhà hàng mới đó?"], ["Would you mind closing the door?", "Bạn đóng giúp cửa được không?"], ["Let's start now, shall we?", "Bắt đầu luôn nhé?"]]},
+ more:[
+  ()=>({t:'fill',q:"Why not ___ her the truth?",ans:["tell"],e:"Why not + V nguyên mẫu.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"The doctor recommended that he ___ more exercise.",ans:["take"],e:"recommend that + S + V nguyên mẫu (thức giả định).",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"___ we discuss this after lunch?",ans:["Shall"],e:"Đề nghị cùng làm → Shall we.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"Let's ___ a cup of tea.",ans:["have"],e:"Let's + V nguyên mẫu.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"Supposing you ___ the lottery, what would you do?",ans:["won"],e:"Supposing + S + V quá khứ, giả định không có thật.",hint:"Điền 1 từ"}),
+  ()=>({t:'error',sent:"Why not telling her the truth?",wrong:"telling",right:"tell",e:"Why not + V nguyên mẫu."}),
+  ()=>({t:'error',sent:"The doctor recommended that he takes more exercise.",wrong:"takes",right:"take",e:"recommend that + S + V nguyên mẫu (thức giả định)."}),
+  ()=>({t:'error',sent:"Will we discuss this after lunch?",wrong:"Will",right:"Shall",e:"Đề nghị cùng làm → Shall we."}),
+  ()=>({t:'error',sent:"Let's having a cup of tea.",wrong:"having",right:"have",e:"Let's + V nguyên mẫu."}),
+  ()=>({t:'error',sent:"Supposing you win the lottery, what would you do?",wrong:"win",right:"won",e:"Supposing + S + V quá khứ, giả định không có thật."}),
+  ()=>({t:'order',sent:"The doctor recommended that he take more exercise",e:"recommend that + S + V nguyên mẫu (thức giả định).",vn:""}),
+  ()=>({t:'order',sent:"Let's have a cup of tea",e:"Let's + V nguyên mẫu.",vn:""}),
+  ()=>({t:'order',sent:"I insist that she be present at the ceremony",e:"insist that + S + be (thức giả định).",vn:""}),
+  ()=>({t:'order',sent:"Let's not talk about it anymore",e:"Phủ định của Let's → Let's not + V.",vn:""}),
+  ()=>({t:'order',sent:"I would rather you didn't smoke in here",e:"would rather + S + didn't + V.",vn:""})
+ ]},
+gr_cleft:{gr:[11, 12],
+ theory:{use:["Nhấn mạnh một thành phần của câu: chủ ngữ, tân ngữ hoặc trạng ngữ"],form:[["It-cleft", "It is/was + phần nhấn mạnh + that/who + phần còn lại", "<b>It was Nam who</b> bought this book."], ["Nhấn tân ngữ", "It is/was + tân ngữ + that", "<b>It was this book that</b> Nam bought."], ["Nhấn trạng ngữ", "It is/was + trạng ngữ + that", "<b>It was yesterday that</b> Nam bought it."], ["What-cleft", "What + S + V + is/was + ...", "<b>What I need is</b> a holiday."], ["All-cleft", "All + S + V + is/was + V nguyên mẫu", "<b>All he did was</b> apologise."]],sign:"Người → who/that · Vật → that/which · Thời gian, nơi chốn → that. Dùng that luôn an toàn",tips:["Động từ sau It is/was chia theo <b>thì của câu gốc</b>, không chia theo phần nhấn mạnh", "Trong <b>What I need is...</b>, động từ chính luôn chia <b>SỐ ÍT</b> dù phần sau là số nhiều", "Sau <b>All I did was</b> dùng động từ nguyên mẫu KHÔNG có to", "Kết hợp được với not until: <b>It was not until midnight that</b> he came home."],ex:[["It was Lan who broke the vase.", "Chính Lan là người làm vỡ bình hoa."], ["It is this book that I want to buy.", "Chính cuốn sách này là cuốn tôi muốn mua."], ["It was in 2010 that they got married.", "Chính vào năm 2010 họ đã kết hôn."], ["What I need is a good rest.", "Cái tôi cần là một giấc nghỉ ngơi tử tế."], ["All he wants is to be left alone.", "Tất cả những gì anh ấy muốn là được ở một mình."]]},
+ more:[
+  ()=>({t:'fill',q:"It is this song ___ I like best.",ans:["that"],e:"Nhấn mạnh vật → that.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"It was last year ___ they moved here.",ans:["that"],e:"Nhấn mạnh thời gian → that.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"What matters in the end ___ the results.",ans:["is"],e:"What-clause làm chủ ngữ → động từ số ít, dù bổ ngữ số nhiều.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"The thing ___ worries me is the deadline.",ans:["that"],e:"Sau danh từ the thing → mệnh đề quan hệ với that.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"It was in Hue ___ we first met.",ans:["that"],e:"Nhấn mạnh nơi chốn → that (hoặc where).",hint:"Điền 1 từ"}),
+  ()=>({t:'error',sent:"It is this song who I like best.",wrong:"who",right:"that",e:"Nhấn mạnh vật → that."}),
+  ()=>({t:'error',sent:"It was last year who they moved here.",wrong:"who",right:"that",e:"Nhấn mạnh thời gian → that."}),
+  ()=>({t:'error',sent:"What matters in the end are the results.",wrong:"are",right:"is",e:"What-clause làm chủ ngữ → động từ số ít, dù bổ ngữ số nhiều."}),
+  ()=>({t:'error',sent:"The thing what worries me is the deadline.",wrong:"what",right:"that",e:"Sau danh từ the thing → mệnh đề quan hệ với that."}),
+  ()=>({t:'error',sent:"It was in Hue who we first met.",wrong:"who",right:"that",e:"Nhấn mạnh nơi chốn → that (hoặc where)."}),
+  ()=>({t:'order',sent:"It is this song that I like best",e:"Nhấn mạnh vật → that.",vn:""}),
+  ()=>({t:'order',sent:"It was last year that they moved here",e:"Nhấn mạnh thời gian → that.",vn:""}),
+  ()=>({t:'order',sent:"It was in Hue that we first met",e:"Nhấn mạnh nơi chốn → that (hoặc where).",vn:""}),
+  ()=>({t:'order',sent:"What the committee decided was never announced publicly",e:"What-clause làm chủ ngữ → động từ số ít, bị động was announced.",vn:""}),
+  ()=>({t:'order',sent:"What surprised me was how calm she remained",e:"What-cleft → was.",vn:""})
+ ]},
+gr_sosuch:{gr:[7, 8, 9, 10],
+ theory:{use:["Diễn tả mức độ và kết quả: quá đến mức nào đó, đủ để làm gì"],form:[["so", "so + adj/adv + that", "It was <b>so cold that</b> we stayed in."], ["such", "such + (a/an) + adj + N + that", "It was <b>such a cold day that</b>..."], ["too", "too + adj/adv + (for sb) + to V", "He is <b>too young to drive</b>."], ["enough (adj)", "adj/adv + enough + to V", "He is <b>old enough to drive</b>."], ["enough (N)", "enough + danh từ", "I have <b>enough money</b>."]],sign:"Có danh từ theo sau → such · Chỉ có tính từ đứng một mình → so · enough đứng SAU tính từ nhưng TRƯỚC danh từ",tips:["<b>too</b> luôn mang nghĩa tiêu cực (quá đến mức không làm được), <b>very</b> thì trung tính", "Danh từ không đếm được dùng <b>so much / so little</b>, đếm được dùng <b>so many / so few</b>", "Chuyển đổi: He is <b>too weak to</b> lift it = He is <b>not strong enough to</b> lift it", "Đảo ngữ: <b>So heavy was</b> the rain that the roads flooded."],ex:[["The box was so heavy that I could not lift it.", "Cái hộp nặng đến mức tôi không nhấc nổi."], ["It was such a heavy box that I could not lift it.", "Đó là cái hộp nặng đến mức tôi không nhấc nổi."], ["He is too young to watch this film.", "Cậu bé quá nhỏ để xem phim này."], ["She is old enough to make her own decisions.", "Cô ấy đủ lớn để tự quyết định."], ["We do not have enough chairs for everyone.", "Chúng tôi không đủ ghế cho mọi người."]]},
+ more:[
+  ()=>({t:'fill',q:"He had ___ few friends that he often felt lonely.",ans:["so"],e:"so few + danh từ đếm được + that.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"She spoke ___ softly that nobody could hear her.",ans:["so"],e:"so + trạng từ + that.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"The coffee is ___ hot to drink.",ans:["too"],e:"too + adj + to V.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"Such ___ his determination that he never gave up.",ans:["was"],e:"Such + be + S + that, dạng đảo ngữ.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"The film was ___ boring that I left early.",ans:["so"],e:"so + tính từ đứng một mình + that.",hint:"Điền 1 từ"}),
+  ()=>({t:'error',sent:"He had such few friends that he often felt lonely.",wrong:"such",right:"so",e:"so few + danh từ đếm được + that."}),
+  ()=>({t:'error',sent:"She spoke such softly that nobody could hear her.",wrong:"such",right:"so",e:"so + trạng từ + that."}),
+  ()=>({t:'error',sent:"The coffee is so hot to drink.",wrong:"so",right:"too",e:"too + adj + to V."}),
+  ()=>({t:'error',sent:"Such did his determination that he never gave up.",wrong:"did",right:"was",e:"Such + be + S + that, dạng đảo ngữ."}),
+  ()=>({t:'error',sent:"The film was such boring that I left early.",wrong:"such",right:"so",e:"so + tính từ đứng một mình + that."}),
+  ()=>({t:'order',sent:"She spoke so softly that nobody could hear her",e:"so + trạng từ + that.",vn:""}),
+  ()=>({t:'order',sent:"The coffee is too hot to drink",e:"too + adj + to V.",vn:""}),
+  ()=>({t:'order',sent:"Such was his determination that he never gave up",e:"Such + be + S + that, dạng đảo ngữ.",vn:""}),
+  ()=>({t:'order',sent:"The film was so boring that I left early",e:"so + tính từ đứng một mình + that.",vn:""}),
+  ()=>({t:'order',sent:"He is too tired to continue working",e:"too + adj + to V, nghĩa không thể làm được.",vn:""})
+ ]},
+gr_reduced:{gr:[11, 12],
+ theory:{use:["Rút ngắn mệnh đề quan hệ và mệnh đề trạng ngữ cho câu gọn và trang trọng hơn"],form:[["Chủ động → V-ing", "who/which + V → V-ing", "The man <b>standing</b> there is my uncle."], ["Bị động → V3", "who/which + be + V3 → V3", "The letter <b>written</b> by Lan arrived."], ["Sau the first/only", "who + V → to V", "He was the first <b>to finish</b>."], ["Trạng ngữ chủ động", "V-ing + , + mệnh đề chính", "<b>Seeing</b> the dog, she ran away."], ["Trạng ngữ hoàn thành", "Having + V3", "<b>Having finished</b> work, he went home."], ["Phủ định", "Not + V-ing", "<b>Not knowing</b> the way, he got lost."]],sign:"Danh từ đứng trước TỰ làm hành động → V-ing · BỊ tác động → V3",tips:["Chỉ rút gọn mệnh đề trạng ngữ khi <b>hai mệnh đề cùng chủ ngữ</b>", "Sau khi rút gọn, chủ ngữ của mệnh đề chính phải là người/vật thực hiện hành động trong phần phân từ", "<b>Having + V3</b> dùng khi hành động xảy ra TRƯỚC hành động chính", "Mệnh đề phân từ độc lập có chủ ngữ riêng: <b>Weather permitting</b>, we will go camping."],ex:[["The man standing over there is my uncle.", "Người đàn ông đang đứng đằng kia là chú tôi."], ["The letter written by Lan arrived today.", "Lá thư do Lan viết đã đến hôm nay."], ["He was the first student to finish the test.", "Cậu ấy là học sinh đầu tiên làm xong bài."], ["Having finished his homework, he went out.", "Làm xong bài tập, cậu ấy ra ngoài."], ["Not knowing what to say, she kept silent.", "Không biết nói gì, cô ấy im lặng."]]},
+ more:[
+  ()=>({t:'fill',q:"___ in simple language, the book appeals to young readers.",ans:["Written"],e:"Cuốn sách được viết → V3.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"The girl ___ in the corner looks sad.",ans:["sitting"],e:"who is sitting → sitting.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"The window ___ by the storm has been repaired.",ans:["broken"],e:"which was broken → broken.",hint:"Điền 1 từ"}),
+  ()=>({t:'fill',q:"___ twice, he did not want to try again.",ans:["Having failed"],e:"Thất bại hai lần trước đó → Having + V3.",hint:"Điền 2 từ"}),
+  ()=>({t:'fill',q:"___ by his failure, he decided to try once more.",ans:["Not discouraged"],e:"Anh ấy không bị nản → Not + V3.",hint:"Điền 2 từ"}),
+  ()=>({t:'error',sent:"Writing in simple language, the book appeals to young readers.",wrong:"Writing",right:"Written",e:"Cuốn sách được viết → V3."}),
+  ()=>({t:'error',sent:"The girl sat in the corner looks sad.",wrong:"sat",right:"sitting",e:"who is sitting → sitting."}),
+  ()=>({t:'error',sent:"The window breaking by the storm has been repaired.",wrong:"breaking",right:"broken",e:"which was broken → broken."}),
+  ()=>({t:'error',sent:"Failing twice, he did not want to try again.",wrong:"Failing",right:"Having failed",e:"Thất bại hai lần trước đó → Having + V3."}),
+  ()=>({t:'error',sent:"The book writing by my father is interesting.",wrong:"writing",right:"written",e:"which was written → written (bị động)."}),
+  ()=>({t:'order',sent:"The book written by my father is interesting",e:"which was written → written (bị động).",vn:""}),
+  ()=>({t:'order',sent:"The boy playing football is my brother",e:"who is playing → playing (chủ động).",vn:""}),
+  ()=>({t:'order',sent:"The car bought last week was expensive",e:"which was bought → bought.",vn:""}),
+  ()=>({t:'order',sent:"There are many students wanting to join the club",e:"who want → wanting.",vn:""}),
+  ()=>({t:'order',sent:"The proposal discussed at yesterday meeting will be revised",e:"Đề xuất được thảo luận → V3.",vn:""})
+ ]}
+});
+
 /* ===== Gộp chuyên đề trùng id + gắn lý thuyết, nhãn lớp, bài tập bổ sung ===== */
 (function mergeGrammar(){
   const seen={},out=[];
@@ -7959,7 +8928,7 @@ gr_reported:[
 const DIFF_LABELS={easy:'🟢 Dễ',medium:'🟡 Vừa',hard:'🔴 Khó',advanced:'🟠 Nâng cao'};
 const DIFF_SHORT={easy:'Dễ',medium:'Vừa',hard:'Khó',advanced:'Nâng cao'};
 const DIFF_ORDER=['easy','medium','hard','advanced'];
-const GR_GRADES=[4,5,6,7,8,9,10];
+const GR_GRADES=[4,5,6,7,8,9,10,11,12];
 let _grGrade='all';
 const GR_TYPES=['mcq','fill','order','error','trans'];
 const TYPE_LABEL={mcq:'🔘 Trắc nghiệm',fill:'✍️ Điền từ',order:'🔤 Sắp xếp câu',error:'🔍 Tìm lỗi sai',trans:'🔁 Viết lại câu'};

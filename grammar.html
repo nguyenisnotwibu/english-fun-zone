@@ -176,7 +176,7 @@ section{animation:pop .3s ease}
       <span class="rocket">📚</span>
       <div>
         <h1>Ngữ Pháp <span>Master</span></h1>
-        <p>20 chuyên đề · Lý thuyết → Ví dụ → Luyện tập → Kiểm tra</p>
+        <p id="gpCount">33 chuyên đề · Lý thuyết → Ví dụ → Luyện tập → Kiểm tra</p>
       </div>
     </div>
     <div class="player-chip" id="chip">
@@ -1351,6 +1351,869 @@ qs:[
 {l:4,q:"The last time she wrote to me was in March. = ...",a:"She hasn't written to me since March.",d:["She hasn't written to me for March.","She didn't write to me since March.","She hasn't been writing to me in March."],e:"last time...was + mốc = haven't/hasn't + V3 + since + mốc."},
 ]});
 
+/* ---------- ĐẠI TỪ & SỞ HỮU ---------- */
+GP_DATA.push({
+id:'pronouns',em:'🙋',name:'Đại Từ & Sở Hữu',sub:'Chủ ngữ · tân ngữ · sở hữu · phản thân · sở hữu cách',
+theory:`
+<h3>🗂️ Bảng đại từ đầy đủ</h3>
+<table class="gp-table">
+<tr><th>Đại từ chủ ngữ</th><th>Đại từ tân ngữ</th><th>Tính từ sở hữu</th><th>Đại từ sở hữu</th><th>Đại từ phản thân</th></tr>
+<tr><td><b class="f">I</b></td><td>me</td><td>my + N</td><td>mine</td><td>myself</td></tr>
+<tr><td><b class="f">you</b></td><td>you</td><td>your + N</td><td>yours</td><td>yourself / yourselves</td></tr>
+<tr><td><b class="f">he</b></td><td>him</td><td>his + N</td><td>his</td><td>himself</td></tr>
+<tr><td><b class="f">she</b></td><td>her</td><td>her + N</td><td>hers</td><td>herself</td></tr>
+<tr><td><b class="f">it</b></td><td>it</td><td>its + N</td><td>—</td><td>itself</td></tr>
+<tr><td><b class="f">we</b></td><td>us</td><td>our + N</td><td>ours</td><td>ourselves</td></tr>
+<tr><td><b class="f">they</b></td><td>them</td><td>their + N</td><td>theirs</td><td>themselves</td></tr>
+</table>
+<h3>📐 Phân biệt nhanh</h3>
+<table class="gp-table">
+<tr><th>Loại</th><th>Đứng ở đâu</th><th>Ví dụ</th></tr>
+<tr><td>Đại từ chủ ngữ</td><td>trước động từ</td><td><b class="f">She</b> loves music.</td></tr>
+<tr><td>Đại từ tân ngữ</td><td>sau động từ hoặc sau giới từ</td><td>I love <b class="f">her</b>. / with <b class="f">him</b></td></tr>
+<tr><td>Tính từ sở hữu</td><td><b>luôn có danh từ theo sau</b></td><td><b class="f">my</b> book</td></tr>
+<tr><td>Đại từ sở hữu</td><td><b>đứng một mình</b>, thay cả cụm</td><td>This book is <b class="f">mine</b>.</td></tr>
+<tr><td>Phản thân</td><td>khi chủ ngữ và tân ngữ là một</td><td>She hurt <b class="f">herself</b>.</td></tr>
+</table>
+<h3>🔑 Sở hữu cách</h3>
+<div class="chips"><span class="chip">người/động vật → 's: Lan's bag</span><span class="chip">số nhiều có s → chỉ thêm ': the students' room</span><span class="chip">số nhiều bất quy tắc → 's: children's toys</span><span class="chip">đồ vật → of: the roof of the house</span><span class="chip">by + oneself = một mình</span></div>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Nhìn ngay sau chỗ trống — <b>có danh từ</b> thì chọn tính từ sở hữu (my, your, her...), <b>không có danh từ</b> thì chọn đại từ sở hữu (mine, yours, hers...).</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> <b>its</b> (của nó) KHÁC <b>it's</b> (= it is). — <b>their</b> (của họ) KHÁC <b>they're</b> (= they are) và <b>there</b> (ở đó). — Sau giới từ luôn dùng đại từ <b>tân ngữ</b>: "between you and <b>me</b>", không phải "and I".</div>`,
+ex:[
+{en:'<mark>She</mark> and I are in the same class.',vn:'Cô ấy và tôi học cùng lớp.',nt:'Đứng trước động từ → đại từ chủ ngữ: She (không dùng Her).'},
+{en:'My mother often helps <mark>me</mark> with my homework.',vn:'Mẹ tôi hay giúp tôi làm bài tập.',nt:'Sau động từ helps → đại từ tân ngữ: me.'},
+{en:'This is not my pen. <mark>Mine</mark> is blue.',vn:'Đây không phải bút của tôi. Bút của tôi màu xanh.',nt:'Đứng một mình, không có danh từ theo sau → đại từ sở hữu: mine.'},
+{en:'The cat licked <mark>its</mark> paw.',vn:'Con mèo liếm chân nó.',nt:'its = của nó (tính từ sở hữu), tuyệt đối không viết it\'s.'},
+{en:'The children did the project <mark>themselves</mark>.',vn:'Bọn trẻ tự làm dự án.',nt:'Chủ ngữ và tân ngữ cùng là bọn trẻ → đại từ phản thân.'},
+{en:'That is <mark>my brother\'s</mark> motorbike.',vn:'Đó là xe máy của anh trai tôi.',nt:'Người sở hữu số ít → thêm \'s.'},
+],
+qs:[
+{l:1,q:"___ is my best friend. She lives next door.",a:"She",d:["Her", "Hers", "Herself"],e:"Đứng đầu câu làm chủ ngữ → đại từ chủ ngữ: She."},
+{l:1,q:"Can you help ___ with this exercise?",a:"me",d:["I", "my", "mine"],e:"Sau động từ help → đại từ tân ngữ: me."},
+{l:1,q:"This is ___ book. Please give it back to Nam.",a:"his",d:["him", "he", "himself"],e:"Trước danh từ book → tính từ sở hữu: his."},
+{l:1,q:"That bag is not mine. It is ___.",a:"hers",d:["her", "she", "herself"],e:"Đứng một mình cuối câu → đại từ sở hữu: hers."},
+{l:1,q:"___ are students of class 8A.",a:"We",d:["Us", "Our", "Ours"],e:"Chủ ngữ của are → đại từ chủ ngữ: We."},
+{l:1,q:"The dog wagged ___ tail happily.",a:"its",d:["it's", "it", "itself"],e:"Trước danh từ tail, nghĩa \"của nó\" → its (không dấu nháy)."},
+{l:1,q:"I love ___ very much. They are very kind.",a:"them",d:["they", "their", "theirs"],e:"Sau động từ love → đại từ tân ngữ: them."},
+{l:1,q:"This is ___ classroom. We study here every day.",a:"our",d:["us", "ours", "we"],e:"Trước danh từ classroom → tính từ sở hữu: our."},
+{l:2,q:"My sister cut ___ while she was cooking.",a:"herself",d:["her", "hers", "she"],e:"Chủ ngữ và tân ngữ cùng là my sister → đại từ phản thân herself."},
+{l:2,q:"These books are ___, not yours.",a:"theirs",d:["their", "them", "they"],e:"Đứng một mình sau be → đại từ sở hữu: theirs."},
+{l:2,q:"Between you and ___, I think the plan will fail.",a:"me",d:["I", "my", "mine"],e:"Sau giới từ between → đại từ tân ngữ: me."},
+{l:2,q:"This is my ___ bicycle.",a:"sister's",d:["sisters", "sisters'", "sister"],e:"Một người chị sở hữu → sister's."},
+{l:2,q:"The ___ room is on the second floor.",a:"students'",d:["students", "student's", "student"],e:"Nhiều học sinh, danh từ số nhiều đã có s → chỉ thêm dấu nháy."},
+{l:2,q:"He lives alone, so he cooks for ___ every day.",a:"himself",d:["him", "his", "he"],e:"Nấu cho chính anh ấy → đại từ phản thân himself."},
+{l:2,q:"Lan and ___ went to the cinema last night.",a:"I",d:["me", "my", "mine"],e:"Cùng làm chủ ngữ với Lan → đại từ chủ ngữ: I."},
+{l:2,q:"Whose umbrella is this? — It is ___.",a:"mine",d:["my", "me", "myself"],e:"Trả lời Whose, đứng một mình → đại từ sở hữu: mine."},
+{l:3,q:"The ___ toys are all over the living room.",a:"children's",d:["childrens", "childrens'", "children"],e:"children là số nhiều bất quy tắc (không có s) → thêm 's."},
+{l:3,q:"Nobody helped her. She did everything by ___.",a:"herself",d:["her", "hers", "she"],e:"by + oneself = tự mình, một mình."},
+{l:3,q:"___ of the two sisters has her own room.",a:"Each",d:["Every", "Both", "All"],e:"Each + danh từ số ít + động từ số ít; \"of the two\" chỉ dùng với Each, không dùng Every."},
+{l:3,q:"The roof ___ the old house needs repairing.",a:"of",d:["of the", "'s", "s'"],e:"Vật vô tri → dùng \"of + the + N\"; ở đây \"the house\" đã có sẵn nên chỉ điền of."},
+{l:3,q:"She and her brother blamed ___ for the accident.",a:"themselves",d:["himself", "herself", "theirself"],e:"Chủ ngữ số nhiều (She and her brother) → themselves."},
+{l:3,q:"It was ___ who broke the window, not me.",a:"he",d:["him", "his", "himself"],e:"Trong cấu trúc nhấn mạnh \"It was ... who + V\", chọn đại từ chủ ngữ he vì theo sau là who broke."},
+{l:3,q:"A friend of ___ told me about the news.",a:"mine",d:["me", "my", "I"],e:"Cấu trúc sở hữu kép: a/an/this + N + of + đại từ sở hữu."},
+{l:3,q:"Neither of ___ wanted to go first.",a:"us",d:["we", "our", "ours"],e:"Sau giới từ of → đại từ tân ngữ: us."},
+{l:4,q:"The committee published ___ report yesterday.",a:"its",d:["it's", "their", "theirs"],e:"Danh từ tập hợp committee coi là một khối → tính từ sở hữu its."},
+{l:4,q:"He is the man ___ car was stolen last week.",a:"whose",d:["who", "which", "his"],e:"Thay cho \"his car\" trong mệnh đề quan hệ → whose + danh từ."},
+{l:4,q:"They had the house painted ___ last summer.",a:"themselves",d:["theirselves", "them", "their"],e:"Nhấn mạnh tự họ làm → themselves; dạng \"theirselves\" không tồn tại."},
+{l:4,q:"I would rather you told her ___ than let her hear it from others.",a:"yourself",d:["you", "your", "yours"],e:"Nhấn mạnh chính người nghe làm việc đó → yourself."},
+{l:4,q:"Hardly anyone brought ___ own laptop to the workshop.",a:"their",d:["his", "its", "theirs"],e:"Sau \"anyone/everyone\" ngày nay dùng their mang nghĩa trung tính; trước danh từ own → tính từ sở hữu."},
+{l:4,q:"This room of ___ is much tidier than mine.",a:"hers",d:["her", "she", "herself"],e:"Sở hữu kép: this + N + of + đại từ sở hữu hers."},
+{l:4,q:"All but ___ have finished the test.",a:"him",d:["he", "his", "himself"],e:"but ở đây là giới từ nghĩa \"ngoại trừ\" → theo sau là đại từ tân ngữ."},
+{l:4,q:"The decision was made by the manager ___.",a:"himself",d:["his", "him", "he"],e:"Đại từ phản thân đứng cuối để nhấn mạnh \"đích thân giám đốc\"."},
+]});
+
+/* ---------- DANH TỪ ---------- */
+GP_DATA.push({
+id:'nouns',em:'📦',name:'Danh Từ',sub:'Đếm được · không đếm được · số nhiều bất quy tắc',
+theory:`
+<h3>🗂️ Đếm được &amp; không đếm được</h3>
+<table class="gp-table">
+<tr><th></th><th>Đếm được (count)</th><th>Không đếm được (uncount)</th></tr>
+<tr><td>Số nhiều</td><td>có: a book → two books</td><td><b>không có</b>: water, music</td></tr>
+<tr><td>Mạo từ</td><td>a / an / the</td><td>chỉ <b class="f">the</b> hoặc không mạo từ</td></tr>
+<tr><td>Số lượng</td><td>many, few, a few, a number of</td><td>much, little, a little, an amount of</td></tr>
+<tr><td>Dùng chung</td><td colspan="2">some, any, a lot of, lots of, plenty of, no</td></tr>
+<tr><td>Động từ</td><td>số ít/số nhiều theo danh từ</td><td><b>luôn chia số ít</b></td></tr>
+</table>
+<h3>📐 Quy tắc tạo số nhiều</h3>
+<table class="gp-table">
+<tr><th>Tận cùng</th><th>Cách thêm</th><th>Ví dụ</th></tr>
+<tr><td>thường</td><td>+ s</td><td>book → books</td></tr>
+<tr><td>s, ss, sh, ch, x, z</td><td>+ es</td><td>box → boxes, watch → watches</td></tr>
+<tr><td>phụ âm + y</td><td>đổi y → ies</td><td>city → cities</td></tr>
+<tr><td>nguyên âm + y</td><td>+ s</td><td>boy → boys</td></tr>
+<tr><td>f / fe</td><td>đổi → ves</td><td>leaf → leaves, knife → knives</td></tr>
+<tr><td>phụ âm + o</td><td>+ es</td><td>potato → potatoes</td></tr>
+</table>
+<h3>🔑 Số nhiều bất quy tắc cần thuộc</h3>
+<div class="chips"><span class="chip">man → men</span><span class="chip">woman → women</span><span class="chip">child → children</span><span class="chip">foot → feet</span><span class="chip">tooth → teeth</span><span class="chip">mouse → mice</span><span class="chip">person → people</span><span class="chip">sheep / fish / deer giữ nguyên</span></div>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Danh từ không đếm được thường là <b>chất liệu</b> (water, rice, sugar), <b>khái niệm trừu tượng</b> (love, advice, information) hoặc <b>môn học/hoạt động</b> (music, homework). Muốn đếm phải mượn đơn vị: <b class="f">a piece of advice</b>, <b class="f">two glasses of water</b>.</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> Các từ sau <b>KHÔNG đếm được</b> dù tiếng Việt nghe như đếm được: advice, information, news, furniture, luggage, equipment, homework, money. — <b>news</b> có s nhưng chia <b>số ít</b>: "The news <b>is</b> good." — <b>people</b> là số nhiều: "People <b>are</b>...".</div>`,
+ex:[
+{en:'I need some <mark>information</mark> about the course.',vn:'Tôi cần một ít thông tin về khoá học.',nt:'information không đếm được → không có s, không dùng "an".'},
+{en:'She gave me two useful <mark>pieces of advice</mark>.',vn:'Cô ấy cho tôi hai lời khuyên hữu ích.',nt:'advice không đếm được → mượn đơn vị "piece of".'},
+{en:'There are three <mark>children</mark> in the garden.',vn:'Có ba đứa trẻ trong vườn.',nt:'child → children, số nhiều bất quy tắc.'},
+{en:'The <mark>news</mark> was very surprising.',vn:'Tin tức đó rất đáng ngạc nhiên.',nt:'news có đuôi s nhưng chia động từ số ít.'},
+{en:'He bought a lot of <mark>furniture</mark> for the new house.',vn:'Anh ấy mua nhiều đồ nội thất cho nhà mới.',nt:'furniture không đếm được → không thêm s.'},
+{en:'How many <mark>loaves</mark> of bread do you want?',vn:'Bạn muốn mấy ổ bánh mì?',nt:'loaf → loaves; bread không đếm được nên phải mượn đơn vị loaf.'},
+],
+qs:[
+{l:1,q:"There are five ___ in my family.",a:"people",d:["peoples", "person", "persons"],e:"people là dạng số nhiều của person, không thêm s."},
+{l:1,q:"She bought three ___ at the market.",a:"tomatoes",d:["tomatos", "tomatoies", "tomato"],e:"Danh từ tận cùng phụ âm + o → thêm es."},
+{l:1,q:"I brush my ___ twice a day.",a:"teeth",d:["tooths", "tooth", "teeths"],e:"tooth → teeth, số nhiều bất quy tắc."},
+{l:1,q:"Can you give me some ___, please?",a:"water",d:["waters", "a water", "waters of"],e:"water không đếm được → không thêm s."},
+{l:1,q:"There are many ___ on the tree.",a:"leaves",d:["leafs", "leafes", "leave"],e:"Danh từ tận cùng f → đổi thành ves."},
+{l:1,q:"My father has two ___.",a:"watches",d:["watchs", "watchies", "watch"],e:"Tận cùng ch → thêm es."},
+{l:1,q:"How many ___ are there in your class?",a:"students",d:["student", "studentes", "studentss"],e:"Danh từ đếm được số nhiều → thêm s."},
+{l:1,q:"We saw three ___ in the field.",a:"sheep",d:["sheeps", "sheepes", "sheepies"],e:"sheep giữ nguyên ở dạng số nhiều."},
+{l:2,q:"He gave me a useful piece of ___.",a:"advice",d:["advices", "an advice", "advice's"],e:"advice không đếm được → mượn \"a piece of\"."},
+{l:2,q:"There is too much ___ in this room.",a:"furniture",d:["furnitures", "a furniture", "furnitury"],e:"furniture không đếm được."},
+{l:2,q:"The ___ about the earthquake was shocking.",a:"news",d:["new", "newses", "news'"],e:"news là một danh từ không đếm được, luôn có s."},
+{l:2,q:"She has a lot of ___ to finish tonight.",a:"homework",d:["homeworks", "a homework", "homeworkes"],e:"homework không đếm được."},
+{l:2,q:"I packed my ___ before the flight.",a:"luggage",d:["luggages", "a luggage", "luggagies"],e:"luggage không đếm được."},
+{l:2,q:"There are two ___ standing at the gate.",a:"women",d:["womans", "womens", "woman"],e:"woman → women."},
+{l:2,q:"He walked ten ___ to school every day.",a:"kilometres",d:["kilometre", "kilometres'", "kilometreses"],e:"Danh từ đếm được chỉ đơn vị đo → số nhiều bình thường."},
+{l:2,q:"We need three ___ of paper for the test.",a:"sheets",d:["sheet", "sheetes", "sheeties"],e:"paper không đếm được → mượn đơn vị sheet, ở đây số nhiều."},
+{l:3,q:"The police ___ looking for the thief at the moment.",a:"are",d:["is", "was", "has been"],e:"police luôn được coi là danh từ số nhiều → are."},
+{l:3,q:"Mathematics ___ my favourite subject.",a:"is",d:["are", "were", "have been"],e:"Tên môn học tận cùng -ics chia động từ số ít."},
+{l:3,q:"The number of tourists ___ increased sharply.",a:"has",d:["have", "are", "were"],e:"\"The number of\" → chủ ngữ là number (số ít) → has."},
+{l:3,q:"A number of students ___ absent today.",a:"are",d:["is", "has", "was"],e:"\"A number of + N số nhiều\" → động từ số nhiều."},
+{l:3,q:"I would like two ___ of coffee, please.",a:"cups",d:["cup", "coffees", "cupes"],e:"coffee ở đây là chất lỏng → mượn đơn vị cup, số nhiều cups."},
+{l:3,q:"There is little ___ left in the jar.",a:"sugar",d:["sugars", "a sugar", "sugares"],e:"little + danh từ không đếm được; sugar không thêm s."},
+{l:3,q:"My ___ are too small for these shoes.",a:"feet",d:["foots", "foot", "feets"],e:"foot → feet."},
+{l:3,q:"All the ___ in the laboratory was damaged.",a:"equipment",d:["equipments", "equipmentes", "an equipment"],e:"equipment không đếm được → động từ cũng chia số ít (was)."},
+{l:4,q:"The scissors ___ on the table.",a:"are",d:["is", "was", "has been"],e:"Vật gồm hai phần (scissors, trousers, glasses) luôn chia số nhiều."},
+{l:4,q:"Ten thousand dollars ___ a large sum for them.",a:"is",d:["are", "were", "have been"],e:"Số tiền/khoảng cách/thời gian coi là một khối → động từ số ít."},
+{l:4,q:"Neither of the two reports ___ accurate.",a:"is",d:["are", "were", "have been"],e:"Neither of + N số nhiều → động từ chia số ít trong văn viết trang trọng."},
+{l:4,q:"The committee ___ divided on the issue.",a:"are",d:["is", "was", "has"],e:"Khi nhấn mạnh các thành viên bất đồng với nhau, danh từ tập hợp chia số nhiều."},
+{l:4,q:"He gave us several ___ of valuable information.",a:"pieces",d:["piece", "informations", "peices"],e:"information không đếm được → đếm bằng pieces (số nhiều sau several)."},
+{l:4,q:"Physics ___ considered a difficult subject by many students.",a:"is",d:["are", "were", "have been"],e:"Physics là tên môn học → động từ số ít."},
+{l:4,q:"The Vietnamese ___ famous for their hospitality.",a:"are",d:["is", "was", "has been"],e:"\"The + tính từ chỉ dân tộc\" chỉ toàn bộ dân tộc → động từ số nhiều."},
+{l:4,q:"Two-thirds of the land ___ been flooded.",a:"has",d:["have", "are", "were"],e:"Phân số + danh từ không đếm được (land) → động từ số ít."},
+]});
+
+/* ---------- TÍNH TỪ & TRẠNG TỪ ---------- */
+GP_DATA.push({
+id:'adjadv',em:'🎨',name:'Tính Từ & Trạng Từ',sub:'Vị trí · trật tự tính từ · cách tạo trạng từ',
+theory:`
+<h3>🗂️ Phân biệt tính từ và trạng từ</h3>
+<table class="gp-table">
+<tr><th></th><th>Tính từ (adjective)</th><th>Trạng từ (adverb)</th></tr>
+<tr><td>Bổ nghĩa cho</td><td><b>danh từ</b></td><td><b>động từ, tính từ, cả câu</b></td></tr>
+<tr><td>Vị trí</td><td>trước N; sau be/seem/look/become</td><td>sau động từ thường; trước adj/adv</td></tr>
+<tr><td>Ví dụ</td><td>a <b class="f">careful</b> driver / She is <b class="f">careful</b>.</td><td>He drives <b class="f">carefully</b>.</td></tr>
+</table>
+<h3>📐 Cách tạo trạng từ</h3>
+<table class="gp-table">
+<tr><th>Tính từ tận cùng</th><th>Cách thêm</th><th>Ví dụ</th></tr>
+<tr><td>thường</td><td>+ ly</td><td>quick → quickly</td></tr>
+<tr><td>phụ âm + y</td><td>y → ily</td><td>happy → happily</td></tr>
+<tr><td>le</td><td>bỏ e + y</td><td>simple → simply</td></tr>
+<tr><td>ic</td><td>+ ally</td><td>automatic → automatically</td></tr>
+<tr><td colspan="3">Bất quy tắc: good → <b class="f">well</b>; fast → fast; hard → hard; late → late; early → early</td></tr>
+</table>
+<h3>🔑 Trật tự tính từ: OSASCOMP</h3>
+<div class="chips"><span class="chip">Opinion: beautiful</span><span class="chip">Size: big</span><span class="chip">Age: old</span><span class="chip">Shape: round</span><span class="chip">Colour: red</span><span class="chip">Origin: Vietnamese</span><span class="chip">Material: wooden</span><span class="chip">Purpose: sleeping</span></div>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Sau các động từ giác quan <b>be, seem, look, feel, taste, smell, sound, become, get</b> → dùng <b>tính từ</b>, không dùng trạng từ: "It tastes <b>good</b>", không phải "tastes well".</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> <b>hard</b> = chăm chỉ / <b>hardly</b> = hầu như không. — <b>late</b> = muộn / <b>lately</b> = gần đây. — <b>near</b> = gần / <b>nearly</b> = gần như. — Từ tận cùng <b>-ly</b> chưa chắc là trạng từ: friendly, lovely, lonely, silly là <b>tính từ</b>.</div>`,
+ex:[
+{en:'He speaks English very <mark>fluently</mark>.',vn:'Anh ấy nói tiếng Anh rất trôi chảy.',nt:'Bổ nghĩa cho động từ speaks → trạng từ fluently.'},
+{en:'This soup tastes <mark>delicious</mark>.',vn:'Món súp này ngon.',nt:'Sau động từ giác quan taste → dùng tính từ.'},
+{en:'She bought a <mark>beautiful small round wooden</mark> table.',vn:'Cô ấy mua một cái bàn gỗ tròn nhỏ xinh.',nt:'Trật tự: Opinion - Size - Shape - Material.'},
+{en:'He works <mark>hard</mark> but earns little.',vn:'Anh ấy làm việc chăm chỉ mà kiếm được ít.',nt:'hard vừa là tính từ vừa là trạng từ, không thêm -ly.'},
+{en:'I <mark>hardly</mark> know him.',vn:'Tôi hầu như không quen anh ta.',nt:'hardly = hầu như không, nghĩa hoàn toàn khác hard.'},
+{en:'She is a very <mark>friendly</mark> girl.',vn:'Cô ấy là một cô gái rất thân thiện.',nt:'friendly tận cùng -ly nhưng là tính từ.'},
+],
+qs:[
+{l:1,q:"She sings very ___.",a:"beautifully",d:["beautiful", "beauty", "beautify"],e:"Bổ nghĩa cho động từ sings → trạng từ."},
+{l:1,q:"He is a ___ student.",a:"good",d:["well", "goodly", "best"],e:"Trước danh từ student → tính từ good."},
+{l:1,q:"The children played ___ in the garden.",a:"happily",d:["happy", "happyly", "happiness"],e:"Bổ nghĩa cho động từ played → trạng từ; happy → happily."},
+{l:1,q:"This cake smells ___.",a:"nice",d:["nicely", "nicer", "nicest"],e:"Sau động từ giác quan smell → tính từ."},
+{l:1,q:"Please drive ___ on this road.",a:"carefully",d:["careful", "care", "careless"],e:"Bổ nghĩa cho động từ drive → trạng từ."},
+{l:1,q:"My brother runs very ___.",a:"fast",d:["fastly", "faster", "fastest"],e:"fast là trạng từ bất quy tắc, không thêm -ly."},
+{l:1,q:"She looks ___ today.",a:"tired",d:["tiredly", "tiring", "tire"],e:"Sau look mang nghĩa \"trông có vẻ\" → tính từ."},
+{l:1,q:"He speaks English ___.",a:"well",d:["good", "goodly", "best"],e:"Bổ nghĩa cho động từ speaks → trạng từ của good là well."},
+{l:2,q:"She is a ___ driver; she has never had an accident.",a:"careful",d:["carefully", "care", "carefulness"],e:"Trước danh từ driver → tính từ."},
+{l:2,q:"They arrived ___ for the meeting.",a:"late",d:["lately", "later", "latest"],e:"late = muộn; lately = gần đây, sai nghĩa ở đây."},
+{l:2,q:"I have ___ seen him these days.",a:"hardly",d:["hard", "harder", "hardest"],e:"hardly = hầu như không, hợp với nghĩa câu."},
+{l:2,q:"It was a ___ long journey.",a:"terribly",d:["terrible", "terror", "terrify"],e:"Bổ nghĩa cho tính từ long → dùng trạng từ terribly."},
+{l:2,q:"He gave me a ___ answer.",a:"polite",d:["politely", "politeness", "impolitely"],e:"Trước danh từ answer → tính từ."},
+{l:2,q:"She dances as ___ as a professional.",a:"gracefully",d:["graceful", "grace", "gracefulness"],e:"as + trạng từ + as vì bổ nghĩa cho động từ dances."},
+{l:2,q:"The test was ___ difficult for us.",a:"too",d:["so", "such", "very much"],e:"too + tính từ = quá đến mức không làm được."},
+{l:2,q:"This is an ___ old Vietnamese painting.",a:"interesting",d:["interestingly", "interest", "interested"],e:"Đứng trong chuỗi tính từ bổ nghĩa cho painting → tính từ opinion đứng đầu."},
+{l:3,q:"She bought a ___ handbag.",a:"small black leather",d:["leather black small", "black leather small", "small leather black"],e:"Trật tự OSASCOMP: Size - Colour - Material."},
+{l:3,q:"He was ___ to answer all the questions.",a:"clever enough",d:["enough clever", "too clever", "clever too"],e:"enough đứng SAU tính từ: adj + enough + to V."},
+{l:3,q:"The film was so ___ that I fell asleep.",a:"boring",d:["bored", "bore", "boredom"],e:"Mô tả tính chất của bộ phim → đuôi -ing."},
+{l:3,q:"I was ___ with the result of the exam.",a:"disappointed",d:["disappointing", "disappoint", "disappointment"],e:"Cảm xúc của người → đuôi -ed."},
+{l:3,q:"___ had he left when the phone rang.",a:"Hardly",d:["Hard", "Hardly ever", "Almost"],e:"Cấu trúc đảo ngữ: Hardly + had + S + V3 ... when + QK đơn."},
+{l:3,q:"The higher we climbed, the ___ it became.",a:"colder",d:["cold", "coldest", "more cold"],e:"So sánh kép: The + comparative, the + comparative."},
+{l:3,q:"He is ___ the best student in this class.",a:"easily",d:["easy", "ease", "easiness"],e:"easily ở đây nghĩa \"rõ ràng, chắc chắn\", bổ nghĩa cho cụm the best."},
+{l:3,q:"She works ___ than her colleagues.",a:"harder",d:["hardlier", "more hard", "hardest"],e:"hard → harder, không dùng more hard."},
+{l:4,q:"Seldom ___ such a beautiful sunset.",a:"have I seen",d:["I have seen", "did I saw", "I saw"],e:"Trạng từ phủ định Seldom đầu câu → đảo trợ động từ lên trước chủ ngữ."},
+{l:4,q:"The project proved ___ more complex than expected.",a:"far",d:["very", "too", "so"],e:"far/much/a lot dùng để nhấn mạnh so sánh hơn; very không dùng được."},
+{l:4,q:"He spoke ___ enough for everyone to hear.",a:"loudly",d:["loud", "louder", "loudest"],e:"Bổ nghĩa cho động từ spoke → trạng từ, rồi mới tới enough."},
+{l:4,q:"It is ___ a difficult problem that nobody can solve it.",a:"such",d:["so", "too", "very"],e:"such + a/an + adj + N + that; so chỉ đi trực tiếp với tính từ."},
+{l:4,q:"Only after the meeting ___ the truth.",a:"did we learn",d:["we learned", "we did learn", "learned we"],e:"\"Only + cụm trạng ngữ\" đầu câu → đảo ngữ với trợ động từ did."},
+{l:4,q:"The more carefully you read, the ___ mistakes you will make.",a:"fewer",d:["less", "fewest", "least"],e:"mistakes đếm được → dùng fewer, không dùng less."},
+{l:4,q:"She is by far ___ candidate for the job.",a:"the most suitable",d:["more suitable", "most suitable", "the more suitable"],e:"by far + so sánh nhất, bắt buộc có \"the\"."},
+{l:4,q:"Not until he apologised ___ to speak to him again.",a:"did she agree",d:["she agreed", "she did agree", "agreed she"],e:"\"Not until ...\" đứng đầu câu → mệnh đề chính đảo ngữ."},
+]});
+
+/* ---------- CÂU HỎI ---------- */
+GP_DATA.push({
+id:'questions',em:'❓',name:'Câu Hỏi',sub:'Yes-No · Wh- · hỏi chủ ngữ · câu hỏi gián tiếp',
+theory:`
+<h3>🗂️ Bốn loại câu hỏi</h3>
+<table class="gp-table">
+<tr><th>Loại</th><th>Công thức</th><th>Ví dụ</th></tr>
+<tr><td>Yes/No</td><td><b class="f">Trợ ĐT + S + V?</b></td><td>Do you like tea?</td></tr>
+<tr><td>Wh- hỏi tân ngữ</td><td><b class="f">Wh- + trợ ĐT + S + V?</b></td><td>What <b>did you</b> buy?</td></tr>
+<tr><td>Wh- hỏi chủ ngữ</td><td><b class="f">Wh- + V?</b> (KHÔNG đảo)</td><td>Who <b>broke</b> the window?</td></tr>
+<tr><td>Câu hỏi gián tiếp</td><td><b class="f">... + Wh-/if + S + V</b> (trật tự câu kể)</td><td>Can you tell me where <b>he lives</b>?</td></tr>
+</table>
+<h3>📐 Chọn từ để hỏi</h3>
+<table class="gp-table">
+<tr><th>Từ hỏi</th><th>Hỏi về</th><th>Từ hỏi</th><th>Hỏi về</th></tr>
+<tr><td>What</td><td>vật, việc</td><td>How long</td><td>khoảng thời gian</td></tr>
+<tr><td>Who / Whom</td><td>người</td><td>How often</td><td>mức độ thường xuyên</td></tr>
+<tr><td>Whose</td><td>sở hữu</td><td>How far</td><td>khoảng cách</td></tr>
+<tr><td>Which</td><td>lựa chọn có giới hạn</td><td>How much / many</td><td>số lượng</td></tr>
+<tr><td>When / Where / Why</td><td>thời gian / nơi chốn / lý do</td><td>What ... like</td><td>tính chất, đặc điểm</td></tr>
+</table>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Muốn biết hỏi chủ ngữ hay tân ngữ: thử trả lời. Nếu câu trả lời <b>đứng đầu câu</b> ("<b>Nam</b> broke it") thì là hỏi chủ ngữ → <b>không đảo</b>, không dùng do/does/did.</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> Câu hỏi gián tiếp <b>KHÔNG đảo ngữ</b>: "Do you know where <b>the station is</b>?" chứ không phải "where is the station". — Đã có <b>did</b> thì động từ chính giữ nguyên mẫu: "Where <b>did</b> he <b>go</b>?" không phải "went".</div>`,
+ex:[
+{en:'<mark>Who</mark> teaches you English?',vn:'Ai dạy em tiếng Anh?',nt:'Hỏi chủ ngữ → không dùng does, động từ chia số ít.'},
+{en:'<mark>Who do</mark> you admire most?',vn:'Em ngưỡng mộ ai nhất?',nt:'Hỏi tân ngữ → có trợ động từ do và đảo ngữ.'},
+{en:'<mark>How long</mark> have you lived here?',vn:'Em sống ở đây bao lâu rồi?',nt:'How long hỏi khoảng thời gian.'},
+{en:'Could you tell me <mark>where the museum is</mark>?',vn:'Bạn chỉ giúp bảo tàng ở đâu được không?',nt:'Câu hỏi gián tiếp → giữ trật tự câu kể.'},
+{en:'<mark>What is</mark> your new teacher <mark>like</mark>?',vn:'Thầy giáo mới của em thế nào?',nt:'What ... like hỏi về tính cách, đặc điểm.'},
+{en:'<mark>Whose</mark> bag is this?',vn:'Cái cặp này của ai?',nt:'Whose hỏi về sở hữu, theo sau là danh từ.'},
+],
+qs:[
+{l:1,q:"___ do you go to school? — By bike.",a:"How",d:["What", "Where", "Who"],e:"Hỏi phương tiện → How."},
+{l:1,q:"___ is your birthday? — On the fifth of May.",a:"When",d:["Where", "What", "Which"],e:"Hỏi thời gian → When."},
+{l:1,q:"___ are you from? — I am from Hue.",a:"Where",d:["When", "What", "Who"],e:"Hỏi nơi chốn → Where."},
+{l:1,q:"___ you like coffee?",a:"Do",d:["Are", "Is", "Does"],e:"Chủ ngữ you, động từ thường → trợ động từ Do."},
+{l:1,q:"___ books do you have? — About twenty.",a:"How many",d:["How much", "How long", "How often"],e:"books đếm được → How many."},
+{l:1,q:"___ is that girl? — She is my cousin.",a:"Who",d:["What", "Whose", "Which"],e:"Hỏi người là ai → Who."},
+{l:1,q:"___ does your mother work? — In a hospital.",a:"Where",d:["When", "Why", "How"],e:"Hỏi nơi làm việc → Where."},
+{l:1,q:"___ old are you?",a:"How",d:["What", "Which", "Who"],e:"Hỏi tuổi → How old."},
+{l:2,q:"___ broke the window yesterday?",a:"Who",d:["Who did", "Whom did", "Who does"],e:"Hỏi chủ ngữ → không dùng trợ động từ, không đảo."},
+{l:2,q:"___ did you meet at the party?",a:"Who",d:["Who was", "Whose", "Which"],e:"Hỏi tân ngữ → có did, chủ ngữ you đứng sau."},
+{l:2,q:"___ water do you drink every day?",a:"How much",d:["How many", "How long", "How often"],e:"water không đếm được → How much."},
+{l:2,q:"___ do you go swimming? — Twice a week.",a:"How often",d:["How long", "How much", "How far"],e:"Hỏi mức độ thường xuyên → How often."},
+{l:2,q:"___ is it from here to the beach?",a:"How far",d:["How long", "How much", "How many"],e:"Hỏi khoảng cách → How far."},
+{l:2,q:"Where ___ he go last Sunday?",a:"did",d:["does", "was", "has"],e:"last Sunday → quá khứ, động từ thường → did."},
+{l:2,q:"___ T-shirt do you prefer, the red one or the blue one?",a:"Which",d:["What", "Who", "Whose"],e:"Lựa chọn có giới hạn (hai cái) → Which."},
+{l:2,q:"___ were you late for class?",a:"Why",d:["What", "When", "How"],e:"Hỏi lý do → Why."},
+{l:3,q:"Can you tell me where ___?",a:"the post office is",d:["is the post office", "does the post office", "is the post office located at"],e:"Câu hỏi gián tiếp → giữ trật tự chủ ngữ + động từ."},
+{l:3,q:"I wonder if ___ the meeting tomorrow.",a:"she will attend",d:["will she attend", "does she attend", "will attend she"],e:"Sau I wonder if → trật tự câu kể, không đảo."},
+{l:3,q:"___ happened to your car?",a:"What",d:["What did", "What was", "Which did"],e:"What làm chủ ngữ → không dùng trợ động từ."},
+{l:3,q:"Do you know ___ he arrived yesterday?",a:"what time",d:["what time did", "when did", "at what time did"],e:"Câu hỏi gián tiếp → bỏ trợ động từ did."},
+{l:3,q:"___ of these two books is more interesting?",a:"Which",d:["What", "Who", "Whose"],e:"Chọn giữa hai → Which + of."},
+{l:3,q:"___ does it take you to get to school?",a:"How long",d:["How far", "How much", "How often"],e:"Hỏi thời gian cần để làm gì → How long does it take."},
+{l:3,q:"To ___ should I address this letter?",a:"whom",d:["who", "whose", "which"],e:"Sau giới từ To → dùng whom trong văn trang trọng."},
+{l:3,q:"___ was the film like? — It was fantastic.",a:"What",d:["How", "Which", "Why"],e:"Hỏi đặc điểm, cảm nhận → What ... like."},
+{l:4,q:"You have met him before, ___?",a:"haven't you",d:["have you", "didn't you", "don't you"],e:"Câu hỏi đuôi: mệnh đề khẳng định với have (HTHT) → đuôi phủ định haven't you."},
+{l:4,q:"___ do you think will win the match?",a:"Who",d:["Whom", "Who do", "Whose"],e:"\"do you think\" xen vào giữa, Who vẫn làm chủ ngữ của will win."},
+{l:4,q:"I would like to know ___ the project by Friday.",a:"whether they can finish",d:["can they finish", "whether can they finish", "if can they finish"],e:"Câu hỏi gián tiếp sau know → whether + S + V."},
+{l:4,q:"Never before ___ such a beautiful city.",a:"have I visited",d:["I have visited", "did I visited", "I visited"],e:"\"Never before\" đầu câu → đảo trợ động từ lên trước chủ ngữ."},
+{l:4,q:"___ is it that you are looking for?",a:"What",d:["Which", "Who", "Whose"],e:"Cấu trúc nhấn mạnh câu hỏi: What is it that + S + V."},
+{l:4,q:"He asked me ___ I had finished the report.",a:"if",d:["that", "what", "whether or no"],e:"Tường thuật câu hỏi Yes/No → dùng if hoặc whether."},
+{l:4,q:"___ of the applicants has the best qualifications?",a:"Which",d:["What", "Who", "Whom"],e:"Chọn trong một nhóm xác định (the applicants) → Which."},
+{l:4,q:"Hardly ever ___ to the cinema these days.",a:"do we go",d:["we go", "go we", "we do go"],e:"\"Hardly ever\" đầu câu → đảo ngữ với trợ động từ do."},
+]});
+
+/* ---------- THERE IS-ARE & IT ---------- */
+GP_DATA.push({
+id:'there',em:'🏠',name:'There Is-Are & It',sub:'Cấu trúc tồn tại · "it" giả chủ ngữ',
+theory:`
+<h3>🗂️ There + be</h3>
+<table class="gp-table">
+<tr><th>Dạng</th><th>Số ít / không đếm được</th><th>Số nhiều</th></tr>
+<tr><td>Khẳng định</td><td><b class="f">There is</b> a book.</td><td><b class="f">There are</b> two books.</td></tr>
+<tr><td>Phủ định</td><td>There <b class="f">isn't</b> any milk.</td><td>There <b class="f">aren't</b> any eggs.</td></tr>
+<tr><td>Nghi vấn</td><td><b class="f">Is there</b> a pen?</td><td><b class="f">Are there</b> any pens?</td></tr>
+<tr><td>Quá khứ</td><td>There <b class="f">was</b> a party.</td><td>There <b class="f">were</b> many guests.</td></tr>
+<tr><td>Tương lai / hoàn thành</td><td colspan="2">There <b class="f">will be</b> / There <b class="f">has been</b> / There <b class="f">used to be</b></td></tr>
+</table>
+<h3>📐 "It" giả — những trường hợp bắt buộc</h3>
+<table class="gp-table">
+<tr><th>Dùng để nói về</th><th>Mẫu câu</th></tr>
+<tr><td>Thời tiết</td><td><b class="f">It is</b> sunny today.</td></tr>
+<tr><td>Thời gian, ngày tháng</td><td><b class="f">It is</b> half past seven.</td></tr>
+<tr><td>Khoảng cách</td><td><b class="f">It is</b> 5 km from here to school.</td></tr>
+<tr><td>Nhận xét về việc gì</td><td><b class="f">It is</b> + adj + <b class="f">to V</b> / <b class="f">that</b> + mệnh đề</td></tr>
+<tr><td>Mất bao lâu</td><td><b class="f">It takes</b> + (sb) + thời gian + <b class="f">to V</b></td></tr>
+</table>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Phân biệt rất nhanh: <b>There</b> dùng để giới thiệu <b>sự tồn tại</b> ("có cái gì đó"); <b>It</b> dùng để nói về <b>thời tiết, thời gian, khoảng cách</b> hoặc thay cho một mệnh đề dài.</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> Động từ sau There chia theo <b>danh từ đứng sau</b>, không chia theo there: "There <b>are</b> many books." — Khi liệt kê, chia theo <b>danh từ đầu tiên</b>: "There <b>is</b> a pen and two books." — Đừng lẫn "It takes 2 hours" (mất 2 tiếng) với "There are 2 hours".</div>`,
+ex:[
+{en:'<mark>There is</mark> a big tree in front of my house.',vn:'Có một cái cây to trước nhà tôi.',nt:'Danh từ số ít a big tree → There is.'},
+{en:'<mark>There are</mark> thirty students in my class.',vn:'Lớp tôi có ba mươi học sinh.',nt:'Danh từ số nhiều students → There are.'},
+{en:'<mark>It is</mark> very hot in summer.',vn:'Mùa hè trời rất nóng.',nt:'Nói về thời tiết → dùng It.'},
+{en:'<mark>It takes</mark> me twenty minutes to walk to school.',vn:'Tôi mất hai mươi phút đi bộ đến trường.',nt:'Cấu trúc It takes + sb + thời gian + to V.'},
+{en:'<mark>There used to be</mark> a cinema here.',vn:'Trước đây ở đây từng có một rạp chiếu phim.',nt:'used to be dùng sau There để nói việc đã từng tồn tại.'},
+{en:'<mark>It is</mark> important <mark>to protect</mark> the environment.',vn:'Bảo vệ môi trường là điều quan trọng.',nt:'It giả chủ ngữ thay cho cụm to V đứng sau.'},
+],
+qs:[
+{l:1,q:"___ a book on the table.",a:"There is",d:["There are", "It is", "They are"],e:"a book số ít → There is."},
+{l:1,q:"___ four seasons in a year.",a:"There are",d:["There is", "It is", "It has"],e:"four seasons số nhiều → There are."},
+{l:1,q:"___ is cold today.",a:"It",d:["There", "They", "That"],e:"Nói về thời tiết → It."},
+{l:1,q:"___ any milk in the fridge?",a:"Is there",d:["Are there", "Is it", "Has there"],e:"milk không đếm được → Is there."},
+{l:1,q:"___ is half past six now.",a:"It",d:["There", "This", "They"],e:"Nói về giờ giấc → It."},
+{l:1,q:"There ___ two cats in the garden.",a:"are",d:["is", "was", "has"],e:"two cats số nhiều, hiện tại → are."},
+{l:1,q:"___ five kilometres from my house to the market.",a:"It is",d:["There is", "There are", "It has"],e:"Nói về khoảng cách → It is."},
+{l:1,q:"There ___ not any sugar left.",a:"is",d:["are", "were", "have"],e:"sugar không đếm được → is."},
+{l:2,q:"There ___ a lot of people at the concert last night.",a:"were",d:["was", "are", "is"],e:"people số nhiều + last night → were."},
+{l:2,q:"___ takes me an hour to finish my homework.",a:"It",d:["There", "This", "That"],e:"Cấu trúc It takes + thời gian + to V."},
+{l:2,q:"There ___ a heavy rain yesterday afternoon.",a:"was",d:["were", "is", "are"],e:"a heavy rain số ít + yesterday → was."},
+{l:2,q:"There ___ a meeting tomorrow morning.",a:"will be",d:["will have", "is going", "will been"],e:"Tương lai sau There → will be."},
+{l:2,q:"___ is dangerous to swim in this river.",a:"It",d:["There", "That", "This"],e:"It giả chủ ngữ thay cho \"to swim in this river\"."},
+{l:2,q:"There ___ a pen and two notebooks in my bag.",a:"is",d:["are", "were", "have"],e:"Khi liệt kê, động từ chia theo danh từ đầu tiên (a pen)."},
+{l:2,q:"How many chairs ___ in the room?",a:"are there",d:["there are", "is there", "there is"],e:"Câu hỏi → đảo: are there."},
+{l:2,q:"___ seems that he has forgotten our appointment.",a:"It",d:["There", "This", "He"],e:"It seems that + mệnh đề."},
+{l:3,q:"There ___ been several accidents on this road.",a:"have",d:["has", "was", "is"],e:"several accidents số nhiều + hoàn thành → have been."},
+{l:3,q:"There ___ to be a bookshop on this corner.",a:"used",d:["use", "using", "uses"],e:"There used to be = trước đây từng có."},
+{l:3,q:"___ is no use crying over spilt milk.",a:"It",d:["There", "That", "This"],e:"Thành ngữ: It is no use + V-ing."},
+{l:3,q:"There ___ to be a solution to this problem.",a:"seems",d:["seem", "is seeming", "seemed to"],e:"a solution số ít → seems."},
+{l:3,q:"___ was not until midnight that he came home.",a:"It",d:["There", "That", "This"],e:"Cấu trúc nhấn mạnh: It was not until ... that ..."},
+{l:3,q:"There ___ little hope of finding the missing boy.",a:"is",d:["are", "were", "have"],e:"hope không đếm được → is."},
+{l:3,q:"___ is said that he is the richest man in town.",a:"It",d:["There", "They", "People"],e:"It is said that + mệnh đề (bị động với động từ tường thuật)."},
+{l:3,q:"There ___ hardly any water left in the tank.",a:"is",d:["are", "were", "have been"],e:"water không đếm được → is."},
+{l:4,q:"There ___ no point in arguing with him.",a:"is",d:["are", "was being", "has"],e:"Thành ngữ: There is no point in + V-ing."},
+{l:4,q:"___ appears to have been a misunderstanding.",a:"There",d:["It", "That", "This"],e:"There + appear/seem + to have been = dường như đã có."},
+{l:4,q:"___ is high time we left for the airport.",a:"It",d:["There", "That", "This"],e:"Thành ngữ: It is high time + S + V quá khứ."},
+{l:4,q:"There being no bus, ___ to walk home.",a:"we had",d:["we have", "there had", "it had"],e:"Mệnh đề phân từ \"There being no bus\" làm trạng ngữ lý do, mệnh đề chính có chủ ngữ riêng."},
+{l:4,q:"___ was reported that the typhoon had caused heavy damage.",a:"It",d:["There", "They", "That"],e:"It was reported that + mệnh đề."},
+{l:4,q:"There ___ to be no way out of this situation.",a:"appears",d:["appear", "is appearing", "appeared to"],e:"no way số ít → appears."},
+{l:4,q:"___ takes a great deal of patience to teach young children.",a:"It",d:["There", "This", "That"],e:"It takes + danh từ chỉ phẩm chất + to V."},
+{l:4,q:"Were there ___ problems during the installation?",a:"any",d:["some", "much", "a"],e:"Câu hỏi với danh từ đếm được số nhiều → any."},
+]});
+
+/* ---------- MỆNH ĐỀ TRẠNG NGỮ ---------- */
+GP_DATA.push({
+id:'advclause',em:'🔗',name:'Mệnh Đề Trạng Ngữ',sub:'Thời gian · lý do · mục đích · kết quả · nhượng bộ',
+theory:`
+<h3>🗂️ Năm loại mệnh đề trạng ngữ</h3>
+<table class="gp-table">
+<tr><th>Loại</th><th>Từ nối</th><th>Ví dụ</th></tr>
+<tr><td>Thời gian</td><td>when, while, as, before, after, until, as soon as, since</td><td><b class="f">As soon as</b> he arrives, call me.</td></tr>
+<tr><td>Lý do</td><td>because, since, as, now that</td><td>She stayed home <b class="f">because</b> it rained.</td></tr>
+<tr><td>Mục đích</td><td>so that, in order that</td><td>He studies hard <b class="f">so that</b> he can pass.</td></tr>
+<tr><td>Kết quả</td><td>so ... that, such ... that</td><td>It was <b class="f">so</b> cold <b class="f">that</b> we stayed in.</td></tr>
+<tr><td>Nhượng bộ</td><td>although, though, even though, while, whereas</td><td><b class="f">Although</b> he is poor, he is happy.</td></tr>
+</table>
+<h3>📐 Cặp từ dễ nhầm</h3>
+<table class="gp-table">
+<tr><th>Theo sau là MỆNH ĐỀ (S + V)</th><th>Theo sau là CỤM DANH TỪ</th></tr>
+<tr><td>although / though / even though</td><td>despite / in spite of</td></tr>
+<tr><td>because</td><td>because of / due to / owing to</td></tr>
+<tr><td>so + adj + that</td><td>such + a/an + adj + N + that</td></tr>
+</table>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Nhìn ngay sau chỗ trống. Thấy <b>chủ ngữ + động từ</b> → chọn although / because. Thấy <b>danh từ hoặc V-ing</b> → chọn despite / because of.</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> Tiếng Việt nói "Tuy ... nhưng ..." nhưng tiếng Anh <b>chỉ dùng một</b>: "Although he is poor, he is happy." KHÔNG viết "Although ..., but ...". — Sau <b>when/as soon as/until</b> chỉ tương lai thì dùng <b>hiện tại đơn</b>, không dùng will.</div>`,
+ex:[
+{en:'<mark>Although</mark> it was raining, we went out.',vn:'Mặc dù trời mưa, chúng tôi vẫn ra ngoài.',nt:'Although + mệnh đề; không thêm but ở mệnh đề sau.'},
+{en:'<mark>Despite</mark> the rain, we went out.',vn:'Dù trời mưa, chúng tôi vẫn ra ngoài.',nt:'Despite + cụm danh từ.'},
+{en:'He failed <mark>because of</mark> his carelessness.',vn:'Anh ấy trượt vì sự bất cẩn của mình.',nt:'because of + cụm danh từ.'},
+{en:'I will call you <mark>as soon as</mark> I arrive.',vn:'Tôi sẽ gọi bạn ngay khi tôi đến.',nt:'Sau as soon as dùng hiện tại đơn dù nghĩa tương lai.'},
+{en:'She spoke slowly <mark>so that</mark> everyone could understand.',vn:'Cô ấy nói chậm để mọi người đều hiểu.',nt:'so that + mệnh đề chỉ mục đích, thường có can/could.'},
+{en:'It was <mark>such a</mark> boring film <mark>that</mark> I fell asleep.',vn:'Bộ phim chán đến mức tôi ngủ gật.',nt:'such + a + adj + N + that.'},
+],
+qs:[
+{l:1,q:"___ it was late, we went home.",a:"Because",d:["Despite", "Because of", "In spite of"],e:"Theo sau là mệnh đề it was late → dùng Because."},
+{l:1,q:"We stayed inside ___ the heavy rain.",a:"because of",d:["because", "although", "though"],e:"Theo sau là cụm danh từ the heavy rain → because of."},
+{l:1,q:"___ he is young, he is very responsible.",a:"Although",d:["Despite", "Because of", "So"],e:"Hai vế trái nghĩa, theo sau là mệnh đề → Although."},
+{l:1,q:"I will wait here ___ you come back.",a:"until",d:["while", "because", "so that"],e:"Chờ cho tới khi ai đó quay lại → until."},
+{l:1,q:"___ I was cooking, the phone rang.",a:"While",d:["Because", "Although", "So that"],e:"Hai hành động, một cái xen ngang → While."},
+{l:1,q:"He went to bed early ___ he was tired.",a:"because",d:["so that", "although", "despite"],e:"Chỉ lý do, theo sau là mệnh đề → because."},
+{l:1,q:"Turn off the lights ___ you leave the room.",a:"when",d:["so that", "because of", "although"],e:"Chỉ thời điểm → when."},
+{l:1,q:"She was ___ tired that she fell asleep immediately.",a:"so",d:["such", "such a", "very"],e:"so + tính từ + that."},
+{l:2,q:"___ his illness, he still came to class.",a:"In spite of",d:["Although", "Because", "Even though"],e:"Theo sau là cụm danh từ his illness → In spite of."},
+{l:2,q:"It was ___ an interesting book that I read it twice.",a:"such",d:["so", "very", "too"],e:"such + a/an + adj + N + that."},
+{l:2,q:"He saved money ___ he could buy a new laptop.",a:"so that",d:["so", "such that", "because"],e:"Chỉ mục đích, có could → so that."},
+{l:2,q:"___ we had finished dinner, we watched a film.",a:"After",d:["Until", "While", "Because of"],e:"Hành động xảy ra trước → After."},
+{l:2,q:"I have known her ___ we were children.",a:"since",d:["for", "when", "until"],e:"since + mốc thời gian/mệnh đề quá khứ."},
+{l:2,q:"___ the bad weather, the flight was cancelled.",a:"Owing to",d:["Although", "Because", "Even though"],e:"Theo sau là cụm danh từ → Owing to."},
+{l:2,q:"She kept working ___ she was exhausted.",a:"even though",d:["despite", "in spite of", "because of"],e:"Theo sau là mệnh đề she was exhausted → even though."},
+{l:2,q:"Wait here ___ I get back.",a:"until",d:["during", "so that", "because of"],e:"until + mệnh đề chỉ thời điểm kết thúc."},
+{l:3,q:"___ that you have finished school, what will you do?",a:"Now",d:["Although", "Despite", "So"],e:"Now that = bởi vì bây giờ, chỉ lý do."},
+{l:3,q:"He speaks English well ___ he has never been abroad.",a:"although",d:["despite", "because of", "so that"],e:"Ý trái ngược, theo sau là mệnh đề → although."},
+{l:3,q:"___ being very tired, she finished the report.",a:"Despite",d:["Although", "Because", "Even though"],e:"Despite + V-ing (coi như cụm danh từ)."},
+{l:3,q:"My sister likes pop music ___ I prefer classical music.",a:"whereas",d:["because", "so that", "unless"],e:"whereas dùng để đối chiếu hai vế trái nhau."},
+{l:3,q:"The test was ___ difficult that few students passed.",a:"so",d:["such", "such a", "too"],e:"so + adj + that."},
+{l:3,q:"He left early ___ to catch the first train.",a:"in order",d:["so that", "because", "despite"],e:"in order + to V chỉ mục đích."},
+{l:3,q:"___ hard he tried, he could not solve the puzzle.",a:"However",d:["Although", "Despite", "Because"],e:"However + adj/adv + S + V = dù ... đến đâu."},
+{l:3,q:"They moved to the countryside ___ the air is fresher.",a:"because",d:["because of", "despite", "so that"],e:"Theo sau là mệnh đề the air is fresher → because."},
+{l:4,q:"___ he may be rich, he is not happy.",a:"Though",d:["Despite", "Because of", "Owing to"],e:"Though + mệnh đề; \"may be\" cho thấy đây là mệnh đề đầy đủ."},
+{l:4,q:"No sooner had he sat down ___ the bell rang.",a:"than",d:["when", "that", "then"],e:"Cấu trúc cố định: No sooner ... than ..."},
+{l:4,q:"___ as he was, he refused to give up.",a:"Tired",d:["Although tired", "Despite tired", "Because tired"],e:"Cấu trúc nhượng bộ đảo: Adj + as + S + V."},
+{l:4,q:"She worked overtime ___ finish the project on time.",a:"so as to",d:["so that", "in order that", "because of"],e:"so as to + V nguyên mẫu chỉ mục đích."},
+{l:4,q:"___ the heavy traffic, we arrived on time.",a:"Notwithstanding",d:["Although", "Even though", "Because"],e:"Notwithstanding + cụm danh từ = mặc dù, văn trang trọng."},
+{l:4,q:"He had scarcely entered the room ___ the lights went out.",a:"when",d:["than", "that", "then"],e:"Cấu trúc: had scarcely ... when ..."},
+{l:4,q:"___ much he earns, he never saves any money.",a:"No matter how",d:["However that", "Although how", "Despite how"],e:"No matter how + adv + S + V."},
+{l:4,q:"The instructions were ___ complicated that nobody could follow them.",a:"so",d:["such", "such a", "too"],e:"so + adj + that, dù có \"the instructions\" vì complicated là tính từ đứng một mình."},
+]});
+
+/* ---------- MỆNH ĐỀ DANH NGỮ ---------- */
+GP_DATA.push({
+id:'nounclause',em:'💬',name:'Mệnh Đề Danh Ngữ',sub:'That-clause · Wh-clause · if-whether',
+theory:`
+<h3>🗂️ Ba loại mệnh đề danh ngữ</h3>
+<table class="gp-table">
+<tr><th>Loại</th><th>Mở đầu bằng</th><th>Ví dụ</th></tr>
+<tr><td>That-clause</td><td><b class="f">that</b></td><td>I know <b>that he is honest</b>.</td></tr>
+<tr><td>Wh-clause</td><td>what, who, where, when, why, how</td><td>I do not know <b>where he lives</b>.</td></tr>
+<tr><td>If/Whether-clause</td><td><b class="f">if / whether</b></td><td>I wonder <b>whether she will come</b>.</td></tr>
+</table>
+<h3>📐 Làm được những chức năng gì</h3>
+<table class="gp-table">
+<tr><th>Chức năng</th><th>Ví dụ</th></tr>
+<tr><td>Chủ ngữ</td><td><b class="f">What he said</b> surprised everyone.</td></tr>
+<tr><td>Tân ngữ của động từ</td><td>I believe <b class="f">that she is right</b>.</td></tr>
+<tr><td>Tân ngữ của giới từ</td><td>I am interested in <b class="f">what you do</b>.</td></tr>
+<tr><td>Bổ ngữ sau be</td><td>The problem is <b class="f">that we have no money</b>.</td></tr>
+</table>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Trật tự bên trong mệnh đề danh ngữ luôn là <b>câu kể</b> (S + V), không bao giờ đảo ngữ, dù nó bắt đầu bằng từ để hỏi.</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> Sau <b>giới từ</b> chỉ dùng <b>whether</b>, không dùng if: "I am not sure <b>about whether</b> he will come." — Mệnh đề danh ngữ làm chủ ngữ luôn chia động từ <b>số ít</b>: "What they need <b>is</b> money." — Phân biệt <b>what</b> (không có danh từ đi trước) với <b>that</b> (nối sau danh từ là mệnh đề quan hệ).</div>`,
+ex:[
+{en:'I know <mark>that he is telling the truth</mark>.',vn:'Tôi biết rằng anh ấy đang nói thật.',nt:'That-clause làm tân ngữ của know.'},
+{en:'<mark>What she said</mark> made everyone laugh.',vn:'Điều cô ấy nói làm mọi người bật cười.',nt:'Wh-clause làm chủ ngữ, động từ chia số ít made.'},
+{en:'I wonder <mark>whether he will agree</mark>.',vn:'Tôi tự hỏi liệu anh ấy có đồng ý không.',nt:'whether-clause làm tân ngữ của wonder.'},
+{en:'The problem is <mark>that we have no time</mark>.',vn:'Vấn đề là chúng ta không có thời gian.',nt:'That-clause làm bổ ngữ sau be.'},
+{en:'I am not interested in <mark>what he thinks</mark>.',vn:'Tôi không quan tâm anh ta nghĩ gì.',nt:'Mệnh đề danh ngữ làm tân ngữ của giới từ in.'},
+{en:'Can you tell me <mark>where the bank is</mark>?',vn:'Bạn chỉ giúp ngân hàng ở đâu không?',nt:'Trật tự câu kể, không đảo "where is the bank".'},
+],
+qs:[
+{l:1,q:"I think ___ he is a good teacher.",a:"that",d:["what", "which", "whether"],e:"Mệnh đề đầy đủ làm tân ngữ của think → that."},
+{l:1,q:"I do not know ___ she lives.",a:"where",d:["that", "which", "whether"],e:"Hỏi nơi chốn → where."},
+{l:1,q:"___ he said was not true.",a:"What",d:["That", "Which", "Whether"],e:"Làm chủ ngữ, nghĩa \"điều mà\" → What."},
+{l:1,q:"She asked me ___ I liked coffee.",a:"if",d:["that", "what", "which"],e:"Tường thuật câu hỏi Yes/No → if."},
+{l:1,q:"Nobody knows ___ the meeting will start.",a:"when",d:["that", "what", "which"],e:"Hỏi thời gian → when."},
+{l:1,q:"I hope ___ you will come to my party.",a:"that",d:["what", "whether", "which"],e:"Mệnh đề đầy đủ sau hope → that."},
+{l:1,q:"Can you tell me ___ this word means?",a:"what",d:["that", "which", "whether"],e:"Hỏi nghĩa → what."},
+{l:1,q:"I am sure ___ he will pass the exam.",a:"that",d:["what", "whether", "which"],e:"be sure + that-clause."},
+{l:2,q:"Do you know ___?",a:"where he works",d:["where does he work", "where he does work", "where work he"],e:"Câu hỏi gián tiếp → trật tự câu kể."},
+{l:2,q:"___ they need most is money.",a:"What",d:["That", "Which", "Whether"],e:"Làm chủ ngữ, nghĩa \"cái mà\" → What."},
+{l:2,q:"I am not sure about ___ he is coming.",a:"whether",d:["if", "that", "what"],e:"Sau giới từ about chỉ dùng whether."},
+{l:2,q:"He told me ___ he had finished the report.",a:"that",d:["what", "which", "whether"],e:"Mệnh đề đầy đủ sau tell sb → that."},
+{l:2,q:"I wonder ___ the train has left yet.",a:"whether",d:["that", "what", "which"],e:"Hỏi liệu có hay không → whether/if; ở đây whether."},
+{l:2,q:"___ worries me is his health.",a:"What",d:["That", "Which", "It"],e:"Làm chủ ngữ, nghĩa \"điều làm tôi lo\" → What."},
+{l:2,q:"She explained ___ the machine worked.",a:"how",d:["what", "that", "which"],e:"Hỏi cách thức → how."},
+{l:2,q:"Please tell me ___ you prefer, tea or coffee.",a:"which",d:["what", "that", "whether"],e:"Chọn giữa hai thứ xác định → which."},
+{l:3,q:"___ he will accept the job remains unclear.",a:"Whether",d:["If", "That what", "What if"],e:"Mệnh đề làm chủ ngữ đầu câu → dùng Whether, không dùng If."},
+{l:3,q:"What they decided ___ a surprise to us all.",a:"was",d:["were", "are", "have been"],e:"Mệnh đề danh ngữ làm chủ ngữ → động từ chia số ít."},
+{l:3,q:"It is surprising ___ he passed the test so easily.",a:"that",d:["what", "whether", "which"],e:"It giả chủ ngữ + that-clause thật."},
+{l:3,q:"I have no idea ___ she is so angry.",a:"why",d:["that", "what", "which"],e:"Hỏi lý do → why."},
+{l:3,q:"The question is ___ we can afford it.",a:"whether",d:["that", "what", "which"],e:"Bổ ngữ sau be, nghĩa \"liệu có\" → whether."},
+{l:3,q:"He insisted ___ the report be submitted by Friday.",a:"that",d:["what", "whether", "which"],e:"insist that + S + V nguyên mẫu (thức giả định)."},
+{l:3,q:"___ the money came from is still a mystery.",a:"Where",d:["That", "What", "Whether"],e:"Làm chủ ngữ, hỏi nguồn gốc → Where."},
+{l:3,q:"She was worried about ___ her son had arrived safely.",a:"whether",d:["if", "that", "what"],e:"Sau giới từ about → whether."},
+{l:4,q:"___ causes the disease is not yet known.",a:"What",d:["That", "Which", "Whether"],e:"Làm chủ ngữ và đồng thời là chủ ngữ của causes → What."},
+{l:4,q:"The fact ___ he lied shocked everyone.",a:"that",d:["what", "which", "whether"],e:"the fact + that-clause đồng vị ngữ, không dùng which."},
+{l:4,q:"It was suggested ___ the meeting be postponed.",a:"that",d:["what", "whether", "which"],e:"Thức giả định bị động: It was suggested that + S + be + V3."},
+{l:4,q:"___ he comes or not makes no difference.",a:"Whether",d:["If", "That", "What"],e:"Cấu trúc whether ... or not làm chủ ngữ."},
+{l:4,q:"I do not doubt ___ he is capable of doing it.",a:"that",d:["what", "whether", "which"],e:"Câu khẳng định với doubt phủ định → dùng that."},
+{l:4,q:"___ matters most is how you treat other people.",a:"What",d:["That", "Which", "Whether"],e:"What + V làm chủ ngữ, theo sau là is."},
+{l:4,q:"He gave no explanation as to ___ he had been absent.",a:"why",d:["that", "what", "whether"],e:"as to + từ để hỏi, ở đây hỏi lý do → why."},
+{l:4,q:"That he survived the crash ___ a miracle.",a:"is",d:["are", "were", "have been"],e:"That-clause làm chủ ngữ → động từ chia số ít."},
+]});
+
+/* ---------- ĐẢO NGỮ ---------- */
+GP_DATA.push({
+id:'inversion',em:'🔄',name:'Đảo Ngữ',sub:'Trạng từ phủ định · Only · Not until · So-Such',
+theory:`
+<h3>🗂️ Công thức chung</h3>
+<table class="gp-table">
+<tr><th colspan="2">Cụm đảo ngữ đứng đầu câu + <b class="f">trợ động từ + S + V</b></th></tr>
+<tr><td>Có trợ động từ sẵn</td><td>Never <b class="f">have I</b> seen...</td></tr>
+<tr><td>Không có trợ động từ</td><td>mượn do/does/did: Rarely <b class="f">does he</b> complain.</td></tr>
+<tr><td>Có động từ be</td><td>đưa be lên: Seldom <b class="f">is she</b> late.</td></tr>
+</table>
+<h3>📐 Các cụm hay gặp</h3>
+<table class="gp-table">
+<tr><th>Cụm</th><th>Mẫu câu</th></tr>
+<tr><td>Never / Rarely / Seldom / Hardly ever</td><td>Never <b class="f">have I</b> met such a kind person.</td></tr>
+<tr><td>Not until + mốc/mệnh đề</td><td>Not until midnight <b class="f">did he</b> come home.</td></tr>
+<tr><td>Only when / Only after / Only by</td><td>Only then <b class="f">did I</b> understand.</td></tr>
+<tr><td>No sooner ... than</td><td>No sooner <b class="f">had he</b> left than it rained.</td></tr>
+<tr><td>Hardly / Scarcely ... when</td><td>Hardly <b class="f">had she</b> arrived when the phone rang.</td></tr>
+<tr><td>So + adj ... that</td><td><b class="f">So difficult was</b> the test that nobody passed.</td></tr>
+<tr><td>Such + be ... that</td><td><b class="f">Such was</b> his anger that he left.</td></tr>
+<tr><td>Điều kiện bỏ If</td><td><b class="f">Were I</b> you / <b class="f">Had I</b> known / <b class="f">Should you</b> need</td></tr>
+</table>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Đảo ngữ chỉ xảy ra ở <b>mệnh đề đứng ngay sau cụm đảo</b>. Với "Not until ... that ..." và "No sooner ... than ...", phần bị đảo là <b>mệnh đề chính</b>, mệnh đề thời gian giữ nguyên trật tự bình thường.</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> Đã đảo thì <b>không dùng thêm trợ động từ ở sau</b>: "Never <b>did I see</b>..." chứ không phải "Never did I saw". — "Only when he came <b>did I</b> leave" — mệnh đề "he came" KHÔNG đảo, chỉ mệnh đề chính đảo.</div>`,
+ex:[
+{en:'<mark>Never have I</mark> seen such a beautiful sunset.',vn:'Chưa bao giờ tôi thấy hoàng hôn đẹp như vậy.',nt:'Never đầu câu → đưa trợ động từ have lên trước chủ ngữ.'},
+{en:'<mark>Rarely does he</mark> go out at night.',vn:'Anh ấy hiếm khi ra ngoài buổi tối.',nt:'Không có trợ động từ sẵn → mượn does.'},
+{en:'<mark>Not until</mark> he apologised <mark>did she</mark> forgive him.',vn:'Mãi đến khi anh xin lỗi cô mới tha thứ.',nt:'Mệnh đề "he apologised" giữ nguyên, mệnh đề chính đảo.'},
+{en:'<mark>No sooner had</mark> we sat down <mark>than</mark> the film started.',vn:'Chúng tôi vừa ngồi xuống thì phim bắt đầu.',nt:'No sooner + had + S + V3 ... than + quá khứ đơn.'},
+{en:'<mark>Were I</mark> you, I would accept the offer.',vn:'Nếu tôi là bạn, tôi sẽ nhận lời.',nt:'Câu điều kiện loại 2 bỏ If → đảo were lên đầu.'},
+{en:'<mark>So loud was</mark> the music that we could not talk.',vn:'Nhạc to đến mức chúng tôi không nói chuyện được.',nt:'So + tính từ + be + S + that.'},
+],
+qs:[
+{l:1,q:"Never ___ such a delicious meal.",a:"have I eaten",d:["I have eaten", "did I ate", "I ate"],e:"Never đầu câu → đảo have lên trước I."},
+{l:1,q:"Seldom ___ to the cinema.",a:"does he go",d:["he goes", "he does go", "goes he"],e:"Seldom + does + S + V nguyên mẫu."},
+{l:1,q:"Rarely ___ late for school.",a:"is she",d:["she is", "does she is", "she does be"],e:"Có động từ be → đưa be lên trước chủ ngữ."},
+{l:1,q:"Hardly ever ___ television.",a:"do they watch",d:["they watch", "they do watch", "watch they"],e:"Hardly ever + do + S + V."},
+{l:1,q:"Never ___ him before.",a:"had I met",d:["I had met", "did I met", "I met"],e:"Never + had + S + V3."},
+{l:1,q:"Little ___ that he was lying.",a:"did I know",d:["I knew", "I did know", "knew I"],e:"Little mang nghĩa phủ định → đảo với did."},
+{l:1,q:"Not only ___ English but she also speaks French.",a:"does she speak",d:["she speaks", "she does speak", "speaks she"],e:"Not only đầu câu → đảo với does."},
+{l:1,q:"Seldom ___ such kindness.",a:"have we seen",d:["we have seen", "did we saw", "we saw"],e:"Seldom + have + S + V3."},
+{l:2,q:"Not until midnight ___ home.",a:"did he come",d:["he came", "he did come", "came he"],e:"Not until + mốc thời gian → mệnh đề chính đảo với did."},
+{l:2,q:"Only when it rained ___ the match.",a:"did they cancel",d:["they cancelled", "they did cancel", "cancelled they"],e:"Mệnh đề \"it rained\" giữ nguyên, mệnh đề chính đảo."},
+{l:2,q:"No sooner had the bell rung ___ the students ran out.",a:"than",d:["when", "that", "then"],e:"Cấu trúc cố định No sooner ... than."},
+{l:2,q:"Hardly had she sat down ___ the doorbell rang.",a:"when",d:["than", "that", "then"],e:"Cấu trúc Hardly ... when."},
+{l:2,q:"So tired ___ that he fell asleep at once.",a:"was he",d:["he was", "did he", "he did be"],e:"So + adj + be + S + that."},
+{l:2,q:"Only after the exam ___ relaxed.",a:"did we feel",d:["we felt", "we did feel", "felt we"],e:"Only after + cụm danh từ → mệnh đề chính đảo."},
+{l:2,q:"Were I rich, ___ around the world.",a:"I would travel",d:["I will travel", "would I travel", "I travelled"],e:"Mệnh đề chính của câu điều kiện loại 2 giữ trật tự bình thường."},
+{l:2,q:"Not a single word ___ during the meeting.",a:"did he say",d:["he said", "he did say", "said he"],e:"Cụm phủ định \"Not a single word\" đầu câu → đảo."},
+{l:3,q:"Had I known about the traffic, ___ earlier.",a:"I would have left",d:["I would leave", "would I have left", "I had left"],e:"Câu điều kiện loại 3 bỏ If → Had + S + V3; mệnh đề chính không đảo."},
+{l:3,q:"Should you need any help, ___ me.",a:"call",d:["you call", "do you call", "will you call"],e:"Should + S + V = If + S + should V; mệnh đề chính là câu mệnh lệnh."},
+{l:3,q:"Such ___ his anger that he slammed the door.",a:"was",d:["is", "did", "had"],e:"Such + be + S + that."},
+{l:3,q:"In no circumstances ___ to leave the room.",a:"are you allowed",d:["you are allowed", "do you allowed", "you do allow"],e:"Cụm phủ định + be → đưa be lên trước chủ ngữ."},
+{l:3,q:"Only by working hard ___ succeed.",a:"can you",d:["you can", "do you can", "you do"],e:"Only by + V-ing → đảo động từ khuyết thiếu can."},
+{l:3,q:"Scarcely ___ the house when it began to rain.",a:"had we left",d:["we had left", "did we leave", "we left"],e:"Scarcely + had + S + V3 ... when."},
+{l:3,q:"At no time ___ aware of the danger.",a:"was he",d:["he was", "did he", "he did be"],e:"At no time mang nghĩa phủ định → đảo be."},
+{l:3,q:"Not only did he win the race, ___ he broke the record.",a:"but",d:["and", "so", "or"],e:"Cấu trúc Not only ... but also."},
+{l:4,q:"Under no circumstances ___ this document to anyone.",a:"should you show",d:["you should show", "do you show", "you do show"],e:"Cụm phủ định + động từ khuyết thiếu should → đảo should lên trước."},
+{l:4,q:"So rapidly ___ that few people can keep up.",a:"is technology advancing",d:["technology is advancing", "does technology advance", "technology does advance"],e:"So + trạng từ + trợ động từ is + S + V-ing."},
+{l:4,q:"Only after he had left ___ what he really meant.",a:"did I realise",d:["I realised", "I did realise", "realised I"],e:"Mệnh đề \"he had left\" giữ nguyên; mệnh đề chính đảo với did."},
+{l:4,q:"Were it not for your help, ___ this project.",a:"I could not have finished",d:["could I not have finished", "I can not finish", "I had not finished"],e:"Were it not for = If it were not for; mệnh đề chính không đảo."},
+{l:4,q:"Nowhere in the world ___ such a strange custom.",a:"will you find",d:["you will find", "do you will find", "find you will"],e:"Cụm trạng ngữ phủ định Nowhere → đảo will."},
+{l:4,q:"On no account ___ the machine unattended.",a:"must you leave",d:["you must leave", "do you must leave", "must leave you"],e:"On no account + must + S + V."},
+{l:4,q:"Not until she read the letter ___ the truth.",a:"did she learn",d:["she learned", "she did learn", "learned she"],e:"Not until + mệnh đề → mệnh đề chính đảo."},
+{l:4,q:"Had it not been for the rain, ___ the match.",a:"we would have won",d:["would we have won", "we had won", "we would win"],e:"Điều kiện loại 3 đảo; mệnh đề chính giữ trật tự thường."},
+]});
+
+/* ---------- USED TO & BE USED TO ---------- */
+GP_DATA.push({
+id:'usedto',em:'⏳',name:'Used To & Be Used To',sub:'Thói quen quá khứ · quen với việc gì',
+theory:`
+<h3>🗂️ Ba cấu trúc rất dễ nhầm</h3>
+<table class="gp-table">
+<tr><th>Cấu trúc</th><th>Nghĩa</th><th>Ví dụ</th></tr>
+<tr><td><b class="f">used to + V</b></td><td>đã từng, thói quen <b>trong quá khứ</b>, nay không còn</td><td>I <b>used to play</b> football.</td></tr>
+<tr><td><b class="f">be used to + V-ing / N</b></td><td><b>đã quen</b> với việc gì (trạng thái)</td><td>I <b>am used to getting</b> up early.</td></tr>
+<tr><td><b class="f">get used to + V-ing / N</b></td><td><b>đang dần quen</b> với việc gì (quá trình)</td><td>He <b>is getting used to</b> the weather.</td></tr>
+</table>
+<h3>📐 Dạng phủ định và nghi vấn của "used to"</h3>
+<table class="gp-table">
+<tr><th>Dạng</th><th>Mẫu</th></tr>
+<tr><td>Phủ định</td><td>S + <b class="f">did not use to</b> + V (không có d)</td></tr>
+<tr><td>Nghi vấn</td><td><b class="f">Did</b> + S + <b class="f">use to</b> + V?</td></tr>
+<tr><td>Đồng nghĩa</td><td>would + V (chỉ dùng cho hành động, KHÔNG dùng cho trạng thái)</td></tr>
+</table>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Chỉ cần nhìn <b>ngay sau "to"</b>. Theo sau là <b>động từ nguyên mẫu</b> → used to (đã từng). Theo sau là <b>V-ing hoặc danh từ</b> → be/get used to (quen với).</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> Sau <b>did</b> phải dùng <b>use to</b>, bỏ chữ d: "I <b>didn't use to</b> like coffee." — <b>would</b> thay được used to với hành động lặp lại, nhưng KHÔNG thay được với trạng thái: không nói "I would have a bike" mà phải "I used to have a bike".</div>`,
+ex:[
+{en:'I <mark>used to live</mark> in the countryside.',vn:'Tôi từng sống ở quê.',nt:'Thói quen quá khứ, nay không còn → used to + V.'},
+{en:'She <mark>is used to working</mark> at night.',vn:'Cô ấy đã quen làm việc ban đêm.',nt:'Đã quen rồi → be used to + V-ing.'},
+{en:'He <mark>is getting used to</mark> the new school.',vn:'Cậu ấy đang dần quen với trường mới.',nt:'Đang trong quá trình làm quen → get used to + N.'},
+{en:'I <mark>did not use to</mark> like vegetables.',vn:'Trước đây tôi không thích rau.',nt:'Phủ định của used to → did not use to (bỏ d).'},
+{en:'<mark>Did</mark> you <mark>use to</mark> play the piano?',vn:'Bạn từng chơi piano à?',nt:'Nghi vấn → Did + S + use to + V.'},
+{en:'When we were children, we <mark>would</mark> go fishing every summer.',vn:'Hồi nhỏ, hè nào chúng tôi cũng đi câu.',nt:'would thay used to với hành động lặp lại.'},
+],
+qs:[
+{l:1,q:"I ___ go swimming every weekend when I was young.",a:"used to",d:["am used to", "get used to", "use to"],e:"Thói quen quá khứ → used to + V."},
+{l:1,q:"She is used to ___ up early.",a:"getting",d:["get", "got", "gets"],e:"be used to + V-ing."},
+{l:1,q:"There ___ be a cinema here.",a:"used to",d:["use to", "is used to", "gets used to"],e:"There used to be = trước đây từng có."},
+{l:1,q:"He ___ smoke, but he quit last year.",a:"used to",d:["is used to", "uses to", "was used to"],e:"Thói quen đã chấm dứt → used to."},
+{l:1,q:"I am used to ___ in a big city.",a:"living",d:["live", "lived", "lives"],e:"be used to + V-ing."},
+{l:1,q:"Did you ___ have long hair?",a:"use to",d:["used to", "using to", "uses to"],e:"Sau Did → use to, bỏ d."},
+{l:1,q:"My father ___ to drink coffee every morning.",a:"used",d:["use", "using", "uses"],e:"Thói quen quá khứ → used to."},
+{l:1,q:"She is not used to ___ spicy food.",a:"eating",d:["eat", "ate", "eats"],e:"be used to + V-ing."},
+{l:2,q:"I did not ___ to like classical music.",a:"use",d:["used", "using", "uses"],e:"Sau did not → use to."},
+{l:2,q:"After a month, he got used to ___ in the dormitory.",a:"living",d:["live", "lived", "lives"],e:"get used to + V-ing."},
+{l:2,q:"They ___ to the noise of the traffic now.",a:"are used",d:["used", "use", "were using"],e:"Hiện tại đã quen → are used to."},
+{l:2,q:"When I was a child, I ___ climb trees.",a:"would",d:["am used to", "was used to", "get used to"],e:"Hành động lặp lại trong quá khứ → would thay được used to."},
+{l:2,q:"It took her a while to get used to ___ on the left.",a:"driving",d:["drive", "drove", "drives"],e:"get used to + V-ing."},
+{l:2,q:"This house ___ belong to my grandparents.",a:"used to",d:["is used to", "was used to", "uses to"],e:"Trạng thái sở hữu trong quá khứ → used to."},
+{l:2,q:"Are you used to ___ the new software yet?",a:"using",d:["use", "used", "uses"],e:"be used to + V-ing."},
+{l:2,q:"He ___ be very shy, but now he is confident.",a:"used to",d:["is used to", "gets used to", "was used to"],e:"Trạng thái quá khứ nay đã thay đổi → used to."},
+{l:3,q:"I am slowly ___ used to the cold weather here.",a:"getting",d:["being", "used", "having"],e:"Đang dần quen → getting used to."},
+{l:3,q:"She ___ used to working night shifts, so she never complains.",a:"is",d:["used", "did", "was used"],e:"Hiện tại đã quen → is used to."},
+{l:3,q:"My grandmother ___ tell us stories every evening.",a:"would",d:["is used to", "gets used to", "would be used to"],e:"Hành động lặp lại trong quá khứ → would."},
+{l:3,q:"He could not get used to ___ so far from home.",a:"being",d:["be", "been", "is"],e:"get used to + V-ing, ở đây là being."},
+{l:3,q:"We ___ have a big garden when we lived in the village.",a:"used to",d:["would", "are used to", "were used to"],e:"Sở hữu là trạng thái → chỉ dùng used to, không dùng would."},
+{l:3,q:"It did not take him long to ___ used to the new routine.",a:"get",d:["be", "being", "used"],e:"Sau to trong \"take long to\" → động từ nguyên mẫu get."},
+{l:3,q:"I am not used to ___ treated like that.",a:"being",d:["be", "been", "am"],e:"be used to + being + V3 (bị động)."},
+{l:3,q:"___ you use to walk to school?",a:"Did",d:["Do", "Were", "Have"],e:"Nghi vấn của used to → Did + S + use to."},
+{l:4,q:"By the end of the year, she will ___ used to the climate.",a:"have got",d:["get", "be getting", "have been"],e:"Tương lai hoàn thành: will have got used to."},
+{l:4,q:"He is no longer used to ___ long hours.",a:"working",d:["work", "worked", "works"],e:"be used to + V-ing dù có \"no longer\"."},
+{l:4,q:"Living abroad, I had to get used to ___ by strangers.",a:"being greeted",d:["greeted", "greet", "be greeted"],e:"get used to + being + V3 (dạng bị động)."},
+{l:4,q:"There ___ to be far fewer cars on this street.",a:"used",d:["use", "is used", "was used"],e:"There used to be; sau There chỉ dùng used to."},
+{l:4,q:"She said she ___ used to such rude behaviour.",a:"was not",d:["did not", "has not", "used not"],e:"Tường thuật \"I am not used to\" → was not used to."},
+{l:4,q:"I would rather you ___ used to doing things on your own.",a:"got",d:["get", "getting", "had got"],e:"would rather + S + V quá khứ → got."},
+{l:4,q:"Not until he moved to Hanoi ___ used to the traffic.",a:"did he get",d:["he got", "he did get", "got he"],e:"Not until đầu câu → mệnh đề chính đảo ngữ."},
+{l:4,q:"He used to be a teacher, ___ he?",a:"didn't",d:["usedn't", "wasn't", "doesn't"],e:"Câu hỏi đuôi của used to dùng didn't."},
+]});
+
+/* ---------- CÂU MỆNH LỆNH & ĐỀ NGHỊ ---------- */
+GP_DATA.push({
+id:'imperative',em:'📣',name:'Câu Mệnh Lệnh & Đề Nghị',sub:'Mệnh lệnh · rủ rê · gợi ý · lời mời',
+theory:`
+<h3>🗂️ Câu mệnh lệnh</h3>
+<table class="gp-table">
+<tr><th>Dạng</th><th>Công thức</th><th>Ví dụ</th></tr>
+<tr><td>Khẳng định</td><td><b class="f">V nguyên mẫu + ...</b></td><td>Open the door.</td></tr>
+<tr><td>Phủ định</td><td><b class="f">Do not / Don't + V</b></td><td>Don't be late.</td></tr>
+<tr><td>Lịch sự hơn</td><td>Please + V / V + ..., please</td><td>Please sit down.</td></tr>
+<tr><td>Rủ cùng làm</td><td><b class="f">Let's + V</b></td><td>Let's go out tonight.</td></tr>
+</table>
+<h3>📐 Các cách đề nghị, gợi ý</h3>
+<table class="gp-table">
+<tr><th>Mẫu câu</th><th>Theo sau là</th><th>Ví dụ</th></tr>
+<tr><td>Let's / Let us</td><td><b class="f">V nguyên mẫu</b></td><td>Let's <b>have</b> dinner.</td></tr>
+<tr><td>Why don't we / you</td><td><b class="f">V nguyên mẫu</b></td><td>Why don't we <b>go</b> swimming?</td></tr>
+<tr><td>How about / What about</td><td><b class="f">V-ing</b> hoặc danh từ</td><td>How about <b>going</b> out?</td></tr>
+<tr><td>Shall we</td><td><b class="f">V nguyên mẫu</b></td><td>Shall we <b>start</b> now?</td></tr>
+<tr><td>Would you like</td><td><b class="f">to V</b> hoặc danh từ</td><td>Would you like <b>to join</b> us?</td></tr>
+<tr><td>Do you mind / Would you mind</td><td><b class="f">V-ing</b></td><td>Would you mind <b>opening</b> the window?</td></tr>
+<tr><td>I suggest</td><td><b class="f">V-ing</b> hoặc that + S + V</td><td>I suggest <b>taking</b> a taxi.</td></tr>
+</table>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Chia hai nhóm cho dễ nhớ: <b>Let's / Why don't we / Shall we</b> → theo sau là <b>động từ nguyên mẫu</b>. <b>How about / What about / mind / suggest</b> → theo sau là <b>V-ing</b>.</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> Câu hỏi đuôi của "Let's" là <b>shall we?</b>, của câu mệnh lệnh là <b>will you?</b>. — Trả lời "Would you mind...?" thì <b>"No, not at all"</b> nghĩa là ĐỒNG Ý. — Sau <b>suggest</b> KHÔNG dùng "to V": "I suggest <b>going</b>", không phải "suggest to go".</div>`,
+ex:[
+{en:'<mark>Don\'t touch</mark> that wire!',vn:'Đừng chạm vào sợi dây đó!',nt:'Mệnh lệnh phủ định → Don\'t + V.'},
+{en:'<mark>Let\'s go</mark> to the cinema tonight.',vn:'Tối nay đi xem phim đi.',nt:'Let\'s + động từ nguyên mẫu.'},
+{en:'<mark>How about having</mark> dinner at that new restaurant?',vn:'Hay là ăn tối ở nhà hàng mới đó?',nt:'How about + V-ing.'},
+{en:'<mark>Why don\'t we take</mark> a short break?',vn:'Sao chúng ta không nghỉ một lát nhỉ?',nt:'Why don\'t we + động từ nguyên mẫu.'},
+{en:'<mark>Would you mind closing</mark> the door?',vn:'Bạn đóng giúp cửa được không?',nt:'Would you mind + V-ing.'},
+{en:'Let\'s start now, <mark>shall we</mark>?',vn:'Bắt đầu luôn nhé?',nt:'Câu hỏi đuôi của Let\'s là shall we.'},
+],
+qs:[
+{l:1,q:"___ the window, please.",a:"Open",d:["Opening", "To open", "Opens"],e:"Câu mệnh lệnh → động từ nguyên mẫu đứng đầu."},
+{l:1,q:"___ be late for school.",a:"Don't",d:["Not", "No", "Doesn't"],e:"Mệnh lệnh phủ định → Don't + V."},
+{l:1,q:"Let's ___ a cup of tea.",a:"have",d:["having", "to have", "had"],e:"Let's + V nguyên mẫu."},
+{l:1,q:"How about ___ to the beach this weekend?",a:"going",d:["go", "to go", "went"],e:"How about + V-ing."},
+{l:1,q:"Why don't we ___ a film tonight?",a:"watch",d:["watching", "to watch", "watched"],e:"Why don't we + V nguyên mẫu."},
+{l:1,q:"Shall we ___ now?",a:"begin",d:["beginning", "to begin", "began"],e:"Shall we + V nguyên mẫu."},
+{l:1,q:"___ quiet in the library.",a:"Be",d:["Being", "To be", "Are"],e:"Mệnh lệnh với động từ be → Be."},
+{l:1,q:"Would you like ___ with us?",a:"to come",d:["coming", "come", "came"],e:"Would you like + to V."},
+{l:2,q:"What about ___ the museum tomorrow?",a:"visiting",d:["visit", "to visit", "visited"],e:"What about + V-ing."},
+{l:2,q:"Would you mind ___ me a hand?",a:"giving",d:["give", "to give", "gave"],e:"Would you mind + V-ing."},
+{l:2,q:"Let's not ___ about it anymore.",a:"talk",d:["talking", "to talk", "talked"],e:"Phủ định của Let's → Let's not + V."},
+{l:2,q:"I suggest ___ an early train.",a:"taking",d:["to take", "take", "took"],e:"suggest + V-ing, không dùng to V."},
+{l:2,q:"Let's go out tonight, ___?",a:"shall we",d:["will we", "do we", "don't we"],e:"Câu hỏi đuôi của Let's là shall we."},
+{l:2,q:"Open the door, ___?",a:"will you",d:["shall we", "do you", "don't you"],e:"Câu hỏi đuôi của câu mệnh lệnh là will you."},
+{l:2,q:"Why not ___ her the truth?",a:"tell",d:["telling", "to tell", "told"],e:"Why not + V nguyên mẫu."},
+{l:2,q:"___ forget to lock the door.",a:"Don't",d:["Not", "No", "Doesn't"],e:"Mệnh lệnh phủ định."},
+{l:3,q:"He suggested that we ___ the meeting until Monday.",a:"postpone",d:["postponed", "to postpone", "postponing"],e:"suggest that + S + V nguyên mẫu (thức giả định)."},
+{l:3,q:"Would you mind if I ___ the window?",a:"opened",d:["open", "opening", "to open"],e:"Would you mind if + S + V quá khứ."},
+{l:3,q:"\"Would you mind waiting?\" — \"___\"",a:"No, not at all.",d:["Yes, of course not.", "Yes, I would like.", "No, I would mind."],e:"Trả lời \"No, not at all\" nghĩa là đồng ý, không phiền."},
+{l:3,q:"I would rather you ___ smoke in here.",a:"didn't",d:["don't", "not", "wouldn't"],e:"would rather + S + didn't + V."},
+{l:3,q:"It is time we ___ home.",a:"went",d:["go", "going", "to go"],e:"It is time + S + V quá khứ."},
+{l:3,q:"___ we discuss this after lunch?",a:"Shall",d:["Will", "Do", "Would"],e:"Đề nghị cùng làm → Shall we."},
+{l:3,q:"How about we ___ the party on Saturday?",a:"hold",d:["holding", "to hold", "held"],e:"Khi How about theo sau là mệnh đề thì dùng động từ chia bình thường."},
+{l:3,q:"Do you mind ___ me the salt?",a:"passing",d:["to pass", "pass", "passed"],e:"Do you mind + V-ing."},
+{l:4,q:"The doctor recommended that he ___ more exercise.",a:"take",d:["takes", "took", "taking"],e:"recommend that + S + V nguyên mẫu (thức giả định)."},
+{l:4,q:"It was suggested that the rule ___ changed.",a:"be",d:["was", "is", "were"],e:"Thức giả định bị động: that + S + be + V3."},
+{l:4,q:"I insist that she ___ present at the ceremony.",a:"be",d:["is", "was", "will be"],e:"insist that + S + be (thức giả định)."},
+{l:4,q:"Let us not ___ hasty conclusions.",a:"draw",d:["drawing", "to draw", "drew"],e:"Let us not + V nguyên mẫu."},
+{l:4,q:"Would you be so kind as ___ me the document?",a:"to send",d:["sending", "send", "sent"],e:"so kind as + to V."},
+{l:4,q:"He proposed ___ the budget before the deadline.",a:"reviewing",d:["to review", "review", "reviewed"],e:"propose + V-ing khi không dùng mệnh đề that."},
+{l:4,q:"Supposing you ___ the lottery, what would you do?",a:"won",d:["win", "will win", "have won"],e:"Supposing + S + V quá khứ, giả định không có thật."},
+{l:4,q:"You had better ___ late again.",a:"not be",d:["not to be", "to not be", "be not"],e:"had better + not + V nguyên mẫu."},
+]});
+
+/* ---------- CÂU CHẺ (NHẤN MẠNH) ---------- */
+GP_DATA.push({
+id:'cleft',em:'💡',name:'Câu Chẻ (Nhấn Mạnh)',sub:'It is ... that · What ... is · All ... is',
+theory:`
+<h3>🗂️ Ba kiểu câu chẻ</h3>
+<table class="gp-table">
+<tr><th>Kiểu</th><th>Công thức</th><th>Nhấn mạnh</th></tr>
+<tr><td>It-cleft</td><td><b class="f">It is/was + phần nhấn mạnh + that/who + phần còn lại</b></td><td>chủ ngữ, tân ngữ, trạng ngữ</td></tr>
+<tr><td>Wh-cleft</td><td><b class="f">What + S + V + is/was + phần nhấn mạnh</b></td><td>hành động hoặc vật</td></tr>
+<tr><td>All-cleft</td><td><b class="f">All + S + V + is/was + V nguyên mẫu</b></td><td>"tất cả những gì ... chỉ là"</td></tr>
+</table>
+<h3>📐 Câu gốc chuyển thành câu chẻ</h3>
+<table class="gp-table">
+<tr><th>Câu gốc</th><th>Nhấn mạnh</th><th>Câu chẻ</th></tr>
+<tr><td rowspan="3">Nam bought this book yesterday.</td><td>chủ ngữ</td><td><b class="f">It was Nam who</b> bought this book yesterday.</td></tr>
+<tr><td>tân ngữ</td><td><b class="f">It was this book that</b> Nam bought yesterday.</td></tr>
+<tr><td>trạng ngữ</td><td><b class="f">It was yesterday that</b> Nam bought this book.</td></tr>
+</table>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Chọn từ nối theo phần được nhấn mạnh: <b>người → who/that</b>, <b>vật → that/which</b>, <b>thời gian → that/when</b>, <b>nơi chốn → that/where</b>. Dùng <b>that</b> thì luôn an toàn.</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> Động từ sau "It is/was" luôn chia theo <b>thì của câu gốc</b>, không chia theo phần nhấn mạnh. — Trong "What I need is...", động từ chính chia <b>số ít</b> dù phần nhấn mạnh là số nhiều: "What I need <b>is</b> some books." — Sau "All I did was" dùng <b>động từ nguyên mẫu không to</b>.</div>`,
+ex:[
+{en:'<mark>It was Lan who</mark> broke the vase.',vn:'Chính Lan là người làm vỡ bình hoa.',nt:'Nhấn mạnh chủ ngữ là người → It was + người + who.'},
+{en:'<mark>It is this book that</mark> I want to buy.',vn:'Chính cuốn sách này là cuốn tôi muốn mua.',nt:'Nhấn mạnh tân ngữ là vật → that.'},
+{en:'<mark>It was in 2010 that</mark> they got married.',vn:'Chính vào năm 2010 họ đã kết hôn.',nt:'Nhấn mạnh trạng ngữ thời gian.'},
+{en:'<mark>What I need is</mark> a good rest.',vn:'Cái tôi cần là một giấc nghỉ ngơi tử tế.',nt:'What-cleft, động từ chính chia số ít is.'},
+{en:'<mark>All he wants is</mark> to be left alone.',vn:'Tất cả những gì anh ấy muốn là được ở một mình.',nt:'All-cleft.'},
+{en:'<mark>It was not until midnight that</mark> he came home.',vn:'Mãi đến nửa đêm anh ấy mới về nhà.',nt:'Kết hợp nhấn mạnh với not until.'},
+],
+qs:[
+{l:1,q:"___ was Nam who won the first prize.",a:"It",d:["That", "There", "He"],e:"Câu chẻ bắt đầu bằng It."},
+{l:1,q:"It was my sister ___ cooked this meal.",a:"who",d:["which", "what", "whose"],e:"Nhấn mạnh người → who."},
+{l:1,q:"It is this song ___ I like best.",a:"that",d:["who", "whose", "whom"],e:"Nhấn mạnh vật → that."},
+{l:1,q:"___ I want is a cup of coffee.",a:"What",d:["That", "Which", "It"],e:"What-cleft làm chủ ngữ."},
+{l:1,q:"It was in Hue ___ we first met.",a:"that",d:["who", "what", "whose"],e:"Nhấn mạnh nơi chốn → that (hoặc where)."},
+{l:1,q:"All I need ___ your support.",a:"is",d:["are", "were", "have"],e:"All-cleft chia động từ số ít."},
+{l:1,q:"It was last year ___ they moved here.",a:"that",d:["who", "which one", "what"],e:"Nhấn mạnh thời gian → that."},
+{l:1,q:"What she bought ___ a new laptop.",a:"was",d:["were", "are", "have been"],e:"What-cleft → động từ số ít was."},
+{l:2,q:"___ was the heavy rain that caused the flood.",a:"It",d:["There", "That", "What"],e:"Câu chẻ nhấn mạnh nguyên nhân."},
+{l:2,q:"It is my parents ___ always support me.",a:"who",d:["which", "what", "whose"],e:"Nhấn mạnh người số nhiều → who."},
+{l:2,q:"What I dislike ___ his rudeness.",a:"is",d:["are", "were", "have been"],e:"What-cleft → động từ số ít."},
+{l:2,q:"It was the noise ___ woke me up.",a:"that",d:["who", "what", "whose"],e:"Nhấn mạnh vật làm chủ ngữ → that."},
+{l:2,q:"All he did ___ apologise.",a:"was",d:["were", "is to", "did"],e:"All ... was + V nguyên mẫu không to."},
+{l:2,q:"It was because of the storm ___ the flight was delayed.",a:"that",d:["which", "what", "when"],e:"Nhấn mạnh cụm lý do → that."},
+{l:2,q:"What they need most ___ more time.",a:"is",d:["are", "were", "have"],e:"What-cleft → is."},
+{l:2,q:"It is not the money ___ matters, but the gesture.",a:"that",d:["which it", "what", "who"],e:"Nhấn mạnh chủ ngữ là vật → that."},
+{l:3,q:"It was not until he left ___ I realised the truth.",a:"that",d:["when", "then", "which"],e:"Cấu trúc It was not until ... that ..."},
+{l:3,q:"What he said ___ everyone in the room.",a:"shocked",d:["shock", "were shocking", "have shocked"],e:"What-clause làm chủ ngữ → động từ số ít, quá khứ shocked."},
+{l:3,q:"It is the students ___ suffer most from this policy.",a:"who",d:["whom", "which", "what"],e:"Nhấn mạnh người làm chủ ngữ → who."},
+{l:3,q:"All that is needed ___ a little patience.",a:"is",d:["are", "were", "have been"],e:"All that ... → động từ số ít."},
+{l:3,q:"It was to his mother ___ he told the secret.",a:"that",d:["who", "whom", "which"],e:"Nhấn mạnh cụm giới từ → that."},
+{l:3,q:"What surprised me ___ how calm she remained.",a:"was",d:["were", "are", "have been"],e:"What-cleft → was."},
+{l:3,q:"It was only after the exam ___ he relaxed.",a:"that",d:["when", "then", "which"],e:"It was only after ... that ..."},
+{l:3,q:"The thing ___ worries me is the deadline.",a:"that",d:["what", "who", "whose"],e:"Sau danh từ the thing → mệnh đề quan hệ với that."},
+{l:4,q:"It is the quality of teaching, not the facilities, ___ makes a good school.",a:"that",d:["which it", "what", "who"],e:"Nhấn mạnh chủ ngữ, dù có cụm xen giữa vẫn dùng that."},
+{l:4,q:"What the committee decided ___ never announced publicly.",a:"was",d:["were", "are", "have been"],e:"What-clause làm chủ ngữ → động từ số ít, bị động was announced."},
+{l:4,q:"It was not I ___ started the argument.",a:"who",d:["whom", "which", "that it"],e:"Nhấn mạnh chủ ngữ là người → who; sau be dùng đại từ chủ ngữ I."},
+{l:4,q:"All you have to do ___ sign here.",a:"is",d:["is to signing", "are", "were"],e:"All ... is + V nguyên mẫu không to."},
+{l:4,q:"It is precisely this attitude ___ I find unacceptable.",a:"that",d:["which it", "what", "who"],e:"Nhấn mạnh tân ngữ → that."},
+{l:4,q:"What matters in the end ___ the results.",a:"is",d:["are", "were", "have been"],e:"What-clause làm chủ ngữ → động từ số ít, dù bổ ngữ số nhiều."},
+{l:4,q:"It was with great reluctance ___ she accepted the offer.",a:"that",d:["which", "when", "who"],e:"Nhấn mạnh cụm trạng ngữ cách thức → that."},
+{l:4,q:"Rarely is it the teacher ___ is to blame.",a:"who",d:["whom", "which", "what"],e:"Câu chẻ lồng trong đảo ngữ; nhấn mạnh người → who."},
+]});
+
+/* ---------- SO · SUCH · TOO · ENOUGH ---------- */
+GP_DATA.push({
+id:'sosuch',em:'⚖️',name:'So · Such · Too · Enough',sub:'Bốn cấu trúc chỉ mức độ rất hay nhầm',
+theory:`
+<h3>🗂️ Bảng phân biệt</h3>
+<table class="gp-table">
+<tr><th>Cấu trúc</th><th>Công thức</th><th>Ví dụ</th></tr>
+<tr><td><b class="f">so</b></td><td>so + <b>adj/adv</b> + that</td><td>It was <b>so cold that</b> we stayed in.</td></tr>
+<tr><td><b class="f">such</b></td><td>such + <b>(a/an) + adj + N</b> + that</td><td>It was <b>such a cold day that</b>...</td></tr>
+<tr><td><b class="f">too</b></td><td>too + adj/adv + (for sb) + <b>to V</b></td><td>He is <b>too young to drive</b>.</td></tr>
+<tr><td><b class="f">enough</b></td><td>adj/adv + <b>enough</b> + (for sb) + to V<br>enough + <b>N</b></td><td>He is <b>old enough to drive</b>.<br>I have <b>enough money</b>.</td></tr>
+</table>
+<h3>📐 Vị trí của enough</h3>
+<table class="gp-table">
+<tr><th>Đi với</th><th>Vị trí</th><th>Ví dụ</th></tr>
+<tr><td>Tính từ / trạng từ</td><td><b>SAU</b></td><td>strong <b class="f">enough</b>, quickly <b class="f">enough</b></td></tr>
+<tr><td>Danh từ</td><td><b>TRƯỚC</b></td><td><b class="f">enough</b> time, <b class="f">enough</b> chairs</td></tr>
+</table>
+<h3>🔑 Chuyển đổi too ↔ enough</h3>
+<div class="chips"><span class="chip">He is too weak to lift it.</span><span class="chip">= He is not strong enough to lift it.</span><span class="chip">so + adj + that = such + a + adj + N + that</span></div>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Nhìn ngay sau chỗ trống. Có <b>danh từ</b> → chọn <b>such</b>. Chỉ có <b>tính từ đứng một mình</b> → chọn <b>so</b>. Với enough thì ngược lại: danh từ đứng <b>sau</b> enough, tính từ đứng <b>trước</b> enough.</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> <b>too</b> luôn mang nghĩa <b>tiêu cực</b> (quá đến mức không làm được), <b>very</b> thì trung tính: "He is very tall" (khen) nhưng "He is too tall" (cao quá gây bất tiện). — Với danh từ không đếm được dùng <b>so much/so little</b>, đếm được dùng <b>so many/so few</b>.</div>`,
+ex:[
+{en:'The box was <mark>so heavy that</mark> I could not lift it.',vn:'Cái hộp nặng đến mức tôi không nhấc nổi.',nt:'so + tính từ đứng một mình + that.'},
+{en:'It was <mark>such a heavy box that</mark> I could not lift it.',vn:'Đó là cái hộp nặng đến mức tôi không nhấc nổi.',nt:'such + a + adj + danh từ + that.'},
+{en:'He is <mark>too young to</mark> watch this film.',vn:'Cậu bé quá nhỏ để xem phim này.',nt:'too + adj + to V, nghĩa tiêu cực.'},
+{en:'She is <mark>old enough to</mark> make her own decisions.',vn:'Cô ấy đủ lớn để tự quyết định.',nt:'adj + enough + to V.'},
+{en:'We do not have <mark>enough chairs</mark> for everyone.',vn:'Chúng tôi không đủ ghế cho mọi người.',nt:'enough đứng TRƯỚC danh từ.'},
+{en:'There were <mark>so many people that</mark> I could not find him.',vn:'Đông người đến mức tôi không tìm được anh ấy.',nt:'so many + danh từ đếm được số nhiều.'},
+],
+qs:[
+{l:1,q:"The film was ___ boring that I left early.",a:"so",d:["such", "too", "very"],e:"so + tính từ đứng một mình + that."},
+{l:1,q:"It was ___ a hot day that we stayed inside.",a:"such",d:["so", "too", "very"],e:"such + a + adj + danh từ + that."},
+{l:1,q:"He is ___ tired to continue working.",a:"too",d:["so", "such", "enough"],e:"too + adj + to V, nghĩa không thể làm được."},
+{l:1,q:"She is tall ___ to reach the shelf.",a:"enough",d:["too", "so", "such"],e:"adj + enough + to V."},
+{l:1,q:"We have ___ time to finish the test.",a:"enough",d:["too", "so", "such"],e:"enough đứng trước danh từ time."},
+{l:1,q:"The coffee is ___ hot to drink.",a:"too",d:["so", "such", "enough"],e:"too + adj + to V."},
+{l:1,q:"There were ___ many students in the hall.",a:"so",d:["such", "too much", "enough"],e:"so many + danh từ đếm được số nhiều."},
+{l:1,q:"He speaks ___ quickly that I cannot follow.",a:"so",d:["such", "too", "enough"],e:"so + trạng từ + that."},
+{l:2,q:"It was ___ an interesting lecture that nobody left.",a:"such",d:["so", "too", "very much"],e:"such + a/an + adj + N + that."},
+{l:2,q:"The test was not easy ___ for us to pass.",a:"enough",d:["too", "so", "such"],e:"adj + enough + for sb + to V."},
+{l:2,q:"She had ___ little money that she could not buy food.",a:"so",d:["such", "too", "enough"],e:"so + little (từ chỉ lượng) + that."},
+{l:2,q:"He was ___ weak to carry the suitcase.",a:"too",d:["so", "such", "enough"],e:"too + adj + to V."},
+{l:2,q:"There is not ___ sugar in my tea.",a:"enough",d:["too", "so", "such"],e:"enough + danh từ không đếm được."},
+{l:2,q:"They were ___ good players that they won easily.",a:"such",d:["so", "too", "very"],e:"such + adj + danh từ số nhiều (không có a) + that."},
+{l:2,q:"The room was ___ small for ten people.",a:"too",d:["so", "such", "enough"],e:"too + adj + for sb, nghĩa quá nhỏ."},
+{l:2,q:"He did not run fast ___ to catch the bus.",a:"enough",d:["too", "so", "such"],e:"trạng từ + enough + to V."},
+{l:3,q:"It was ___ bad weather that the match was cancelled.",a:"such",d:["so", "too", "very"],e:"weather không đếm được → such + adj + N, không có a."},
+{l:3,q:"She was ___ exhausted that she fell asleep at her desk.",a:"so",d:["such", "too", "enough"],e:"so + tính từ đứng một mình + that."},
+{l:3,q:"He is too stubborn ___ to anyone.",a:"to listen",d:["listening", "listen", "for listening"],e:"too + adj + to V nguyên mẫu."},
+{l:3,q:"There was ___ much noise that we had to leave.",a:"so",d:["such", "too", "enough"],e:"so much + danh từ không đếm được + that."},
+{l:3,q:"The problem is ___ complicated for a beginner to solve.",a:"too",d:["so", "such", "enough"],e:"too + adj + for sb + to V."},
+{l:3,q:"He is not experienced ___ for this position.",a:"enough",d:["too", "so", "such"],e:"adj + enough + for + danh từ."},
+{l:3,q:"It was ___ a long walk that we were all exhausted.",a:"such",d:["so", "too", "very"],e:"such + a + adj + N + that."},
+{l:3,q:"She spoke ___ softly that nobody could hear her.",a:"so",d:["such", "too", "enough"],e:"so + trạng từ + that."},
+{l:4,q:"So heavy ___ the rain that the roads were flooded.",a:"was",d:["it was", "did it", "had"],e:"So + adj đầu câu → đảo ngữ: So + adj + be + S + that."},
+{l:4,q:"Such ___ his determination that he never gave up.",a:"was",d:["it was", "did", "had been it"],e:"Such + be + S + that, dạng đảo ngữ."},
+{l:4,q:"The lecture was so dull ___ half the audience left.",a:"that",d:["so that", "such that", "in order that"],e:"so + adj + that chỉ kết quả."},
+{l:4,q:"He had ___ few friends that he often felt lonely.",a:"so",d:["such", "too", "enough"],e:"so few + danh từ đếm được + that."},
+{l:4,q:"The instructions were not clear ___ for us to follow.",a:"enough",d:["too", "so", "such"],e:"adj + enough + for sb + to V."},
+{l:4,q:"It is ___ an honour to be invited here tonight.",a:"such",d:["so", "too", "very much"],e:"such + a/an + danh từ (có thể không cần tính từ) để nhấn mạnh."},
+{l:4,q:"She is far ___ sensible to believe such a rumour.",a:"too",d:["so", "such", "enough"],e:"far too + adj + to V, far nhấn mạnh too."},
+{l:4,q:"There was hardly ___ evidence to convict him.",a:"enough",d:["too", "so", "such"],e:"enough + danh từ không đếm được evidence."},
+]});
+
+/* ---------- RÚT GỌN MỆNH ĐỀ ---------- */
+GP_DATA.push({
+id:'reduced',em:'✂️',name:'Rút Gọn Mệnh Đề',sub:'Mệnh đề quan hệ · mệnh đề trạng ngữ rút gọn',
+theory:`
+<h3>🗂️ Rút gọn mệnh đề quan hệ</h3>
+<table class="gp-table">
+<tr><th>Mệnh đề gốc</th><th>Rút gọn thành</th><th>Khi nào</th></tr>
+<tr><td>who/which + V chủ động</td><td><b class="f">V-ing</b></td><td>The man <b>who is standing</b> → The man <b>standing</b></td></tr>
+<tr><td>who/which + be + V3</td><td><b class="f">V3 (P.P.)</b></td><td>The book <b>which was written</b> → The book <b>written</b></td></tr>
+<tr><td>who/which + be + the first/only...</td><td><b class="f">to V</b></td><td>He was the first <b>who came</b> → the first <b>to come</b></td></tr>
+<tr><td>who/which + be + cụm giới từ</td><td><b>bỏ hẳn</b> who/which + be</td><td>The girl <b>who is in blue</b> → The girl <b>in blue</b></td></tr>
+</table>
+<h3>📐 Rút gọn mệnh đề trạng ngữ (cùng chủ ngữ)</h3>
+<table class="gp-table">
+<tr><th>Dạng</th><th>Công thức</th><th>Ví dụ</th></tr>
+<tr><td>Chủ động</td><td><b class="f">V-ing</b></td><td><b>Seeing</b> the dog, she ran away.</td></tr>
+<tr><td>Bị động</td><td><b class="f">V3</b> hoặc Being + V3</td><td><b>Built</b> in 1990, the bridge is old.</td></tr>
+<tr><td>Hoàn thành</td><td><b class="f">Having + V3</b></td><td><b>Having finished</b> work, he went home.</td></tr>
+<tr><td>Phủ định</td><td><b class="f">Not + V-ing</b></td><td><b>Not knowing</b> the way, he got lost.</td></tr>
+</table>
+<div class="tipbox"><b class="t">💡 Mẹo:</b> Hỏi một câu: danh từ đứng trước <b>tự làm</b> hành động hay <b>bị</b> tác động? Tự làm → <b>V-ing</b>. Bị tác động → <b>V3</b>.</div>
+<div class="trapbox"><b class="t">⚠️ Bẫy hay gặp:</b> Chỉ rút gọn được mệnh đề trạng ngữ khi <b>hai mệnh đề cùng chủ ngữ</b>. Khác chủ ngữ mà vẫn rút gọn sẽ tạo câu sai nghĩa. — Sau khi rút gọn, <b>chủ ngữ của mệnh đề chính phải là người/vật thực hiện hành động</b> trong phần phân từ.</div>`,
+ex:[
+{en:'The man <mark>standing</mark> over there is my uncle.',vn:'Người đàn ông đang đứng đằng kia là chú tôi.',nt:'who is standing → standing (chủ động).'},
+{en:'The letter <mark>written</mark> by Lan arrived today.',vn:'Lá thư do Lan viết đã đến hôm nay.',nt:'which was written → written (bị động).'},
+{en:'He was the first student <mark>to finish</mark> the test.',vn:'Cậu ấy là học sinh đầu tiên làm xong bài.',nt:'who finished → to finish, sau the first.'},
+{en:'<mark>Having finished</mark> his homework, he went out.',vn:'Làm xong bài tập, cậu ấy ra ngoài.',nt:'Hành động xảy ra trước → Having + V3.'},
+{en:'<mark>Not knowing</mark> what to say, she kept silent.',vn:'Không biết nói gì, cô ấy im lặng.',nt:'Phủ định của phân từ → Not + V-ing.'},
+{en:'<mark>Built</mark> in 1975, this house is very old.',vn:'Được xây năm 1975, ngôi nhà này rất cũ.',nt:'Mệnh đề bị động rút gọn thành V3.'},
+],
+qs:[
+{l:1,q:"The boy ___ football is my brother.",a:"playing",d:["played", "plays", "to play"],e:"who is playing → playing (chủ động)."},
+{l:1,q:"The book ___ by my father is interesting.",a:"written",d:["writing", "wrote", "to write"],e:"which was written → written (bị động)."},
+{l:1,q:"The girl ___ in the corner looks sad.",a:"sitting",d:["sat", "sits", "to sit"],e:"who is sitting → sitting."},
+{l:1,q:"The car ___ last week was expensive.",a:"bought",d:["buying", "buys", "to buy"],e:"which was bought → bought."},
+{l:1,q:"She was the only person ___ the answer.",a:"to know",d:["knowing", "known", "knew"],e:"Sau the only → to V."},
+{l:1,q:"The students ___ in the library are very quiet.",a:"studying",d:["studied", "study", "to study"],e:"who are studying → studying."},
+{l:1,q:"___ tired, he went to bed early.",a:"Feeling",d:["Felt", "Feel", "To feel"],e:"Chủ ngữ he tự cảm thấy → V-ing."},
+{l:1,q:"The window ___ by the storm has been repaired.",a:"broken",d:["breaking", "broke", "to break"],e:"which was broken → broken."},
+{l:2,q:"___ the news, she burst into tears.",a:"Hearing",d:["Heard", "Hear", "To hear"],e:"Chủ ngữ she tự nghe → V-ing."},
+{l:2,q:"___ in 1990, the factory still works well.",a:"Built",d:["Building", "Build", "To build"],e:"Nhà máy được xây → V3."},
+{l:2,q:"___ his work, he went home.",a:"Having finished",d:["Finishing", "Finished", "To finish"],e:"Hành động xảy ra trước hành động chính → Having + V3."},
+{l:2,q:"___ what to do, he asked his teacher.",a:"Not knowing",d:["Not know", "Knowing not", "Not to know"],e:"Phủ định của phân từ → Not + V-ing."},
+{l:2,q:"The man ___ to the police is my neighbour.",a:"talking",d:["talked", "talks", "to talk"],e:"who is talking → talking."},
+{l:2,q:"The questions ___ in the exam were quite easy.",a:"asked",d:["asking", "ask", "to ask"],e:"which were asked → asked."},
+{l:2,q:"He was the last person ___ the building.",a:"to leave",d:["leaving", "left", "leave"],e:"Sau the last → to V."},
+{l:2,q:"___ by the noise, the baby started crying.",a:"Disturbed",d:["Disturbing", "Disturb", "To disturb"],e:"Em bé bị quấy rầy → V3."},
+{l:3,q:"___ for three hours, we finally reached the top.",a:"Having walked",d:["Walking", "Walked", "To walk"],e:"Nhấn mạnh hành động kéo dài và hoàn tất trước → Having + V3."},
+{l:3,q:"The road ___ the two cities is under repair.",a:"connecting",d:["connected", "connects", "to connect"],e:"Con đường tự nối hai thành phố → V-ing (chủ động)."},
+{l:3,q:"___ twice, he did not want to try again.",a:"Having failed",d:["Failing", "Failed", "To fail"],e:"Thất bại hai lần trước đó → Having + V3."},
+{l:3,q:"The information ___ on the website is not accurate.",a:"posted",d:["posting", "posts", "to post"],e:"Thông tin được đăng → V3."},
+{l:3,q:"___ no money, he had to walk home.",a:"Having",d:["Had", "To have", "Being had"],e:"Chủ động, cùng thời điểm → V-ing (Having ở đây là V-ing của have)."},
+{l:3,q:"There are many students ___ to join the club.",a:"wanting",d:["wanted", "want", "to wanting"],e:"who want → wanting."},
+{l:3,q:"___ the exam, she felt very relieved.",a:"Having passed",d:["Passing", "Passed", "To pass"],e:"Thi đỗ rồi mới nhẹ nhõm → Having + V3."},
+{l:3,q:"The man ___ the award is a famous scientist.",a:"receiving",d:["received", "receives", "to receive"],e:"who is receiving → receiving."},
+{l:4,q:"___ carefully, the instructions are easy to follow.",a:"Read",d:["Reading", "Having read", "To read"],e:"Chủ ngữ là the instructions, chúng được đọc → V3."},
+{l:4,q:"___ by his failure, he decided to try once more.",a:"Not discouraged",d:["Not discouraging", "Discouraging not", "Not to discourage"],e:"Anh ấy không bị nản → Not + V3."},
+{l:4,q:"___ all the evidence, the jury reached a verdict.",a:"Having considered",d:["Considering", "Considered", "To consider"],e:"Xem xét xong rồi mới đưa ra phán quyết → Having + V3."},
+{l:4,q:"The proposal ___ at yesterday meeting will be revised.",a:"discussed",d:["discussing", "discusses", "to discuss"],e:"Đề xuất được thảo luận → V3."},
+{l:4,q:"___ that he was innocent, the judge released him.",a:"Convinced",d:["Convincing", "Having convinced", "To convince"],e:"Quan toà được thuyết phục → V3 (be convinced that)."},
+{l:4,q:"___ for hours, the children were fast asleep.",a:"Having played",d:["Playing", "Played", "To play"],e:"Chơi suốt nhiều giờ trước đó → Having + V3."},
+{l:4,q:"Weather ___, we will go camping this weekend.",a:"permitting",d:["permitted", "permits", "to permit"],e:"Mệnh đề phân từ độc lập có chủ ngữ riêng: Weather permitting."},
+{l:4,q:"___ in simple language, the book appeals to young readers.",a:"Written",d:["Writing", "Having written", "To write"],e:"Cuốn sách được viết → V3."},
+]});
+
+
 /* ==APPEND_TOPICS== */
 
 /* ================= VIEWS ================= */
@@ -1360,10 +2223,11 @@ function home(){
   CUR=null;window.scrollTo({top:0});
   const totalTest=GP_DATA.filter(t=>prOf(t.id).test>=60).length;
   const avg=Math.round(GP_DATA.reduce((s,t)=>s+topicPct(t),0)/GP_DATA.length);
+  {const el=$('gpCount');if(el)el.textContent=GP_DATA.length+' chuyên đề · Lý thuyết → Ví dụ → Luyện tập → Kiểm tra'}
   $('app').innerHTML=`
   <div class="hero">
     <span class="big-em">🧠</span>
-    <h2>Chinh phục 20 chuyên đề ngữ pháp! 🏔️</h2>
+    <h2>Chinh phục ${GP_DATA.length} chuyên đề ngữ pháp! 🏔️</h2>
     <p>Học theo lộ trình 4 bước: <b>📖 Lý thuyết → 💡 Ví dụ → ✏️ Luyện tập (4 mức độ) → 🏆 Kiểm tra</b>. Dựa theo sách "Tổng ôn Ngữ pháp Tiếng Anh". Mỗi câu đúng được cộng XP, đạt ≥60% bài kiểm tra để nhận huy chương!</p>
     <div class="stats">
       <div class="hstat">📈 Tiến độ chung <b>${avg}%</b></div>
