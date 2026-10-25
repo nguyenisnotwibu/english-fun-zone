@@ -421,8 +421,30 @@ section.show{display:block}
 .td2-hud{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 8px}
 .td2-pill{background:#faf9ff;border:2px solid #eceaff;border-radius:12px;padding:5px 11px;font-size:14px;font-weight:700}
 .td2-wrap{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
-.td2-canvas{background:#a7f3c0;border:3px solid #6ee7a0;border-radius:14px;width:480px;max-width:100%;height:auto;touch-action:manipulation;cursor:pointer;will-change:contents;contain:paint;transform:translateZ(0)}
+.td2-canvas{background:#a7f3c0;border:3px solid #6ee7a0;border-radius:14px;width:560px;max-width:100%;height:auto;touch-action:manipulation;cursor:pointer;will-change:contents;contain:paint;transform:translateZ(0)}
 .td2-side{flex:1;min-width:190px}
+/* 📊 cột trái: bản đồ + bảng chỉ số lấp chỗ trống phía dưới */
+.td2-left{display:flex;flex-direction:column;gap:8px;width:560px;max-width:100%}
+.td2board{background:#faf9ff;border:2px solid #e4e0ff;border-radius:14px;padding:8px 10px;font-size:12.5px}
+.td2board-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.td2board-head b{font-size:13px}
+.td2b-tong{color:var(--muted);font-weight:700;font-size:11.5px}
+.td2b-tabs{margin-left:auto;display:flex;gap:4px}
+.td2bt{border:2px solid #ded9ff;background:#fff;border-radius:9px;padding:3px 7px;font-size:13px;line-height:1;cursor:pointer}
+.td2bt.on{border-color:var(--violet);background:#ede9ff}
+.td2bt:hover{background:#f3f1ff}
+.td2b-row{display:grid;grid-template-columns:18px 24px 1fr auto;grid-template-areas:'no em nm v' '. . bar bar';align-items:center;gap:4px 6px;padding:3px 0;border-top:1px solid #efecff}
+.td2b-row.dead{opacity:.45}
+.td2b-no{grid-area:no;color:var(--muted);font-weight:800;font-size:11px;text-align:right}
+.td2b-em{grid-area:em;font-size:17px;line-height:1}
+.td2b-nm{grid-area:nm;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.td2b-nm small{color:var(--muted);font-weight:700;font-size:10.5px}
+.td2b-v{grid-area:v;font-weight:800;font-family:'Baloo 2';white-space:nowrap}
+.td2b-sub{color:var(--muted);font-weight:700;font-size:10px}
+.td2b-bar{grid-area:bar;height:5px;background:#eceaff;border-radius:4px;overflow:hidden;display:block}
+.td2b-bar i{display:block;height:100%;border-radius:4px;transition:width .25s}
+.td2b-empty{color:var(--muted);font-weight:600;padding:6px 2px;font-size:12px}
+@media(max-width:620px){.td2-left{width:100%}.td2b-nm small{display:none}}
 .td2-shop{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:4px 0 8px}
 .td2-tower{background:#fff;border:2px solid #d9d6ff;border-radius:12px;padding:6px 4px;text-align:center;font-size:11.5px;font-weight:700;color:var(--ink);transition:.12s;line-height:1.25}
 .td2-tower:hover{background:#ede9ff;transform:translateY(-2px)}
@@ -4628,7 +4650,10 @@ function td2Shell(surv){
      <div id="td2qmode">${td2QModeBar()}</div>
      <div class="td2-q" id="td2q"></div>
      <div class="td2-wrap">
-       <canvas id="td2cv" width="480" height="400" class="td2-canvas"></canvas>
+       <div class="td2-left">
+         <canvas id="td2cv" width="480" height="400" class="td2-canvas"></canvas>
+         <div id="td2board" class="td2board"></div>
+       </div>
        <div class="td2-side" id="td2side"></div>
      </div>`;
   $('td2cv').onclick=td2Click;
@@ -5127,6 +5152,67 @@ function td2Pool(){
   }
   return poolVocab();
 }
+/* ===== 📊 BẢNG CHỈ SỐ TỪNG TRỤ (kiểu bảng điểm trong game MOBA) =====
+   Ghi lại suốt cả ván: sát thương, hạ quái, hồi máu, khống chế, phá khiên.
+   Hiện ngay dưới bản đồ — chỗ trước đây bị trống. */
+function td2St(t){
+  if(!t)return {dmg:0,kill:0,heal:0,cc:0,shield:0,minion:0};
+  if(!t.st)t.st={dmg:0,kill:0,heal:0,cc:0,shield:0,minion:0};
+  return t.st;
+}
+const TD_BOARD_COLS=[
+  {k:'dmg',   em:'⚔️', lab:'Sát thương', col:'#ef4444', fmt:v=>td2Num(v)},
+  {k:'kill',  em:'💀', lab:'Hạ quái',    col:'#8b5cf6', fmt:v=>Math.round(v).toLocaleString('vi')},
+  {k:'heal',  em:'💚', lab:'Hồi máu',    col:'#22c55e', fmt:v=>td2Num(v)},
+  {k:'cc',    em:'🧊', lab:'Khống chế',  col:'#0ea5e9', fmt:v=>v>=10?Math.round(v)+'s':v.toFixed(1)+'s'},
+  {k:'shield',em:'🛡️', lab:'Phá khiên',  col:'#3b82f6', fmt:v=>td2Num(v)},
+];
+let TD_BOARD_K=(function(){try{return localStorage.getItem('efz_bk')||'dmg'}catch(e){return 'dmg'}})();
+let TD_BOARD_ON=(function(){try{return localStorage.getItem('efz_bon')!=='0'}catch(e){return true}})();
+function td2BoardSet(k){TD_BOARD_K=k;try{localStorage.setItem('efz_bk',k)}catch(e){}sndClick();td2Board(true)}
+function td2BoardToggle(){TD_BOARD_ON=!TD_BOARD_ON;try{localStorage.setItem('efz_bon',TD_BOARD_ON?'1':'0')}catch(e){}sndClick();td2Board(true)}
+function td2BoardVal(t,k){
+  const st=td2St(t);
+  return k==='dmg' ? (st.dmg||0)+(st.minion||0) : (st[k]||0);
+}
+function td2Board(force){
+  const el=$('td2board'); if(!el||!GM||GM.type!=='tower2')return;
+  if(!force){
+    GM._bT=(GM._bT||0)+1;
+    if(GM._bT%20)return;            /* ~3 lần/giây là đủ mượt mắt */
+  }
+  const C=TD_BOARD_COLS.find(c=>c.k===TD_BOARD_K)||TD_BOARD_COLS[0];
+  const tabs=TD_BOARD_COLS.map(c=>
+    `<button class="td2bt${c.k===TD_BOARD_K?' on':''}" title="${c.lab}" onclick="td2BoardSet('${c.k}')">${c.em}</button>`).join('');
+  if(!TD_BOARD_ON){
+    el.innerHTML=`<div class="td2board-head"><b>📊 Bảng chỉ số trụ</b>
+      <button class="td2bt" onclick="td2BoardToggle()">👁️ Hiện</button></div>`;
+    return;
+  }
+  const rows=(GM.towers||[]).map(t=>({t,v:td2BoardVal(t,C.k)}));
+  rows.sort((a,b)=>b.v-a.v);
+  const max=Math.max(1,rows.length?rows[0].v:1);
+  const tong=rows.reduce((a,r)=>a+r.v,0);
+  const body=rows.length? rows.map((r,i)=>{
+    const t=r.t,T=TT[t.type]||{},st=td2St(t);
+    const pct=Math.max(2,Math.round(r.v/max*100));
+    const phu=C.k==='dmg'&&st.minion?` <span class="td2b-sub">(lính ${td2Num(st.minion)})</span>`:'';
+    return `<div class="td2b-row${t.broken?' dead':''}">
+      <span class="td2b-no">${i+1}</span>
+      <span class="td2b-em">${t.em||T.em||'🏰'}</span>
+      <span class="td2b-nm">${esc(T.name||t.type)} <small>Lv.${t.level}${t.star?' ⭐'+t.star:''}</small></span>
+      <span class="td2b-v" style="color:${C.col}">${C.fmt(r.v)}${phu}</span>
+      <span class="td2b-bar"><i style="width:${pct}%;background:${C.col}"></i></span>
+    </div>`;
+  }).join('') : `<div class="td2b-empty">Chưa đặt trụ nào — mua trụ ở cửa hàng bên phải rồi chạm lên bản đồ nhé!</div>`;
+  el.innerHTML=`<div class="td2board-head">
+      <b>📊 ${C.em} ${C.lab}</b>
+      <span class="td2b-tong">Tổng ${C.fmt(tong)}</span>
+      <span class="td2b-tabs">${tabs}</span>
+      <button class="td2bt" title="Ẩn bảng" onclick="td2BoardToggle()">✖️</button>
+    </div>${body}`;
+}
+
 /* ===== 🎖️ CHỌN ĐỘI HÌNH: qua đợt 15 thì chọn tối đa 6 trụ, các trụ khác bị loại khỏi game ===== */
 const TD_PICK_AT=15, TD_PICK_MAX=6;
 function td2PickOpen(){
@@ -5243,7 +5329,7 @@ function td2RoundDone(){
   for(const k in TT)if(td2UnlockAt(k)===GM.round){confetti(80);sndWin();toast('🦸 MỞ KHOÁ TRỤ MỚI: '+TT[k].em+' '+TT[k].name+' — '+TT[k].cost+'🪙, mạnh nhất game!')}
   td2Q();td2Side()
 }
-function td2HUD(){const g=$('td2gold');if(!g)return;
+function td2HUD(){td2Board();const g=$('td2gold');if(!g)return;
   const gv=Math.floor(GM.gold), lv=Math.max(0,GM.lives), bk=GM.bossKills||0;
   if(GM._hG!==gv){GM._hG=gv;g.textContent=gv}
   if(GM._hL!==lv){GM._hL=lv;const e=$('td2life');if(e)e.textContent=lv}
@@ -5332,10 +5418,10 @@ function td2Hit(t,e,raw,primary){
     e.shredV=Math.min(t.shredMax,old+t.shred);e.shredT=3.5;
     if(e.shredV>old&&Math.random()<.4)td2Pop(e.x,e.y-16,'🛡️−'+Math.round(e.shredV)+' giáp','#f472b6',11,-20);
   }
-  if(e.shield>0){const ab=Math.min(e.shield,d);e.shield-=ab;d-=ab;
+  if(e.shield>0){const ab=Math.min(e.shield,d);e.shield-=ab;d-=ab;td2St(t).shield+=ab;
     if(Math.random()<.4)td2Pop(e.x,e.y-22,'🔵 KHIÊN −'+td2Num(ab),'#60a5fa',11,-22);
     if(e.shield<=0&&e.boss){toast('💥 Khiên của '+e.bossName+' đã vỡ!');sndOK();td2Pop(e.x,e.y-26,'💥 VỠ KHIÊN!','#3b82f6',16,-30)}}
-  if(d>0)e.hp-=d;
+  if(d>0){e.hp-=d;td2St(t).dmg+=d}
   if(primary){
     const big=d>=e.max*.08;                       /* đòn nặng thì luôn hiện */
     if(crit)td2Pop(e.x,e.y,'💥 '+td2Num(d)+' CHÍ MẠNG!','#f59e0b',16,-34);
@@ -5344,13 +5430,13 @@ function td2Hit(t,e,raw,primary){
   }
   /* 🩸 hút máu: mỗi đòn trúng, trụ tự hồi một phần máu tối đa */
   if(t.lifesteal&&d>0&&t.maxHp&&t.hp<t.maxHp&&!t.broken){
-    const heal=t.maxHp*t.lifesteal;
-    t.hp=Math.min(t.maxHp,t.hp+heal);
+    const heal=Math.min(t.maxHp-t.hp,t.maxHp*t.lifesteal);
+    t.hp=Math.min(t.maxHp,t.hp+heal);td2St(t).heal+=heal;
     if(primary&&Math.random()<.14)td2Pop(t.x,t.y-20,'🩸 +'+td2Num(Math.round(heal)),'#f87171',11,-20);
   }
-  if(t.slow&&!e.noSlow){e.slowT=1.5;e.slowP=Math.min(e.slowP||1,t.slowP)}
-  if(t.burn)e.burn=Math.max(e.burn||0,t.burn*t.dmg);
-  if(e.hp<=0){e.dead=true;e.killed=true}
+  if(t.slow&&!e.noSlow){if(!(e.slowT>0))td2St(t).cc+=1.5;e.slowT=1.5;e.slowP=Math.min(e.slowP||1,t.slowP)}
+  if(t.burn){e.burn=Math.max(e.burn||0,t.burn*t.dmg);e.burnBy=t}
+  if(e.hp<=0&&!e.dead){e.dead=true;e.killed=true;td2St(t).kill++}
 }
 function td2MakeFx(t,tg){
   t.aimA=Math.atan2(tg.y-t.y,tg.x-t.x);   /* để trụ xoay/nghiêng về phía mục tiêu */
@@ -5499,7 +5585,9 @@ function td2Loop(ts){
     if(e.dead)continue;
     if(e.slowT>0){e.slowT-=dt;if(e.slowT<=0)e.slowP=1}
     if(e.shredT>0){e.shredT-=dt;if(e.shredT<=0)e.shredV=0}
-    if(e.burn>0){e.hp-=e.burn*dt;if(e.hp<=0){e.dead=true;e.killed=true;continue}}
+    if(e.burn>0){const bd=Math.min(Math.max(0,e.hp),e.burn*dt);e.hp-=e.burn*dt;
+      if(e.burnBy)td2St(e.burnBy).dmg+=bd;
+      if(e.hp<=0){e.dead=true;e.killed=true;if(e.burnBy)td2St(e.burnBy).kill++;continue}}
     if(e.boss&&e.ab){
       if(e.ab.indexOf('regen')>=0&&e.hp<e.max){e.hp=Math.min(e.max,e.hp+e.max*.004*dt);if(Math.random()<dt*.5)td2Pop(e.x,e.y-18,'💚 hồi máu','#22c55e',11,-18)}
       if(e.ab.indexOf('rage')>=0&&!e.raged&&e.hp<e.max*.4){e.raged=true;e.speed*=1.35;sndNo();toast('😤 '+e.bossName+' NỔI GIẬN — tăng tốc!')}
@@ -5605,7 +5693,7 @@ function td2Loop(ts){
         if(e.d>bd){bd=e.d;best=e}}
       if(best){
         const bdd=Math.min(GM.total-4,best.d+26),pp=td2Pos(bdd);
-        GM.bergs.push({d:bdd,x:pp.x,y:pp.y,t:t.bergHold,max:t.bergHold});
+        GM.bergs.push({d:bdd,x:pp.x,y:pp.y,t:t.bergHold,max:t.bergHold});td2St(t).cc+=t.bergHold;
         td2Pop(pp.x,pp.y-16,'🧊 CHẶN ĐƯỜNG!','#7dd3fc',13,-24);
         td2FxAdd({x1:t.x,y1:t.y-4,x2:pp.x,y2:pp.y,c:'#7dd3fc',kind:'frost',lv:t.level,t:0,dur:.22,arc:10});
       }else t.bergCd=1;
@@ -5621,7 +5709,11 @@ function td2Loop(ts){
     if(foe){
       if(!foe.blocked)td2Pop(foe.x,foe.y-14,'🛑 BỊ CHẶN','#f97316',11,-18);
       foe.blocked=true;m.fight=.18;
-      m.cd-=dt;if(m.cd<=0){m.cd=m.rate;foe.hp-=m.dmg;if(foe.hp<=0){foe.dead=true;foe.killed=true}}
+      m.cd-=dt;if(m.cd<=0){m.cd=m.rate;
+        const md=Math.min(Math.max(0,foe.hp),m.dmg);foe.hp-=m.dmg;
+        if(m.owner)td2St(m.owner).minion+=md;
+        if(foe.hp<=0&&!foe.dead){foe.dead=true;foe.killed=true;if(m.owner)td2St(m.owner).kill++}}
+      if(m.owner)td2St(m.owner).cc+=dt;
       m.hp-=eDps*(foe.boss?2.4:1)*dt;
       if(m.hp<=0){m.dead=true;td2FxAdd({x1:m.x,y1:m.y,x2:m.x,y2:m.y,c:'#94a3b8',kind:'poof',lv:1,t:0,dur:.4})}
     }else{
@@ -5636,10 +5728,12 @@ function td2Loop(ts){
     if(t.maxHp===undefined)td2Stats(t);
     if(t.hp===undefined)t.hp=t.maxHp;
     /* 💚 tự hồi máu (bậc cao & có sao) */
-    if(!t.broken&&t.regen&&t.hp<t.maxHp)t.hp=Math.min(t.maxHp,t.hp+t.maxHp*t.regen*dt);
+    if(!t.broken&&t.regen&&t.hp<t.maxHp){const h=Math.min(t.maxHp-t.hp,t.maxHp*t.regen*dt);
+      t.hp+=h;td2St(t).heal+=h}
     /* 💚 Lv.20 hồi máu cho các trụ xung quanh */
     if(!t.broken&&t.auraHeal){for(const o of GM.towers){if(o===t||o.broken||o.hp>=o.maxHp)continue;
-      if(Math.hypot(o.x-t.x,o.y-t.y)<110)o.hp=Math.min(o.maxHp,o.hp+o.maxHp*t.auraHeal*dt)}}
+      if(Math.hypot(o.x-t.x,o.y-t.y)<110){const h=Math.min(o.maxHp-o.hp,o.maxHp*t.auraHeal*dt);
+        o.hp+=h;td2St(t).heal+=h}}}
     if(t.broken)continue;
     if(t.stun>0){t.stun-=dt;continue}
     t.cd-=dt;if(t.cd<=0){let tg=null,best=-1,bt=null,bb=-1;
