@@ -77,6 +77,28 @@ header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 0 4p
 .ielts-subtab{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
 .ielts-subtab button{padding:7px 16px;border-radius:20px;border:2px solid #e2e8f0;background:#fff;font-weight:700;cursor:pointer;transition:.15s;font-size:13px}
 .ielts-subtab button.on{background:#0f766e;color:#fff;border-color:#0f766e}
+.gpill.gh{background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff}
+.hsa-subtab{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.hsa-subtab button{padding:7px 16px;border-radius:20px;border:2px solid #e2e8f0;background:#fff;font-weight:700;cursor:pointer;transition:.15s;font-size:13px}
+.hsa-subtab button.on{background:#7c3aed;color:#fff;border-color:#7c3aed}
+.hsa-q-card{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.13);border-radius:14px;padding:18px;margin-bottom:14px}
+.hsa-q-card .q-num{font-weight:800;color:#c084fc;font-size:14px;margin-bottom:6px}
+.hsa-q-card .q-text{font-size:15px;line-height:1.6;margin-bottom:12px;color:#e2e8f0}
+.hsa-q-card .q-passage{background:rgba(255,255,255,.05);border-left:3px solid #c084fc;padding:12px 16px;margin:10px 0 14px;border-radius:0 10px 10px 0;font-size:14px;line-height:1.7;color:#cbd5e1}
+.hsa-opts{display:grid;gap:8px}
+.hsa-opt{padding:12px 16px;border-radius:10px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);cursor:pointer;text-align:left;font-size:14px;transition:.2s;color:#e2e8f0}
+.hsa-opt:hover{border-color:#c084fc;background:rgba(124,58,237,.15)}
+.hsa-opt.correct{border-color:#22c55e;background:rgba(34,197,94,.15);color:#4ade80}
+.hsa-opt.wrong{border-color:#ef4444;background:rgba(239,68,68,.15);color:#f87171}
+.hsa-opt.reveal{border-color:#22c55e;background:rgba(34,197,94,.1)}
+.hsa-explain{margin-top:12px;padding:14px;background:rgba(124,58,237,.1);border-radius:10px;border:1px solid rgba(124,58,237,.25);display:none}
+.hsa-explain.show{display:block}
+.hsa-explain .exp-title{font-weight:700;color:#c084fc;margin-bottom:4px;font-size:13px}
+.hsa-explain .exp-body{font-size:13.5px;line-height:1.6;color:#cbd5e1}
+.hsa-score-bar{display:flex;gap:16px;align-items:center;padding:14px 18px;background:rgba(124,58,237,.12);border-radius:12px;margin-bottom:18px;flex-wrap:wrap}
+.hsa-score-bar .sc-item{font-size:14px;font-weight:600;color:#e2e8f0}
+.hsa-score-bar .sc-item b{color:#c084fc}
+.hsa-cat-header{font-size:15px;font-weight:700;color:#c084fc;margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.1)}
 .ielts-topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;margin-bottom:8px}
 .ielts-topic-card{background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:2px solid #99f6e4;border-radius:16px;padding:14px 10px;text-align:center;cursor:pointer;transition:.2s}
 .ielts-topic-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(15,118,110,.2)}
@@ -610,6 +632,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
     <button class="gpill g11" data-g="11" onclick="setGrade(11)">🏅 Lớp 11<small>Global Success 11</small></button>
     <button class="gpill g12" data-g="12" onclick="setGrade(12)">🎖️ Lớp 12<small>Global Success 12</small></button>
     <button class="gpill gi" id="gpillIELTS" onclick="goIELTS()">📝 IELTS<small>Vocab · Paraphrase</small></button>
+    <button class="gpill gh" id="gpillHSA" onclick="goHSA()">🎯 HSA ĐGNL<small>Đánh Giá Năng Lực</small></button>
   </div>
 
   <nav id="nav">
@@ -623,6 +646,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
     <button class="tab" data-s="grammar" onclick="go('grammar')"><span class="ico">📝</span>Ôn Ngữ Pháp</button>
     <button class="tab" data-s="board" onclick="go('board')"><span class="ico">🏆</span>Bảng vàng</button>
     <button class="tab" data-s="ielts" onclick="go('ielts')" style="display:none" id="tabIELTS"><span class="ico">📝</span>IELTS</button>
+    <button class="tab" data-s="hsa" onclick="go('hsa')" style="display:none" id="tabHSA"><span class="ico">🎯</span>HSA ĐGNL</button>
   </nav>
 
   <!-- HOME -->
@@ -717,7 +741,20 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
     </div>
   </section>
 
-  <footer>Made with 💜 for học trò của thầy Vũ Nguyên — English Fun Zone 2026</footer>
+<!-- HSA ĐGNL -->
+  <section id="sec-hsa">
+    <div class="card">
+      <h2>🎯 Tiếng Anh HSA Đánh Giá Năng Lực</h2>
+      <p class="sub">Luyện đề ĐGNL — Ngôn ngữ & Tiếng Anh · Đáp án + Giải thích chi tiết</p>
+      <div class="hsa-subtab" id="hsaSubtab">
+        <button class="on" onclick="showHSATab('eng')">🇬🇧 Đề 1 - Tiếng Anh</button>
+        <button onclick="showHSATab('vn')">🇻🇳 Đề 1 - Ngôn Ngữ</button>
+      </div>
+      <div id="hsaContent"></div>
+    </div>
+  </section>
+
+    <footer>Made with 💜 for học trò của thầy Vũ Nguyên — English Fun Zone 2026</footer>
 </div>
 
 <!-- name modal -->
@@ -898,17 +935,18 @@ function go(s){
   if(s==='writing')writingHome();
   if(s==='games')gamesHome();
   if(s==='board'){renderBoard();renderBadges()}
-  if(s!=='ielts'){try{_iqStop()}catch(e){}}
+  if(s!=='ielts'&&s!=='hsa'){try{_iqStop()}catch(e){}}
   if(s==='ielts'){showIELTSTab(_ieltsTab||'vocab')}
+  if(s==='hsa'){showHSATab(_hsaTab||'eng')}
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function setGrade(g){
   grade=g;sndClick();
   document.querySelectorAll('.gpill').forEach(p=>p.classList.toggle('on',+p.dataset.g===g));
   // Hide IELTS tab when switching to a normal grade
-  const ti=$('tabIELTS');if(ti)ti.style.display='none';
+  const ti=$('tabIELTS');if(ti)ti.style.display='none';const th=$('tabHSA');if(th)th.style.display='none';
   toast('📚 Đã chuyển sang <b>Lớp '+g+'</b>!');
-  go(curSec==='ielts'?'home':curSec==='home'?'home':curSec);
+  go(curSec==='ielts'||curSec==='hsa'?'home':curSec==='home'?'home':curSec);
 }
 
 /* ===== helpers ===== */
@@ -3754,6 +3792,220 @@ const IELTS_PARA=[
   {word:'because',vn:'vì/bởi vì',syns:['since','as','due to','owing to','given that','on account of','as a result of','in light of']},
   {word:'cause / lead to',vn:'gây ra / dẫn đến',syns:['result in','trigger','bring about','generate','contribute to','give rise to','produce','create']},
   {word:'improve',vn:'cải thiện',syns:['enhance','boost','advance','strengthen','upgrade','develop','optimize','elevate']},
+];
+
+/* ================= HSA ĐGNL ================= */
+let _hsaTab='eng';
+function goHSA(){
+  document.querySelectorAll('.gpill').forEach(p=>p.classList.remove('on'));
+  document.getElementById('gpillHSA').classList.add('on');
+  document.getElementById('tabHSA').style.display='';
+  const ti=$('tabIELTS');if(ti)ti.style.display='none';
+  go('hsa');
+}
+function showHSATab(tab){
+  _hsaTab=tab;
+  document.querySelectorAll('#hsaSubtab button').forEach((b,i)=>{
+    b.classList.toggle('on',i===(['eng','vn'].indexOf(tab)));
+  });
+  if(tab==='eng') renderHSAQuiz(HSA_ENG_DATA,'eng');
+  else renderHSAQuiz(HSA_VN_DATA,'vn');
+}
+
+let _hsaState={};
+function renderHSAQuiz(data,prefix){
+  const el=$('hsaContent');
+  _hsaState={answered:0,correct:0,total:data.reduce((s,cat)=>s+cat.questions.length,0)};
+  let h=`<div class="hsa-score-bar" id="hsa-score-${prefix}">
+    <div class="sc-item">📊 Đã làm: <b><span id="hsa-done-${prefix}">0</span>/${_hsaState.total}</b></div>
+    <div class="sc-item">✅ Đúng: <b><span id="hsa-right-${prefix}">0</span></b></div>
+    <div class="sc-item">📈 Tỉ lệ: <b><span id="hsa-pct-${prefix}">0</span>%</b></div>
+  </div>`;
+  data.forEach(cat=>{
+    h+=`<div class="hsa-cat-header">${cat.icon} ${cat.title}</div>`;
+    if(cat.passage) h+=`<div class="hsa-q-card"><div class="q-passage">${cat.passage}</div></div>`;
+    cat.questions.forEach(q=>{
+      const qid=prefix+'-'+q.num;
+      h+=`<div class="hsa-q-card" id="hq-${qid}">`;
+      h+=`<div class="q-num">Câu ${q.num} ${q.level?'('+q.level+')':''}</div>`;
+      h+=`<div class="q-text">${q.text}</div>`;
+      h+=`<div class="hsa-opts">`;
+      q.opts.forEach((opt,i)=>{
+        const letter='ABCD'[i];
+        h+=`<button class="hsa-opt" data-qid="${qid}" data-idx="${i}" onclick="hsaAnswer('${qid}',${i},'${prefix}')">${letter}. ${opt}</button>`;
+      });
+      h+=`</div>`;
+      h+=`<div class="hsa-explain" id="hexp-${qid}">`;
+      h+=`<div class="exp-title">💡 Giải chi tiết</div>`;
+      h+=`<div class="exp-body">${q.explain}</div>`;
+      h+=`</div></div>`;
+    });
+  });
+  el.innerHTML=h;
+}
+
+function hsaAnswer(qid,idx,prefix){
+  const card=document.getElementById('hq-'+qid);
+  if(card.dataset.done) return;
+  card.dataset.done='1';
+  const btns=card.querySelectorAll('.hsa-opt');
+  // Find correct index
+  let correctIdx=-1;
+  const allData=prefix==='eng'?HSA_ENG_DATA:HSA_VN_DATA;
+  for(const cat of allData){
+    for(const q of cat.questions){
+      if(prefix+'-'+q.num===qid){correctIdx=q.ans;break}
+    }
+    if(correctIdx>=0) break;
+  }
+  btns.forEach((b,i)=>{
+    b.style.cursor='default';
+    if(i===correctIdx) b.classList.add('correct');
+    if(i===idx && i!==correctIdx) b.classList.add('wrong');
+    if(i!==idx && i!==correctIdx) b.style.opacity='0.4';
+  });
+  const exp=document.getElementById('hexp-'+qid);
+  exp.classList.add('show');
+  _hsaState.answered++;
+  if(idx===correctIdx) _hsaState.correct++;
+  const de=$('hsa-done-'+prefix); if(de) de.textContent=_hsaState.answered;
+  const re=$('hsa-right-'+prefix); if(re) re.textContent=_hsaState.correct;
+  const pe=$('hsa-pct-'+prefix); if(pe) pe.textContent=_hsaState.answered?Math.round(_hsaState.correct/_hsaState.answered*100):0;
+  try{sndClick()}catch(e){}
+  if(idx===correctIdx){try{addXP(5);toast('🎯 Chính xác! +5 XP')}catch(e){}}
+  else{try{toast('❌ Sai rồi! Đáp án đúng: '+'ABCD'[correctIdx])}catch(e){}}
+}
+
+/* ===== ENGLISH DATA (Q601-650) ===== */
+const HSA_ENG_DATA=[
+{icon:'📝',title:'Sentence Completion (601-610)',questions:[
+{num:601,level:'NB',text:'This class, ______ is a prerequisite for microbiology, is so difficult that I would rather drop it.',opts:['that','when','where','which'],ans:3,explain:'<b>Phương pháp:</b> Đại từ quan hệ<br><b>Giải:</b> "Which" thay thế cho danh từ chỉ sự vật đứng trước nó.<br><b>Tạm dịch:</b> Lớp học này, vốn là điều kiện tiên quyết cho môn vi sinh, khó đến mức tôi muốn bỏ nó.'},
+{num:602,level:'TH',text:'I haven\'t read any medical books or articles on the subject for a long time, so I\'m ______ with recent developments.',opts:['out of reach','out of the condition','out of touch','out of the question'],ans:2,explain:'<b>Phương pháp:</b> Kết hợp từ<br><b>Giải:</b> out of touch: mất liên hệ, không theo kịp.<br><b>Tạm dịch:</b> Đã lâu rồi tôi không đọc bất kỳ sách hay bài viết y khoa nào nên tôi không theo kịp những diễn biến gần đây.'},
+{num:603,level:'TH',text:'It turned out that we ______ rushed to the airport as the plane was delayed.',opts:['hadn\'t','should have','mustn\'t','needn\'t have'],ans:3,explain:'<b>Phương pháp:</b> Động từ khuyết thiếu<br><b>Giải:</b> Needn\'t have + PII: đáng lẽ ra không cần làm gì.<br><b>Tạm dịch:</b> Hóa ra là chúng tôi không cần phải vội vã ra sân bay vì chuyến bay đã bị hoãn.'},
+{num:604,level:'TH',text:'When the Titanic started sinking, the passengers were ______.',opts:['horrifying','apprehensive','panic-stricken','weather-beaten'],ans:2,explain:'<b>Phương pháp:</b> Từ vựng<br><b>Giải:</b> panic-stricken (adj): hoảng loạn.<br><b>Tạm dịch:</b> Khi tàu Titanic bắt đầu chìm, hành khách hoảng loạn.'},
+{num:605,level:'NB',text:'Everyone in both cars ______ injured in the accident last night, ______?',opts:['was/weren\'t they','were/weren\'t they','was/wasn\'t he','were/were they'],ans:0,explain:'<b>Phương pháp:</b> Câu hỏi đuôi<br><b>Giải:</b> "Everyone" chia động từ số ít (was). Câu khẳng định → câu hỏi đuôi phủ định. Đại từ thay thế "Everyone" là "they".<br><b>Tạm dịch:</b> Mọi người trên cả hai xe đều bị thương trong vụ tai nạn đêm qua, đúng không?'},
+{num:606,level:'NB',text:'Kate didn\'t enjoy the roller coaster ride because it was ______ experience of her life.',opts:['the most terrifying','the most terrified','a most terrified','far more terrifying'],ans:0,explain:'<b>Phương pháp:</b> So sánh nhất<br><b>Giải:</b> Cấu trúc: S + tobe + the most + adj dài.<br><b>Tạm dịch:</b> Kate không thích trò tàu lượn siêu tốc vì đó là trải nghiệm đáng sợ nhất trong cuộc đời cô.'},
+{num:607,level:'TH',text:'He would win the race if he ______ followed his brother\'s example and trained harder.',opts:['has','had','were','will have'],ans:1,explain:'<b>Phương pháp:</b> Câu điều kiện loại 2<br><b>Giải:</b> If + S + V-ed/V2, S + would + V.<br><b>Tạm dịch:</b> Anh ấy sẽ chiến thắng cuộc đua nếu anh ấy noi gương anh trai mình và tập luyện chăm chỉ hơn.'},
+{num:608,level:'VD',text:'By appearing on the soap powder commercials, she became a ______ name.',opts:['housekeeper','housewife','household','house'],ans:2,explain:'<b>Phương pháp:</b> Kết hợp từ<br><b>Giải:</b> household name: trở nên quen thuộc, ai cũng biết.<br><b>Tạm dịch:</b> Bằng cách xuất hiện trên các quảng cáo bột xà phòng, cô đã trở thành cái tên quen thuộc.'},
+{num:609,level:'TH',text:'I had the electrician ______ my broken light.',opts:['looked at','looking at','to look at','look at'],ans:3,explain:'<b>Phương pháp:</b> Dạng động từ<br><b>Giải:</b> Have sb + V nguyên thể: nhờ ai làm gì.<br><b>Tạm dịch:</b> Tôi đã nhờ thợ điện xem xét chiếc đèn bị hỏng của tôi.'},
+{num:610,level:'VDC',text:'You got a serious fever last week but now I can see you ______.',opts:['on the mend','on the way','on the whole','on the pot'],ans:0,explain:'<b>Phương pháp:</b> Thành ngữ<br><b>Giải:</b> On the mend: hồi phục, khỏe mạnh.<br><b>Tạm dịch:</b> Tuần trước bạn bị sốt rất nặng nhưng bây giờ tôi thấy bạn đang hồi phục.'}
+]},
+{icon:'🔍',title:'Synonyms (611-612)',questions:[
+{num:611,level:'',text:'Laws on military service since 1960 still <u>hold good</u>.',opts:['remains for good','is still in good condition','stands in life','remains in effect'],ans:3,explain:'<b>Phương pháp:</b> Kết hợp từ<br><b>Giải:</b> hold good: còn hiệu lực = remains in effect.<br><b>Tạm dịch:</b> Luật về nghĩa vụ quân sự từ năm 1960 vẫn còn hiệu lực.'},
+{num:612,level:'',text:'The expression "out of the frying pan and into the fire" means to go from one <u>dilemma</u> to a worse one.',opts:['situation','predicament','solution','embarrassment'],ans:1,explain:'<b>Phương pháp:</b> Từ vựng<br><b>Giải:</b> dilemma (n): tiến thoái lưỡng nan = predicament.<br><b>Tạm dịch:</b> Thành ngữ "ra khỏi chảo rán và vào lửa" có nghĩa là đi từ tình thế khó khăn này sang tình thế khó khăn khác tồi tệ hơn.'}
+]},
+{icon:'🔄',title:'Antonyms (613-614)',questions:[
+{num:613,level:'TH',text:'Nutritionists believe that vitamins <u>circumvent</u> diseases.',opts:['defeat','promote','help','treat'],ans:1,explain:'<b>Phương pháp:</b> Từ vựng<br><b>Giải:</b> circumvent (v): tránh >< promote (v): thúc đẩy.<br><b>Tạm dịch:</b> Các chuyên gia dinh dưỡng tin rằng vitamin có thể ngăn ngừa bệnh tật.'},
+{num:614,level:'NB',text:'We have lived there for years and <u>grown fond of the surroundings</u>. That is why we do not want to leave.',opts:['loved the surroundings','planted many trees in the surroundings','possessed by the surroundings','detest the surroundings'],ans:3,explain:'<b>Phương pháp:</b> Từ vựng<br><b>Giải:</b> grown fond of: dần yêu thích >< detest: ghét.<br><b>Tạm dịch:</b> Chúng tôi đã sống ở đó nhiều năm và yêu thích môi trường xung quanh. Đó là lý do tại sao chúng tôi không muốn rời đi.'}
+]},
+{icon:'💬',title:'Dialogue Completion (615-618)',questions:[
+{num:615,level:'NB',text:'Jane: "Was everyone happy with the decision?"<br>Billy: "______"',opts:['That sounds like fun.','Yes, certainly.','No, have you?','Not really.'],ans:1,explain:'<b>Phương pháp:</b> Ngôn ngữ giao tiếp<br><b>Giải:</b> Jane hỏi mọi người có hài lòng không → Billy đáp: "Có, chắc chắn là vậy."'},
+{num:616,level:'NB',text:'Lucy: "Is it all right if I play the guitar in here while you\'re studying?"<br>Pete: "______"',opts:['Oh, I wish you wouldn\'t.','Well, I\'d rather not.','Well, actually, I\'d prefer it if you didn\'t.','Well, if only you didn\'t.'],ans:2,explain:'<b>Phương pháp:</b> Ngôn ngữ giao tiếp<br><b>Giải:</b> Lucy xin phép chơi guitar → Pete từ chối lịch sự: "Thực ra, em thích anh không chơi hơn."'},
+{num:617,level:'NB',text:'"That\'s a very nice skirt you\'re wearing." — "______"',opts:['How a compliment!','That\'s all right.','It\'s nice of you to say so.','I like you said so.'],ans:2,explain:'<b>Phương pháp:</b> Ngôn ngữ giao tiếp<br><b>Giải:</b> Khi được khen → đáp lại: "Bạn nói thế thật tốt."'},
+{num:618,level:'NB',text:'"______" — "Yes, of course."',opts:['You won\'t help me this time.','You\'d better give me one hand.','I don\'t think I\'ll need your help.','Could you give me a hand?'],ans:3,explain:'<b>Phương pháp:</b> Ngôn ngữ giao tiếp<br><b>Giải:</b> "Anh có thể giúp tôi một tay không?" → "Được chứ, tất nhiên rồi."'}
+]},
+{icon:'🔢',title:'Sentence Arrangement (619-622)',questions:[
+{num:619,level:'TH',text:'a. Finally, doing exercise daily helps in producing cells in the hippocampus...<br>b. In addition, it helps in developing your muscles...<br>c. First of all, it helps in maintaining your weight.<br>d. Exercise has a lot of benefits in today\'s world.<br>e. Moreover, it helps you reduce weight if you are overweight.',opts:['b-e-d-a-c','d-e-c-b-a','d-a-b-e-c','d-c-e-b-a'],ans:3,explain:'<b>Phương pháp:</b> Sắp xếp câu<br><b>Giải:</b> d (giới thiệu) → c (First of all) → e (Moreover) → b (In addition) → a (Finally).<br>Thứ tự logic: giới thiệu → lần lượt các lợi ích → kết luận.'},
+{num:620,level:'TH',text:'a. First, what are the university entry requirements...?<br>b. Regards,<br>c. Dear Kevin, I hope you are well! I am writing to ask you...<br>d. What\'s more, what types of accommodation are available...?<br>e. Do I have to take any university entrance examinations...?<br>f. I wish you and your family the best',opts:['c-e-a-d-f-b','c-a-e-f-d-b','c-a-e-d-f-b','c-a-b-f-d-e'],ans:2,explain:'<b>Phương pháp:</b> Sắp xếp câu (thư)<br><b>Giải:</b> c (lời chào) → a (First, câu hỏi 1) → e (câu hỏi 2) → d (What\'s more, câu hỏi 3) → f (lời chúc) → b (kết thư).'},
+{num:621,level:'TH',text:'a. Well, next to the broken glass was a baseball.<br>b. Why, what leads you to that suspicion?<br>c. I have a feeling that it might have been the neighborhood kids.<br>d. Well, a baseball is certainly solid evidence.',opts:['b-c-a-c','b-d-c-a','c-a-b-d','c-b-a-d'],ans:3,explain:'<b>Phương pháp:</b> Sắp xếp câu (hội thoại)<br><b>Giải:</b> c (nghi ngờ) → b (hỏi tại sao) → a (bằng chứng: quả bóng chày) → d (xác nhận bằng chứng).'},
+{num:622,level:'TH',text:'a. Alright, come over now and show me how to use it.<br>b. If the key doesn\'t work, I\'ll have to call a repairman.<br>c. Well, if it doesn\'t work, that\'s fine.<br>d. Well, I have a spare key, so I\'ll come over to show you how to use it.',opts:['d-a-b-c','d-b-a-c','d-c-b-a','d-b-c-a'],ans:3,explain:'<b>Phương pháp:</b> Sắp xếp câu (hội thoại)<br><b>Giải:</b> d (đề nghị) → b (nếu không được thì gọi thợ) → c (không sao) → a (OK, đến đây đi).'}
+]},
+{icon:'✏️',title:'Sentence Rewriting (623-626)',questions:[
+{num:623,level:'NB',text:'"I have never been to Russia. I think I shall go there next year." said Bill.',opts:['Bill said that he had never been to Russia and he thought he would go there the next year.','Bill said that he would have never been to Russia and he thinks he would go there the next year.','Bill said that he had never been to Russia and he thinks he will go there the next year.','Bill said that he has never been to Russia and he thinks he would go there the next year.'],ans:0,explain:'<b>Phương pháp:</b> Câu trần thuật<br><b>Giải:</b> Lùi hiện tại hoàn thành → quá khứ hoàn thành; "shall" → "would"; "next year" → "the next year".'},
+{num:624,level:'TH',text:'People believed that Jane retired because of her poor health.',opts:['Jane is believed to have retired because of her poor health.','Jane was believed to have retired because of her poor health.','It is believed that Jane retired because of her poor health.','Jane retired because of her poor health was believed.'],ans:1,explain:'<b>Phương pháp:</b> Câu bị động đặc biệt<br><b>Giải:</b> Câu ở thì quá khứ đơn → "was believed to have retired". Loại A, C (sai thì), D (sai ngữ pháp).'},
+{num:625,level:'TH',text:'Charles would have won the essay contest if he had typed his paper.',opts:['Charles won the essay contest in spite of not typing his paper.','Charles did not win the essay contest because he did not type his paper.','Typing his paper made Charles win the essay contest.','Charles did not win the essay contest even though he typed his paper.'],ans:1,explain:'<b>Phương pháp:</b> Câu điều kiện loại 3<br><b>Giải:</b> Diễn tả điều không có thật trong quá khứ → Charles không thắng vì không đánh máy bài.'},
+{num:626,level:'NB',text:'Rather than disturb the meeting, I left without saying goodbye.',opts:['I disturbed the meeting because I said goodbye.','I would rather disturb the meeting than leave without saying goodbye.','The meeting was disturbed as I left saying goodbye.','I left without saying goodbye as I didn\'t want to disturb the meeting.'],ans:3,explain:'<b>Phương pháp:</b> Liên từ<br><b>Giải:</b> "Rather than" = vì không muốn → "as I didn\'t want to disturb the meeting".'}
+]},
+{icon:'🔗',title:'Sentence Combination (627-630)',questions:[
+{num:627,level:'TH',text:'The young girl has great experience of nursing. She has worked as a hospital volunteer for years.',opts:['Before she worked as a hospital volunteer for years, the young girl has great experience of nursing.','Much as she has worked as a hospital volunteer for years, the young girl has great experience of nursing.','Having worked as a hospital volunteer for years, the young girl has great experience of nursing.','With great experience of nursing, the young girl has worked as a hospital volunteer for years.'],ans:2,explain:'<b>Phương pháp:</b> Mệnh đề phân từ hoàn thành<br><b>Giải:</b> Having + PII/V-ing..., mệnh đề: Sau khi..., .....'},
+{num:628,level:'VD',text:'Peter told us about his leaving the school. He did it on his arrival at the meeting.',opts:['Only after his leaving the school did Peter inform us of his arrival at the meeting.','Not until Peter told us that he would leave the school did he arrive at the meeting.','Hardly had Peter informed us about his leaving the school when he arrived at the meeting.','No sooner had Peter arrived at the meeting than he told us about his leaving the school.'],ans:3,explain:'<b>Phương pháp:</b> Câu đảo ngữ<br><b>Giải:</b> No sooner + đảo ngữ + than + mệnh đề: vừa mới... thì đã...'},
+{num:629,level:'TH',text:'He was successful because he was determined to pursue personal goals. He was not talented.',opts:['In addition to his determination, his talent ensured his success in pursuing his goals.','His determination to pursue personal goals made him successful and talented.','It was his determination to pursue personal goals, not talent, that contributed to his success.','His success lay in his natural ability, not in his determination to pursue personal goals.'],ans:2,explain:'<b>Phương pháp:</b> Câu chẻ<br><b>Giải:</b> It + to be + N + that + S + V: Chính... mà...<br>Chính quyết tâm theo đuổi mục tiêu, chứ không phải tài năng, đã góp phần vào thành công.'},
+{num:630,level:'TH',text:'There was a serious flood. All local pupils couldn\'t go to school on that day.',opts:['The serious flood hinder all local pupils in their efforts not to go to school on that day.','The serious flood hindered all local pupils from going to school on that day.','The serious flood made all pupils from not going to school on that day.','The serious flood caused all local pupils not go to school on that day.'],ans:1,explain:'<b>Phương pháp:</b> Kết hợp từ<br><b>Giải:</b> Hinder sb from + V-ing: ngăn cản ai khỏi điều gì.'}
+]},
+{icon:'📖',title:'Cloze Text — Rainbows (631-635)',passage:'A rainbow is an optical display of color that usually appears in the sky when a beam of sunlight refracts through millions of raindrops. Each (631)______ color from the spectrum is then sent to your eyes...<br><br>After studying rainbows in (632)______ Sir Isaac Newton was able to explain how they are formed. However, he was color blind, so he had to rely on the eyes of his assistant, who could easily (633)______ all the seven colors...<br><br>Secondary rainbows are unusual because the light is reflected twice within the raindrop before it (634)______ a rainbow...<br><br>...it moves away from you as quickly as you (635)______.',questions:[
+{num:631,level:'NB',text:'Each (631)______ color from the spectrum is then sent to your eyes.',opts:['single','divided','detached','separate'],ans:3,explain:'<b>Phương pháp:</b> Từ vựng<br><b>Giải:</b> separate (adj): tách rời, riêng biệt. "Each separate color" = mỗi màu riêng biệt.'},
+{num:632,level:'NB',text:'After studying rainbows in (632)______',opts:['depth','width','breadth','length'],ans:0,explain:'<b>Phương pháp:</b> Kết hợp từ<br><b>Giải:</b> in depth: một cách sâu sắc, chuyên sâu.'},
+{num:633,level:'NB',text:'...his assistant, who could easily (633)______ all the seven colors.',opts:['realize','discover','understand','recognize'],ans:3,explain:'<b>Phương pháp:</b> Từ vựng<br><b>Giải:</b> recognize (v): nhận ra. Trợ lý có thể dễ dàng nhận ra cả bảy màu.'},
+{num:634,level:'NB',text:'...the light is reflected twice within the raindrop before it (634)______ a rainbow.',opts:['forms','grows','develops','shapes'],ans:0,explain:'<b>Phương pháp:</b> Từ vựng<br><b>Giải:</b> form (v): hình thành, tạo thành. Ánh sáng phản xạ hai lần trước khi tạo thành cầu vồng.'},
+{num:635,level:'NB',text:'...it moves away from you as quickly as you (635)______.',opts:['progress','arrive','get','approach'],ans:3,explain:'<b>Phương pháp:</b> Từ vựng<br><b>Giải:</b> approach (v): tiếp cận, đến gần. Cầu vồng di chuyển ra xa nhanh như khi bạn đến gần.'}
+]},
+{icon:'📚',title:'Reading — Duncan Phyfe (636-640)',passage:'Duncan Phyfe made some of the most beautiful furniture found in America. His family name was originally Fife, and he was born in Scotland in 1768. In 1784, the Fife family immigrated to Albany, New York where Duncan\'s father opened a cabinetmaking shop. Duncan followed his father\'s footsteps and was apprenticed to a cabinetmaker...<br><br>At the peak of his success, Phyfe employed 100 craftsmen. Each piece of furniture was made of the best available materials. He was reported to have paid $1,000 for a single Santo Domingo mahogany log...',questions:[
+{num:636,level:'TH',text:'What is the main idea of the passage?',opts:['The business of cabinetmaking.','The significance of Duncan Phyfe\'s name.','Duncan Phyfe\'s life and career.','Duncan Phyfe\'s cabinetmaking designs.'],ans:2,explain:'<b>Phương pháp:</b> Đọc – Ý chính<br><b>Giải:</b> Bài viết nói về cuộc đời và sự nghiệp của Duncan Phyfe từ khi sinh ra đến khi thành công.'},
+{num:637,level:'TH',text:'According to the passage, which of the following does the author imply?',opts:['Duncan Fife and his father had the same first name.','Duncan Fife worked for his father in Scotland.','Duncan Fife and his father were in the same business.','Duncan Phyfe made over 100 different kinds of tables.'],ans:2,explain:'<b>Phương pháp:</b> Đọc – Chi tiết<br><b>Giải:</b> Cha Duncan mở cửa hàng làm tủ. Duncan theo bước chân cha và học nghề làm tủ → cùng ngành.'},
+{num:638,level:'NB',text:'Which choice does the word "it" in paragraph 3 refer to?',opts:['His spelling','His chair','His French','His name'],ans:3,explain:'<b>Phương pháp:</b> Đọc – Từ thay thế<br><b>Giải:</b> "his new name had more to do with hanging <u>it</u> on a sign" → "it" = his name.'},
+{num:639,level:'VD',text:'Which choice is closest in meaning to the word "guild" in paragraph 4?',opts:['Verdict of a jury','Organization of craftsmen','Political party of emigrants','Immigrants\' club'],ans:1,explain:'<b>Phương pháp:</b> Đọc – Từ vựng<br><b>Giải:</b> guild: hội, phường hội = organization of craftsmen (tổ chức thợ thủ công).'},
+{num:640,level:'TH',text:'In his business, Duncan Phyfe used all of the following EXCEPT ______.',opts:['division of labor','an assembly line','continental designs','the least expensive materials'],ans:3,explain:'<b>Phương pháp:</b> Đọc – Chi tiết<br><b>Giải:</b> Bài viết nói ông dùng phân công lao động, dây chuyền lắp ráp, thiết kế châu Âu, và vật liệu TỐT NHẤT (không phải rẻ nhất).'}
+]},
+{icon:'📖',title:'Reading — Lewis & Clark (641-645)',passage:'After the United States purchased Louisiana from France in 1803, President Thomas Jefferson called for an expedition... Meriwether Lewis and William Clark led the expedition, discovering new natural wealth...<br><br>They discovered a paradise full of giant buffalo herds and elk and antelope... also found mosquitoes and harsh winters... Lewis and Clark kept detailed journals, even unearthing the bones of a 45-foot dinosaur.',questions:[
+{num:641,level:'NB',text:'The word "they" in paragraph 3 refers to ______.',opts:['elk and antelope','buffalo herds','the members of the expedition','Shoshoni and Mandans'],ans:0,explain:'<b>Phương pháp:</b> Đọc – Từ thay thế<br><b>Giải:</b> "...elk and antelope so innocent of human contact that <u>they</u> tamely approached the men." → "they" = elk and antelope.'},
+{num:642,level:'TH',text:'The word "blighted" in paragraph 3 is closest in meaning to ______.',opts:['increased','ruined','swollen','driven'],ans:1,explain:'<b>Phương pháp:</b> Đọc – Từ vựng<br><b>Giải:</b> blighted: bị tàn phá, hủy hoại = ruined.'},
+{num:643,level:'TH',text:'Lewis and Clark encountered all of the following EXCEPT ______.',opts:['mountains','buffaloes','dinosaur herds','friendly people'],ans:2,explain:'<b>Phương pháp:</b> Đọc – Chi tiết<br><b>Giải:</b> Họ gặp núi Rocky, đàn trâu, người Otos thân thiện. Họ chỉ tìm thấy XƯƠNG khủng long, không phải đàn khủng long sống.'},
+{num:644,level:'VD',text:'The word "boon" in paragraph 5 is closest in meaning to ______.',opts:['power','hurdle','benefit','conclusion'],ans:2,explain:'<b>Phương pháp:</b> Đọc – Từ vựng<br><b>Giải:</b> boon: lợi ích = benefit. Mô tả của họ mang lại lợi ích cho cuộc di cư về phía Tây.'},
+{num:645,level:'TH',text:'It can be inferred from the passage that the Lewis and Clark expedition ______.',opts:['experienced more hardships than successes','encouraged Americans to move to the West','probably cost the United States more than $15 million','caused the deaths of some of the explorers'],ans:1,explain:'<b>Phương pháp:</b> Đọc – Suy luận<br><b>Giải:</b> "Their glowing descriptions... provided a boon to the westward migration" → khuyến khích di cư về phía Tây.'}
+]},
+{icon:'🧩',title:'Logical Thinking (646-650)',questions:[
+{num:646,level:'VD',text:'Tanya is older than Eric. Cliff is older than Tanya. Eric is older than Cliff.<br>If the first two statements are true, the third statement is ______.',opts:['true','false','uncertain','no idea'],ans:1,explain:'<b>Phương pháp:</b> Phán đoán logic<br><b>Giải:</b> Cliff > Tanya > Eric → Eric KHÔNG lớn hơn Cliff. Câu 3 SAI.'},
+{num:647,level:'VD',text:'One New York publisher has estimated that 50,000 to 60,000 people in the US want an anthology that includes the complete works of William Shakespeare... his psychological insights into both male and female characters are amazing even today.',opts:['Shakespeare\'s characters are more interesting than fictional characters today.','People even today are interested in Shakespeare\'s work because of the characters.','Academic scholars are putting together an anthology of Shakespeare\'s work.','New Yorkers have a renewed interest in the work of Shakespeare.'],ans:1,explain:'<b>Phương pháp:</b> Phán đoán<br><b>Giải:</b> Đoạn văn nói sự quan tâm đến Shakespeare là vì "psychological insights into characters" → B đúng.'},
+{num:648,level:'VD',text:'Erin is twelve years old. For three years, she has been asking her parents for a dog. Her parents have told her that they believe a dog would not be happy in an apartment, but they have given her permission to have a bird.',opts:['Erin\'s parents like birds better than they like dogs.','Erin does not like birds.','Erin and her parents live in an apartment.','Erin and her parents would like to move.'],ans:2,explain:'<b>Phương pháp:</b> Phán đoán<br><b>Giải:</b> Bố mẹ nói "a dog would not be happy in an apartment" → họ sống trong căn hộ.'},
+{num:649,level:'VD',text:'I. The prices of petrol and diesel in the domestic market have remained unchanged for the past few months.<br>II. The crude oil prices in the international market have gone up substantially in the last few months.',opts:['Statement I is the cause and statement II is its effect','Statement II is the cause and statement I is its effect','Both the statements I and II are independent causes','Both the statements I and II are effects of independent causes'],ans:2,explain:'<b>Phương pháp:</b> Phán đoán nhân quả<br><b>Giải:</b> Giá dầu thô quốc tế tăng nhưng giá xăng trong nước không đổi → hai sự kiện độc lập (có thể do chính sách bình ổn giá).'},
+{num:650,level:'VD',text:'Which of the following is a non-metal that remains liquid at room temperature?',opts:['Phosphorous','Bromine','Chlorine','Helium'],ans:1,explain:'<b>Phương pháp:</b> Kiến thức chung<br><b>Giải:</b> Bromine (Brom) là phi kim duy nhất ở thể lỏng ở nhiệt độ phòng.'}
+]}
+];
+
+/* ===== VIETNAMESE DATA (Q51-100) ===== */
+const HSA_VN_DATA=[
+{icon:'📝',title:'Ngôn Ngữ - Văn Học (Câu 51-100)',questions:[
+{num:51,level:'',text:'Tác phẩm nào sau đây thuộc thể loại truyện ngắn?',opts:['Tắt đèn','Chí Phèo','Số đỏ','Vợ nhặt'],ans:2,explain:'<b>Giải:</b> Đáp án C. (Theo đáp án GV)'},
+{num:52,level:'',text:'Nhân vật nào sau đây trong tác phẩm "Truyện Kiều" được xem là hiện thân của tài năng và sắc đẹp?',opts:['Thúy Vân','Thúy Kiều','Hoạn Thư','Đạm Tiên'],ans:1,explain:'<b>Giải:</b> Đáp án B - Thúy Kiều.'},
+{num:53,level:'',text:'Câu thơ "Bước tới Đèo Ngang bóng xế tà" thuộc bài thơ nào?',opts:['Chiều hôm nhớ nhà','Qua Đèo Ngang','Thu vịnh','Thương vợ'],ans:1,explain:'<b>Giải:</b> Đáp án B - Qua Đèo Ngang (Bà Huyện Thanh Quan).'},
+{num:54,level:'',text:'Phong cách ngôn ngữ nào được sử dụng chủ yếu trong văn bản hành chính?',opts:['Phong cách nghệ thuật','Phong cách báo chí','Phong cách khoa học','Phong cách hành chính - công vụ'],ans:3,explain:'<b>Giải:</b> Đáp án D - Phong cách hành chính - công vụ.'},
+{num:55,level:'',text:'Biện pháp tu từ nào được sử dụng trong câu "Mặt trời xuống biển như hòn lửa"?',opts:['So sánh','Nhân hóa','Ẩn dụ','Hoán dụ'],ans:0,explain:'<b>Giải:</b> Đáp án A - So sánh (dùng từ "như").'},
+{num:56,level:'',text:'Tác giả của bài thơ "Tây Tiến" là ai?',opts:['Quang Dũng','Tố Hữu','Chế Lan Viên','Huy Cận'],ans:0,explain:'<b>Giải:</b> Đáp án A - Quang Dũng.'},
+{num:57,level:'',text:'Thể thơ của bài "Đây thôn Vĩ Dạ" là gì?',opts:['Thơ bảy chữ','Thơ lục bát','Thơ tự do','Thơ năm chữ'],ans:0,explain:'<b>Giải:</b> Đáp án A - Thơ bảy chữ (thất ngôn).'},
+{num:58,level:'',text:'Từ nào sau đây là từ Hán Việt?',opts:['Nhà cửa','Cây cối','Sơn hà','Ruộng đồng'],ans:2,explain:'<b>Giải:</b> Đáp án C - Sơn hà (núi sông) là từ Hán Việt.'},
+{num:59,level:'',text:'Tác phẩm "Vợ chồng A Phủ" của tác giả nào?',opts:['Nam Cao','Ngô Tất Tố','Kim Lân','Tô Hoài'],ans:3,explain:'<b>Giải:</b> Đáp án D - Tô Hoài.'},
+{num:60,level:'',text:'Câu nào sau đây sử dụng biện pháp nhân hóa?',opts:['Mặt trời đỏ rực','Dòng sông uốn khúc quanh co','Trời xanh ngắt','Gió thổi mạnh'],ans:1,explain:'<b>Giải:</b> Đáp án B - "uốn khúc quanh co" gán hành động cho dòng sông.'},
+{num:61,level:'',text:'Thành ngữ "Ếch ngồi đáy giếng" có nghĩa là gì?',opts:['Hiểu biết hạn hẹp','Sống tự do thoải mái','Kiên trì bền bỉ','Thận trọng cẩn thận'],ans:0,explain:'<b>Giải:</b> Đáp án A - Hiểu biết hạn hẹp, tầm nhìn thiển cận.'},
+{num:62,level:'',text:'Đoạn trích "Kiều ở lầu Ngưng Bích" nằm trong phần nào của Truyện Kiều?',opts:['Gia biến và lưu lạc','Đoàn tụ','Gặp gỡ và đính ước','Tái hồi Kim Trọng'],ans:0,explain:'<b>Giải:</b> Đáp án A - Gia biến và lưu lạc.'},
+{num:63,level:'',text:'Câu "Đất nước mình đẹp lắm" thuộc kiểu câu gì?',opts:['Câu nghi vấn','Câu cầu khiến','Câu phủ định','Câu trần thuật'],ans:3,explain:'<b>Giải:</b> Đáp án D - Câu trần thuật (câu kể).'},
+{num:64,level:'',text:'Trong bài thơ "Việt Bắc", Tố Hữu sử dụng chủ yếu thể thơ nào?',opts:['Thơ tự do','Thơ lục bát','Thơ bảy chữ','Thơ năm chữ'],ans:1,explain:'<b>Giải:</b> Đáp án B - Thơ lục bát.'},
+{num:65,level:'',text:'Phép liên kết nào được sử dụng trong "Anh ấy rất giỏi. Tuy nhiên, anh ấy rất khiêm tốn"?',opts:['Phép nối','Phép thế','Phép lặp','Phép liên tưởng'],ans:0,expand:'', explain:'<b>Giải:</b> Đáp án D (theo đáp án GV). "Tuy nhiên" là phép nối nghịch.'},
+{num:66,level:'',text:'Tác phẩm nào sau đây của Xuân Diệu?',opts:['Tràng giang','Đây mùa thu tới','Đây thôn Vĩ Dạ','Vội vàng'],ans:2,explain:'<b>Giải:</b> Đáp án C (theo đáp án GV).'},
+{num:67,level:'',text:'Từ "Xuân" trong câu "Xuân đương tới nghĩa là xuân đương qua" có nghĩa gì?',opts:['Mùa xuân thiên nhiên','Tuổi trẻ','Mùa xuân và tuổi trẻ','Niềm vui'],ans:2,explain:'<b>Giải:</b> Đáp án C - Cả mùa xuân thiên nhiên và tuổi trẻ.'},
+{num:68,level:'',text:'Nghĩa của thành ngữ "Đánh trống bỏ dùi" là gì?',opts:['Làm việc hết mình','Kiên trì theo đuổi','Làm nửa chừng rồi bỏ','Làm việc nửa chừng rồi bỏ dở'],ans:3,explain:'<b>Giải:</b> Đáp án D - Làm việc bỏ dở, không đến nơi đến chốn.'},
+{num:69,level:'',text:'Nhà thơ nào được mệnh danh là "ông hoàng thơ tình"?',opts:['Hàn Mặc Tử','Chế Lan Viên','Xuân Diệu','Huy Cận'],ans:2,explain:'<b>Giải:</b> Đáp án C - Xuân Diệu.'},
+{num:70,level:'',text:'Trong câu "Con sông quê tôi đẹp lắm", chủ ngữ là gì?',opts:['Con sông','Quê tôi','Con sông quê tôi','Đẹp lắm'],ans:2,explain:'<b>Giải:</b> Đáp án C - "Con sông quê tôi" là chủ ngữ.'},
+{num:71,level:'',text:'Tác phẩm "Đất nước" của Nguyễn Khoa Điềm thuộc thể loại gì?',opts:['Truyện ngắn','Tiểu thuyết','Kịch','Thơ (trường ca)'],ans:3,explain:'<b>Giải:</b> Đáp án D - Thơ (trích trường ca "Mặt đường khát vọng").'},
+{num:72,level:'',text:'Từ nào sau đây là từ láy?',opts:['Nhà cửa','Long lanh','Sách vở','Quần áo'],ans:1,explain:'<b>Giải:</b> Đáp án B - "Long lanh" là từ láy.'},
+{num:73,level:'',text:'Câu tục ngữ "Gần mực thì đen, gần đèn thì rạng" sử dụng biện pháp tu từ nào?',opts:['Ẩn dụ','Hoán dụ','So sánh','Nói quá'],ans:0,explain:'<b>Giải:</b> Đáp án A - Ẩn dụ (mực = xấu, đèn = tốt).'},
+{num:74,level:'',text:'"Người lái đò sông Đà" là tác phẩm của ai?',opts:['Nguyễn Tuân','Kim Lân','Nguyễn Minh Châu','Nguyễn Tuân'],ans:2,explain:'<b>Giải:</b> Đáp án C (theo đáp án GV).'},
+{num:75,level:'',text:'Câu "Sao anh không về chơi thôn Vĩ?" thuộc kiểu câu gì?',opts:['Câu trần thuật','Câu cầu khiến','Câu nghi vấn','Câu cảm thán'],ans:2,explain:'<b>Giải:</b> Đáp án C - Câu nghi vấn (có từ "sao" và dấu "?").'},
+{num:76,level:'',text:'Từ "mắt" trong "mắt na" và "mắt người" là hiện tượng gì?',opts:['Từ nhiều nghĩa','Từ đồng âm','Từ đồng nghĩa','Từ trái nghĩa'],ans:0,explain:'<b>Giải:</b> Đáp án A - Từ nhiều nghĩa (nghĩa gốc → nghĩa chuyển).'},
+{num:77,level:'',text:'Tác phẩm "Chữ người tử tù" thuộc thể loại gì?',opts:['Tiểu thuyết','Truyện ngắn','Bút ký','Hồi ký'],ans:1,explain:'<b>Giải:</b> Đáp án B - Truyện ngắn (của Nguyễn Tuân).'},
+{num:78,level:'',text:'Phong trào Thơ mới diễn ra trong giai đoạn nào?',opts:['1900-1920','1920-1930','1932-1945','1945-1954'],ans:2,explain:'<b>Giải:</b> Đáp án C - 1932-1945.'},
+{num:79,level:'',text:'Câu thơ "Lom khom dưới núi tiều vài chú" sử dụng biện pháp tu từ nào?',opts:['Nhân hóa','So sánh','Ẩn dụ','Đảo ngữ'],ans:3,explain:'<b>Giải:</b> Đáp án D - Đảo ngữ (đảo vị ngữ "lom khom" lên trước chủ ngữ).'},
+{num:80,level:'',text:'Trong Truyện Kiều, "Trao duyên" là đoạn trích nói về việc gì?',opts:['Kiều nhờ Thúy Vân thay mình trả nghĩa cho Kim Trọng','Kiều gặp Kim Trọng lần đầu','Kiều bị bán cho Mã Giám Sinh','Kiều ở lầu Ngưng Bích'],ans:0,explain:'<b>Giải:</b> Đáp án A - Kiều nhờ Thúy Vân thay mình trả nghĩa cho Kim Trọng.'},
+{num:81,level:'',text:'Từ ghép nào sau đây là từ ghép đẳng lập?',opts:['Hoa hồng','Xe đạp','Quần áo','Sách giáo khoa'],ans:2,explain:'<b>Giải:</b> Đáp án C - "Quần áo" là từ ghép đẳng lập.'},
+{num:82,level:'',text:'Tác phẩm "Hai đứa trẻ" của Thạch Lam thuộc dòng văn học nào?',opts:['Văn học hiện thực phê phán','Văn học hiện thực','Văn học lãng mạn','Văn học cách mạng'],ans:2,explain:'<b>Giải:</b> Đáp án C - Văn học lãng mạn.'},
+{num:83,level:'',text:'Nghĩa của từ "Độc lập" là gì?',opts:['Tự làm một mình','Đứng một mình','Tự quyết định, không phụ thuộc','Sống riêng biệt'],ans:2,explain:'<b>Giải:</b> Đáp án C - Tự quyết định, không phụ thuộc vào ai.'},
+{num:84,level:'',text:'Bài thơ "Sóng" của Xuân Quỳnh sử dụng hình tượng gì làm trung tâm?',opts:['Biển','Sóng','Gió','Bờ cát'],ans:1,explain:'<b>Giải:</b> Đáp án B - Sóng (biểu tượng cho tình yêu).'},
+{num:85,level:'',text:'Câu "Ôi! Đẹp quá!" thuộc kiểu câu gì?',opts:['Câu trần thuật','Câu nghi vấn','Câu cầu khiến','Câu cảm thán'],ans:3,explain:'<b>Giải:</b> Đáp án D - Câu cảm thán (bộc lộ cảm xúc, có "Ôi" và "!").'},
+{num:86,level:'',text:'Nhân vật Mị trong "Vợ chồng A Phủ" được miêu tả là người như thế nào?',opts:['Yếu đuối, cam chịu','Mạnh mẽ, kiên cường','Có sức sống tiềm tàng mạnh mẽ','Lạnh lùng, vô cảm'],ans:2,explain:'<b>Giải:</b> Đáp án C - Có sức sống tiềm tàng mạnh mẽ.'},
+{num:87,level:'',text:'Tác giả "Chiếc thuyền ngoài xa" là ai?',opts:['Nguyễn Minh Châu','Nam Cao','Nguyễn Huy Thiệp','Ma Văn Kháng'],ans:0,explain:'<b>Giải:</b> Đáp án A - Nguyễn Minh Châu.'},
+{num:88,level:'',text:'Từ "ngọt" trong "nói ngọt" và "cam ngọt" có quan hệ gì?',opts:['Đồng âm','Trái nghĩa','Đồng nghĩa','Nhiều nghĩa'],ans:3,explain:'<b>Giải:</b> Đáp án D - Từ nhiều nghĩa (nghĩa gốc: vị ngọt; nghĩa chuyển: lời nói dễ nghe).'},
+{num:89,level:'',text:'Dòng nào sau đây nêu đúng đặc điểm của văn bản nghị luận?',opts:['Có luận điểm, luận cứ, lập luận','Kể lại sự việc theo trình tự thời gian','Miêu tả chi tiết sự vật','Biểu đạt cảm xúc cá nhân'],ans:0,explain:'<b>Giải:</b> Đáp án A - Có luận điểm, luận cứ, lập luận.'},
+{num:90,level:'',text:'Bài thơ "Tràng giang" của Huy Cận thuộc phong trào nào?',opts:['Thơ cách mạng','Thơ mới','Thơ kháng chiến','Thơ dân gian'],ans:1,explain:'<b>Giải:</b> Đáp án B - Thơ mới (1932-1945).'},
+{num:91,level:'',text:'Trong câu "Trẻ em như búp trên cành", biện pháp tu từ nào được sử dụng?',opts:['Ẩn dụ','So sánh','Nhân hóa','Hoán dụ'],ans:1,explain:'<b>Giải:</b> Đáp án B (theo đáp án GV). Tuy nhiên, cũng có thể hiểu là so sánh (từ "như").'},
+{num:92,level:'',text:'Nghĩa gốc của từ "chân" là gì?',opts:['Bộ phận dưới cùng của cơ thể người','Chân bàn','Chân núi','Chân trời'],ans:0,explain:'<b>Giải:</b> Đáp án A - Bộ phận dưới cùng của cơ thể người (nghĩa gốc).'},
+{num:93,level:'',text:'Tác phẩm nào sau đây là tiểu thuyết?',opts:['Số đỏ','Chí Phèo','Vợ nhặt','Lão Hạc'],ans:0,explain:'<b>Giải:</b> Đáp án A - "Số đỏ" (Vũ Trọng Phụng) là tiểu thuyết.'},
+{num:94,level:'',text:'Câu "Hãy giữ gìn sức khỏe!" thuộc kiểu câu gì?',opts:['Câu trần thuật','Câu cầu khiến','Câu nghi vấn','Câu cảm thán'],ans:1,explain:'<b>Giải:</b> Đáp án B - Câu cầu khiến (có từ "Hãy", yêu cầu/khuyên nhủ).'},
+{num:95,level:'',text:'Từ nào sau đây là từ ghép chính phụ?',opts:['Sách vở','Xe đạp','Quần áo','Bàn ghế'],ans:1,explain:'<b>Giải:</b> Đáp án B - "Xe đạp" là từ ghép chính phụ (xe = chính, đạp = phụ).'},
+{num:96,level:'',text:'Phong cách ngôn ngữ nghệ thuật có đặc trưng nào?',opts:['Tính chính xác','Tính khách quan','Tính hình tượng','Tính công khai'],ans:2,explain:'<b>Giải:</b> Đáp án C - Tính hình tượng (đặc trưng quan trọng nhất).'},
+{num:97,level:'',text:'Tác phẩm "Rừng xà nu" của ai?',opts:['Nguyễn Trung Thành','Nguyễn Trung Thành (Nguyên Ngọc)','Anh Đức','Nguyễn Quang Sáng'],ans:1,explain:'<b>Giải:</b> Đáp án B - Nguyễn Trung Thành (bút danh của Nguyên Ngọc).'},
+{num:98,level:'',text:'Câu "Anh ấy học giỏi mà lại rất khiêm tốn" sử dụng kiểu quan hệ từ nào?',opts:['Nguyên nhân - kết quả','Điều kiện - kết quả','Tăng tiến','Tương phản'],ans:3,explain:'<b>Giải:</b> Đáp án D - Tương phản (từ "mà lại" biểu thị quan hệ tương phản).'},
+{num:99,level:'',text:'Hình ảnh "Mặt trời" trong câu "Mặt trời của bắp thì nằm trên đồi / Mặt trời của mẹ em nằm trên lưng" sử dụng biện pháp gì?',opts:['So sánh','Nhân hóa','Ẩn dụ','Hoán dụ'],ans:2,explain:'<b>Giải:</b> Đáp án C - Ẩn dụ ("Mặt trời" thứ hai ẩn dụ cho em bé - nguồn sống, niềm hy vọng của mẹ).'},
+{num:100,level:'',text:'Tác phẩm nào sau đây thuộc văn học trung đại Việt Nam?',opts:['Tắt đèn','Truyện Kiều','Chí Phèo','Số đỏ'],ans:1,explain:'<b>Giải:</b> Đáp án B - "Truyện Kiều" (Nguyễn Du) thuộc văn học trung đại.'}
+]}
 ];
 
 let _ieltsTab='vocab';
