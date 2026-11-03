@@ -99,6 +99,32 @@ header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 0 4p
 .hsa-score-bar .sc-item{font-size:14px;font-weight:600;color:#2d2a55}
 .hsa-score-bar .sc-item b{color:#7c3aed}
 .hsa-cat-header{font-size:15px;font-weight:700;color:#7c3aed;margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid #e3e0ff}
+
+.hsa-summary{background:#fff;border:2px solid #e3e0ff;border-radius:16px;padding:24px;margin-top:24px;display:none}
+.hsa-summary.show{display:block}
+.hsa-summary h3{font-size:20px;color:#7c3aed;margin-bottom:16px;font-family:'Baloo 2',cursive}
+.hsa-sum-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.hsa-sum-card{background:#f6f4ff;border-radius:12px;padding:16px;text-align:center;border:1.5px solid #e3e0ff}
+.hsa-sum-card .big{font-size:28px;font-weight:800;font-family:'Baloo 2',cursive}
+.hsa-sum-card .big.green{color:#16a34a}
+.hsa-sum-card .big.red{color:#dc2626}
+.hsa-sum-card .big.blue{color:#7c3aed}
+.hsa-sum-card .lbl{font-size:12px;color:#7a77a8;margin-top:4px}
+.hsa-weak-section{margin-bottom:16px}
+.hsa-weak-title{font-weight:700;font-size:15px;color:#2d2a55;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.hsa-weak-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.hsa-weak-tag{background:#ffe9ee;color:#c2233f;border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;border:1px solid #ffc4d1}
+.hsa-weak-tag.ok{background:#e9fbef;color:#0f8a4d;border-color:#b8ecca}
+.hsa-wrong-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px}
+.hsa-wrong-table th{background:#ede9ff;color:#7c3aed;padding:8px 10px;text-align:left;font-weight:700;border-bottom:2px solid #c4b5fd}
+.hsa-wrong-table td{padding:8px 10px;border-bottom:1px solid #e3e0ff;color:#2d2a55;vertical-align:top}
+.hsa-wrong-table tr:hover td{background:#f6f4ff}
+.hsa-roadmap{background:linear-gradient(135deg,#ede9ff,#f6f4ff);border-radius:12px;padding:16px;border:1.5px solid #c4b5fd}
+.hsa-roadmap h4{color:#7c3aed;margin-bottom:10px;font-size:15px}
+.hsa-roadmap-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:13px;color:#2d2a55;line-height:1.5}
+.hsa-roadmap-item .pri{background:#7c3aed;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.hsa-roadmap-item .pri.warn{background:#f59e0b}
+.hsa-roadmap-item .pri.ok{background:#16a34a}
 .ielts-topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;margin-bottom:8px}
 .ielts-topic-card{background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:2px solid #99f6e4;border-radius:16px;padding:14px 10px;text-align:center;cursor:pointer;transition:.2s}
 .ielts-topic-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(15,118,110,.2)}
@@ -3818,7 +3844,7 @@ function showHSATab(tab){
 let _hsaState={};
 function renderHSAQuiz(data,prefix){
   const el=$('hsaContent');
-  _hsaState={answered:0,correct:0,total:data.reduce((s,cat)=>s+cat.questions.length,0)};
+  _hsaState={answered:0,correct:0,total:data.reduce((s,cat)=>s+cat.questions.length,0),wrongs:[],catStats:{}};
   let h=`<div class="hsa-score-bar" id="hsa-score-${prefix}">
     <div class="sc-item">📊 Đã làm: <b><span id="hsa-done-${prefix}">0</span>/${_hsaState.total}</b></div>
     <div class="sc-item">✅ Đúng: <b><span id="hsa-right-${prefix}">0</span></b></div>
@@ -3844,6 +3870,7 @@ function renderHSAQuiz(data,prefix){
       h+=`</div></div>`;
     });
   });
+  h+=`<div class="hsa-summary" id="hsa-summary-${prefix}"></div>`;
   el.innerHTML=h;
 }
 
@@ -3874,9 +3901,122 @@ function hsaAnswer(qid,idx,prefix){
   const de=$('hsa-done-'+prefix); if(de) de.textContent=_hsaState.answered;
   const re=$('hsa-right-'+prefix); if(re) re.textContent=_hsaState.correct;
   const pe=$('hsa-pct-'+prefix); if(pe) pe.textContent=_hsaState.answered?Math.round(_hsaState.correct/_hsaState.answered*100):0;
+  // Track category and grammar topic for wrong answers
+  let qCat='',qTopic='',qObj=null;
+  for(const cat of allData){
+    for(const q of cat.questions){
+      if(prefix+'-'+q.num===qid){
+        qCat=cat.title;qObj=q;
+        const tm=q.explain.match(/<b>Phương pháp:<\/b>\s*([^<]+)/);
+        qTopic=tm?tm[1].trim():'Khác';
+        break;
+      }
+    }
+    if(qObj)break;
+  }
+  if(!_hsaState.catStats[qCat])_hsaState.catStats[qCat]={total:0,correct:0};
+  _hsaState.catStats[qCat].total++;
+  if(idx===correctIdx){
+    _hsaState.catStats[qCat].correct++;
+  }else{
+    _hsaState.wrongs.push({num:qObj.num,text:qObj.text,cat:qCat,topic:qTopic,chose:'ABCD'[idx],correct:'ABCD'[correctIdx],correctText:qObj.opts[correctIdx],level:qObj.level});
+  }
   try{sndClick()}catch(e){}
   if(idx===correctIdx){try{addXP(5);toast('🎯 Chính xác! +5 XP')}catch(e){}}
   else{try{toast('❌ Sai rồi! Đáp án đúng: '+'ABCD'[correctIdx])}catch(e){}}
+  // Show summary when all questions answered
+  if(_hsaState.answered>=_hsaState.total){
+    setTimeout(()=>showHSASummary(prefix),600);
+  }
+}
+
+function showHSASummary(prefix){
+  const el=document.getElementById('hsa-summary-'+prefix);
+  if(!el)return;
+  const st=_hsaState;
+  const pct=Math.round(st.correct/st.total*100);
+  const wrong=st.total-st.correct;
+  // Grade
+  let grade='',gradeColor='';
+  if(pct>=90){grade='Xuất sắc 🏆';gradeColor='green';}
+  else if(pct>=70){grade='Khá tốt 👍';gradeColor='blue';}
+  else if(pct>=50){grade='Trung bình ⚡';gradeColor='blue';}
+  else{grade='Cần cải thiện 📚';gradeColor='red';}
+
+  let h=`<h3>📊 Tổng Kết Đề Thi</h3>`;
+  h+=`<div class="hsa-sum-grid">
+    <div class="hsa-sum-card"><div class="big blue">${st.total}</div><div class="lbl">Tổng câu hỏi</div></div>
+    <div class="hsa-sum-card"><div class="big green">${st.correct}</div><div class="lbl">Trả lời đúng</div></div>
+    <div class="hsa-sum-card"><div class="big red">${wrong}</div><div class="lbl">Trả lời sai</div></div>
+    <div class="hsa-sum-card"><div class="big ${gradeColor}">${pct}%</div><div class="lbl">${grade}</div></div>
+  </div>`;
+
+  // Category breakdown
+  h+=`<div class="hsa-weak-section"><div class="hsa-weak-title">📋 Kết quả theo từng phần</div>`;
+  h+=`<table class="hsa-wrong-table"><tr><th>Phần thi</th><th>Đúng</th><th>Tổng</th><th>Tỉ lệ</th></tr>`;
+  for(const[cat,s] of Object.entries(st.catStats)){
+    const p=Math.round(s.correct/s.total*100);
+    const color=p>=80?'#16a34a':p>=50?'#f59e0b':'#dc2626';
+    h+=`<tr><td>${cat}</td><td>${s.correct}</td><td>${s.total}</td><td style="color:${color};font-weight:700">${p}%</td></tr>`;
+  }
+  h+=`</table></div>`;
+
+  // Group wrong answers by topic
+  if(st.wrongs.length>0){
+    const topicMap={};
+    st.wrongs.forEach(w=>{
+      if(!topicMap[w.topic])topicMap[w.topic]=[];
+      topicMap[w.topic].push(w);
+    });
+    // Sort by most mistakes
+    const sorted=Object.entries(topicMap).sort((a,b)=>b[1].length-a[1].length);
+
+    h+=`<div class="hsa-weak-section"><div class="hsa-weak-title">🔴 Điểm yếu cần khắc phục</div><div class="hsa-weak-list">`;
+    sorted.forEach(([topic,items])=>{
+      h+=`<span class="hsa-weak-tag">${topic} (${items.length} sai)</span>`;
+    });
+    h+=`</div></div>`;
+
+    // Detailed wrong answer table
+    h+=`<div class="hsa-weak-section"><div class="hsa-weak-title">📝 Chi tiết câu sai</div>`;
+    h+=`<table class="hsa-wrong-table"><tr><th>Câu</th><th>Dạng</th><th>Chủ đề</th><th>Bạn chọn</th><th>Đáp án đúng</th></tr>`;
+    st.wrongs.forEach(w=>{
+      h+=`<tr><td><b>${w.num}</b></td><td>${w.cat.replace(/ \(.+/,'')}</td><td>${w.topic}</td><td style="color:#dc2626">${w.chose}</td><td style="color:#16a34a">${w.correct}. ${w.correctText}</td></tr>`;
+    });
+    h+=`</table></div>`;
+
+    // Study roadmap
+    h+=`<div class="hsa-roadmap"><h4>🗺️ Lộ Trình Ôn Tập Đề Xuất</h4>`;
+    let pri=1;
+    sorted.forEach(([topic,items])=>{
+      const cls=pri<=2?'pri':pri<=4?'pri warn':'pri ok';
+      let advice='';
+      const t=topic.toLowerCase();
+      if(t.includes('từ vựng')||t.includes('vocabulary'))advice='Học từ vựng theo chủ đề, ghi chú collocations và context.';
+      else if(t.includes('đại từ quan hệ')||t.includes('relative'))advice='Ôn lại who/whom/which/that/whose và mệnh đề quan hệ.';
+      else if(t.includes('giới từ')||t.includes('preposition'))advice='Luyện giới từ đi kèm với động từ và tính từ.';
+      else if(t.includes('thì')||t.includes('tense'))advice='Ôn 12 thì tiếng Anh, tập trung vào dấu hiệu nhận biết.';
+      else if(t.includes('kết hợp từ')||t.includes('collocation'))advice='Học phrasal verbs và cụm từ cố định.';
+      else if(t.includes('câu hỏi đuôi'))advice='Ôn quy tắc câu hỏi đuôi với các chủ ngữ đặc biệt.';
+      else if(t.includes('so sánh'))advice='Ôn so sánh hơn, so sánh nhất với tính từ ngắn/dài.';
+      else if(t.includes('động từ')||t.includes('modal'))advice='Ôn modal verbs: can/could/may/might/must/should/need.';
+      else if(t.includes('liên từ')||t.includes('conjunction'))advice='Ôn các liên từ: and/but/or/so/because/although/however.';
+      else if(t.includes('đọc hiểu')||t.includes('reading'))advice='Luyện đọc bài, tìm main idea, specific details, inference.';
+      else if(t.includes('sắp xếp'))advice='Luyện nhận biết trình tự logic và từ nối giữa các câu.';
+      else if(t.includes('viết lại')||t.includes('rewrite'))advice='Ôn các cấu trúc viết lại câu phổ biến.';
+      else if(t.includes('điền từ')||t.includes('cloze'))advice='Luyện đọc cloze text, chú ý ngữ cảnh và từ loại.';
+      else advice='Ôn lại lý thuyết và làm thêm bài tập phần này.';
+      h+=`<div class="hsa-roadmap-item"><span class="${cls}">${pri}</span><div><b>${topic}</b> — sai ${items.length}/${items.length} câu<br>${advice}</div></div>`;
+      pri++;
+    });
+    h+=`</div>`;
+  }else{
+    h+=`<div class="hsa-roadmap" style="text-align:center;padding:24px"><h4>🎉 Hoàn hảo! Bạn đúng 100%!</h4><p>Tiếp tục luyện các đề khác để duy trì phong độ.</p></div>`;
+  }
+
+  el.innerHTML=h;
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 /* ===== ENGLISH DATA (Q601-650) ===== */
