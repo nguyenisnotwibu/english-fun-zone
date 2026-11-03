@@ -125,6 +125,8 @@ header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 0 4p
 .hsa-roadmap-item .pri{background:#7c3aed;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 .hsa-roadmap-item .pri.warn{background:#f59e0b}
 .hsa-roadmap-item .pri.ok{background:#16a34a}
+.hsa-timer{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#7c3aed;background:#f6f4ff;border:1.5px solid #e3e0ff;border-radius:20px;padding:5px 14px;position:sticky;top:8px;z-index:10;width:fit-content;margin-left:auto}
+.hsa-timer .t-icon{font-size:16px}
 .ielts-topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;margin-bottom:8px}
 .ielts-topic-card{background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:2px solid #99f6e4;border-radius:16px;padding:14px 10px;text-align:center;cursor:pointer;transition:.2s}
 .ielts-topic-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(15,118,110,.2)}
@@ -3845,11 +3847,23 @@ let _hsaState={};
 function renderHSAQuiz(data,prefix){
   const el=$('hsaContent');
   _hsaState={answered:0,correct:0,total:data.reduce((s,cat)=>s+cat.questions.length,0),wrongs:[],catStats:{}};
+  if(window._hsaTimer)clearInterval(window._hsaTimer);
+  window._hsaStartTime=Date.now();
+  window._hsaElapsed=0;
   let h=`<div class="hsa-score-bar" id="hsa-score-${prefix}">
     <div class="sc-item">📊 Đã làm: <b><span id="hsa-done-${prefix}">0</span>/${_hsaState.total}</b></div>
     <div class="sc-item">✅ Đúng: <b><span id="hsa-right-${prefix}">0</span></b></div>
     <div class="sc-item">📈 Tỉ lệ: <b><span id="hsa-pct-${prefix}">0</span>%</b></div>
+    <div class="hsa-timer" id="hsa-timer-${prefix}"><span class="t-icon">⏱️</span> <span id="hsa-time-${prefix}">00:00</span></div>
   </div>`;
+  // Start timer
+  window._hsaTimer=setInterval(()=>{
+    window._hsaElapsed=Math.floor((Date.now()-window._hsaStartTime)/1000);
+    const m=Math.floor(window._hsaElapsed/60).toString().padStart(2,'0');
+    const s=(window._hsaElapsed%60).toString().padStart(2,'0');
+    const te=document.getElementById('hsa-time-'+prefix);
+    if(te)te.textContent=m+':'+s;
+  },1000);
   data.forEach(cat=>{
     h+=`<div class="hsa-cat-header">${cat.icon} ${cat.title}</div>`;
     if(cat.passage) h+=`<div class="hsa-q-card"><div class="q-passage">${cat.passage}</div></div>`;
@@ -3926,6 +3940,7 @@ function hsaAnswer(qid,idx,prefix){
   else{try{toast('❌ Sai rồi! Đáp án đúng: '+'ABCD'[correctIdx])}catch(e){}}
   // Show summary when all questions answered
   if(_hsaState.answered>=_hsaState.total){
+    if(window._hsaTimer){clearInterval(window._hsaTimer);window._hsaTimer=null;}
     setTimeout(()=>showHSASummary(prefix),600);
   }
 }
@@ -3942,6 +3957,10 @@ function showHSASummary(prefix){
   else if(pct>=70){grade='Khá tốt 👍';gradeColor='blue';}
   else if(pct>=50){grade='Trung bình ⚡';gradeColor='blue';}
   else{grade='Cần cải thiện 📚';gradeColor='red';}
+  const elapsed=window._hsaElapsed||0;
+  const mins=Math.floor(elapsed/60);
+  const secs=elapsed%60;
+  const timeStr=mins>0?mins+' phút '+secs+' giây':secs+' giây';
 
   let h=`<h3>📊 Tổng Kết Đề Thi</h3>`;
   h+=`<div class="hsa-sum-grid">
@@ -3949,6 +3968,7 @@ function showHSASummary(prefix){
     <div class="hsa-sum-card"><div class="big green">${st.correct}</div><div class="lbl">Trả lời đúng</div></div>
     <div class="hsa-sum-card"><div class="big red">${wrong}</div><div class="lbl">Trả lời sai</div></div>
     <div class="hsa-sum-card"><div class="big ${gradeColor}">${pct}%</div><div class="lbl">${grade}</div></div>
+    <div class="hsa-sum-card"><div class="big blue">⏱️</div><div class="lbl">${timeStr}</div></div>
   </div>`;
 
   // Category breakdown
