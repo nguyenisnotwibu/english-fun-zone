@@ -132,7 +132,7 @@ header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 0 4p
 .qprog{flex:1;height:10px;background:#efedff;border-radius:8px;overflow:hidden}
 .qprog i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--blue));border-radius:8px;transition:.3s}
 .streakBadge{font-weight:800;font-size:13px;color:var(--orange);white-space:nowrap}
-.qq{font-size:17px;font-weight:700;line-height:1.5;margin-bottom:14px}
+.qq{font-size:17px;font-weight:700;line-height:1.65;margin-bottom:14px;white-space:pre-line}.qq .err-tag{display:inline-block;background:#ede9fe;color:#6d28d9;border:1.5px solid #c4b5fd;border-radius:6px;padding:0 5px;margin:0 2px;font-size:13.5px;font-weight:800}.qq .q-stem{display:block;margin-top:6px;color:#4c1d95;font-weight:600}
 .opts{display:grid;gap:9px}
 .opt{display:flex;align-items:flex-start;gap:10px;background:#faf9ff;border:2.5px solid #e4e0ff;border-radius:14px;padding:11px 13px;font-size:14.5px;font-weight:600;text-align:left;transition:.14s;line-height:1.45}
 .opt:hover:not(:disabled){border-color:#b9a8ff;transform:translateX(3px)}
@@ -1351,7 +1351,7 @@ qs:[
 {l:4,q:"The last time she wrote to me was in March. = ...",a:"She hasn't written to me since March.",d:["She hasn't written to me for March.","She didn't write to me since March.","She hasn't been writing to me in March."],e:"last time...was + mốc = haven't/hasn't + V3 + since + mốc."},
 ]});
 
-/* ---------- ĐẠI TỪ & SỞ HỮU ---------- */
+/* ---------- 21. ĐẠI TỪ & SỞ HỮU ---------- */
 GP_DATA.push({
 id:'pronouns',em:'🙋',name:'Đại Từ & Sở Hữu',sub:'Chủ ngữ · tân ngữ · sở hữu · phản thân · sở hữu cách',
 theory:`
@@ -1422,7 +1422,7 @@ qs:[
 {l:4,q:"The decision was made by the manager ___.",a:"himself",d:["his", "him", "he"],e:"Đại từ phản thân đứng cuối để nhấn mạnh \"đích thân giám đốc\"."},
 ]});
 
-/* ---------- DANH TỪ ---------- */
+/* ---------- 22. DANH TỪ ---------- */
 GP_DATA.push({
 id:'nouns',em:'📦',name:'Danh Từ',sub:'Đếm được · không đếm được · số nhiều bất quy tắc',
 theory:`
@@ -1492,7 +1492,7 @@ qs:[
 {l:4,q:"Two-thirds of the land ___ been flooded.",a:"has",d:["have", "are", "were"],e:"Phân số + danh từ không đếm được (land) → động từ số ít."},
 ]});
 
-/* ---------- TÍNH TỪ & TRẠNG TỪ ---------- */
+/* ---------- 23. TÍNH TỪ & TRẠNG TỪ ---------- */
 GP_DATA.push({
 id:'adjadv',em:'🎨',name:'Tính Từ & Trạng Từ',sub:'Vị trí · trật tự tính từ · cách tạo trạng từ',
 theory:`
@@ -1559,7 +1559,7 @@ qs:[
 {l:4,q:"Not until he apologised ___ to speak to him again.",a:"did she agree",d:["she agreed", "she did agree", "agreed she"],e:"\"Not until ...\" đứng đầu câu → mệnh đề chính đảo ngữ."},
 ]});
 
-/* ---------- CÂU HỎI ---------- */
+/* ---------- 24. CÂU HỎI ---------- */
 GP_DATA.push({
 id:'questions',em:'❓',name:'Câu Hỏi',sub:'Yes-No · Wh- · hỏi chủ ngữ · câu hỏi gián tiếp',
 theory:`
@@ -1625,7 +1625,7 @@ qs:[
 {l:4,q:"Hardly ever ___ to the cinema these days.",a:"do we go",d:["we go", "go we", "we do go"],e:"\"Hardly ever\" đầu câu → đảo ngữ với trợ động từ do."},
 ]});
 
-/* ---------- THERE IS-ARE & IT ---------- */
+/* ---------- 25. THERE IS-ARE & IT ---------- */
 GP_DATA.push({
 id:'there',em:'🏠',name:'There Is-Are & It',sub:'Cấu trúc tồn tại · "it" giả chủ ngữ',
 theory:`
@@ -1692,7 +1692,7 @@ qs:[
 {l:4,q:"Were there ___ problems during the installation?",a:"any",d:["some", "much", "a"],e:"Câu hỏi với danh từ đếm được số nhiều → any."},
 ]});
 
-/* ---------- MỆNH ĐỀ TRẠNG NGỮ ---------- */
+/* ---------- 26. MỆNH ĐỀ TRẠNG NGỮ ---------- */
 GP_DATA.push({
 id:'advclause',em:'🔗',name:'Mệnh Đề Trạng Ngữ',sub:'Thời gian · lý do · mục đích · kết quả · nhượng bộ',
 theory:`
@@ -1757,7 +1757,7 @@ qs:[
 {l:4,q:"The instructions were ___ complicated that nobody could follow them.",a:"so",d:["such", "such a", "too"],e:"so + adj + that, dù có \"the instructions\" vì complicated là tính từ đứng một mình."},
 ]});
 
-/* ---------- MỆNH ĐỀ DANH NGỮ ---------- */
+/* ---------- 27. MỆNH ĐỀ DANH NGỮ ---------- */
 GP_DATA.push({
 id:'nounclause',em:'💬',name:'Mệnh Đề Danh Ngữ',sub:'That-clause · Wh-clause · if-whether',
 theory:`
@@ -1821,7 +1821,7 @@ qs:[
 {l:4,q:"That he survived the crash ___ a miracle.",a:"is",d:["are", "were", "have been"],e:"That-clause làm chủ ngữ → động từ chia số ít."},
 ]});
 
-/* ---------- ĐẢO NGỮ ---------- */
+/* ---------- 28. ĐẢO NGỮ ---------- */
 GP_DATA.push({
 id:'inversion',em:'🔄',name:'Đảo Ngữ',sub:'Trạng từ phủ định · Only · Not until · So-Such',
 theory:`
@@ -1889,7 +1889,7 @@ qs:[
 {l:4,q:"Had it not been for the rain, ___ the match.",a:"we would have won",d:["would we have won", "we had won", "we would win"],e:"Điều kiện loại 3 đảo; mệnh đề chính giữ trật tự thường."},
 ]});
 
-/* ---------- USED TO & BE USED TO ---------- */
+/* ---------- 29. USED TO & BE USED TO ---------- */
 GP_DATA.push({
 id:'usedto',em:'⏳',name:'Used To & Be Used To',sub:'Thói quen quá khứ · quen với việc gì',
 theory:`
@@ -1952,7 +1952,7 @@ qs:[
 {l:4,q:"He used to be a teacher, ___ he?",a:"didn't",d:["usedn't", "wasn't", "doesn't"],e:"Câu hỏi đuôi của used to dùng didn't."},
 ]});
 
-/* ---------- CÂU MỆNH LỆNH & ĐỀ NGHỊ ---------- */
+/* ---------- 30. CÂU MỆNH LỆNH & ĐỀ NGHỊ ---------- */
 GP_DATA.push({
 id:'imperative',em:'📣',name:'Câu Mệnh Lệnh & Đề Nghị',sub:'Mệnh lệnh · rủ rê · gợi ý · lời mời',
 theory:`
@@ -2020,7 +2020,7 @@ qs:[
 {l:4,q:"You had better ___ late again.",a:"not be",d:["not to be", "to not be", "be not"],e:"had better + not + V nguyên mẫu."},
 ]});
 
-/* ---------- CÂU CHẺ (NHẤN MẠNH) ---------- */
+/* ---------- 31. CÂU CHẺ (NHẤN MẠNH) ---------- */
 GP_DATA.push({
 id:'cleft',em:'💡',name:'Câu Chẻ (Nhấn Mạnh)',sub:'It is ... that · What ... is · All ... is',
 theory:`
@@ -2083,7 +2083,7 @@ qs:[
 {l:4,q:"Rarely is it the teacher ___ is to blame.",a:"who",d:["whom", "which", "what"],e:"Câu chẻ lồng trong đảo ngữ; nhấn mạnh người → who."},
 ]});
 
-/* ---------- SO · SUCH · TOO · ENOUGH ---------- */
+/* ---------- 32. SO · SUCH · TOO · ENOUGH ---------- */
 GP_DATA.push({
 id:'sosuch',em:'⚖️',name:'So · Such · Too · Enough',sub:'Bốn cấu trúc chỉ mức độ rất hay nhầm',
 theory:`
@@ -2148,7 +2148,7 @@ qs:[
 {l:4,q:"There was hardly ___ evidence to convict him.",a:"enough",d:["too", "so", "such"],e:"enough + danh từ không đếm được evidence."},
 ]});
 
-/* ---------- RÚT GỌN MỆNH ĐỀ ---------- */
+/* ---------- 33. RÚT GỌN MỆNH ĐỀ ---------- */
 GP_DATA.push({
 id:'reduced',em:'✂️',name:'Rút Gọn Mệnh Đề',sub:'Mệnh đề quan hệ · mệnh đề trạng ngữ rút gọn',
 theory:`
@@ -2214,7 +2214,6 @@ qs:[
 ]});
 
 
-/* ==APPEND_TOPICS== */
 
 /* ================= VIEWS ================= */
 let CUR=null, PRC=null;
@@ -2347,6 +2346,19 @@ function startTest(){
 }
 
 /* ---- shared question UI ---- */
+function fmtQ(s){
+  let out=esc(s).replace(/\\([!?.])/g,'$1');
+  if(/(?:^|\s)a\.\s+\S/.test(out)&&/\s+b\.\s+\S/.test(out)){
+    out=out.replace(/\s+([b-f]\.\s+)/g,'\n$1');
+  }
+  if(/^Tìm lỗi sai:\s*/i.test(out)){
+    out=out.replace(/^(Tìm lỗi sai:)\s*/i,'$1\n').replace(/\(([A-D])\)/g,'<span class="err-tag">($1)</span>');
+  }
+  if(/\s+(?:→|=)\s+/.test(out)){
+    out=out.replace(/\s+(→|=)\s+/,'\n<span class="q-stem">$1 </span>');
+  }
+  return out;
+}
 function renderQ(){
   const q=PRC.qs[PRC.i];
   const opts=shuffle([{t:q.a,ok:1},...q.d.map(t=>({t,ok:0}))]);
@@ -2357,7 +2369,7 @@ function renderQ(){
       <div class="qprog"><i style="width:${PRC.i/PRC.qs.length*100}%"></i></div>
       <span class="streakBadge">🔥 ${PRC.streak}</span>
     </div>
-    <div class="qq">${q.q}</div>
+    <div class="qq">${fmtQ(q.q)}</div>
     <div class="opts">${opts.map((o,k)=>`<button class="opt" id="op${k}" onclick="answer(${k},event)"><span class="ab">${'ABCD'[k]}</span><span>${esc(o.t)}</span></button>`).join('')}</div>
     <div class="feedback" id="fb"></div>
     <div class="center mt hidden" id="nextRow"><button class="btn teal" onclick="nextQ()">${PRC.i+1<PRC.qs.length?'Câu tiếp theo ➜':'Xem kết quả 🎉'}</button></div>`;
