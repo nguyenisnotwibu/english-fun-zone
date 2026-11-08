@@ -7857,15 +7857,17 @@ function chStatsKey(){return 'efz_chess_'+((P&&P.name)||'guest')}
 function chStats(){try{return JSON.parse(localStorage.getItem(chStatsKey()))||{}}catch(e){return{}}}
 function chSaveWin(lv){try{const d=chStats();d[lv]=(d[lv]||0)+1;localStorage.setItem(chStatsKey(),JSON.stringify(d))}catch(e){}}
 let CH_COLOR='w';
-let CH_GATE=(()=>{try{const v=localStorage.getItem('efz_chess_gate');return v==null?3:+v}catch(e){return 3}})();
-function chSetGate(n){CH_GATE=n;try{localStorage.setItem('efz_chess_gate',n)}catch(e){}startChess()}
+const CH_GATE='auto'; // luôn tự động: 4 → 3 → 2 nước/câu theo số quân còn lại
+function chSetGate(n){CH_GATE=n;try{localStorage.setItem('efz_chess_gate2',n)}catch(e){}startChess()}
+/* Tự động: đầu ván (nhiều quân) 4 nước/câu → giữa ván 3 → tàn cuộc (ít quân) 2 */
+function chGateN(){const C=CH;if(C.gate!=='auto')return C.gate;const n=C.S.b.filter(Boolean).length;return n>=24?4:n>=14?3:2}
+function chPhase(){const n=CH.S.b.filter(Boolean).length;return n>=24?'khai cuộc':n>=14?'trung cuộc':'tàn cuộc'}
 function chUse(k){if(CH[k]<99)CH[k]--}
 function chMyMoves(){return CH.log.filter(x=>x.who==='me').length}
 /* cứ mỗi N nước của em → phải trả lời đúng 1 câu mới được đi tiếp */
 function chGateCheck(){
-  const C=CH;if(!C||!C.gate||C.over||C.S.t!==C.me)return;
-  const n=chMyMoves();
-  if(n>0&&n%C.gate===0&&C.gateDone!==n){C.gatePending=true;C.quiz={kind:'gate',got:0,busy:false};chQuizNext()}
+  const C=CH;if(!C||C.over||C.S.t!==C.me)return;
+  if(C.since>=chGateN()){C.gatePending=true;C.quiz={kind:'gate',got:0,busy:false};chQuizNext()}
 }
 function chGlyph(p,extra){return `<span class="ch-pc ${p<'a'?'w':'b'} ${extra||''}">${CHG[p.toLowerCase()]}︎</span>`}
 function chPName(p){const t=p.toLowerCase();return `<b>${CHN[t]}</b> (${CHV[t]})`}
@@ -7876,16 +7878,12 @@ function startChess(){
   sndClick();CH_RUN++;CH=null;chCloseModal();GM={type:'chess'};
   const st=chStats();
   $('gamesCard').innerHTML=gameTop('♟️ Cờ vua tiếng Anh','<span class="streak">Lớp '+grade+'</span>')+
-  `<p class="sub" style="margin:0 0 10px">Chơi cờ với máy và học từ vựng cùng lúc! Cứ đi vài nước là phải <b>trả lời 1 câu tiếng Anh</b> mới được đi tiếp. Muốn <b>đi lại</b> một nước cũ? Bấm vào nước đó trong bảng <b>Các nước đã đi</b> rồi <b>trả lời đúng câu hỏi tiếng Anh</b>. Muốn biết nước hay? Trả lời đúng để xem <b>gợi ý</b> 💡</p>
+  `<p class="sub" style="margin:0 0 10px">Chơi cờ với máy và học từ vựng cùng lúc! Cứ đi vài nước là phải <b>trả lời 1 câu tiếng Anh</b> mới được đi tiếp (đầu ván 4 nước/câu, giữa ván 3, gần cuối ván 2). Muốn <b>đi lại</b> một nước cũ? Bấm vào nước đó trong bảng <b>Các nước đã đi</b> rồi <b>trả lời đúng câu hỏi tiếng Anh</b>. Muốn biết nước hay? Trả lời đúng để xem <b>gợi ý</b> 💡</p>
   <div class="sect-title">① Em cầm quân màu gì?</div>
   <div class="row ch-colpick">
     ${[['w','⚪ Quân trắng (đi trước)'],['b','⚫ Quân đen'],['r','🎲 Ngẫu nhiên']].map(([k,l])=>`<button class="btn ${CH_COLOR===k?'':'ghost'} sm" onclick="CH_COLOR='${k}';startChess()">${l}</button>`).join('')}
   </div>
-  <div class="sect-title">② Cứ mấy nước thì phải trả lời 1 câu tiếng Anh?</div>
-  <div class="row ch-colpick">
-    ${[[2,'⚡ Mỗi 2 nước'],[3,'⭐ Mỗi 3 nước'],[4,'🐢 Mỗi 4 nước'],[0,'🚫 Không hỏi']].map(([k,l])=>`<button class="btn ${CH_GATE===k?'':'ghost'} sm" onclick="chSetGate(${k})">${l}</button>`).join('')}
-  </div>
-  <div class="sect-title">③ Chọn đối thủ (từ dễ đến khó)</div>
+  <div class="sect-title">② Chọn đối thủ (từ dễ đến khó)</div>
   <div class="game-grid">`+
   CH_LV.map(L=>`<button class="gcard" style="background:linear-gradient(140deg,${L.col},${L.col2})" onclick="chNew(${L.id})">
     <span class="em">${L.em}</span><h3>${L.id}. ${L.nm}</h3>
@@ -7905,7 +7903,7 @@ function chNew(lv){
   const L=CH_LV[lv-1];
   const me=CH_COLOR==='r'?(Math.random()<.5?'w':'b'):CH_COLOR;
   CH={L,S:chInit(),me,sel:-1,targets:[],last:null,snaps:[],log:[],undo:L.undo,hint:L.hint,
-      lost:[],won:[],justCap:false,gate:CH_GATE,gateDone:0,gatePending:false,uid:Date.now()+Math.random(),hintMv:null,over:null,run:++CH_RUN,think:false,info:'',view:-1,hold:null};
+      lost:[],won:[],justCap:false,gate:CH_GATE,since:0,gatePending:false,uid:Date.now()+Math.random(),hintMv:null,over:null,run:++CH_RUN,think:false,info:'',view:-1,hold:null};
   chRender();
   if(me==='b')chBotTurn();
 }
@@ -8000,7 +7998,7 @@ function chRender(){
   if(chSet('chStatus','st',status))$('chStatus').className='ch-status '+stCls;
   const lost=viewing?C.snaps[C.view].lost:C.lost,won=viewing?C.snaps[C.view].won:C.won;
   chSet('chLost','lost',lost.map(p=>chGlyph(p,'sm')).join('')||'<i>chưa mất quân nào</i>');
-  {const n=chMyMoves(),g=C.gate;chSet('chGate','gate',g&&!C.over?`📝 Câu hỏi sau <b>${g-(n%g)}</b> nước`:'')}
+  {const g=chGateN();chSet('chGate','gate',!C.over?`📝 Câu hỏi sau <b>${Math.max(1,g-C.since)}</b> nước${C.gate==='auto'?` · ${chPhase()}`:''}`:'')}
   chSet('chWon','won',won.map(p=>chGlyph(p,'sm')).join('')||'<i>chưa ăn quân nào</i>');
   const can=chCanRewind();
   let side;
@@ -8136,7 +8134,7 @@ function chTryMove(f,t){const m=chLegal(CH.S).find(x=>x.f===f&&x.t===t);if(m)chP
 
 /* ---------- đi quân ---------- */
 function chPlayerMove(m){
-  const C=CH;chSnap();
+  const C=CH;chSnap();C.since++;
   chMake(C.S,m);
   if(m.c)C.won.push(m.c);
   C.log.push({who:'me',m,html:chDesc(m)});
@@ -8236,7 +8234,7 @@ function chQuizNext(){
   Q.q=chMakeQ(typed);Q.busy=false;
   const back=Q.kind==='undo'?C.log.length-Q.target:0;
   const head=gate?'📝 Trả lời để ĐI TIẾP':Q.kind==='undo'?'↩️ Trả lời để ĐI LẠI':'💡 Trả lời để xem GỢI Ý';
-  const sub=Q.kind==='undo'?`<div class="ch-prog" style="color:var(--muted);font-weight:600">Quay lại ${back} nước</div>`:gate?`<div class="ch-prog" style="color:var(--muted);font-weight:600">Em đã đi ${C.gate} nước – trả lời đúng để chơi tiếp nhé!</div>`:'';
+  const sub=Q.kind==='undo'?`<div class="ch-prog" style="color:var(--muted);font-weight:600">Quay lại ${back} nước</div>`:gate?`<div class="ch-prog" style="color:var(--muted);font-weight:600">Em đã đi ${C.since} nước – trả lời đúng để chơi tiếp nhé!</div>`:'';
   const prog=need>1?`<div class="ch-prog">Câu ${Q.got+1}/${L.need} ${'⭐'.repeat(Q.got)}</div>`:'';
   let body;
   if(Q.q.typed){
@@ -8289,10 +8287,10 @@ function chRewind(k){
 }
 function chQuizDone(){
   const C=CH,Q=C.quiz;chCloseModal();C.quiz=null;
-  if(Q.kind==='gate'){C.gateDone=chMyMoves();C.gatePending=false;toast('✅ Giỏi lắm! Đi tiếp nào');chRender();return}
+  if(Q.kind==='gate'){C.since=0;C.gatePending=false;toast('✅ Giỏi lắm! Đi tiếp nào');chRender();return}
   if(Q.kind==='undo'){
     const back=C.log.length-Q.target;
-    chRewind(Q.target);chUse('undo');C.gateDone=chMyMoves();
+    chRewind(Q.target);chUse('undo');C.since=0;
     C.info=`↩️ Đã quay lại ${back} nước! Nghĩ kỹ rồi đi nước khác nhé. Mẹo: nhấn giữ quân để xem mũi tên các nước đi.`;
     toast('↩️ Đi lại thành công!');chRender();
   }else{
