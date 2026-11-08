@@ -927,10 +927,9 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
 .ch-sq.chk{background-image:radial-gradient(circle,rgba(255,0,0,.95) 0%,rgba(255,0,0,.5) 38%,transparent 72%)}
 .ch-sq.dot::after{content:"";position:absolute;width:30%;height:30%;border-radius:50%;background:rgba(30,20,60,.32);pointer-events:none}
 .ch-sq.cap::after{content:"";position:absolute;inset:5%;border-radius:50%;border:5px solid rgba(220,38,38,.65);pointer-events:none}
-.ch-sq:hover{filter:brightness(1.06)}
 .ch-pc{position:relative;z-index:1;display:inline-block;transition:transform .12s;line-height:1}
-.ch-pc.w{color:#fff;text-shadow:1px 1px 0 #222,-1px -1px 0 #222,1px -1px 0 #222,-1px 1px 0 #222,0 1px 0 #222,0 -1px 0 #222,1px 0 0 #222,-1px 0 0 #222,0 4px 5px rgba(0,0,0,.35)}
-.ch-pc.b{color:#1c1917;text-shadow:0 0 1px rgba(255,255,255,.5),0 4px 5px rgba(0,0,0,.35)}
+.ch-pc.w{color:#fff;-webkit-text-stroke:2px #222;paint-order:stroke fill;text-shadow:0 3px 3px rgba(0,0,0,.3)}
+.ch-pc.b{color:#1c1917;text-shadow:0 3px 3px rgba(0,0,0,.3)}
 .ch-sq.sel .ch-pc{transform:scale(1.15) translateY(-3%)}
 .ch-pc.sm{font-size:20px;font-family:"Segoe UI Symbol","DejaVu Sans","Noto Sans Symbols 2",serif}
 .ch-co{position:absolute;font:800 11px/1 'Baloo 2',sans-serif;font-size:2.4cqw;opacity:.75;z-index:2;pointer-events:none}
@@ -953,7 +952,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
 .ch-act.pulse{animation:chPulse 1.1s infinite}
 @keyframes chPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.6)}50%{box-shadow:0 0 0 10px rgba(239,68,68,0)}}
 .ch-tip{font-size:12.5px;color:var(--muted)}
-.ch-log{max-height:220px;overflow:auto;font-size:13px}
+.ch-log{max-height:260px;overflow:auto;font-size:13px}
 .ch-log div{padding:2px 0;border-bottom:1px dashed rgba(139,92,246,.18)}
 .ch-lt{font-weight:800;margin-bottom:4px;color:var(--violet)}
 .ch-guide{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
@@ -979,6 +978,32 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
 [data-theme="dark"] .ch-status{background:#2e1065;color:#ddd6fe}
 [data-theme="dark"] .ch-status.warn{background:#450a0a;color:#fecaca}
 [data-theme="dark"] .ch-status.over{background:#422006;color:#fde68a}
+.ch-board{touch-action:none}
+.ch-board.viewing{border-color:#f97316;box-shadow:0 0 0 4px rgba(249,115,22,.35),0 8px 0 rgba(0,0,0,.18)}
+.ch-board.viewing .ch-sq{cursor:default}
+.ch-vtag{position:absolute;top:6px;right:6px;z-index:4;background:#f97316;color:#fff;font-weight:800;font-size:12px;padding:3px 9px;border-radius:20px;pointer-events:none}
+.ch-status.view{background:#ffedd5;color:#c2410c}
+[data-theme="dark"] .ch-status.view{background:#431407;color:#fed7aa}
+.ch-viewbox{border-color:rgba(249,115,22,.45)}
+.ch-log{max-height:260px}
+.ch-log .ch-mv{cursor:pointer;padding:4px 8px;border-radius:9px;border-bottom:none;display:flex;align-items:center;gap:5px;transition:background .12s}
+.ch-log .ch-mv:hover{background:rgba(139,92,246,.12)}
+.ch-log .ch-mv.on{background:#f97316;color:#fff}
+.ch-log .ch-mv.on .ch-num{color:#fff}
+.ch-num{min-width:30px;font-weight:800;color:var(--muted);font-size:12px}
+.ch-ghost{position:fixed;left:0;top:0;z-index:500;pointer-events:none;will-change:transform;line-height:1;font-family:"Segoe UI Symbol","DejaVu Sans","Noto Sans Symbols 2",serif;filter:drop-shadow(0 6px 6px rgba(0,0,0,.35))}
+.ch-ghost .ch-pc{font-size:1em}
+.ch-board .ch-sq{contain:layout paint}
+.ch-ph{display:contents}
+.ch-vtag{display:none}.ch-board.viewing .ch-vtag{display:block}
+.ch-status.think{background:#e0f2fe;color:#0369a1}
+[data-theme="dark"] .ch-status.think{background:#082f49;color:#bae6fd}
+.ch-dots i{font-style:normal;animation:chDot 1.2s infinite}.ch-dots i:nth-child(2){animation-delay:.2s}.ch-dots i:nth-child(3){animation-delay:.4s}
+@keyframes chDot{0%,60%,100%{opacity:.2}30%{opacity:1}}
+.ch-pc.sm{-webkit-text-stroke:1px #222}
+.ch-pc.b.sm{-webkit-text-stroke:0}
+.ch-gchip{font-size:12px;font-weight:700;color:#7c3aed;background:#ede9fe;padding:3px 9px;border-radius:20px}
+[data-theme="dark"] .ch-gchip{background:#2e1065;color:#ddd6fe}
 </style>
 </head>
 <body>
@@ -7614,7 +7639,7 @@ function gamesHome(){
     </div>
     <div class="sect-title">♟️ Cờ vua học tiếng Anh</div>
     <div class="game-grid">
-      <button class="gcard" style="background:linear-gradient(140deg,#7c5a3a,#b58863)" onclick="startChess()"><span class="em">♟️</span><h3>Cờ vua tiếng Anh</h3><p>Đấu với máy 5 cấp độ · trả lời đúng để đi lại &amp; xem gợi ý</p></button>
+      <button class="gcard" style="background:linear-gradient(140deg,#7c5a3a,#b58863)" onclick="startChess()"><span class="em">♟️</span><h3>Cờ vua tiếng Anh</h3><p>Đấu với máy 5 cấp độ · đi lại nước bất kỳ &amp; xem gợi ý bằng câu hỏi</p></button>
     </div>`;
 }
 function gameTop(title,extra){
@@ -7643,6 +7668,8 @@ const CHHOW={p:'Đi thẳng 1 ô (nước đầu được đi 2 ô). Ăn quân t
 const CH_VOCAB=[['king','quân vua'],['queen','quân hậu, nữ hoàng'],['rook','quân xe'],['bishop','quân tượng'],['knight','quân mã, hiệp sĩ'],['pawn','quân tốt'],
  ['checkmate','chiếu hết'],['board','bàn cờ'],['move','nước đi, di chuyển'],['capture','bắt, ăn (quân)'],['win','thắng'],['lose','thua'],['draw','hoà'],
  ['square','ô vuông'],['attack','tấn công'],['defend','phòng thủ, bảo vệ'],['player','người chơi'],['turn','lượt đi']];
+/* --- engine cờ: bọc trong 1 hàm để chạy được cả ở luồng chính lẫn Web Worker (bot nghĩ không làm đơ trang) --- */
+function chEngine(){
 const CHVAL={p:100,n:320,b:330,r:500,q:900,k:0};
 const CHPST={
  p:[0,0,0,0,0,0,0,0,50,50,50,50,50,50,50,50,10,10,20,30,30,20,10,10,5,5,10,25,25,10,5,5,0,0,0,20,20,0,0,0,5,-5,-10,0,0,-10,-5,5,5,10,10,-20,-20,10,10,5,0,0,0,0,0,0,0,0],
@@ -7805,12 +7832,41 @@ function chBotMove(S,lv){
   return chBest(S,4,true,0,2600);
 }
 
+
+return{chCol,chSqName,chInit,chClone,chAtt,chInCheck,chGen,chMake,chUnmake,chLegal,chEval,chBest,chBotMove};
+}
+const {chCol,chSqName,chInit,chClone,chAtt,chInCheck,chGen,chMake,chUnmake,chLegal,chEval,chBest,chBotMove}=chEngine();
+let CH_W=null,CH_WID=0;const CH_WQ={};
+function chAISync(d){return d.kind==='hint'?chBest(d.S,3,true,0,1500):chBotMove(d.S,d.lv)}
+/* gọi AI bất đồng bộ qua Worker; nếu trình duyệt không cho Worker thì chạy thường */
+function chAI(d,cb){
+  if(CH_W===null){
+    try{
+      const src='const E=('+chEngine.toString()+')();onmessage=function(e){var d=e.data,m=null;try{m=d.kind==="hint"?E.chBest(d.S,3,true,0,1500):E.chBotMove(d.S,d.lv)}catch(x){}postMessage({id:d.id,m:m})}';
+      CH_W=new Worker(URL.createObjectURL(new Blob([src],{type:'text/javascript'})));
+      CH_W.onmessage=ev=>{const q=CH_WQ[ev.data.id];if(!q)return;delete CH_WQ[ev.data.id];q.cb(ev.data.m)};
+      CH_W.onerror=()=>{CH_W=false;for(const k of Object.keys(CH_WQ)){const q=CH_WQ[k];delete CH_WQ[k];setTimeout(()=>q.cb(chAISync(q.d)),20)}};
+    }catch(x){CH_W=false}
+  }
+  if(!CH_W){setTimeout(()=>cb(chAISync(d)),30);return}
+  const id=++CH_WID;d.id=id;CH_WQ[id]={d,cb};CH_W.postMessage(d);
+}
 /* ---------- trạng thái + lưu thành tích ---------- */
 let CH=null,CH_RUN=0;
 function chStatsKey(){return 'efz_chess_'+((P&&P.name)||'guest')}
 function chStats(){try{return JSON.parse(localStorage.getItem(chStatsKey()))||{}}catch(e){return{}}}
 function chSaveWin(lv){try{const d=chStats();d[lv]=(d[lv]||0)+1;localStorage.setItem(chStatsKey(),JSON.stringify(d))}catch(e){}}
 let CH_COLOR='w';
+let CH_GATE=(()=>{try{const v=localStorage.getItem('efz_chess_gate');return v==null?3:+v}catch(e){return 3}})();
+function chSetGate(n){CH_GATE=n;try{localStorage.setItem('efz_chess_gate',n)}catch(e){}startChess()}
+function chUse(k){if(CH[k]<99)CH[k]--}
+function chMyMoves(){return CH.log.filter(x=>x.who==='me').length}
+/* cứ mỗi N nước của em → phải trả lời đúng 1 câu mới được đi tiếp */
+function chGateCheck(){
+  const C=CH;if(!C||!C.gate||C.over||C.S.t!==C.me)return;
+  const n=chMyMoves();
+  if(n>0&&n%C.gate===0&&C.gateDone!==n){C.gatePending=true;C.quiz={kind:'gate',got:0,busy:false};chQuizNext()}
+}
 function chGlyph(p,extra){return `<span class="ch-pc ${p<'a'?'w':'b'} ${extra||''}">${CHG[p.toLowerCase()]}︎</span>`}
 function chPName(p){const t=p.toLowerCase();return `<b>${CHN[t]}</b> (${CHV[t]})`}
 function chInf(n){return n>=99?'∞':n}
@@ -7820,12 +7876,16 @@ function startChess(){
   sndClick();CH_RUN++;CH=null;chCloseModal();GM={type:'chess'};
   const st=chStats();
   $('gamesCard').innerHTML=gameTop('♟️ Cờ vua tiếng Anh','<span class="streak">Lớp '+grade+'</span>')+
-  `<p class="sub" style="margin:0 0 10px">Chơi cờ với máy và học từ vựng cùng lúc! Bị ăn quân? <b>Trả lời đúng câu hỏi tiếng Anh</b> để <b>đi lại</b>. Muốn biết nước hay? Trả lời đúng để xem <b>gợi ý</b> 💡</p>
+  `<p class="sub" style="margin:0 0 10px">Chơi cờ với máy và học từ vựng cùng lúc! Cứ đi vài nước là phải <b>trả lời 1 câu tiếng Anh</b> mới được đi tiếp. Muốn <b>đi lại</b> một nước cũ? Bấm vào nước đó trong bảng <b>Các nước đã đi</b> rồi <b>trả lời đúng câu hỏi tiếng Anh</b>. Muốn biết nước hay? Trả lời đúng để xem <b>gợi ý</b> 💡</p>
   <div class="sect-title">① Em cầm quân màu gì?</div>
   <div class="row ch-colpick">
     ${[['w','⚪ Quân trắng (đi trước)'],['b','⚫ Quân đen'],['r','🎲 Ngẫu nhiên']].map(([k,l])=>`<button class="btn ${CH_COLOR===k?'':'ghost'} sm" onclick="CH_COLOR='${k}';startChess()">${l}</button>`).join('')}
   </div>
-  <div class="sect-title">② Chọn đối thủ (từ dễ đến khó)</div>
+  <div class="sect-title">② Cứ mấy nước thì phải trả lời 1 câu tiếng Anh?</div>
+  <div class="row ch-colpick">
+    ${[[2,'⚡ Mỗi 2 nước'],[3,'⭐ Mỗi 3 nước'],[4,'🐢 Mỗi 4 nước'],[0,'🚫 Không hỏi']].map(([k,l])=>`<button class="btn ${CH_GATE===k?'':'ghost'} sm" onclick="chSetGate(${k})">${l}</button>`).join('')}
+  </div>
+  <div class="sect-title">③ Chọn đối thủ (từ dễ đến khó)</div>
   <div class="game-grid">`+
   CH_LV.map(L=>`<button class="gcard" style="background:linear-gradient(140deg,${L.col},${L.col2})" onclick="chNew(${L.id})">
     <span class="em">${L.em}</span><h3>${L.id}. ${L.nm}</h3>
@@ -7836,7 +7896,7 @@ function startChess(){
   <div class="ch-guide">`+
   ['k','q','r','b','n','p'].map(t=>`<div class="ch-gi"><div class="ch-gg">${chGlyph(t.toUpperCase())}</div><div><div class="ch-gn">${CHN[t]} <span>· ${CHV[t]}</span></div><div class="ch-gd">${CHHOW[t]}</div></div></div>`).join('')+
   `</div>
-  <p class="sub" style="margin-top:10px;font-size:12.5px">Câu hỏi lấy từ <b>chủ đề đang chọn</b> ở trang Games (${poolLabel()}) + từ vựng về cờ vua. Mỗi câu đúng được ⭐ +5 XP, thắng bot được thưởng XP lớn!</p>`;
+  <p class="sub" style="margin-top:10px;font-size:12.5px">🖱️ Mẹo: <b>nhấn giữ</b> một quân để hiện <b>mũi tên</b> tới mọi ô nó đi được, rồi <b>kéo thả</b> để đi quân. Câu hỏi lấy từ <b>chủ đề đang chọn</b> ở trang Games (${poolLabel()}) + từ vựng về cờ vua. Mỗi câu đúng ⭐ +5 XP, thắng bot được thưởng XP lớn!</p>`;
 }
 
 /* ---------- ván mới ---------- */
@@ -7844,12 +7904,13 @@ function chNew(lv){
   sndClick();chCloseModal();
   const L=CH_LV[lv-1];
   const me=CH_COLOR==='r'?(Math.random()<.5?'w':'b'):CH_COLOR;
-  CH={L,S:chInit(),me,sel:-1,targets:[],last:null,hist:[],undo:L.undo,hint:L.hint,
-      lost:[],won:[],canUndo:false,hintMv:null,over:null,run:++CH_RUN,log:[],think:false,info:'',lastCap:''};
+  CH={L,S:chInit(),me,sel:-1,targets:[],last:null,snaps:[],log:[],undo:L.undo,hint:L.hint,
+      lost:[],won:[],justCap:false,gate:CH_GATE,gateDone:0,gatePending:false,uid:Date.now()+Math.random(),hintMv:null,over:null,run:++CH_RUN,think:false,info:'',view:-1,hold:null};
   chRender();
   if(me==='b')chBotTurn();
 }
-function chPush(){CH.hist.push({S:chClone(CH.S),lost:CH.lost.slice(),won:CH.won.slice(),log:CH.log.slice(),last:CH.last})}
+/* lưu ảnh chụp bàn cờ TRƯỚC mỗi nước đi → snaps[i] = thế cờ trước nước log[i] */
+function chSnap(){CH.snaps.push({S:chClone(CH.S),lost:CH.lost.slice(),won:CH.won.slice()})}
 function chDesc(m){
   const t=m.p.toLowerCase();
   let s=`${chGlyph(m.p,'sm')} ${CHN[t]} ${chSqName(m.f)}→${chSqName(m.t)}`;
@@ -7858,130 +7919,261 @@ function chDesc(m){
   if(m.pr)s+=' 👑';
   return s;
 }
+function chMvNum(i){return (Math.floor(i/2)+1)+(i%2?'…':'.')}
+function chLastMe(){for(let i=CH.log.length-1;i>=0;i--)if(CH.log[i].who==='me')return i;return -1}
+function chCanRewind(){const C=CH;return !!C&&!C.think&&C.undo>0&&!(C.over&&C.over.res==='win')&&chLastMe()>=0}
+
+/* ---------- vẽ mũi tên ---------- */
+function chPos(s){const r=s>>3,f=s&7;return CH.me==='b'?[7-f+.5,7-r+.5]:[f+.5,r+.5]}
+const CH_AC={g:'#16a34a',o:'#f97316',v:'#8b5cf6'};
+function chArrow(f,t,c,w,op){
+  const[a,b]=chPos(f),[x,y]=chPos(t);
+  const len=Math.hypot(x-a,y-b),ux=(x-a)/len,uy=(y-b)/len,ex=x-ux*.3,ey=y-uy*.3;
+  return `<line x1="${a+ux*.2}" y1="${b+uy*.2}" x2="${ex}" y2="${ey}" stroke="${CH_AC[c]}" stroke-width="${w}" stroke-linecap="round" marker-end="url(#chAh${c})" opacity="${op}"/>`;
+}
+function chDefs(){return '<defs>'+Object.keys(CH_AC).map(k=>`<marker id="chAh${k}" markerWidth="3" markerHeight="3" refX="1.4" refY="1.5" orient="auto"><path d="M0,0 L3,1.5 L0,3 z" fill="${CH_AC[k]}"/></marker>`).join('')+'</defs>'}
 
 /* ---------- vẽ bàn cờ ---------- */
-function chRender(){
-  if(!CH)return;
-  const C=CH,L=C.L,S=C.S,flip=C.me==='b';
-  const chkSq=chInCheck(S,S.t)?S.b.indexOf(S.t==='w'?'K':'k'):-1;
+/* dựng khung 1 lần cho mỗi ván, các lần sau chỉ cập nhật phần thay đổi → mượt hơn */
+function chBuild(){
+  const C=CH,L=C.L,flip=C.me==='b',meName=(P&&P.name)?esc(P.name):'Em';
   let sq='';
   for(let i=0;i<64;i++){
-    const s=flip?63-i:i,r=s>>3,f=s&7,dark=(r+f)%2===1,p=S.b[s];
-    let cls='ch-sq '+(dark?'d':'l');
-    if(C.last&&(C.last.f===s||C.last.t===s))cls+=' last';
-    if(C.sel===s)cls+=' sel';
-    if(C.targets.includes(s))cls+=p||(C.sel>=0&&S.b[C.sel].toLowerCase()==='p'&&(s&7)!==(C.sel&7))?' cap':' dot';
-    if(s===chkSq)cls+=' chk';
-    if(C.hintMv&&(C.hintMv.f===s||C.hintMv.t===s))cls+=' hint';
-    const row=flip?7-r:r,col=flip?7-f:f;
+    const s=flip?63-i:i,r=s>>3,f=s&7,row=flip?7-r:r,col=flip?7-f:f;
     let co='';
     if(col===0)co+=`<span class="ch-co rk">${8-r}</span>`;
     if(row===7)co+=`<span class="ch-co fl">${'abcdefgh'[f]}</span>`;
-    sq+=`<div class="${cls}" onclick="chClick(${s})">${co}${p?chGlyph(p):''}</div>`;
+    sq+=`<div class="ch-sq ${(r+f)%2?'d':'l'}" data-s="${s}">${co}<span class="ch-ph"></span></div>`;
   }
-  let arrow='';
-  if(C.hintMv){
-    const pos=s=>{const r=s>>3,f=s&7;return flip?[7-f+.5,7-r+.5]:[f+.5,r+.5]};
-    const[a,b]=pos(C.hintMv.f),[c,d]=pos(C.hintMv.t);
-    const len=Math.hypot(c-a,d-b),ux=(c-a)/len,uy=(d-b)/len,ex=c-ux*.32,ey=d-uy*.32;
-    arrow=`<svg class="ch-arrow" viewBox="0 0 8 8"><defs><marker id="chAh" markerWidth="3" markerHeight="3" refX="1.5" refY="1.5" orient="auto"><path d="M0,0 L3,1.5 L0,3 z" fill="#16a34a"/></marker></defs>
-      <line x1="${a}" y1="${b}" x2="${ex}" y2="${ey}" stroke="#16a34a" stroke-width=".2" stroke-linecap="round" marker-end="url(#chAh)" opacity=".85"/></svg>`;
-  }
-  const myTurn=!C.over&&!C.think&&S.t===C.me;
-  let status;
-  if(C.over)status=C.over.res==='win'?'🏆 Em thắng rồi! You win!':C.over.res==='lose'?'😢 Em thua ván này':'🤝 Hoà! Draw';
-  else if(C.think)status=`🤔 ${L.nm} đang nghĩ…`;
-  else status=chkSq>=0?'⚠️ Vua của em bị chiếu! (Check!) Hãy cứu Vua':'👉 Đến lượt em! (Your turn)';
-  const lostH=C.lost.map(p=>chGlyph(p,'sm')).join('')||'<i>chưa mất quân nào</i>';
-  const wonH=C.won.map(p=>chGlyph(p,'sm')).join('')||'<i>chưa ăn quân nào</i>';
-  const meName=(P&&P.name)?esc(P.name):'Em';
   $('gamesCard').innerHTML=gameTop('♟️ Cờ vua tiếng Anh',`<span class="streak">${L.em} ${L.nm}</span>`)+
-  `<div class="ch-wrap">
+  `<div class="ch-wrap" data-uid="${C.uid}">
     <div>
-      <div class="ch-bar"><span class="ch-ava" style="background:${L.col}">${L.em}</span><b>${L.nm}</b><span class="ch-caps" title="Quân của em bị ăn">${lostH}</span></div>
-      <div class="ch-board" id="chBoard">${sq}${arrow}</div>
-      <div class="ch-bar"><span class="ch-ava" style="background:#8b5cf6">🙂</span><b>${meName}</b> <small>(${C.me==='w'?'quân trắng':'quân đen'})</small><span class="ch-caps" title="Quân em đã ăn">${wonH}</span></div>
+      <div class="ch-bar"><span class="ch-ava" style="background:${L.col}">${L.em}</span><b>${L.nm}</b><span class="ch-caps" id="chLost"></span></div>
+      <div class="ch-board" id="chBoard">${sq}<svg class="ch-arrow" id="chArr" viewBox="0 0 8 8"></svg><svg class="ch-arrow" id="chHold" viewBox="0 0 8 8"></svg><div class="ch-vtag">👀 Xem lại</div></div>
+      <div class="ch-bar"><span class="ch-ava" style="background:#8b5cf6">🙂</span><b>${meName}</b> <small>(${C.me==='w'?'quân trắng':'quân đen'})</small><span class="ch-gchip" id="chGate"></span><span class="ch-caps" id="chWon"></span></div>
     </div>
     <div class="ch-side">
-      <div class="ch-status ${C.over?'over':chkSq>=0&&myTurn?'warn':''}">${status}</div>
-      ${C.over?chOverBox():''}
-      <div class="ch-card ch-info">${C.info||'Chạm vào <b>một quân của em</b> để xem nó đi được những ô nào (chấm tròn). Chạm vào ô có chấm để đi.'}</div>
-      <button class="btn ch-act ${C.canUndo&&C.undo>0?'pulse':''}" style="background:#ef4444" ${C.canUndo&&C.undo>0&&!C.think?'':'disabled'} onclick="chAsk('undo')">↩️ Đi lại nước vừa rồi <small>(còn ${chInf(C.undo)})</small></button>
-      <button class="btn ch-act" style="background:#16a34a" ${myTurn&&C.hint>0?'':'disabled'} onclick="chAsk('hint')">💡 Gợi ý nước tốt <small>(còn ${chInf(C.hint)})</small></button>
-      <div class="ch-tip">${C.canUndo?'😱 Em vừa bị ăn quân — trả lời đúng để đi lại!':'↩️ Nút <b>Đi lại</b> sáng lên khi em bị ăn quân.'} ${L.need>1?'Cấp này cần <b>đúng '+L.need+' câu liên tiếp</b>.':''}${L.strict?' Trả lời sai sẽ mất 1 lượt.':' Sai thì được thử câu khác.'}</div>
+      <div class="ch-status" id="chStatus"></div>
+      <div id="chSide" class="ch-side"></div>
+      <div class="ch-card ch-log" id="chLogBox"><div class="ch-lt">📜 Các nước đã đi (Moves) <small>– bấm để xem lại</small></div><div id="chLogList"></div></div>
+    </div>
+  </div>`;
+  const bd=$('chBoard');bd.onpointerdown=chDown;
+  C.els=[];bd.querySelectorAll('.ch-sq').forEach(el=>{C.els[+el.dataset.s]=el;el._ph=el.querySelector('.ch-ph');el._p=null;el._c=el.className});
+  C.cache={};
+}
+function chSet(id,key,html){const C=CH;if(C.cache[key]===html)return false;C.cache[key]=html;const el=$(id);if(el)el.innerHTML=html;return true}
+function chRender(){
+  if(!CH)return;
+  const C=CH,L=C.L,viewing=C.view>=0;
+  const w=document.querySelector('.ch-wrap');
+  if(!w||w.dataset.uid!=String(C.uid)||!$('chBoard'))chBuild();
+  const S=viewing?C.snaps[C.view].S:C.S;
+  const lastM=viewing?(C.view>0?C.log[C.view-1].m:null):C.last;
+  const showMv=viewing&&C.view<C.log.length&&C.log[C.view].who==='me'?C.log[C.view].m:null;
+  const chkSq=chInCheck(S,S.t)?S.b.indexOf(S.t==='w'?'K':'k'):-1;
+  for(let s=0;s<64;s++){
+    const el=C.els[s],r=s>>3,f=s&7,p=S.b[s];
+    let cls='ch-sq '+((r+f)%2?'d':'l');
+    if(lastM&&(lastM.f===s||lastM.t===s))cls+=' last';
+    if(!viewing){
+      if(C.sel===s)cls+=' sel';
+      if(C.targets.includes(s))cls+=p||(C.sel>=0&&S.b[C.sel].toLowerCase()==='p'&&(s&7)!==(C.sel&7))?' cap':' dot';
+      if(C.hintMv&&(C.hintMv.f===s||C.hintMv.t===s))cls+=' hint';
+    }
+    if(s===chkSq)cls+=' chk';
+    if(el._c!==cls){el.className=cls;el._c=cls}
+    if(el._p!==p){el._p=p;el._ph.innerHTML=p?chGlyph(p):''}
+  }
+  $('chBoard').classList.toggle('viewing',viewing);
+  let arr='';
+  if(!viewing&&C.hintMv)arr+=chArrow(C.hintMv.f,C.hintMv.t,'g',.2,.85);
+  if(showMv)arr+=chArrow(showMv.f,showMv.t,'o',.2,.85);
+  chSet('chArr','arr',arr?chDefs()+arr:'');
+  const myTurn=!viewing&&!C.over&&!C.think&&C.S.t===C.me;
+  let status,stCls='';
+  if(viewing){status=`👀 Đang xem lại nước ${chMvNum(C.viewI)}`;stCls='view'}
+  else if(C.over){status=C.over.res==='win'?'🏆 Em thắng rồi! You win!':C.over.res==='lose'?'😢 Em thua ván này':'🤝 Hoà! Draw';stCls='over'}
+  else if(C.think){status=`🤔 ${L.nm} đang nghĩ<span class="ch-dots"><i>.</i><i>.</i><i>.</i></span>`;stCls='think'}
+  else if(chkSq>=0){status='⚠️ Vua của em bị chiếu! (Check!) Hãy cứu Vua';stCls='warn'}
+  else status='👉 Đến lượt em! (Your turn)';
+  if(chSet('chStatus','st',status))$('chStatus').className='ch-status '+stCls;
+  const lost=viewing?C.snaps[C.view].lost:C.lost,won=viewing?C.snaps[C.view].won:C.won;
+  chSet('chLost','lost',lost.map(p=>chGlyph(p,'sm')).join('')||'<i>chưa mất quân nào</i>');
+  {const n=chMyMoves(),g=C.gate;chSet('chGate','gate',g&&!C.over?`📝 Câu hỏi sau <b>${g-(n%g)}</b> nước`:'')}
+  chSet('chWon','won',won.map(p=>chGlyph(p,'sm')).join('')||'<i>chưa ăn quân nào</i>');
+  const can=chCanRewind();
+  let side;
+  if(viewing){
+    side=`<div class="ch-card ch-viewbox">
+        <div>${showMv?`Bàn cờ đang hiện thế cờ <b>trước nước ${chMvNum(C.viewI)}</b> – mũi tên <b style="color:#f97316">cam</b> là nước em đã đi lúc đó (${chDesc(showMv)}).`:`Bàn cờ đang hiện thế cờ <b>sau nước ${chMvNum(C.viewI)}</b> của ${L.nm} – lúc đó đến lượt em đi.`}</div>
+        <div style="margin-top:6px">Muốn chơi lại từ đây? Trả lời đúng ${L.need>1?L.need+' câu':'câu hỏi'} tiếng Anh nhé!</div></div>
+      <button class="btn ch-act" style="background:#f97316" ${can?'':'disabled'} onclick="chAsk('undo',${C.view})">↩️ Trả lời để đi lại từ đây <small>(còn ${chInf(C.undo)})</small></button>
+      <button class="btn ch-act" style="background:#8b5cf6" onclick="chView(-1)">▶️ Về ván cờ hiện tại</button>`;
+  }else{
+    side=`${C.over?chOverBox():''}
+      <div class="ch-card ch-info">${C.info||'Chạm vào <b>một quân của em</b> để xem nó đi được những ô nào. <b>Nhấn giữ</b> quân để hiện mũi tên, kéo thả để đi.'}</div>
+      <button class="btn ch-act ${C.justCap&&can?'pulse':''}" style="background:#ef4444" ${can?'':'disabled'} onclick="chAsk('undo',chLastMe())">↩️ Đi lại nước vừa rồi <small>(còn ${chInf(C.undo)})</small></button>
+      <button class="btn ch-act" style="background:#16a34a" ${myTurn&&C.hint>0&&!C.hintBusy?'':'disabled'} onclick="chAsk('hint')">💡 Gợi ý nước tốt <small>(còn ${chInf(C.hint)})</small></button>
+      <div class="ch-tip">📜 <b>Bấm vào một nước bất kỳ</b> trong bảng dưới để xem lại thế cờ đó và đi lại từ đấy. ${L.need>1?'Cấp này cần <b>đúng '+L.need+' câu liên tiếp</b>.':''}${L.strict?' Trả lời sai sẽ mất 1 lượt.':' Sai thì được thử câu khác.'}</div>
       <div class="row" style="gap:8px">
         <button class="btn ghost sm" onclick="chNew(${L.id})">🔄 Ván mới</button>
         ${C.over?'':`<button class="btn ghost sm" onclick="chResign()">🏳️ Đầu hàng</button>`}
         <button class="btn ghost sm" onclick="startChess()">⚙️ Đổi cấp độ</button>
-      </div>
-      <div class="ch-card ch-log"><div class="ch-lt">📜 Các nước đã đi (Moves)</div>${C.log.slice(-12).map(x=>`<div>${x}</div>`).join('')||'<i>Chưa có nước nào</i>'}</div>
-    </div>
-  </div>`;
+      </div>`;
+  }
+  chSet('chSide','side',side);
+  const logH=C.log.map((x,i)=>`<div class="ch-mv ${x.who} ${viewing&&C.viewI===i?'on':''}" onclick="chLogClick(${i})"><span class="ch-num">${chMvNum(i)}</span>${x.who==='me'?'🙂':L.em} ${x.html}</div>`).join('');
+  if(chSet('chLogList','log',logH||'<i>Chưa có nước nào</i>')){
+    const lg=$('chLogBox'),on=lg.querySelector('.ch-mv.on');
+    if(on){const t=on.offsetTop-lg.offsetTop;if(t<lg.scrollTop||t>lg.scrollTop+lg.clientHeight-30)lg.scrollTop=t-lg.clientHeight/2}
+    else if(!viewing)lg.scrollTop=lg.scrollHeight;
+  }
 }
 function chOverBox(){
   const C=CH,L=C.L,nx=CH_LV[L.id];
   let h=`<div class="ch-card" style="text-align:center"><div style="font-size:40px">${C.over.res==='win'?'🏆':C.over.res==='lose'?'💪':'🤝'}</div><div style="font-weight:700">${C.over.why}</div><div class="row" style="justify-content:center;gap:8px;margin-top:8px">`;
-  if(C.over.res==='lose'&&C.canUndo&&C.undo>0)h+=`<button class="btn sm" style="background:#ef4444" onclick="chAsk('undo')">↩️ Trả lời để đi lại</button>`;
+  if(C.over.res==='lose'&&chCanRewind())h+=`<button class="btn sm" style="background:#ef4444" onclick="chAsk('undo',chLastMe())">↩️ Trả lời để đi lại</button>`;
   h+=`<button class="btn sm" onclick="chNew(${L.id})">🔄 Chơi lại</button>`;
   if(C.over.res==='win'&&nx)h+=`<button class="btn sm" style="background:${nx.col}" onclick="chNew(${nx.id})">${nx.em} Lên cấp ${nx.id}</button>`;
   return h+'</div></div>';
 }
 
-/* ---------- người chơi bấm ô ---------- */
-function chClick(s){
-  const C=CH;if(!C||C.over||C.think||C.S.t!==C.me)return;
-  const S=C.S,p=S.b[s];
-  if(C.sel>=0&&C.targets.includes(s)){
-    const m=chLegal(S).find(x=>x.f===C.sel&&x.t===s);
-    if(m){chPlayerMove(m);return}
-  }
-  if(p&&chCol(p)===C.me){
-    if(C.sel===s){C.sel=-1;C.targets=[];C.info='';chRender();return}
-    C.sel=s;C.targets=chLegal(S).filter(x=>x.f===s).map(x=>x.t);
-    const t=p.toLowerCase();
-    C.info=`<div class="ch-sel">${chGlyph(p)}<div><div class="ch-gn">${CHN[t]} <span>· ${CHV[t]}</span></div><div class="ch-gd">${CHHOW[t]}</div></div></div>`+
-      (C.targets.length?`<div style="margin-top:6px">👉 Đi được <b>${C.targets.length}</b> ô (chấm tròn). Vòng đỏ = ăn được quân.</div>`:`<div style="margin-top:6px;color:#dc2626">🚫 Quân này chưa đi được – thử quân khác nhé!</div>`);
-    sndClick();chRender();return;
-  }
-  C.sel=-1;C.targets=[];chRender();
+/* ---------- xem lại nước cũ (bấm vào bảng nước đi) ---------- */
+function chLogClick(i){
+  const C=CH;if(!C||C.think)return;
+  const x=C.log[i];if(!x)return;
+  // nước của em → hiện thế cờ TRƯỚC nước đó (mũi tên cam = nước em đã đi)
+  // nước của bot → hiện thế cờ SAU nước đó (đến lượt em)
+  let k=x.who==='me'?i:i+1;
+  if(k>=C.log.length||C.viewI===i){chView(-1);return}
+  C.viewI=i;chView(k);
 }
+function chView(k){
+  const C=CH;if(!C)return;
+  sndClick();C.view=k;if(k<0)C.viewI=-1;C.sel=-1;C.targets=[];chRender();
+}
+
+/* ---------- nhấn giữ / kéo thả quân ---------- */
+function chSqAt(x,y){
+  const C=CH;if(!C||!C.bdRect)return -1;
+  const R=C.bdRect,col=Math.floor((x-R.l)/R.z),row=Math.floor((y-R.t)/R.z);
+  if(col<0||col>7||row<0||row>7)return -1;
+  const s=row*8+col;return C.me==='b'?63-s:s;
+}
+function chMeasure(){const bd=$('chBoard');if(!bd)return;const r=bd.getBoundingClientRect();CH.bdRect={l:r.left+bd.clientLeft,t:r.top+bd.clientTop,z:bd.clientWidth/8}}
+function chSelect(s){
+  const C=CH,p=C.S.b[s],t=p.toLowerCase();
+  C.sel=s;C.targets=chLegal(C.S).filter(x=>x.f===s).map(x=>x.t);
+  C.info=`<div class="ch-sel">${chGlyph(p)}<div><div class="ch-gn">${CHN[t]} <span>· ${CHV[t]}</span></div><div class="ch-gd">${CHHOW[t]}</div></div></div>`+
+    (C.targets.length?`<div style="margin-top:6px">👉 Đi được <b>${C.targets.length}</b> ô (chấm tròn). Vòng đỏ = ăn được quân. Nhấn giữ để xem mũi tên.</div>`:`<div style="margin-top:6px;color:#dc2626">🚫 Quân này chưa đi được – thử quân khác nhé!</div>`);
+}
+function chDown(e){
+  const C=CH;if(!C||C.gatePending||C.view>=0||C.over||C.think||C.S.t!==C.me)return;
+  if(e.button!==undefined&&e.button!==0)return;
+  chMeasure();
+  const s=chSqAt(e.clientX,e.clientY);if(s<0)return;
+  e.preventDefault();
+  if(C.sel>=0&&C.sel!==s&&C.targets.includes(s)){chTryMove(C.sel,s);return}
+  const p=C.S.b[s];
+  if(p&&chCol(p)===C.me){
+    const wasSel=C.sel===s;
+    if(!wasSel){chSelect(s);sndClick();chRender()}
+    C.hold={from:s,over:s,wasSel,moved:false,shown:false,x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY};
+    clearTimeout(C.holdT);
+    C.holdT=setTimeout(()=>{if(C.hold){C.hold.shown=true;chHoldDraw()}},160);
+    return;
+  }
+  C.sel=-1;C.targets=[];C.info='';chRender();
+}
+function chHoldMove(e){
+  const C=CH;if(!C||!C.hold)return;
+  const h=C.hold;h.x=e.clientX;h.y=e.clientY;
+  if(!h.moved&&Math.abs(h.x-h.sx)+Math.abs(h.y-h.sy)>6){h.moved=true;h.shown=true;h.over=-2}
+  if(!h.moved)return;
+  if(!C.raf)C.raf=requestAnimationFrame(chHoldFrame);
+}
+function chHoldFrame(){
+  const C=CH;if(!C)return;C.raf=0;const h=C.hold;if(!h)return;
+  chGhost(h);
+  const s=chSqAt(h.x,h.y);
+  if(s!==h.over){h.over=s;chHoldDraw()}
+}
+function chHoldUp(){
+  const C=CH;if(!C||!C.hold)return;
+  clearTimeout(C.holdT);const h=C.hold;C.hold=null;
+  if(C.raf){cancelAnimationFrame(C.raf);C.raf=0}
+  chGhost(null);
+  const svg=$('chHold');if(svg)svg.innerHTML='';
+  const over=h.moved?chSqAt(h.x,h.y):h.from;
+  if(over!==h.from&&C.targets.includes(over)){chTryMove(h.from,over);return}
+  if(over===h.from&&h.wasSel&&!h.moved){C.sel=-1;C.targets=[];C.info='';chRender()}
+}
+function chHoldDraw(){
+  const C=CH,h=C&&C.hold,svg=$('chHold');if(!h||!svg)return;
+  let a=chDefs();
+  for(const t of C.targets)if(t!==h.over)a+=chArrow(h.from,t,'v',.11,.55);
+  if(C.targets.includes(h.over))a+=chArrow(h.from,h.over,'g',.22,.95);
+  svg.innerHTML=a;
+}
+function chGhost(h){
+  const C=CH;let g=$('chGhost');
+  const o=C&&C.els&&C.hold?C.els[C.hold.from]:null;
+  if(!h){if(g)g.remove();document.querySelectorAll('#chBoard .ch-pc[style]').forEach(x=>x.style.opacity='');return}
+  if(!g){
+    g=document.createElement('div');g.id='chGhost';g.className='ch-ghost';g.innerHTML=chGlyph(C.S.b[h.from]);
+    g.style.fontSize=(C.bdRect.z*.86)+'px';document.body.appendChild(g);
+    const pc=o&&o.querySelector('.ch-pc');if(pc)pc.style.opacity='.3';
+  }
+  g.style.transform=`translate3d(${h.x}px,${h.y}px,0) translate(-50%,-55%)`;
+}
+if(!window.__chEv){window.__chEv=1;
+  document.addEventListener('pointermove',chHoldMove,{passive:true});
+  document.addEventListener('pointerup',chHoldUp);
+  document.addEventListener('pointercancel',chHoldUp);
+}
+function chTryMove(f,t){const m=chLegal(CH.S).find(x=>x.f===f&&x.t===t);if(m)chPlayerMove(m)}
+
+/* ---------- đi quân ---------- */
 function chPlayerMove(m){
-  const C=CH;chPush();
+  const C=CH;chSnap();
   chMake(C.S,m);
   if(m.c)C.won.push(m.c);
-  C.log.push('🙂 '+chDesc(m));
-  C.last=m;C.sel=-1;C.targets=[];C.hintMv=null;C.canUndo=false;
+  C.log.push({who:'me',m,html:chDesc(m)});
+  C.last=m;C.sel=-1;C.targets=[];C.hintMv=null;C.justCap=false;
   C.info=m.c?`🎯 Giỏi lắm! Em ăn được ${chPName(m.c)}!`:m.pr?'👑 Tốt đã phong thành <b>Queen</b> (Hậu)!':'';
   m.c?sndOK():sndClick();
   if(chCheckEnd())return;
   chBotTurn();
 }
 function chBotTurn(){
-  const C=CH,run=C.run;C.think=true;chRender();
-  setTimeout(()=>{
+  const C=CH,run=C.run,t0=Date.now();C.think=true;C.sel=-1;C.targets=[];chRender();
+  chAI({kind:'bot',S:chClone(C.S),lv:C.L.id},m=>{
+    const wait=Math.max(0,(C.L.id>=4?150:400)-(Date.now()-t0));
+    setTimeout(()=>chBotDone(run,m),wait);
+  });
+}
+function chBotDone(run,m){
     if(!CH||CH.run!==run||!$('chBoard'))return;
-    const m=chBotMove(CH.S,CH.L.id);
-    if(!CH||CH.run!==run)return;
     CH.think=false;
-    if(!m){chCheckEnd();return}
-    chMake(CH.S,m);CH.last=m;
-    CH.log.push(CH.L.em+' '+chDesc(m));
+    if(m)m=chLegal(CH.S).find(x=>x.f===m.f&&x.t===m.t)||null;
+    if(!m){chCheckEnd();chRender();return}
+    chSnap();chMake(CH.S,m);CH.last=m;
+    CH.log.push({who:'bot',m,html:chDesc(m)});
     if(m.c){
-      CH.lost.push(m.c);
-      CH.canUndo=CH.hist.length>0&&CH.undo>0;
-      CH.info=`😱 ${CH.L.nm} vừa ăn ${chPName(m.c)} của em!`+(CH.canUndo?' Bấm <b>↩️ Đi lại</b> và trả lời đúng để quay lại nước trước.':'');
+      CH.lost.push(m.c);CH.justCap=true;
+      CH.info=`😱 ${CH.L.nm} vừa ăn ${chPName(m.c)} của em!`+(chCanRewind()?' Bấm <b>↩️ Đi lại</b> hoặc chọn một nước cũ trong bảng để quay lại.':'');
       sndNo();
     }else CH.info=chInCheck(CH.S,CH.S.t)?'⚠️ Vua của em đang bị chiếu (Check)! Phải đi để cứu Vua.':'';
     if(chCheckEnd())return;
     chRender();
-    if(CH.canUndo)chCapturePrompt(m);
-  },CH.L.id>=4?120:450);
+    chGateCheck();
 }
 function chCapturePrompt(m){
   chOpenModal(`<div style="font-size:46px">${chGlyph(m.c)}</div>
     <h3>Ối! Em bị ăn ${CHN[m.c.toLowerCase()]}!</h3>
-    <p>${CH.L.em} ${CH.L.nm} vừa ăn quân <b>${CHN[m.c.toLowerCase()]} (${CHV[m.c.toLowerCase()]})</b> của em.<br>Trả lời đúng ${CH.L.need>1?CH.L.need+' câu':'câu hỏi'} tiếng Anh để <b>đi lại</b> nhé! (còn ${chInf(CH.undo)} lượt)</p>
-    <div class="row" style="justify-content:center;gap:8px"><button class="btn" style="background:#ef4444" onclick="chAsk('undo')">↩️ Trả lời để đi lại</button><button class="btn ghost" onclick="chCloseModal()">▶️ Thôi, chơi tiếp</button></div>`);
+    <p>${CH.L.em} ${CH.L.nm} vừa ăn quân <b>${CHN[m.c.toLowerCase()]} (${CHV[m.c.toLowerCase()]})</b> của em.<br>Trả lời đúng ${CH.L.need>1?CH.L.need+' câu':'câu hỏi'} tiếng Anh để <b>đi lại</b> nhé! (còn ${chInf(CH.undo)} lượt)<br><small>Hoặc bấm vào một nước cũ hơn trong bảng <b>Các nước đã đi</b>.</small></p>
+    <div class="row" style="justify-content:center;gap:8px"><button class="btn" style="background:#ef4444" onclick="chAsk('undo',chLastMe())">↩️ Trả lời để đi lại</button><button class="btn ghost" onclick="chCloseModal()">▶️ Thôi, chơi tiếp</button></div>`);
 }
 function chCheckEnd(){
   const C=CH,S=C.S,ms=chLegal(S);let res=null,why='';
@@ -7995,18 +8187,18 @@ function chCheckEnd(){
   }
   if(!res)return false;
   C.over={res,why};C.think=false;
-  if(res==='lose'){C.canUndo=C.hist.length>0&&C.undo>0;sndNo()}
-  if(res==='win'){const xp=20*C.L.id;P.gameWins++;chSaveWin(C.L.id);confetti(100);sndWin();gainXP(xp);toast('🏆 Thắng '+C.L.nm+'! +'+xp+' XP');}
-  if(res==='draw'){gainXP(5*C.L.id)}
+  if(res==='lose')sndNo();
+  if(res==='win'&&!C.paid){C.paid=true;const xp=20*C.L.id;P.gameWins++;chSaveWin(C.L.id);confetti(100);sndWin();gainXP(xp);toast('🏆 Thắng '+C.L.nm+'! +'+xp+' XP');}
+  if(res==='draw'&&!C.paid){C.paid=true;gainXP(5*C.L.id)}
   persist();checkBadges();
   chRender();
-  if(res==='lose'&&C.canUndo)chOpenModal(`<div style="font-size:46px">😵</div><h3>Checkmate!</h3><p>Vua của em bị chiếu hết rồi. Trả lời đúng để <b>đi lại</b> và cứu Vua nhé! (còn ${chInf(C.undo)} lượt)</p>
-    <div class="row" style="justify-content:center;gap:8px"><button class="btn" style="background:#ef4444" onclick="chAsk('undo')">↩️ Trả lời để đi lại</button><button class="btn ghost" onclick="chCloseModal()">Thôi</button></div>`);
+  if(res==='lose'&&chCanRewind())chOpenModal(`<div style="font-size:46px">😵</div><h3>Checkmate!</h3><p>Vua của em bị chiếu hết rồi. Trả lời đúng để <b>đi lại</b> và cứu Vua nhé! (còn ${chInf(C.undo)} lượt)<br><small>Hoặc bấm vào một nước cũ hơn trong bảng <b>Các nước đã đi</b>.</small></p>
+    <div class="row" style="justify-content:center;gap:8px"><button class="btn" style="background:#ef4444" onclick="chAsk('undo',chLastMe())">↩️ Trả lời để đi lại</button><button class="btn ghost" onclick="chCloseModal()">Thôi</button></div>`);
   return true;
 }
 function chResign(){
   if(!CH||CH.over)return;
-  CH_RUN++;CH.run=CH_RUN;CH.think=false;CH.canUndo=false;
+  CH_RUN++;CH.run=CH_RUN;CH.think=false;
   CH.over={res:'lose',why:'Em đã đầu hàng. Thử lại nhé, em làm được mà!'};sndNo();chRender();
 }
 
@@ -8026,20 +8218,26 @@ function chMakeQ(typed){
   const en=Math.random()<.6;
   return{typed:false,right,en,opts:shuffle([right,...wr]),ask:en?`<b>${esc(right[0])}</b> nghĩa là gì?`:`Từ tiếng Anh nào nghĩa là: <b>${esc(right[1])}</b>?`};
 }
-function chAsk(kind){
+function chAsk(kind,target){
   const C=CH;if(!C)return;
-  if(kind==='undo'&&!(C.canUndo&&C.undo>0))return;
-  if(kind==='hint'&&!(C.hint>0&&!C.over&&C.S.t===C.me))return;
+  if(kind==='undo'){
+    if(!chCanRewind()||target==null||target<0||target>=C.snaps.length)return;
+    if(C.snaps[target].S.t!==C.me)return;
+  }
+  if(kind==='hint'&&!(C.hint>0&&!C.over&&C.view<0&&C.S.t===C.me))return;
   sndClick();
-  C.quiz={kind,got:0,busy:false};
+  C.quiz={kind,target,got:0,busy:false};
   chQuizNext();
 }
 function chQuizNext(){
   const C=CH,Q=C.quiz,L=C.L;
-  const typed=L.id===5&&Q.got===L.need-1;
+  const gate=Q.kind==='gate',need=gate?1:L.need;
+  const typed=gate?(L.id>=4&&Math.random()<.4):(L.id===5&&Q.got===L.need-1);
   Q.q=chMakeQ(typed);Q.busy=false;
-  const head=Q.kind==='undo'?'↩️ Trả lời để ĐI LẠI':'💡 Trả lời để xem GỢI Ý';
-  const prog=L.need>1?`<div class="ch-prog">Câu ${Q.got+1}/${L.need} ${'⭐'.repeat(Q.got)}</div>`:'';
+  const back=Q.kind==='undo'?C.log.length-Q.target:0;
+  const head=gate?'📝 Trả lời để ĐI TIẾP':Q.kind==='undo'?'↩️ Trả lời để ĐI LẠI':'💡 Trả lời để xem GỢI Ý';
+  const sub=Q.kind==='undo'?`<div class="ch-prog" style="color:var(--muted);font-weight:600">Quay lại ${back} nước</div>`:gate?`<div class="ch-prog" style="color:var(--muted);font-weight:600">Em đã đi ${C.gate} nước – trả lời đúng để chơi tiếp nhé!</div>`:'';
+  const prog=need>1?`<div class="ch-prog">Câu ${Q.got+1}/${L.need} ${'⭐'.repeat(Q.got)}</div>`:'';
   let body;
   if(Q.q.typed){
     body=`<div class="ch-typehint">${Q.q.hint}</div><input id="chType" class="ch-input" autocomplete="off" placeholder="Gõ từ tiếng Anh…" onkeydown="if(event.key==='Enter')chAnswerTyped()">
@@ -8047,8 +8245,8 @@ function chQuizNext(){
   }else{
     body=`<div class="opts ch-opts">`+Q.q.opts.map((o,i)=>`<button class="opt" onclick="chAnswer(${i},this)"><span class="ab">${'ABCD'[i]}</span>${esc(Q.q.en?o[1]:o[0])}</button>`).join('')+`</div>`;
   }
-  chOpenModal(`<h3>${head}</h3>${prog}<p class="ch-q">${Q.q.ask}</p>${body}<div id="chFb" class="ch-fb"></div>
-    <button class="btn ghost sm" style="margin-top:10px" onclick="chCloseModal()">Huỷ</button>`);
+  chOpenModal(`<h3>${head}</h3>${sub}${prog}<p class="ch-q">${Q.q.ask}</p>${body}<div id="chFb" class="ch-fb"></div>
+    ${gate?'':'<button class="btn ghost sm" style="margin-top:10px" onclick="chCloseModal()">Huỷ</button>'}`);
   if(Q.q.typed)setTimeout(()=>{const i=$('chType');if(i)i.focus()},50);
 }
 function chAnswer(i,el){
@@ -8066,42 +8264,50 @@ function chAnswerTyped(){
   chJudge(ok);
 }
 function chJudge(ok){
-  const C=CH,Q=C.quiz,L=C.L,fb=$('chFb'),r=Q.q.right;
+  const C=CH,Q=C.quiz,L=C.L,fb=$('chFb'),r=Q.q.right,need=Q.kind==='gate'?1:L.need;
   if(ok){
     Q.got++;P.correct++;sndOK();gainXP(5);
-    if(Q.got>=L.need){fb.innerHTML=`✅ Chính xác! <b>${esc(r[0])}</b> = ${esc(r[1])}`;fb.className='ch-fb ok';setTimeout(()=>chQuizDone(true),800)}
+    if(Q.got>=need){fb.innerHTML=`✅ Chính xác! <b>${esc(r[0])}</b> = ${esc(r[1])}`;fb.className='ch-fb ok';setTimeout(chQuizDone,800)}
     else{fb.innerHTML=`✅ Đúng rồi! Thêm ${L.need-Q.got} câu nữa…`;fb.className='ch-fb ok';setTimeout(chQuizNext,900)}
     return;
   }
   sndNo();missStreak();
   fb.className='ch-fb no';
-  if(!L.strict){fb.innerHTML=`❌ Chưa đúng. <b>${esc(r[0])}</b> = ${esc(r[1])}<br>Thử câu khác nhé!`;setTimeout(()=>{Q.got=0;chQuizNext()},1700)}
+  if(!L.strict||Q.kind==='gate'){fb.innerHTML=`❌ Chưa đúng. <b>${esc(r[0])}</b> = ${esc(r[1])}<br>Thử câu khác nhé!`;setTimeout(()=>{Q.got=0;chQuizNext()},1700)}
   else{
     fb.innerHTML=`❌ Chưa đúng. <b>${esc(r[0])}</b> = ${esc(r[1])}<br>Em bị mất 1 lượt ${Q.kind==='undo'?'đi lại':'gợi ý'}.`;
-    if(Q.kind==='undo')C.undo--;else C.hint--;
-    if(Q.kind==='undo'&&C.undo<=0)C.canUndo=false;
+    chUse(Q.kind==='undo'?'undo':'hint');
     setTimeout(()=>{chCloseModal();chRender()},2000);
   }
 }
+function chRewind(k){
+  const C=CH,sn=C.snaps[k];
+  C.S=chClone(sn.S);C.lost=sn.lost.slice();C.won=sn.won.slice();
+  C.log=C.log.slice(0,k);C.snaps=C.snaps.slice(0,k);
+  C.last=k>0?C.log[k-1].m:null;
+  C.over=null;C.sel=-1;C.targets=[];C.hintMv=null;C.justCap=false;C.view=-1;C.run=++CH_RUN;C.think=false;
+}
 function chQuizDone(){
-  const C=CH,kind=C.quiz.kind;chCloseModal();C.quiz=null;
-  if(kind==='undo'){
-    const h=C.hist.pop();if(!h)return;
-    C.S=h.S;C.lost=h.lost;C.won=h.won;C.log=h.log;C.last=h.last;
-    C.undo--;C.canUndo=false;C.over=null;C.sel=-1;C.targets=[];C.hintMv=null;C.run=++CH_RUN;C.think=false;
-    C.info='↩️ Đã quay lại! Nghĩ kỹ rồi đi nước khác nhé. Mẹo: xem quân đối thủ đang nhắm vào ô nào.';
+  const C=CH,Q=C.quiz;chCloseModal();C.quiz=null;
+  if(Q.kind==='gate'){C.gateDone=chMyMoves();C.gatePending=false;toast('✅ Giỏi lắm! Đi tiếp nào');chRender();return}
+  if(Q.kind==='undo'){
+    const back=C.log.length-Q.target;
+    chRewind(Q.target);chUse('undo');C.gateDone=chMyMoves();
+    C.info=`↩️ Đã quay lại ${back} nước! Nghĩ kỹ rồi đi nước khác nhé. Mẹo: nhấn giữ quân để xem mũi tên các nước đi.`;
     toast('↩️ Đi lại thành công!');chRender();
   }else{
-    C.hint--;C.info='🔎 Đang tìm nước hay nhất…';chRender();
-    setTimeout(()=>{
-      if(!CH||CH!==C)return;
-      const m=chBest(C.S,3,true,0,1500);if(!m)return;
+    chUse('hint');C.info='🔎 Đang tìm nước hay nhất…';chRender();
+    C.hintBusy=true;const run=C.run;
+    chAI({kind:'hint',S:chClone(C.S)},m0=>{
+      C.hintBusy=false;
+      if(!CH||CH!==C||C.run!==run)return;
+      const m=m0&&chLegal(C.S).find(x=>x.f===m0.f&&x.t===m0.t);if(!m){chRender();return}
       C.hintMv=m;
       const u=chMake(C.S,m),chk=chInCheck(C.S,C.S.t);chUnmake(C.S,u);
       C.info=`💡 <b>Gợi ý:</b> đi ${chPName(m.p)} từ <b>${chSqName(m.f)}</b> đến <b>${chSqName(m.t)}</b> (mũi tên xanh).`+
-        (m.c?`<br>🎯 Nước này ăn được ${chPName(m.c)}!`:'')+(chk?'<br>⚔️ Nước này chiếu Vua đối thủ (Check)!':'')+(m.fl?.startsWith('c')?'<br>🏰 Nhập thành (castling) để bảo vệ Vua.':'');
+        (m.c?`<br>🎯 Nước này ăn được ${chPName(m.c)}!`:'')+(chk?'<br>⚔️ Nước này chiếu Vua đối thủ (Check)!':'')+(m.fl==='ck'||m.fl==='cq'?'<br>🏰 Nhập thành (castling) để bảo vệ Vua.':'');
       chRender();
-    },60);
+    });
   }
 }
 function chOpenModal(html){
