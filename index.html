@@ -1004,6 +1004,26 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
 .ch-pc.b.sm{-webkit-text-stroke:0}
 .ch-gchip{font-size:12px;font-weight:700;color:#7c3aed;background:#ede9fe;padding:3px 9px;border-radius:20px}
 [data-theme="dark"] .ch-gchip{background:#2e1065;color:#ddd6fe}
+/* --- bàn cờ kiểu lichess (nhẹ, mượt) --- */
+.ch-board{display:block;container-type:normal;background:conic-gradient(#b58863 0 25%,#f0d9b5 0 50%,#b58863 0 75%,#f0d9b5 0) 0 0/25% 25%;cursor:pointer;contain:layout paint;transform:translateZ(0)}
+.ch-hl,.ch-pcs{position:absolute;inset:0;pointer-events:none}
+.ch-h{position:absolute;left:0;top:0;width:12.5%;height:12.5%}
+.ch-h.last{background:rgba(155,199,0,.41)}
+.ch-h.sel{background:rgba(20,85,30,.5)}
+.ch-h.dot{background:radial-gradient(rgba(20,85,30,.5) 19%,transparent 20%)}
+.ch-h.cap{background:radial-gradient(transparent 0 78%,rgba(20,85,30,.35) 80%)}
+.ch-h.chk{background:radial-gradient(ellipse at center,rgba(255,0,0,1) 0%,rgba(231,0,0,1) 25%,rgba(169,0,0,0) 89%)}
+.ch-h.hint{box-shadow:inset 0 0 0 4px #16a34a}
+.ch-p{position:absolute;left:0;top:0;width:12.5%;height:12.5%;background-size:100% 100%;background-repeat:no-repeat;will-change:transform;transition:transform .2s cubic-bezier(.3,.7,.4,1);z-index:2;pointer-events:none}
+.ch-p.drag{transition:none;z-index:6;filter:drop-shadow(0 8px 6px rgba(0,0,0,.3))}
+.ch-p.snap{transition:none}
+.ch-board .ch-co{position:absolute;font:800 11px/1 sans-serif;z-index:1;pointer-events:none;opacity:.9}
+.ch-board .ch-co.rk{left:3px;margin-top:3px}
+.ch-board .ch-co.fl{bottom:3px;margin-left:calc(12.5% - 11px)}
+.ch-board .ch-co.l{color:#b58863}.ch-board .ch-co.d{color:#f0d9b5}
+.ch-act.pulse{animation:none;outline:3px solid rgba(239,68,68,.45);outline-offset:3px}
+.ch-dots i{animation:none}
+.doodle,.logo .rocket{will-change:transform}
 </style>
 </head>
 <body>
@@ -7932,22 +7952,33 @@ function chArrow(f,t,c,w,op){
 function chDefs(){return '<defs>'+Object.keys(CH_AC).map(k=>`<marker id="chAh${k}" markerWidth="3" markerHeight="3" refX="1.4" refY="1.5" orient="auto"><path d="M0,0 L3,1.5 L0,3 z" fill="${CH_AC[k]}"/></marker>`).join('')+'</defs>'}
 
 /* ---------- vẽ bàn cờ ---------- */
-/* dựng khung 1 lần cho mỗi ván, các lần sau chỉ cập nhật phần thay đổi → mượt hơn */
+/* ===== Bàn cờ kiểu lichess: nền 1 lớp, quân là ảnh dựng sẵn, di chuyển bằng transform (GPU) ===== */
+const CH_IMG={};
+function chPieceImg(p){
+  if(CH_IMG[p])return CH_IMG[p];
+  const N=160,c=document.createElement('canvas');c.width=c.height=N;const x=c.getContext('2d');
+  const g=CHG[p.toLowerCase()]+'︎',w=p<'a';
+  x.font=`${N*.86}px "Segoe UI Symbol","Noto Sans Symbols 2","DejaVu Sans","Arial Unicode MS",serif`;
+  x.textAlign='center';x.textBaseline='middle';
+  x.shadowColor='rgba(0,0,0,.35)';x.shadowBlur=N*.04;x.shadowOffsetY=N*.03;
+  if(w){x.lineJoin='round';x.lineWidth=N*.045;x.strokeStyle='#222';x.strokeText(g,N/2,N*.53);x.shadowColor='transparent';x.fillStyle='#fff';x.fillText(g,N/2,N*.53)}
+  else{x.fillStyle='#1c1917';x.fillText(g,N/2,N*.53)}
+  return CH_IMG[p]=c.toDataURL();
+}
+function chXY(s){const r=s>>3,f=s&7;return CH.me==='b'?[7-f,7-r]:[f,r]}
+function chTf(s){const[x,y]=chXY(s);return `translate(${x*100}%,${y*100}%)`}
 function chBuild(){
   const C=CH,L=C.L,flip=C.me==='b',meName=(P&&P.name)?esc(P.name):'Em';
-  let sq='';
-  for(let i=0;i<64;i++){
-    const s=flip?63-i:i,r=s>>3,f=s&7,row=flip?7-r:r,col=flip?7-f:f;
-    let co='';
-    if(col===0)co+=`<span class="ch-co rk">${8-r}</span>`;
-    if(row===7)co+=`<span class="ch-co fl">${'abcdefgh'[f]}</span>`;
-    sq+=`<div class="ch-sq ${(r+f)%2?'d':'l'}" data-s="${s}">${co}<span class="ch-ph"></span></div>`;
+  let co='';
+  for(let i=0;i<8;i++){
+    co+=`<span class="ch-co rk ${i%2?'d':'l'}" style="top:${i*12.5}%">${flip?i+1:8-i}</span>`;
+    co+=`<span class="ch-co fl ${i%2?'l':'d'}" style="left:${i*12.5}%">${'abcdefgh'[flip?7-i:i]}</span>`;
   }
   $('gamesCard').innerHTML=gameTop('♟️ Cờ vua tiếng Anh',`<span class="streak">${L.em} ${L.nm}</span>`)+
   `<div class="ch-wrap" data-uid="${C.uid}">
     <div>
       <div class="ch-bar"><span class="ch-ava" style="background:${L.col}">${L.em}</span><b>${L.nm}</b><span class="ch-caps" id="chLost"></span></div>
-      <div class="ch-board" id="chBoard">${sq}<svg class="ch-arrow" id="chArr" viewBox="0 0 8 8"></svg><svg class="ch-arrow" id="chHold" viewBox="0 0 8 8"></svg><div class="ch-vtag">👀 Xem lại</div></div>
+      <div class="ch-board" id="chBoard"><div class="ch-hl" id="chHL"></div>${co}<div class="ch-pcs" id="chPcs"></div><svg class="ch-arrow" id="chArr" viewBox="0 0 8 8"></svg><svg class="ch-arrow" id="chHold" viewBox="0 0 8 8"></svg><div class="ch-vtag">👀 Xem lại</div></div>
       <div class="ch-bar"><span class="ch-ava" style="background:#8b5cf6">🙂</span><b>${meName}</b> <small>(${C.me==='w'?'quân trắng':'quân đen'})</small><span class="ch-gchip" id="chGate"></span><span class="ch-caps" id="chWon"></span></div>
     </div>
     <div class="ch-side">
@@ -7956,10 +7987,33 @@ function chBuild(){
       <div class="ch-card ch-log" id="chLogBox"><div class="ch-lt">📜 Các nước đã đi (Moves) <small>– bấm để xem lại</small></div><div id="chLogList"></div></div>
     </div>
   </div>`;
-  const bd=$('chBoard');bd.onpointerdown=chDown;
-  C.els=[];bd.querySelectorAll('.ch-sq').forEach(el=>{C.els[+el.dataset.s]=el;el._ph=el.querySelector('.ch-ph');el._p=null;el._c=el.className});
-  C.cache={};
+  $('chBoard').onpointerdown=chDown;
+  C.pcs=[];C.cache={};C.bdKey='';
 }
+/* đặt quân: giữ lại phần tử cũ nếu quân không đổi, quân vừa đi thì trượt (transition) tới ô mới */
+function chPaintPieces(S,lastM){
+  const C=CH,box=$('chPcs');if(!box)return;
+  const key=S.b.join(',')+'|'+C.me;if(C.bdKey===key)return;C.bdKey=key;
+  const want=[];for(let s=0;s<64;s++)if(S.b[s])want.push({s,p:S.b[s]});
+  const old=C.pcs.slice(),keep=[],next=[];
+  // 1) cùng ô, cùng quân → giữ nguyên
+  for(const w of want){const i=old.findIndex(o=>o&&o.s===w.s&&o.p===w.p);if(i>=0){next.push(old[i]);old[i]=null}else keep.push(w)}
+  // 2) quân di chuyển → dùng lại phần tử cùng loại (ưu tiên ô xuất phát của nước vừa đi)
+  for(const w of keep){
+    let i=-1;
+    if(lastM&&lastM.t===w.s)i=old.findIndex(o=>o&&o.s===lastM.f&&(o.p===w.p||o.p===lastM.p));
+    if(i<0)i=old.findIndex(o=>o&&o.p===w.p);
+    let o;
+    if(i>=0){o=old[i];old[i]=null}
+    else{const el=document.createElement('div');el.className='ch-p';el.style.transform=chTf(w.s);box.appendChild(el);o={el,s:w.s,p:''}}
+    if(o.p!==w.p){o.p=w.p;o.el.style.backgroundImage=`url(${chPieceImg(w.p)})`}
+    o.s=w.s;o.el.style.transform=chTf(w.s);
+    next.push(o);
+  }
+  for(const o of old)if(o)o.el.remove();
+  C.pcs=next;
+}
+function chPcAt(s){const o=CH.pcs.find(o=>o.s===s);return o?o.el:null}
 function chSet(id,key,html){const C=CH;if(C.cache[key]===html)return false;C.cache[key]=html;const el=$(id);if(el)el.innerHTML=html;return true}
 function chRender(){
   if(!CH)return;
@@ -7970,19 +8024,17 @@ function chRender(){
   const lastM=viewing?(C.view>0?C.log[C.view-1].m:null):C.last;
   const showMv=viewing&&C.view<C.log.length&&C.log[C.view].who==='me'?C.log[C.view].m:null;
   const chkSq=chInCheck(S,S.t)?S.b.indexOf(S.t==='w'?'K':'k'):-1;
-  for(let s=0;s<64;s++){
-    const el=C.els[s],r=s>>3,f=s&7,p=S.b[s];
-    let cls='ch-sq '+((r+f)%2?'d':'l');
-    if(lastM&&(lastM.f===s||lastM.t===s))cls+=' last';
-    if(!viewing){
-      if(C.sel===s)cls+=' sel';
-      if(C.targets.includes(s))cls+=p||(C.sel>=0&&S.b[C.sel].toLowerCase()==='p'&&(s&7)!==(C.sel&7))?' cap':' dot';
-      if(C.hintMv&&(C.hintMv.f===s||C.hintMv.t===s))cls+=' hint';
-    }
-    if(s===chkSq)cls+=' chk';
-    if(el._c!==cls){el.className=cls;el._c=cls}
-    if(el._p!==p){el._p=p;el._ph.innerHTML=p?chGlyph(p):''}
+  chPaintPieces(S,lastM);
+  let hl='';
+  const H=(s,c)=>{hl+=`<div class="ch-h ${c}" style="transform:${chTf(s)}"></div>`};
+  if(lastM){H(lastM.f,'last');H(lastM.t,'last')}
+  if(!viewing){
+    if(C.sel>=0)H(C.sel,'sel');
+    for(const t of C.targets)H(t,S.b[t]||(S.b[C.sel]&&S.b[C.sel].toLowerCase()==='p'&&(t&7)!==(C.sel&7))?'cap':'dot');
+    if(C.hintMv){H(C.hintMv.f,'hint');H(C.hintMv.t,'hint')}
   }
+  if(chkSq>=0)H(chkSq,'chk');
+  chSet('chHL','hl',hl);
   $('chBoard').classList.toggle('viewing',viewing);
   let arr='';
   if(!viewing&&C.hintMv)arr+=chArrow(C.hintMv.f,C.hintMv.t,'g',.2,.85);
@@ -8052,7 +8104,7 @@ function chView(k){
   sndClick();C.view=k;if(k<0)C.viewI=-1;C.sel=-1;C.targets=[];chRender();
 }
 
-/* ---------- nhấn giữ / kéo thả quân ---------- */
+/* ---------- nhấn giữ / kéo thả quân (kiểu lichess: kéo chính quân đó bằng transform) ---------- */
 function chSqAt(x,y){
   const C=CH;if(!C||!C.bdRect)return -1;
   const R=C.bdRect,col=Math.floor((x-R.l)/R.z),row=Math.floor((y-R.t)/R.z);
@@ -8076,10 +8128,10 @@ function chDown(e){
   const p=C.S.b[s];
   if(p&&chCol(p)===C.me){
     const wasSel=C.sel===s;
-    if(!wasSel){chSelect(s);sndClick();chRender()}
-    C.hold={from:s,over:s,wasSel,moved:false,shown:false,x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY};
+    if(!wasSel){chSelect(s);chRender();sndClick()}
+    C.hold={from:s,over:s,wasSel,moved:false,x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,el:chPcAt(s)};
     clearTimeout(C.holdT);
-    C.holdT=setTimeout(()=>{if(C.hold){C.hold.shown=true;chHoldDraw()}},160);
+    C.holdT=setTimeout(()=>{if(C.hold)chHoldDraw()},160);
     return;
   }
   C.sel=-1;C.targets=[];C.info='';chRender();
@@ -8087,13 +8139,13 @@ function chDown(e){
 function chHoldMove(e){
   const C=CH;if(!C||!C.hold)return;
   const h=C.hold;h.x=e.clientX;h.y=e.clientY;
-  if(!h.moved&&Math.abs(h.x-h.sx)+Math.abs(h.y-h.sy)>6){h.moved=true;h.shown=true;h.over=-2}
-  if(!h.moved)return;
-  if(!C.raf)C.raf=requestAnimationFrame(chHoldFrame);
+  if(!h.moved&&Math.abs(h.x-h.sx)+Math.abs(h.y-h.sy)>5){h.moved=true;h.over=-2;if(h.el)h.el.classList.add('drag')}
+  if(h.moved&&!C.raf)C.raf=requestAnimationFrame(chHoldFrame);
 }
 function chHoldFrame(){
   const C=CH;if(!C)return;C.raf=0;const h=C.hold;if(!h)return;
-  chGhost(h);
+  const R=C.bdRect;
+  if(h.el)h.el.style.transform=`translate(${h.x-R.l-R.z/2}px,${h.y-R.t-R.z/2}px) scale(1.12)`;
   const s=chSqAt(h.x,h.y);
   if(s!==h.over){h.over=s;chHoldDraw()}
 }
@@ -8101,9 +8153,11 @@ function chHoldUp(){
   const C=CH;if(!C||!C.hold)return;
   clearTimeout(C.holdT);const h=C.hold;C.hold=null;
   if(C.raf){cancelAnimationFrame(C.raf);C.raf=0}
-  chGhost(null);
   const svg=$('chHold');if(svg)svg.innerHTML='';
   const over=h.moved?chSqAt(h.x,h.y):h.from;
+  if(h.el){h.el.classList.remove('drag');
+    if(h.moved&&over!==h.from&&C.targets.includes(over)){h.el.classList.add('snap');h.el.style.transform=chTf(over);requestAnimationFrame(()=>h.el.classList.remove('snap'))}
+    else h.el.style.transform=chTf(h.from)}
   if(over!==h.from&&C.targets.includes(over)){chTryMove(h.from,over);return}
   if(over===h.from&&h.wasSel&&!h.moved){C.sel=-1;C.targets=[];C.info='';chRender()}
 }
@@ -8113,17 +8167,6 @@ function chHoldDraw(){
   for(const t of C.targets)if(t!==h.over)a+=chArrow(h.from,t,'v',.11,.55);
   if(C.targets.includes(h.over))a+=chArrow(h.from,h.over,'g',.22,.95);
   svg.innerHTML=a;
-}
-function chGhost(h){
-  const C=CH;let g=$('chGhost');
-  const o=C&&C.els&&C.hold?C.els[C.hold.from]:null;
-  if(!h){if(g)g.remove();document.querySelectorAll('#chBoard .ch-pc[style]').forEach(x=>x.style.opacity='');return}
-  if(!g){
-    g=document.createElement('div');g.id='chGhost';g.className='ch-ghost';g.innerHTML=chGlyph(C.S.b[h.from]);
-    g.style.fontSize=(C.bdRect.z*.86)+'px';document.body.appendChild(g);
-    const pc=o&&o.querySelector('.ch-pc');if(pc)pc.style.opacity='.3';
-  }
-  g.style.transform=`translate3d(${h.x}px,${h.y}px,0) translate(-50%,-55%)`;
 }
 if(!window.__chEv){window.__chEv=1;
   document.addEventListener('pointermove',chHoldMove,{passive:true});
@@ -8315,6 +8358,18 @@ function chOpenModal(html){
   document.body.appendChild(d);
 }
 function chCloseModal(){const m=$('chModal');if(m)m.remove()}
+/* ---------- chế độ đo độ mượt: mở web với ?perf (vd: .../english-fun-zone/?perf) ---------- */
+if(/[?&#]perf\b/.test(location.href)&&!window.__chPerf){window.__chPerf=1;(function(){
+  const box=document.createElement('div');
+  box.style.cssText='position:fixed;right:8px;top:8px;z-index:9999;background:rgba(0,0,0,.82);color:#0f0;font:12px/1.5 monospace;padding:8px 10px;border-radius:8px;pointer-events:none;white-space:pre';
+  document.body.appendChild(box);
+  let frames=0,fps=0,last=performance.now(),lat='-',latMax=0,loaf=0,loafS='',scr=0;
+  (function f(t){frames++;if(t-last>=1000){fps=Math.round(frames*1000/(t-last));frames=0;last=t;draw()}requestAnimationFrame(f)})(last);
+  document.addEventListener('pointerdown',e=>{const t0=e.timeStamp;requestAnimationFrame(()=>setTimeout(()=>{const d=Math.round(performance.now()-t0);lat=d;latMax=Math.max(latMax,d);draw()},0))},true);
+  try{new PerformanceObserver(l=>l.getEntries().forEach(e=>{if(e.duration>loaf){loaf=Math.round(e.duration);const s=(e.scripts||[]).sort((a,b)=>b.duration-a.duration)[0];scr=s?Math.round(s.duration):0;loafS=s?(s.invoker||'').slice(0,28):'(vẽ hình)'}draw()})).observe({type:'long-animation-frame'})}catch(x){}
+  function draw(){box.textContent=`FPS: ${fps}\nBấm → hiện: ${lat} ms (max ${latMax})\nKhung chậm nhất: ${loaf} ms\n  script: ${scr} ms ${loafS}\nGPU tab: ${document.visibilityState}`}
+  draw();
+})()}
 
 /* --- memory --- */
 /* ==========================================================
