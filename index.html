@@ -687,6 +687,13 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
 
 /* ===== Từ điển Popup + Highlight + Vocab Panel ===== */
 .word-highlight{background:linear-gradient(120deg,#fef08a 0%,#fde68a 100%);border-radius:3px;padding:0 2px;cursor:pointer;transition:.15s}
+.ans-highlight{background:linear-gradient(120deg,#bbf7d0,#86efac);border-radius:3px;padding:0 2px;font-weight:600}
+.ans-hl-bar{display:flex;gap:8px;align-items:center;margin:8px 0;flex-wrap:wrap}
+.ans-hl-bar input{flex:1;min-width:120px;padding:6px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:13px;font-family:'Be Vietnam Pro',sans-serif}
+.ans-hl-btn{padding:6px 14px;border-radius:8px;border:1.5px solid #7c3aed;background:#f5f3ff;color:#7c3aed;font-weight:600;font-size:13px;cursor:pointer;font-family:'Be Vietnam Pro',sans-serif}
+.ans-hl-btn:hover{background:#7c3aed;color:#fff}
+.ans-hl-btn.clear{border-color:#ef4444;background:#fef2f2;color:#ef4444}
+.ans-hl-btn.clear:hover{background:#ef4444;color:#fff}
 .dict-popup{position:fixed;z-index:9999;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.18);padding:20px;max-width:340px;width:90vw;font-family:'Be Vietnam Pro',sans-serif;animation:dictIn .2s ease}
 @keyframes dictIn{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 .dict-popup .dict-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#9ca3af;line-height:1}
@@ -798,6 +805,11 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
 [data-theme="dark"] .vocab-empty{color:#6b68a0}
 /* Word highlight dark */
 [data-theme="dark"] .word-highlight{background:linear-gradient(120deg,#854d0e,#a16207);color:#fef08a}
+[data-theme="dark"] .ans-highlight{background:linear-gradient(120deg,#065f46,#047857);color:#6ee7b7}
+[data-theme="dark"] .ans-hl-bar input{background:#1a1a2e;border-color:#2d2d50;color:#e2e0f0}
+[data-theme="dark"] .ans-hl-btn{background:#241a40;border-color:#7c3aed;color:#a78bfa}
+[data-theme="dark"] .ans-hl-btn:hover{background:#7c3aed;color:#fff}
+[data-theme="dark"] .ans-hl-btn.clear{background:#2a1a1e;border-color:#ef4444;color:#f87171}
 /* General inputs/elements dark */
 [data-theme="dark"] input,[data-theme="dark"] select{background:#1a1a2e;border-color:#2d2d50;color:#e2e0f0}
 [data-theme="dark"] h1,[data-theme="dark"] h1 span{color:#e2e0f0}
@@ -879,6 +891,8 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
 [data-theme="light"] .vocab-table td{border-color:#e2e8f0;color:#2d2a55}
 /* Word highlight light */
 [data-theme="light"] .word-highlight{background:linear-gradient(120deg,#fef08a,#fde047);color:#713f12}
+[data-theme="light"] .ans-highlight{background:linear-gradient(120deg,#bbf7d0,#86efac);color:#065f46}
+[data-theme="light"] .ans-hl-bar input{background:#fff;border-color:#e2e8f0;color:#1e293b}
 /* General light */
 [data-theme="light"] input,[data-theme="light"] select{background:#fff;border-color:#e2e8f0;color:#2d2a55}
 
@@ -1322,7 +1336,7 @@ function go(s){
   if(s==='board'){renderBoard();renderBadges()}
   if(s!=='ielts'&&s!=='hsa'){try{_iqStop()}catch(e){}}
   if(s==='ielts'){showIELTSTab(_ieltsTab||'vocab')}
-  if(s==='hsa'){showHSATab(_hsaTab||'eng1')}
+  if(s==='hsa'){showHSATab(_hsaTab||'eng1');setTimeout(addSearchBarToPassages,200)}
   if(s==='vocab'){renderVocabPanel()}
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -10672,19 +10686,30 @@ function initQuizWordLookup(){
     if(!area)return;
     const source=areaId==='sec-hsa'?'HSA ĐGNL':'THPT QG';
 
-    // Left click: highlight word
+    // Left click: highlight word OR selected phrase
     area.addEventListener('click',function(e){
-      // Don't interfere with answer buttons
-      if(e.target.closest('.hsa-opt,.thpt-opt,.hsa-subtab,.thpt-subtab,button'))return;
+      if(e.target.closest('.hsa-opt,.thpt-opt,.hsa-subtab,.thpt-subtab,button,.ans-hl-btn'))return;
+      const sel=window.getSelection();
+      const selText=sel.toString().trim();
+      // If user selected a phrase (multi-word), highlight that
+      if(selText.length>1&&sel.rangeCount>0){
+        const range=sel.getRangeAt(0);
+        // Check if selection is within this area
+        if(!area.contains(range.commonAncestorContainer))return;
+        const span=document.createElement('span');
+        span.className='word-highlight';
+        try{range.surroundContents(span)}catch(ex){
+          // Complex selection spanning elements — wrap extractContents
+          const frag=range.extractContents();
+          span.appendChild(frag);
+          range.insertNode(span);
+        }
+        sel.removeAllRanges();
+        return;
+      }
+      // Single click: highlight single word
       const info=getWordAtClick(e);
       if(!info)return;
-      // Remove previous highlights in this area
-      area.querySelectorAll('.word-highlight').forEach(h=>{
-        const parent=h.parentNode;
-        parent.replaceChild(document.createTextNode(h.textContent),h);
-        parent.normalize();
-      });
-      // Create highlight
       const range=document.createRange();
       range.setStart(info.node,info.start);
       range.setEnd(info.node,info.end);
@@ -10693,13 +10718,19 @@ function initQuizWordLookup(){
       range.surroundContents(span);
     });
 
-    // Right click: dictionary popup
+    // Right click: dictionary popup (also works on selected phrase)
     area.addEventListener('contextmenu',function(e){
       if(e.target.closest('.hsa-opt,.thpt-opt,.hsa-subtab,.thpt-subtab,button'))return;
-      const info=getWordAtClick(e);
-      if(!info)return;
+      const sel=window.getSelection();
+      const selText=sel.toString().trim();
+      let word=selText;
+      if(!word||word.length<2){
+        const info=getWordAtClick(e);
+        if(!info)return;
+        word=info.word;
+      }
       e.preventDefault();
-      showDictPopup(info.word,e.clientX,e.clientY,source);
+      showDictPopup(word,e.clientX,e.clientY,source);
     });
   });
 }
@@ -10730,6 +10761,92 @@ function loadTheme(){
   }catch(e){
     document.documentElement.setAttribute('data-theme','light');
   }
+}
+
+/* --- Search & Highlight Answer in Passage --- */
+function addSearchBarToPassages(){
+  document.querySelectorAll('.q-passage').forEach(passage=>{
+    if(passage.previousElementSibling&&passage.previousElementSibling.classList.contains('ans-hl-bar'))return;
+    const bar=document.createElement('div');
+    bar.className='ans-hl-bar';
+    bar.innerHTML=`<input type="text" placeholder="Tìm & highlight trong bài đọc..." class="ans-search-input"><button class="ans-hl-btn" onclick="searchInPassage(this)">🔍 Tìm</button><button class="ans-hl-btn clear" onclick="clearPassageHL(this)">✕ Xóa HL</button>`;
+    passage.parentNode.insertBefore(bar,passage);
+    // Enter key
+    bar.querySelector('input').addEventListener('keydown',function(ev){
+      if(ev.key==='Enter')searchInPassage(bar.querySelector('.ans-hl-btn'));
+    });
+  });
+}
+
+function searchInPassage(btn){
+  const bar=btn.closest('.ans-hl-bar');
+  const input=bar.querySelector('input');
+  const query=input.value.trim();
+  if(!query)return;
+  const passage=bar.nextElementSibling;
+  if(!passage)return;
+  // Clear previous answer highlights
+  passage.querySelectorAll('.ans-highlight').forEach(h=>{
+    const t=document.createTextNode(h.textContent);
+    h.parentNode.replaceChild(t,h);
+  });
+  passage.normalize();
+  // Highlight all occurrences (case-insensitive)
+  highlightTextInNode(passage,query);
+  // Scroll first match into view
+  const first=passage.querySelector('.ans-highlight');
+  if(first){first.scrollIntoView({behavior:'smooth',block:'center'});toast('🔍 Tìm thấy "'+query+'"')}
+  else{toast('❌ Không tìm thấy "'+query+'" trong bài đọc')}
+}
+
+function highlightTextInNode(node,query){
+  if(node.nodeType===3){
+    const text=node.textContent;
+    const lower=text.toLowerCase();
+    const qLower=query.toLowerCase();
+    const idx=lower.indexOf(qLower);
+    if(idx===-1)return;
+    const before=text.substring(0,idx);
+    const match=text.substring(idx,idx+query.length);
+    const after=text.substring(idx+query.length);
+    const frag=document.createDocumentFragment();
+    if(before)frag.appendChild(document.createTextNode(before));
+    const span=document.createElement('span');
+    span.className='ans-highlight';
+    span.textContent=match;
+    frag.appendChild(span);
+    if(after){
+      const afterNode=document.createTextNode(after);
+      frag.appendChild(afterNode);
+      node.parentNode.replaceChild(frag,node);
+      // Continue searching in the remaining text
+      highlightTextInNode(afterNode,query);
+    }else{
+      node.parentNode.replaceChild(frag,node);
+    }
+  }else if(node.nodeType===1&&!node.classList.contains('ans-highlight')){
+    const children=Array.from(node.childNodes);
+    children.forEach(c=>highlightTextInNode(c,query));
+  }
+}
+
+function clearPassageHL(btn){
+  const bar=btn.closest('.ans-hl-bar');
+  const passage=bar.nextElementSibling;
+  if(!passage)return;
+  // Clear answer highlights
+  passage.querySelectorAll('.ans-highlight').forEach(h=>{
+    const t=document.createTextNode(h.textContent);
+    h.parentNode.replaceChild(t,h);
+  });
+  // Also clear word highlights
+  passage.querySelectorAll('.word-highlight').forEach(h=>{
+    const t=document.createTextNode(h.textContent);
+    h.parentNode.replaceChild(t,h);
+  });
+  passage.normalize();
+  bar.querySelector('input').value='';
+  toast('🧹 Đã xóa tất cả highlight');
 }
 
 // Initialize on page load
