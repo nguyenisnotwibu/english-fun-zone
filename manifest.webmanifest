@@ -1,0 +1,14 @@
+{
+  "name": "English Fun Zone – Luyện Tiếng Anh",
+  "short_name": "English Fun Zone",
+  "description": "Học và luyện thi tiếng Anh lớp 4–12: từ vựng, ngữ pháp, game, HSA, THPT, IELTS.",
+  "lang": "vi",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f1033",
+  "theme_color": "#0f1033",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

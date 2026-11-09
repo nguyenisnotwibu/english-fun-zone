@@ -1146,6 +1146,86 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
 }
 .dict-unhl-btn:hover{background:#fee2e2;border-color:#fca5a5;color:#b91c1c}
 
+
+/* === Sticky Score Bar & Submit Button for THPT + HSA === */
+.hsa-score-bar,.thpt-score-bar{
+  position:sticky;top:8px;z-index:45;
+  box-shadow:0 6px 18px rgba(15,23,42,.12);
+}
+.thpt-submit-btn{
+  padding:12px 32px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;
+  font-size:15px;font-weight:700;cursor:pointer;
+  box-shadow:0 4px 14px rgba(37,99,235,.35);transition:.2s;
+}
+.thpt-submit-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.45)}
+.score-submit-btn{
+  padding:7px 15px;border-radius:9px;border:1.5px solid #cbd5e1;
+  background:#f8fafc;color:#64748b;font-size:13px;font-weight:700;
+  cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:5px;
+}
+.score-submit-btn.ready{
+  background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;
+  border-color:#15803d;box-shadow:0 3px 10px rgba(22,163,74,.35);
+}
+.score-submit-btn.ready:hover{transform:translateY(-1px);filter:brightness(1.06)}
+[data-theme="dark"] .score-submit-btn{background:#1e293b;border-color:#334155;color:#94a3b8}
+[data-theme="dark"] .score-submit-btn.ready{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-color:#22c55e}
+
+
+/* === Upgraded Visual Diagnostic Summary & Study Roadmap === */
+.diag-prog-row{margin:10px 0}
+.diag-prog-head{display:flex;justify-content:space-between;font-size:13.5px;font-weight:600;margin-bottom:4px;color:#1e293b}
+.diag-prog-track{height:10px;border-radius:99px;background:#e2e8f0;overflow:hidden}
+.diag-prog-fill{height:100%;border-radius:99px;transition:width .4s ease}
+.diag-q-jump{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 9px;border-radius:6px;font-size:12px;font-weight:700;
+  background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;
+  cursor:pointer;margin:2px 4px 2px 0;transition:.15s;text-decoration:none;
+}
+.diag-q-jump:hover{background:#ef4444;color:#fff;border-color:#dc2626;transform:translateY(-1px)}
+.diag-q-jump.skip{background:#f1f5f9;color:#475569;border-color:#cbd5e1}
+.diag-q-jump.skip:hover{background:#64748b;color:#fff}
+
+.diag-road-card{
+  background:#fff;border:1.5px solid #cbd5e1;border-left:5px solid #2563eb;
+  border-radius:12px;padding:14px 16px;margin-bottom:12px;
+  box-shadow:0 2px 8px rgba(15,23,42,.05);
+}
+.diag-road-card.p1{border-left-color:#dc2626;background:#fffafa}
+.diag-road-card.p2{border-left-color:#f59e0b;background:#fffdf5}
+.diag-road-card.p3{border-left-color:#16a34a;background:#f7fee7}
+.diag-road-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.diag-pri-badge{
+  display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:800;
+}
+.diag-pri-badge.p1{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
+.diag-pri-badge.p2{background:#fef3c7;color:#b45309;border:1px solid #fcd34d}
+.diag-pri-badge.p3{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.diag-road-title{font-size:15px;font-weight:800;color:#0f172a}
+.diag-road-grid{display:grid;grid-template-columns:1fr;gap:6px;font-size:13.5px;line-height:1.6;color:#334155;margin-top:6px}
+.diag-road-box{padding:8px 11px;border-radius:8px;background:rgba(241,245,249,.75);border:1px solid #e2e8f0}
+.diag-action-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.diag-act-btn{
+  display:inline-flex;align-items:center;gap:5px;padding:6px 12px;
+  border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;
+  border:1.5px solid #3b82f6;background:#eff6ff;color:#1d4ed8;text-decoration:none;transition:.15s;
+}
+.diag-act-btn:hover{background:#2563eb;color:#fff}
+
+[data-theme="dark"] .diag-prog-head{color:#e2e8f0}
+[data-theme="dark"] .diag-prog-track{background:#1e293b}
+[data-theme="dark"] .diag-road-card{background:#0f172a;border-color:#1e3a5f;color:#e2e8f0}
+[data-theme="dark"] .diag-road-card.p1{background:#1a1118;border-left-color:#ef4444}
+[data-theme="dark"] .diag-road-card.p2{background:#191711;border-left-color:#f59e0b}
+[data-theme="dark"] .diag-road-card.p3{background:#0d1f17;border-left-color:#22c55e}
+[data-theme="dark"] .diag-road-title{color:#f8fafc}
+[data-theme="dark"] .diag-road-grid{color:#cbd5e1}
+[data-theme="dark"] .diag-road-box{background:#162238;border-color:#2e4a80;color:#e2e8f0}
+[data-theme="dark"] .diag-act-btn{background:#162238;border-color:#3b82f6;color:#60a5fa}
+[data-theme="dark"] .diag-act-btn:hover{background:#2563eb;color:#fff}
+
 </style>
 </head>
 <body>
@@ -1371,7 +1451,7 @@ footer{text-align:center;color:#8d8ac0;font-size:12.5px;padding:30px 0 10px}
   </section>
 
 <!-- TỪ VỰNG ĐÃ LƯU -->
-  <section id="sec-vocab" style="display:none">
+  <section id="sec-vocab">
     <div class="card vocab-panel">
       <h3>📖 Từ Vựng Đã Lưu</h3>
       <p class="vocab-count" id="vocabCount">0 từ</p>
@@ -4458,6 +4538,7 @@ function renderHSAQuiz(data,prefix){
     <div class="sc-item">✅ Đúng: <b><span id="hsa-right-${prefix}">0</span></b></div>
     <div class="sc-item">📈 Tỉ lệ: <b><span id="hsa-pct-${prefix}">0</span>%</b></div>
     <div class="hsa-timer" id="hsa-timer-${prefix}"><span class="t-icon">⏱️</span> <span id="hsa-time-${prefix}">00:00</span></div>
+    <button class="score-submit-btn" id="hsa-submit-top-${prefix}" onclick="hsaSubmit('${prefix}')">📩 Nộp bài (≥5 câu)</button>
   </div>`;
   // Start timer
   window._hsaTimer=setInterval(()=>{
@@ -4521,6 +4602,7 @@ function hsaAnswer(qid,idx,prefix,ev){
   const de=$('hsa-done-'+prefix); if(de) de.textContent=_hsaState.answered;
   const re=$('hsa-right-'+prefix); if(re) re.textContent=_hsaState.correct;
   const pe=$('hsa-pct-'+prefix); if(pe) pe.textContent=_hsaState.answered?Math.round(_hsaState.correct/_hsaState.answered*100):0;
+  const topBtn=$('hsa-submit-top-'+prefix); if(topBtn&&_hsaState.answered>=5){topBtn.classList.add('ready');topBtn.textContent='📩 Nộp Bài ('+_hsaState.answered+'/'+_hsaState.total+')';}
   // Track category and grammar topic for wrong answers
   let qCat='',qTopic='',qObj=null;
   for(const cat of allData){
@@ -4591,6 +4673,8 @@ function hsaSubmit(prefix){
   // Hide submit button
   const btn=document.getElementById('hsa-submit-'+prefix);
   if(btn)btn.style.display='none';
+  const topBtn=document.getElementById('hsa-submit-top-'+prefix);
+  if(topBtn)topBtn.style.display='none';
   // Stop timer and show summary
   if(window._hsaTimer){clearInterval(window._hsaTimer);window._hsaTimer=null;}
   setTimeout(()=>showHSASummary(prefix),400);
@@ -4600,89 +4684,110 @@ function showHSASummary(prefix){
   const el=document.getElementById('hsa-summary-'+prefix);
   if(!el)return;
   const st=_hsaState;
-  const pct=Math.round(st.correct/st.total*100);
-  const wrong=st.total-st.correct;
-  // Grade
+  const actualWrongs=st.wrongs.filter(w=>w.chose!=='—');
+  const skippedItems=st.wrongs.filter(w=>w.chose==='—');
+  const attempted=st.correct+actualWrongs.length;
+  const pctTotal=Math.round(st.correct/st.total*100);
+  const pctAttempted=attempted>0?Math.round(st.correct/attempted*100):0;
+
+  const evalPct=skippedItems.length>0?pctAttempted:pctTotal;
   let grade='',gradeColor='';
-  if(pct>=90){grade='Xuất sắc 🏆';gradeColor='green';}
-  else if(pct>=70){grade='Khá tốt 👍';gradeColor='blue';}
-  else if(pct>=50){grade='Trung bình ⚡';gradeColor='blue';}
-  else{grade='Cần cải thiện 📚';gradeColor='red';}
+  if(evalPct>=85){grade='Xuất sắc 🏆';gradeColor='green';}
+  else if(evalPct>=70){grade='Khá tốt 👍';gradeColor='blue';}
+  else if(evalPct>=50){grade='Trung bình ⚡';gradeColor='blue';}
+  else{grade='Cần củng cố 📚';gradeColor='red';}
+
   const elapsed=window._hsaElapsed||0;
   const mins=Math.floor(elapsed/60);
   const secs=elapsed%60;
   const timeStr=mins>0?mins+' phút '+secs+' giây':secs+' giây';
 
-  let h=`<h3>📊 Tổng Kết Đề Thi</h3>`;
+  let h=`<h3>📊 Kết Quả Chấm Điểm & Đánh Giá Lộ Trình Học Tập (HSA ĐGNL)</h3>`;
   h+=`<div class="hsa-sum-grid">
-    <div class="hsa-sum-card"><div class="big blue">${st.total}</div><div class="lbl">Tổng câu hỏi</div></div>
-    <div class="hsa-sum-card"><div class="big green">${st.correct}</div><div class="lbl">Trả lời đúng</div></div>
-    <div class="hsa-sum-card"><div class="big red">${wrong}</div><div class="lbl">Trả lời sai</div></div>
-    <div class="hsa-sum-card"><div class="big ${gradeColor}">${pct}%</div><div class="lbl">${grade}</div></div>
+    <div class="hsa-sum-card"><div class="big blue">${st.correct}/${st.total}</div><div class="lbl">Điểm toàn đề</div></div>
+    <div class="hsa-sum-card"><div class="big green">${st.correct}/${attempted}</div><div class="lbl">Đúng / Số câu đã làm (${pctAttempted}%)</div></div>
+    <div class="hsa-sum-card"><div class="big red">${actualWrongs.length}</div><div class="lbl">Câu làm sai${skippedItems.length>0?` (+${skippedItems.length} bỏ trống)`:''}</div></div>
+    <div class="hsa-sum-card"><div class="big ${gradeColor}">${evalPct}%</div><div class="lbl">Độ chính xác · ${grade}</div></div>
     <div class="hsa-sum-card"><div class="big blue">⏱️</div><div class="lbl">${timeStr}</div></div>
   </div>`;
 
-  // Category breakdown
-  h+=`<div class="hsa-weak-section"><div class="hsa-weak-title">📋 Kết quả theo từng phần</div>`;
-  h+=`<table class="hsa-wrong-table"><tr><th>Phần thi</th><th>Đúng</th><th>Tổng</th><th>Tỉ lệ</th></tr>`;
+  const dataMap={eng1:HSA_ENG_DATA,eng2:HSA_ENG_2,eng3:HSA_ENG_3,eng4:HSA_ENG_4,eng5:HSA_ENG_5,eng6:HSA_ENG_6,eng7:HSA_ENG_7};
+  const allData=dataMap[prefix]||HSA_ENG_DATA;
+  const qMap={};
+  allData.forEach(cat=>{
+    cat.questions.forEach(q=>{qMap[q.num]={q,catTitle:cat.title};});
+  });
+
+  // Visual progress bars per section
+  h+=`<div class="hsa-weak-section"><div class="hsa-weak-title">📋 Đánh giá năng lực theo từng phần thi</div>`;
   for(const[cat,s] of Object.entries(st.catStats)){
     const p=Math.round(s.correct/s.total*100);
     const color=p>=80?'#16a34a':p>=50?'#f59e0b':'#dc2626';
-    h+=`<tr><td>${cat}</td><td>${s.correct}</td><td>${s.total}</td><td style="color:${color};font-weight:700">${p}%</td></tr>`;
+    const statusTxt=p>=80?'🌟 Vững vàng':p>=50?'⚡ Cần củng cố':'🔴 Điểm yếu cần ôn kỹ';
+    h+=`<div class="diag-prog-row">
+      <div class="diag-prog-head"><span>${cat}</span><span style="color:${color}">${s.correct}/${s.total} câu đúng (${p}%) · ${statusTxt}</span></div>
+      <div class="diag-prog-track"><div class="diag-prog-fill" style="width:${p}%;background:${color}"></div></div>
+    </div>`;
   }
-  h+=`</table></div>`;
+  h+=`</div>`;
 
-  // Group wrong answers by topic
-  if(st.wrongs.length>0){
+  const targetDiagnosticList=actualWrongs.length>0?actualWrongs:skippedItems;
+  const isDiagnosingSkipped=(actualWrongs.length===0&&skippedItems.length>0);
+
+  if(targetDiagnosticList.length>0){
     const topicMap={};
-    st.wrongs.forEach(w=>{
-      if(!topicMap[w.topic])topicMap[w.topic]=[];
-      topicMap[w.topic].push(w);
+    targetDiagnosticList.forEach(w=>{
+      const info=qMap[w.num];
+      const skill=(w.topic&&w.topic!=='Khác')?w.topic:(info?classifyQuestionSkill(info.q,info.catTitle):w.cat.replace(/ \(.+/,''));
+      w.skill=skill;
+      if(!topicMap[skill])topicMap[skill]=[];
+      topicMap[skill].push(w);
     });
-    // Sort by most mistakes
     const sorted=Object.entries(topicMap).sort((a,b)=>b[1].length-a[1].length);
 
-    h+=`<div class="hsa-weak-section"><div class="hsa-weak-title">🔴 Điểm yếu cần khắc phục</div><div class="hsa-weak-list">`;
+    h+=`<div class="hsa-weak-section"><div class="hsa-weak-title">${isDiagnosingSkipped?'📌 Các dạng bài bạn chưa làm trong đề này':'🔴 Chẩn đoán cụ thể các chủ điểm & dạng câu hỏi bạn đang yếu'}</div><div class="hsa-weak-list">`;
     sorted.forEach(([topic,items])=>{
-      h+=`<span class="hsa-weak-tag">${topic} (${items.length} sai)</span>`;
+      h+=`<span class="hsa-weak-tag">${topic} (${items.length} câu)</span>`;
     });
     h+=`</div></div>`;
 
-    // Detailed wrong answer table
-    h+=`<div class="hsa-weak-section"><div class="hsa-weak-title">📝 Chi tiết câu sai</div>`;
-    h+=`<table class="hsa-wrong-table"><tr><th>Câu</th><th>Dạng</th><th>Chủ đề</th><th>Bạn chọn</th><th>Đáp án đúng</th></tr>`;
-    st.wrongs.forEach(w=>{
-      h+=`<tr><td><b>${w.num}</b></td><td>${w.cat.replace(/ \(.+/,'')}</td><td>${w.topic}</td><td style="color:#dc2626">${w.chose}</td><td style="color:#16a34a">${w.correct}. ${w.correctText}</td></tr>`;
-    });
-    h+=`</table></div>`;
-
-    // Study roadmap
-    h+=`<div class="hsa-roadmap"><h4>🗺️ Lộ Trình Ôn Tập Đề Xuất</h4>`;
+    h+=`<div class="hsa-roadmap"><h4>🗺️ Lộ Trình Ôn Tập & Đề Xuất Học Tập Cụ Thể</h4>`;
     let pri=1;
     sorted.forEach(([topic,items])=>{
-      const cls=pri<=2?'pri':pri<=4?'pri warn':'pri ok';
-      let advice='';
-      const t=topic.toLowerCase();
-      if(t.includes('từ vựng')||t.includes('vocabulary'))advice='Học từ vựng theo chủ đề, ghi chú collocations và context.';
-      else if(t.includes('đại từ quan hệ')||t.includes('relative'))advice='Ôn lại who/whom/which/that/whose và mệnh đề quan hệ.';
-      else if(t.includes('giới từ')||t.includes('preposition'))advice='Luyện giới từ đi kèm với động từ và tính từ.';
-      else if(t.includes('thì')||t.includes('tense'))advice='Ôn 12 thì tiếng Anh, tập trung vào dấu hiệu nhận biết.';
-      else if(t.includes('kết hợp từ')||t.includes('collocation'))advice='Học phrasal verbs và cụm từ cố định.';
-      else if(t.includes('câu hỏi đuôi'))advice='Ôn quy tắc câu hỏi đuôi với các chủ ngữ đặc biệt.';
-      else if(t.includes('so sánh'))advice='Ôn so sánh hơn, so sánh nhất với tính từ ngắn/dài.';
-      else if(t.includes('động từ')||t.includes('modal'))advice='Ôn modal verbs: can/could/may/might/must/should/need.';
-      else if(t.includes('liên từ')||t.includes('conjunction'))advice='Ôn các liên từ: and/but/or/so/because/although/however.';
-      else if(t.includes('đọc hiểu')||t.includes('reading'))advice='Luyện đọc bài, tìm main idea, specific details, inference.';
-      else if(t.includes('sắp xếp'))advice='Luyện nhận biết trình tự logic và từ nối giữa các câu.';
-      else if(t.includes('viết lại')||t.includes('rewrite'))advice='Ôn các cấu trúc viết lại câu phổ biến.';
-      else if(t.includes('điền từ')||t.includes('cloze'))advice='Luyện đọc cloze text, chú ý ngữ cảnh và từ loại.';
-      else advice='Ôn lại lý thuyết và làm thêm bài tập phần này.';
-      h+=`<div class="hsa-roadmap-item"><span class="${cls}">${pri}</span><div><b>${topic}</b> — sai ${items.length}/${items.length} câu<br>${advice}</div></div>`;
+      const pClass=pri===1?'p1':pri<=3?'p2':'p3';
+      const pLabel=pri===1?'🔥 Ưu tiên số 1 — Cần khắc phục ngay':pri<=3?'⚡ Ưu tiên số '+pri+' — Cần ôn luyện thêm':'✅ Ưu tiên số '+pri+' — Ôn củng cố';
+      const adv=getSkillStudyAdvice(topic);
+      const qLinks=items.map(w=>`<a class="diag-q-jump${w.chose==='—'?' skip':''}" onclick="jumpToQuestion('hq-${prefix}-${w.num}')" title="Bấm để cuộn tới xem giải thích Câu ${w.num}">Câu ${w.num} (${w.chose==='—'?'Chưa làm':'Chọn '+w.chose+' → Đúng: '+w.correct})</a>`).join('');
+
+      h+=`<div class="diag-road-card ${pClass}">
+        <div class="diag-road-top">
+          <div class="diag-road-title">${pri}. ${topic}</div>
+          <span class="diag-pri-badge ${pClass}">${pLabel} (${items.length} câu)</span>
+        </div>
+        <div style="margin-bottom:6px"><small style="font-weight:700;color:#64748b">📍 Các câu cần xem lại (bấm vào để cuộn tới lời giải):</small><br>${qLinks}</div>
+        <div class="diag-road-grid">
+          <div class="diag-road-box">📚 <b>Kiến thức cần học:</b> ${adv.what}</div>
+          <div class="diag-road-box">💡 <b>Phương pháp & Mẹo xử lý:</b> ${adv.how}</div>
+        </div>
+        <div class="diag-action-links">
+          ${adv.grammarTopic?`<a class="diag-act-btn" href="grammar.html" target="_blank">📖 Học chuyên đề Ngữ pháp này</a>`:''}
+          <button class="diag-act-btn" onclick="goVocab()">📌 Ôn từ vựng đã lưu (${_getVocab().length} từ)</button>
+        </div>
+      </div>`;
       pri++;
     });
     h+=`</div>`;
+
+    if(actualWrongs.length>0){
+      h+=`<div class="hsa-weak-section"><div class="hsa-weak-title">📝 Bảng đối chiếu chi tiết các câu làm sai (${actualWrongs.length} câu)</div>`;
+      h+=`<table class="hsa-wrong-table"><tr><th>Câu</th><th>Dạng bài</th><th>Chủ điểm</th><th>Bạn chọn</th><th>Đáp án đúng</th><th>Xem lại</th></tr>`;
+      actualWrongs.forEach(w=>{
+        h+=`<tr><td><b>Câu ${w.num}</b></td><td>${w.cat.replace(/ \(.+/,'')}</td><td>${w.skill||w.topic}</td><td style="color:#dc2626;font-weight:700">${w.chose}</td><td style="color:#16a34a;font-weight:700">${w.correct}. ${w.correctText}</td><td><button class="diag-q-jump" onclick="jumpToQuestion('hq-${prefix}-${w.num}')">🔍 Xem lời giải</button></td></tr>`;
+      });
+      h+=`</table></div>`;
+    }
   }else{
-    h+=`<div class="hsa-roadmap" style="text-align:center;padding:24px"><h4>🎉 Hoàn hảo! Bạn đúng 100%!</h4><p>Tiếp tục luyện các đề khác để duy trì phong độ.</p></div>`;
+    h+=`<div class="hsa-roadmap" style="text-align:center;padding:24px"><h4>🎉 Xuất sắc! Bạn trả lời đúng 100% các câu đã làm!</h4><p>Hãy tiếp tục luyện các đề HSA tiếp theo để giữ vững phong độ.</p></div>`;
   }
 
   el.innerHTML=h;
@@ -11384,6 +11489,7 @@ function renderTHPTQuiz(data,prefix){
     <div class="sc-item">✅ Đúng: <b><span id="thpt-right-${prefix}">0</span></b></div>
     <div class="sc-item">📈 Tỉ lệ: <b><span id="thpt-pct-${prefix}">0</span>%</b></div>
     <div class="thpt-timer" id="thpt-timer-${prefix}"><span class="t-icon">⏱️</span> <span id="thpt-time-${prefix}">00:00</span></div>
+    <button class="score-submit-btn" id="thpt-submit-top-${prefix}" onclick="thptSubmit('${prefix}')">📩 Nộp bài (≥5 câu)</button>
   </div>`;
   window._thptTimer=setInterval(()=>{
     window._thptElapsed=Math.floor((Date.now()-window._thptStartTime)/1000);
@@ -11418,6 +11524,7 @@ function renderTHPTQuiz(data,prefix){
       h+=`</div></div>`;
     });
   });
+  h+=`<div style="text-align:center;margin:24px 0"><button class="thpt-submit-btn" id="thpt-submit-${prefix}" onclick="thptSubmit('${prefix}')">📩 Nộp Bài</button></div>`;
   h+=`<div class="thpt-summary" id="thpt-summary-${prefix}"></div>`;
   el.innerHTML=h;
   el.scrollIntoView({behavior:'smooth',block:'start'});
@@ -11452,6 +11559,7 @@ function thptAnswer(qid,idx,prefix,ev){
   const de=$('thpt-done-'+prefix); if(de) de.textContent=_thptState.answered;
   const re=$('thpt-right-'+prefix); if(re) re.textContent=_thptState.correct;
   const pe=$('thpt-pct-'+prefix); if(pe) pe.textContent=_thptState.answered?Math.round(_thptState.correct/_thptState.answered*100):0;
+  const topBtn=$('thpt-submit-top-'+prefix); if(topBtn&&_thptState.answered>=5){topBtn.classList.add('ready');topBtn.textContent='📩 Nộp Bài ('+_thptState.answered+'/'+_thptState.total+')';}
   let qCat='',qObj=null;
   for(const cat of allData){
     for(const q of cat.questions){
@@ -11475,87 +11583,340 @@ function thptAnswer(qid,idx,prefix,ev){
   }
 }
 
+
+function thptSubmit(prefix){
+  const minRequired=5;
+  if(_thptState.answered<minRequired){
+    toast('⚠️ Bạn cần làm ít nhất '+minRequired+' câu trước khi nộp bài! (Hiện tại: '+_thptState.answered+'/'+minRequired+' câu)');
+    return;
+  }
+  if(!confirm('Bạn đã làm '+_thptState.answered+'/'+_thptState.total+' câu. Bạn có chắc muốn nộp bài?'))return;
+  const dataMap={thpt1:THPT_DATA_1,thpt2:THPT_DATA_2,thpt3:THPT_DATA_3,thpt4:THPT_DATA_4,thpt5:THPT_DATA_5,thpt6:THPT_DATA_6,thpt7:THPT_DATA_7,thpt8:THPT_DATA_8,thpt9:THPT_DATA_9,thpt10:THPT_DATA_10,thpt11:THPT_DATA_11,thpt12:THPT_DATA_12,thpt13:THPT_DATA_13,thpt14:THPT_DATA_14,thpt15:THPT_DATA_15,thpt16:THPT_DATA_16,thpt17:THPT_DATA_17,thpt18:THPT_DATA_18,thpt19:THPT_DATA_19,thpt20:THPT_DATA_20,thpt21:THPT_DATA_21,thpt22:THPT_DATA_22,thpt23:THPT_DATA_23,thpt24:THPT_DATA_24,thpt25:THPT_DATA_25,thpt26:THPT_DATA_26,thpt27:THPT_DATA_27,thpt28:THPT_DATA_28,thpt29:THPT_DATA_29,thpt30:THPT_DATA_30,thpt31:THPT_DATA_31,thpt32:THPT_DATA_32,thpt33:THPT_DATA_33,thpt34:THPT_DATA_34,thpt35:THPT_DATA_35,thpt36:THPT_DATA_36,thpt37:THPT_DATA_37,thpt38:THPT_DATA_38,thpt39:THPT_DATA_39,thpt40:THPT_DATA_40,thpt41:THPT_DATA_41,thpt42:THPT_DATA_42,thpt43:THPT_DATA_43,thpt44:THPT_DATA_44,thpt45:THPT_DATA_45};
+  const allData=dataMap[prefix]||THPT_DATA_1;
+  allData.forEach(cat=>{
+    cat.questions.forEach(q=>{
+      const qid=prefix+'-'+q.num;
+      const card=document.getElementById('tq-'+qid);
+      if(card && !card.dataset.done){
+        card.dataset.done='1';
+        const btns=card.querySelectorAll('.thpt-opt');
+        btns.forEach((b,i)=>{
+          b.style.cursor='default';
+          if(i===q.ans) b.classList.add('correct');
+          b.style.opacity=i===q.ans?'1':'0.4';
+        });
+        const exp=document.getElementById('texp-'+qid);
+        if(exp)exp.classList.add('show');
+        _thptState.answered++;
+        const qCat=cat.title;
+        if(!_thptState.catStats[qCat])_thptState.catStats[qCat]={total:0,correct:0};
+        _thptState.catStats[qCat].total++;
+        _thptState.wrongs.push({num:q.num,text:q.text||'',cat:qCat,chose:'—',correct:'ABCD'[q.ans],correctText:q.opts[q.ans],level:q.level});
+      }
+    });
+  });
+  const de=$('thpt-done-'+prefix);if(de)de.textContent=_thptState.answered;
+  const pe=$('thpt-pct-'+prefix);if(pe)pe.textContent=_thptState.answered?Math.round(_thptState.correct/_thptState.answered*100):0;
+  const btn=document.getElementById('thpt-submit-'+prefix);
+  if(btn)btn.style.display='none';
+  const topBtn=document.getElementById('thpt-submit-top-'+prefix);
+  if(topBtn)topBtn.style.display='none';
+  if(window._thptTimer){clearInterval(window._thptTimer);window._thptTimer=null;}
+  setTimeout(()=>showTHPTSummary(prefix),400);
+}
+
+
+function jumpToQuestion(cardId){
+  const el=document.getElementById(cardId);
+  if(el){
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+    el.style.transition='box-shadow .3s';
+    el.style.boxShadow='0 0 0 4px #3b82f6';
+    setTimeout(()=>{el.style.boxShadow='';},1800);
+  }
+}
+
+function classifyQuestionSkill(q, catTitle){
+  const t = String(q.text || '').toLowerCase();
+  const exp = String(q.explain || '').toLowerCase();
+  const c = String(catTitle || '').toLowerCase();
+  const opts = (q.opts || []).map(o => String(o));
+
+  // 1) Check explicit Phương pháp tag if present (HSA)
+  const pm = String(q.explain || '').match(/<b>\s*Phương\s*pháp\s*:\s*<\/b>\s*([^<]+)/i);
+  if(pm && pm[1].trim()){
+    const pText = pm[1].trim();
+    if(pText.length < 45) return pText;
+  }
+
+  // 2) Arrangement questions
+  if(opts.some(o => /^[a-f]\s*[-–]\s*[a-f]/i.test(o.trim()))){
+    if(t.includes('dear ') || t.includes('yours') || t.includes('with love') || t.includes('regards'))
+      return 'Sắp xếp Thư từ / Email (Letter Arrangement)';
+    const seqLen = (opts[0].match(/[a-f]/gi) || []).length;
+    if(seqLen <= 3 || /[a-z]+:\s/i.test(q.text || ''))
+      return 'Sắp xếp Hội thoại giao tiếp (Dialogue Arrangement)';
+    return 'Sắp xếp Đoạn văn nghị luận (Paragraph Arrangement)';
+  }
+
+  // 3) Reading Comprehension specific question types
+  if(t.includes('opposite in meaning'))
+    return 'Từ vựng Trái nghĩa trong bài đọc (OPPOSITE in meaning)';
+  if(t.includes('closest in meaning') || t.includes('best replaced by') || t.includes('mostly mean'))
+    return 'Từ vựng Đồng nghĩa trong ngữ cảnh (CLOSEST / Replaced by)';
+  if(t.includes('refer to') || t.includes('refers to'))
+    return 'Quy chiếu đại từ trong bài đọc (Reference: it/they/this...)';
+  if(t.includes('best paraphrases') || t.includes('best restates'))
+    return 'Diễn đạt lại câu gạch chân (Paraphrasing)';
+  if(t.includes('best fit') || opts.some(o => /^\[I/.test(o.trim())))
+    return 'Chèn câu vào vị trí hợp lý trong đoạn ([I]–[IV] Sentence Insertion)';
+  if(t.includes('best summarises') || t.includes('best summarizes') || t.includes('main idea'))
+    return 'Tóm tắt ý chính đoạn văn / toàn bài (Summarising / Main Idea)';
+  if(t.includes('inferred from') || t.includes('infer from'))
+    return 'Suy luận từ thông tin bài đọc (Inference Questions)';
+  if(t.includes('which paragraph'))
+    return 'Định vị thông tin theo đoạn văn (Paragraph Matching)';
+  if(t.includes('not mentioned') || t.includes('true according to') || t.includes('not true') || t.includes('false'))
+    return 'Đọc tìm thông tin chi tiết & Loại trừ (Detail / TRUE – NOT Mentioned)';
+
+  // 4) Reading Cloze (sentence/clause completion 18-22)
+  if(c.includes('reading cloze') || opts.some(o => o.split(/\s+/).length >= 6)){
+    if(exp.includes('mệnh đề quan hệ') || exp.includes('relative') || opts.some(o => /^(which|who|whose|that|in which|of which)\b/i.test(o.trim())))
+      return 'Hoàn thành câu: Mệnh đề quan hệ & Rút gọn mệnh đề';
+    return 'Hoàn thành câu & Mạch liên kết đoạn văn (Sentence / Clause Completion)';
+  }
+
+  // 5) Cloze Text / Grammar & Vocabulary micro-skills
+  if(opts.every(o => /^(who|whom|whose|which|that|where|when|why)$/i.test(o.trim())) || exp.includes('đại từ quan hệ') || exp.includes('rút gọn mệnh đề'))
+    return 'Đại từ quan hệ & Rút gọn mệnh đề (Relative Clauses / Participles)';
+  if(opts.every(o => /^(in|on|at|for|with|about|to|of|from|by|into|over|through|during|under)$/i.test(o.trim())) || exp.includes('giới từ'))
+    return 'Giới từ & Cụm tính từ/động từ đi kèm giới từ (Prepositions)';
+  if(opts.some(o => /\b(up|out|off|down|over|away|back|on|in|into|after|for)\b$/i.test(o.trim()) && o.trim().split(/\s+/).length === 2) || exp.includes('cụm động từ') || exp.includes('phrasal verb'))
+    return 'Cụm động từ (Phrasal Verbs)';
+  if(opts.some(o => /^(many|much|few|little|other|others|another|the other|each|every|some|any|amount|number|range|variety|deal|plenty)\b/i.test(o.trim())) || exp.includes('lượng từ') || exp.includes('đếm được'))
+    return 'Lượng từ & Đại từ bất định (Quantifiers: number/amount/other...)';
+  if(opts.length === 4 && new Set(opts.map(o => o.trim().split(/\s+/).sort().join(' ').toLowerCase())).size === 1 && opts[0].trim().includes(' '))
+    return 'Trật tự từ & Cụm danh từ (Word Order: OPSACOMP / Adj + N)';
+  if(opts.length === 4 && opts[0].trim().length >= 4 && !opts[0].trim().includes(' ') && opts.filter(o => o.trim().toLowerCase().slice(0, 4) === opts[0].trim().toLowerCase().slice(0, 4)).length >= 3)
+    return 'Từ loại & Cấu tạo từ (Word Form: N / V / Adj / Adv)';
+  if(exp.includes('collocation') || exp.includes('cụm từ cố định') || exp.includes('kết hợp từ'))
+    return 'Cụm từ cố định (Collocations)';
+  if(exp.includes('liên từ') || opts.some(o => /^(although|despite|because|however|therefore|meanwhile|moreover|whereas|instead of|in spite of|due to|thanks to)$/i.test(o.trim())))
+    return 'Liên từ & Từ nối (Conjunctions / Linking Words)';
+
+  return 'Từ vựng & Ngữ cảnh đọc điền (Contextual Vocabulary)';
+}
+
+function getSkillStudyAdvice(skillName){
+  const s = skillName.toLowerCase();
+  if(s.includes('trật tự từ') || s.includes('word order'))
+    return {
+      what: 'Quy tắc trật tự tính từ (<b>OSASCOMP</b>: Opinion → Size → Age → Shape → Color → Origin → Material → Purpose) và cấu trúc <b>Trạng từ + Tính từ + Danh từ phụ + Danh từ chính</b>.',
+      how: 'Luôn xác định <b>Danh từ chính (Head Noun)</b> đứng cuối cụm trước, sau đó đặt tính từ bổ nghĩa đứng trước danh từ ghép.',
+      grammarTopic: true
+    };
+  if(s.includes('từ loại') || s.includes('word form'))
+    return {
+      what: 'Nhận diện hậu tố Danh từ (<i>-tion, -ment, -ity, -ness, -ance</i>), Tính từ (<i>-ive, -ous, -ful, -able, -ic, -al</i>), Trạng từ (<i>-ly</i>) và vị trí từ loại trong câu.',
+      how: 'Sau mạo từ (<i>a/an/the</i>), tính từ sở hữu, giới từ → điền <b>Danh từ</b>; trước danh từ hoặc sau <i>be/become/remain/seem</i> → điền <b>Tính từ</b>; bổ nghĩa cho động từ thường/tính từ → điền <b>Trạng từ</b>.',
+      grammarTopic: true
+    };
+  if(s.includes('đại từ quan hệ') || s.includes('rút gọn mệnh đề') || s.includes('mệnh đề quan hệ'))
+    return {
+      what: 'Cách dùng <b>who, whom, whose (+ N), which, that</b> và rút gọn mệnh đề quan hệ bằng <b>V-ing</b> (chủ động), <b>V3/ed</b> (bị động), <b>to V</b> (sau the first/last/only/so sánh nhất).',
+      how: 'Kiểm tra câu đã có động từ chính chưa: nếu đã có động từ chính và không có đại từ quan hệ thì phải chọn dạng rút gọn (<i>V-ing</i> hoặc <i>V-ed</i>); sau dấu phẩy không dùng <i>that</i>.',
+      grammarTopic: true
+    };
+  if(s.includes('lượng từ') || s.includes('quantifiers'))
+    return {
+      what: 'Phân biệt <b>a number of / a wide range of / many / few + N số nhiều</b> với <b>an amount of / a great deal of / much / little + N không đếm được</b>; phân biệt <b>another + N số ít</b>, <b>other + N số nhiều/không đếm được</b>, <b>others</b> (đứng độc lập).',
+      how: 'Nhìn ngay danh từ đứng ngay sau chỗ trống là số ít, số nhiều (có -s) hay không đếm được để loại trừ ngay 2–3 phương án sai ngữ pháp.',
+      grammarTopic: true
+    };
+  if(s.includes('cụm động từ') || s.includes('phrasal verb'))
+    return {
+      what: 'Các nhóm Phrasal Verbs trọng tâm thi THPT & HSA (<i>take up/over/off, put off/up with, bring about/up, make up for, get over, turn down, look up to, cut down on, end up, pass down</i>).',
+      how: 'Đừng dịch từng từ riêng lẻ; hãy dựa vào tân ngữ phía sau và ngữ cảnh tích cực/tiêu cực của câu, đồng thời lưu ngay cụm động từ vừa sai vào tab <b>📖 Từ Vựng</b>.',
+      grammarTopic: false
+    };
+  if(s.includes('collocation') || s.includes('cụm từ cố định') || s.includes('giới từ'))
+    return {
+      what: 'Các cụm động từ – danh từ cố định (<i>make an effort/impact/contribution, raise awareness, pose a threat, play a role, meet the demand</i>) và tính từ đi kèm giới từ (<i>curious about, capable of, responsible for, exposed to</i>).',
+      how: 'Nhìn danh từ hoặc tính từ sát chỗ trống để ghép cặp cố định; bôi đen cả cụm trong bài đọc để lưu vào <b>📖 Từ Vựng</b> ôn tập trên Quizlet.',
+      grammarTopic: true
+    };
+  if(s.includes('liên từ') || s.includes('linking'))
+    return {
+      what: 'Phân biệt liên từ đi với mệnh đề (<i>although, because, while, whereas, so that</i>), giới từ nối đi với N/V-ing (<i>despite, in spite of, due to, owing to, instead of, regardless of</i>) và trạng từ liên kết (<i>however, therefore, meanwhile, moreover</i>).',
+      how: 'Xác định quan hệ logic giữa 2 vế (Nguyên nhân – Kết quả hay Tương phản – Nhượng bộ) và kiểm tra sau chỗ trống là <b>Mệnh đề (S + V)</b> hay <b>Cụm danh từ/V-ing</b>.',
+      grammarTopic: true
+    };
+  if(s.includes('hoàn thành câu') || s.includes('clause completion'))
+    return {
+      what: 'Cấu trúc ngữ pháp câu hoàn chỉnh (Chủ ngữ + Động từ chia thì), mệnh đề phân từ (<i>Having + V3/ed, V-ing...</i>) và sự hòa hợp chủ ngữ khi rút gọn mệnh đề.',
+      how: 'Phân tích khung câu xung quanh chỗ trống: nếu câu chưa có động từ chính (Main Verb) thì bắt buộc chọn đáp án bắt đầu bằng động từ chia thì; nếu câu đã đủ S + V thì chọn mệnh đề phụ hoặc cụm phân từ bổ nghĩa.',
+      grammarTopic: true
+    };
+  if(s.includes('sắp xếp'))
+    return {
+      what: 'Kỹ năng nhận diện câu mở đầu (Topic sentence / lời chào), các từ nối chuyển ý (<i>Firstly, Moreover, However, In addition, Finally, Overall</i>) và đại từ chỉ định (<i>this, these, such, they, he/she</i>).',
+      how: '1) Tìm câu mở đầu khái quát (không bắt đầu bằng <i>However, Therefore, Also, This/They</i>). 2) Ghép các cặp câu hỏi – trả lời hoặc nguyên nhân – kết quả. 3) Tìm câu kết tổng hợp ý (<i>In conclusion, Overall, Thank you...</i>).',
+      grammarTopic: false
+    };
+  if(s.includes('trái nghĩa') || s.includes('đồng nghĩa') || s.includes('opposite') || s.includes('closest'))
+    return {
+      what: 'Kỹ năng đoán nghĩa từ vựng qua ngữ cảnh (Context Clues) và tránh bẫy chọn nhầm từ đồng nghĩa khi đề hỏi <b>OPPOSITE (Trái nghĩa)</b>.',
+      how: 'Thay thử từng đáp án vào câu gốc trong đoạn văn xem sắc thái nghĩa là tích cực (+) hay tiêu cực (–). Với câu <b>OPPOSITE</b>, nếu từ gốc mang nghĩa tiêu cực thì đáp án đúng phải mang nghĩa tích cực.',
+      grammarTopic: false
+    };
+  if(s.includes('quy chiếu') || s.includes('reference'))
+    return {
+      what: 'Xác định danh từ được thay thế bởi các đại từ <b>it, they, them, their, this, these, those, which, one</b>.',
+      how: 'Đọc câu ngay trước đại từ: kiểm tra <b>số ít / số nhiều</b> (<i>it/this</i> thay cho danh từ số ít; <i>they/them/these</i> thay cho danh từ số nhiều) và lắp danh từ đó vào vị trí đại từ xem câu có hợp nghĩa không.',
+      grammarTopic: false
+    };
+  if(s.includes('paraphras') || s.includes('diễn đạt lại'))
+    return {
+      what: 'Kỹ năng nhận diện cấu trúc tương đương và từ đồng nghĩa (Synonym swapping) mà không làm thay đổi mức độ khẳng định của câu gốc.',
+      how: 'Chia câu gốc thành các vế ý chính (Nguyên nhân / Điều kiện / Kết quả). Loại ngay các đáp án chứa từ tuyệt đối hóa sai lệch (<i>only, never, completely, all</i>) hoặc đảo ngược quan hệ nhân quả.',
+      grammarTopic: false
+    };
+  if(s.includes('chèn câu') || s.includes('insertion'))
+    return {
+      what: 'Kỹ năng tìm móc nối (Anchor words) giữa câu cần chèn với câu đứng trước và câu đứng sau các vị trí <b>[I], [II], [III], [IV]</b>.',
+      how: 'Chú ý các từ nối đầu câu cần chèn (<i>However, Moreover, As a result, For example</i>) và các đại từ chỉ định (<i>This challenge, These measures, Such...</i>) — câu đứng ngay trước vị trí chèn phải vừa nhắc đến đối tượng đó.',
+      grammarTopic: false
+    };
+  if(s.includes('tóm tắt') || s.includes('summaris') || s.includes('suy luận') || s.includes('infer'))
+    return {
+      what: 'Kỹ năng tổng hợp luận điểm chính của đoạn/bài (Main Idea) và suy luận logic dựa trên bằng chứng trong bài (Inference).',
+      how: 'Đáp án tóm tắt đúng phải bao quát đủ các luận điểm chính mà không sa vào 1 chi tiết phụ (quá hẹp) hoặc thêm thông tin không có trong bài (quá rộng/cực đoan).',
+      grammarTopic: false
+    };
+  return {
+    what: 'Kỹ năng đọc quét từ khóa (Scanning keywords) và đối chiếu thông tin đồng nghĩa trong bài đọc.',
+    how: 'Dùng thanh công cụ <b>🔍 Tìm & highlight trong bài đọc</b> hoặc bôi đen từ khóa trong câu hỏi để định vị chính xác câu chứa thông tin trong đoạn văn trước khi chọn.',
+    grammarTopic: false
+  };
+}
+
 function showTHPTSummary(prefix){
   const el=document.getElementById('thpt-summary-'+prefix);
   if(!el)return;
   const st=_thptState;
-  const pct=Math.round(st.correct/st.total*100);
-  const wrong=st.total-st.correct;
-  // THPT scoring: each correct = 0.25 points (40 questions, max 10 points)
+  const actualWrongs=st.wrongs.filter(w=>w.chose!=='—');
+  const skippedItems=st.wrongs.filter(w=>w.chose==='—');
+  const attempted=st.correct+actualWrongs.length;
+  const pctTotal=Math.round(st.correct/st.total*100);
+  const pctAttempted=attempted>0?Math.round(st.correct/attempted*100):0;
   const score=(st.correct*0.25).toFixed(2);
+
   let grade='',gradeColor='';
-  if(pct>=90){grade='Xuất sắc 🏆';gradeColor='green';}
-  else if(pct>=70){grade='Khá tốt 👍';gradeColor='blue';}
-  else if(pct>=50){grade='Trung bình ⚡';gradeColor='blue';}
-  else{grade='Cần cải thiện 📚';gradeColor='red';}
+  const evalPct=skippedItems.length>0?pctAttempted:pctTotal;
+  if(evalPct>=85){grade='Xuất sắc 🏆';gradeColor='green';}
+  else if(evalPct>=70){grade='Khá tốt 👍';gradeColor='blue';}
+  else if(evalPct>=50){grade='Trung bình ⚡';gradeColor='blue';}
+  else{grade='Cần củng cố 📚';gradeColor='red';}
+
   const elapsed=window._thptElapsed||0;
   const mins=Math.floor(elapsed/60);
   const secs=elapsed%60;
   const timeStr=mins>0?mins+' phút '+secs+' giây':secs+' giây';
   const overTime=elapsed>3000;
 
-  let h=`<h3>📊 Tổng Kết Đề Thi THPT QG</h3>`;
+  let h=`<h3>📊 Kết Quả Chấm Điểm & Đánh Giá Lộ Trình Học Tập (THPT QG)</h3>`;
   h+=`<div class="thpt-sum-grid">
-    <div class="thpt-sum-card"><div class="big blue">${score}</div><div class="lbl">Điểm / 10</div></div>
-    <div class="thpt-sum-card"><div class="big green">${st.correct}</div><div class="lbl">Trả lời đúng</div></div>
-    <div class="thpt-sum-card"><div class="big red">${wrong}</div><div class="lbl">Trả lời sai</div></div>
-    <div class="thpt-sum-card"><div class="big ${gradeColor}">${pct}%</div><div class="lbl">${grade}</div></div>
+    <div class="thpt-sum-card"><div class="big blue">${score}</div><div class="lbl">Điểm toàn đề / 10</div></div>
+    <div class="thpt-sum-card"><div class="big green">${st.correct}/${attempted}</div><div class="lbl">Đúng / Số câu đã làm (${pctAttempted}%)</div></div>
+    <div class="thpt-sum-card"><div class="big red">${actualWrongs.length}</div><div class="lbl">Câu làm sai${skippedItems.length>0?` (+${skippedItems.length} bỏ trống)`:''}</div></div>
+    <div class="thpt-sum-card"><div class="big ${gradeColor}">${evalPct}%</div><div class="lbl">Độ chính xác · ${grade}</div></div>
     <div class="thpt-sum-card"><div class="big blue">⏱️</div><div class="lbl">${timeStr}${overTime?' (quá giờ!)':''}</div></div>
   </div>`;
 
-  h+=`<div class="thpt-weak-section"><div class="thpt-weak-title">📋 Kết quả theo từng phần</div>`;
-  h+=`<table class="thpt-wrong-table"><tr><th>Phần thi</th><th>Đúng</th><th>Tổng</th><th>Tỉ lệ</th></tr>`;
+  // Lookup full question objects to classify micro-skills accurately
+  const dataMap={thpt1:THPT_DATA_1,thpt2:THPT_DATA_2,thpt3:THPT_DATA_3,thpt4:THPT_DATA_4,thpt5:THPT_DATA_5,thpt6:THPT_DATA_6,thpt7:THPT_DATA_7,thpt8:THPT_DATA_8,thpt9:THPT_DATA_9,thpt10:THPT_DATA_10,thpt11:THPT_DATA_11,thpt12:THPT_DATA_12,thpt13:THPT_DATA_13,thpt14:THPT_DATA_14,thpt15:THPT_DATA_15,thpt16:THPT_DATA_16,thpt17:THPT_DATA_17,thpt18:THPT_DATA_18,thpt19:THPT_DATA_19,thpt20:THPT_DATA_20,thpt21:THPT_DATA_21,thpt22:THPT_DATA_22,thpt23:THPT_DATA_23,thpt24:THPT_DATA_24,thpt25:THPT_DATA_25,thpt26:THPT_DATA_26,thpt27:THPT_DATA_27,thpt28:THPT_DATA_28,thpt29:THPT_DATA_29,thpt30:THPT_DATA_30,thpt31:THPT_DATA_31,thpt32:THPT_DATA_32,thpt33:THPT_DATA_33,thpt34:THPT_DATA_34,thpt35:THPT_DATA_35,thpt36:THPT_DATA_36,thpt37:THPT_DATA_37,thpt38:THPT_DATA_38,thpt39:THPT_DATA_39,thpt40:THPT_DATA_40,thpt41:THPT_DATA_41,thpt42:THPT_DATA_42,thpt43:THPT_DATA_43,thpt44:THPT_DATA_44,thpt45:THPT_DATA_45};
+  const allData=dataMap[prefix]||THPT_DATA_1;
+  const qMap={};
+  allData.forEach(cat=>{
+    cat.questions.forEach(q=>{qMap[q.num]={q,catTitle:cat.title};});
+  });
+
+  // 1) Visual progress breakdown by exam section
+  h+=`<div class="thpt-weak-section"><div class="thpt-weak-title">📋 Đánh giá năng lực theo từng phần thi</div>`;
   for(const[cat,s] of Object.entries(st.catStats)){
     const p=Math.round(s.correct/s.total*100);
     const color=p>=80?'#16a34a':p>=50?'#f59e0b':'#dc2626';
-    h+=`<tr><td>${cat}</td><td>${s.correct}</td><td>${s.total}</td><td style="color:${color};font-weight:700">${p}%</td></tr>`;
+    const statusTxt=p>=80?'🌟 Vững vàng':p>=50?'⚡ Cần củng cố':'🔴 Điểm yếu cần ôn kỹ';
+    h+=`<div class="diag-prog-row">
+      <div class="diag-prog-head"><span>${cat}</span><span style="color:${color}">${s.correct}/${s.total} câu đúng (${p}%) · ${statusTxt}</span></div>
+      <div class="diag-prog-track"><div class="diag-prog-fill" style="width:${p}%;background:${color}"></div></div>
+    </div>`;
   }
-  h+=`</table></div>`;
+  h+=`</div>`;
 
-  if(st.wrongs.length>0){
-    const catMap={};
-    st.wrongs.forEach(w=>{
-      const catShort=w.cat.replace(/ \(.+/,'');
-      if(!catMap[catShort])catMap[catShort]=[];
-      catMap[catShort].push(w);
+  // 2) Diagnose specific micro-skills on wrong answers (prioritize actualWrongs; if user got 100% on attempted but skipped some, show skipped skills)
+  const targetDiagnosticList=actualWrongs.length>0?actualWrongs:skippedItems;
+  const isDiagnosingSkipped=(actualWrongs.length===0&&skippedItems.length>0);
+
+  if(targetDiagnosticList.length>0){
+    const skillMap={};
+    targetDiagnosticList.forEach(w=>{
+      const info=qMap[w.num];
+      const skill=info?classifyQuestionSkill(info.q,info.catTitle):w.cat.replace(/ \(.+/,'');
+      w.skill=skill;
+      if(!skillMap[skill])skillMap[skill]=[];
+      skillMap[skill].push(w);
     });
-    const sorted=Object.entries(catMap).sort((a,b)=>b[1].length-a[1].length);
+    const sortedSkills=Object.entries(skillMap).sort((a,b)=>b[1].length-a[1].length);
 
-    h+=`<div class="thpt-weak-section"><div class="thpt-weak-title">🔴 Điểm yếu cần khắc phục</div><div class="thpt-weak-list">`;
-    sorted.forEach(([cat,items])=>{
-      h+=`<span class="thpt-weak-tag">${cat} (${items.length} sai)</span>`;
+    h+=`<div class="thpt-weak-section"><div class="thpt-weak-title">${isDiagnosingSkipped?'📌 Các dạng bài bạn chưa làm trong đề này':'🔴 Chẩn đoán cụ thể các dạng câu hỏi & mảng kiến thức bạn đang yếu'}</div><div class="thpt-weak-list">`;
+    sortedSkills.forEach(([skill,items])=>{
+      h+=`<span class="thpt-weak-tag">${skill} (${items.length} câu)</span>`;
     });
     h+=`</div></div>`;
 
-    h+=`<div class="thpt-weak-section"><div class="thpt-weak-title">📝 Chi tiết câu sai</div>`;
-    h+=`<table class="thpt-wrong-table"><tr><th>Câu</th><th>Dạng</th><th>Cấp độ</th><th>Bạn chọn</th><th>Đáp án đúng</th></tr>`;
-    st.wrongs.forEach(w=>{
-      const lvl=w.level==='NB'?'Nhận biết':w.level==='TB'?'Thông hiểu':'Vận dụng';
-      h+=`<tr><td><b>${w.num}</b></td><td>${w.cat.replace(/ \(.+/,'')}</td><td>${lvl}</td><td style="color:#dc2626">${w.chose}</td><td style="color:#16a34a">${w.correct}. ${w.correctText}</td></tr>`;
-    });
-    h+=`</table></div>`;
-
-    h+=`<div class="thpt-roadmap"><h4>🗺️ Lộ Trình Ôn Tập THPT QG</h4>`;
+    // 3) Personalized Study Roadmap with concrete advice, clickable question jumps, and direct learning links
+    h+=`<div class="thpt-roadmap"><h4>🗺️ Lộ Trình Ôn Tập & Đề Xuất Học Tập Cụ Thể</h4>`;
     let pri=1;
-    sorted.forEach(([cat,items])=>{
-      const cls=pri<=2?'pri':pri<=4?'pri warn':'pri ok';
-      let advice='';
-      const c=cat.toLowerCase();
-      if(c.includes('cloze'))advice='Luyện đọc cloze text, chú ý ngữ cảnh, từ loại và collocations. Đọc nhiều bài báo tiếng Anh để tăng vốn từ.';
-      else if(c.includes('reading'))advice='Luyện đọc hiểu: tìm main idea, specific details, inference, reference questions. Đọc IELTS Reading passages.';
-      else if(c.includes('sentence arrangement')||c.includes('paragraph'))advice='Luyện sắp xếp câu: chú ý từ nối (however, moreover, firstly), đại từ chỉ thị và logic trình tự.';
-      else if(c.includes('dialogue'))advice='Luyện hội thoại: chú ý ngữ cảnh giao tiếp, cách phản hồi tự nhiên và functional language.';
-      else if(c.includes('closest')||c.includes('meaning'))advice='Ôn paraphrasing: luyện viết lại câu với cấu trúc tương đương, synonym và cách diễn đạt khác.';
-      else if(c.includes('combining'))advice='Ôn các cấu trúc nối câu: although/despite, not only...but also, so...that, too...to.';
-      else if(c.includes('error'))advice='Ôn ngữ pháp trọng tâm: subject-verb agreement, tenses, prepositions, articles, word form.';
-      else if(c.includes('word'))advice='Mở rộng vốn từ vựng: học synonyms, antonyms, word families và collocations.';
-      else advice='Ôn lại lý thuyết và làm thêm bài tập phần này. Tập trung vào dạng bài hay sai.';
-      h+=`<div class="thpt-roadmap-item"><span class="${cls}">${pri}</span><div><b>${cat}</b> — sai ${items.length} câu<br>${advice}</div></div>`;
+    sortedSkills.forEach(([skill,items])=>{
+      const pClass=pri===1?'p1':pri<=3?'p2':'p3';
+      const pLabel=pri===1?'🔥 Ưu tiên số 1 — Cần khắc phục ngay':pri<=3?'⚡ Ưu tiên số '+pri+' — Cần ôn luyện thêm':'✅ Ưu tiên số '+pri+' — Ôn củng cố';
+      const adv=getSkillStudyAdvice(skill);
+      const qLinks=items.map(w=>`<a class="diag-q-jump${w.chose==='—'?' skip':''}" onclick="jumpToQuestion('tq-${prefix}-${w.num}')" title="Bấm để cuộn tới xem giải thích Câu ${w.num}">Câu ${w.num} (${w.chose==='—'?'Chưa làm':'Chọn '+w.chose+' → Đúng: '+w.correct})</a>`).join('');
+
+      h+=`<div class="diag-road-card ${pClass}">
+        <div class="diag-road-top">
+          <div class="diag-road-title">${pri}. ${skill}</div>
+          <span class="diag-pri-badge ${pClass}">${pLabel} (${items.length} câu)</span>
+        </div>
+        <div style="margin-bottom:6px"><small style="font-weight:700;color:#64748b">📍 Các câu cần xem lại (bấm vào để cuộn tới lời giải):</small><br>${qLinks}</div>
+        <div class="diag-road-grid">
+          <div class="diag-road-box">📚 <b>Kiến thức cần học:</b> ${adv.what}</div>
+          <div class="diag-road-box">💡 <b>Phương pháp & Mẹo xử lý:</b> ${adv.how}</div>
+        </div>
+        <div class="diag-action-links">
+          ${adv.grammarTopic?`<a class="diag-act-btn" href="grammar.html" target="_blank">📖 Học chuyên đề Ngữ pháp này</a>`:''}
+          <button class="diag-act-btn" onclick="goVocab()">📌 Ôn từ vựng đã lưu (${_getVocab().length} từ)</button>
+        </div>
+      </div>`;
       pri++;
     });
     h+=`</div>`;
+
+    // 4) Detailed table of wrong answers (with clickable row/button to jump to question)
+    if(actualWrongs.length>0){
+      h+=`<div class="thpt-weak-section"><div class="thpt-weak-title">📝 Bảng đối chiếu chi tiết các câu làm sai (${actualWrongs.length} câu)</div>`;
+      h+=`<table class="thpt-wrong-table"><tr><th>Câu</th><th>Dạng bài / Kiến thức</th><th>Cấp độ</th><th>Bạn chọn</th><th>Đáp án đúng</th><th>Xem lại</th></tr>`;
+      actualWrongs.forEach(w=>{
+        const lvl=w.level==='NB'?'Nhận biết':w.level==='TB'?'Thông hiểu':'Vận dụng';
+        const info=qMap[w.num];
+        const skill=w.skill||(info?classifyQuestionSkill(info.q,info.catTitle):w.cat.replace(/ \(.+/,''));
+        h+=`<tr><td><b>Câu ${w.num}</b></td><td>${skill}</td><td>${lvl}</td><td style="color:#dc2626;font-weight:700">${w.chose}</td><td style="color:#16a34a;font-weight:700">${w.correct}. ${w.correctText}</td><td><button class="diag-q-jump" onclick="jumpToQuestion('tq-${prefix}-${w.num}')">🔍 Xem lời giải</button></td></tr>`;
+      });
+      h+=`</table></div>`;
+    }
   }else{
-    h+=`<div class="thpt-roadmap" style="text-align:center;padding:24px"><h4>🎉 Tuyệt vời! Bạn đạt 10/10 điểm!</h4><p>Tiếp tục luyện các đề khác để duy trì phong độ thi THPT QG.</p></div>`;
+    h+=`<div class="thpt-roadmap" style="text-align:center;padding:24px"><h4>🎉 Tuyệt vời! Bạn trả lời đúng 100% các câu đã làm!</h4><p>Hãy tiếp tục thử sức với các đề tiếp theo để duy trì phong độ 10/10.</p></div>`;
   }
 
   el.innerHTML=h;
@@ -11573,7 +11934,10 @@ function goVocab(){
   const ti=$('tabIELTS');if(ti)ti.style.display='none';
   const th=$('tabHSA');if(th)th.style.display='none';
   const tt=$('tabTHPT');if(tt)tt.style.display='none';
+  const sv=$('sec-vocab');if(sv)sv.style.display='';
   go('vocab');
+  renderVocabPanel();
+  if(sv)sv.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 /* --- Saved vocab store --- */
@@ -11778,9 +12142,18 @@ async function showDictPopup(rawWord,x,y,source,hlEl){
     }catch(e){}
   }
 
-  if(!_dictPopup)return; // closed while loading
+  // Auto-save to vocab as soon as meaning is found (even if user closes popup quickly)
+  let saved=_getVocab().find(w=>w.word.toLowerCase()===displayWord.toLowerCase());
+  if(!saved && (viMeaning || enDef)){
+    const wordsArr=_getVocab();
+    wordsArr.unshift({word:displayWord,meaning:viMeaning||enDef,source:source||'',addedAt:new Date().toISOString()});
+    _setVocab(wordsArr);
+    saved=wordsArr[0];
+    const countEl=$('vocabCount');
+    if(countEl)countEl.textContent=wordsArr.length+' từ';
+  }
 
-  const saved=_getVocab().find(w=>w.word.toLowerCase()===displayWord.toLowerCase());
+  if(!_dictPopup)return; // closed while loading
   const escWord=displayWord.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
   const escMeaning=(viMeaning||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
   const escSource=(source||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
@@ -11820,7 +12193,7 @@ async function showDictPopup(rawWord,x,y,source,hlEl){
   // Save + Unhighlight buttons
   html+=`<div class="dict-action-row">`;
   html+=`<button class="dict-save-btn${saved?' saved':''}" id="dict-save-btn" onclick="dictSaveWord('${escWord}','${escMeaning}','${escSource}')">`;
-  html+=saved?'✅ Đã lưu':(isPhrase?'📌 Lưu cụm từ':'📌 Lưu từ');
+  html+=saved?'✅ Đã tự động lưu (Bấm để bỏ lưu)':(isPhrase?'📌 Lưu cụm từ':'📌 Lưu từ');
   html+=`</button>`;
   if(_activeHighlightEl){
     html+=`<button class="dict-unhl-btn" onclick="unhighlightActive()" title="Bỏ tô màu">🧹 Bỏ tô</button>`;
@@ -11831,9 +12204,22 @@ async function showDictPopup(rawWord,x,y,source,hlEl){
 }
 
 function dictSaveWord(word,meaning,source){
-  const ok=saveWordToVocab(word,meaning,source);
+  const words=_getVocab();
+  const idx=words.findIndex(w=>w.word.toLowerCase()===word.toLowerCase());
   const btn=document.getElementById('dict-save-btn');
-  if(btn&&ok){btn.textContent='✅ Đã lưu';btn.classList.add('saved')}
+  if(idx>=0){
+    words.splice(idx,1);
+    _setVocab(words);
+    if(btn){btn.textContent='📌 Lưu lại từ này';btn.classList.remove('saved');}
+    toast('🗑️ Đã bỏ lưu "'+word+'"');
+  }else{
+    words.unshift({word:word,meaning:meaning||'',source:source||'',addedAt:new Date().toISOString()});
+    _setVocab(words);
+    if(btn){btn.textContent='✅ Đã tự động lưu (Bấm để bỏ lưu)';btn.classList.add('saved');}
+    toast('✅ Đã lưu "'+word+'" vào Từ Vựng');
+  }
+  const countEl=$('vocabCount');
+  if(countEl)countEl.textContent=words.length+' từ';
 }
 
 /* --- Helpers for Word/Phrase Highlighting & Option Highlighting --- */

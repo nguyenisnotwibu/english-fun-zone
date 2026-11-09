@@ -36,6 +36,12 @@ echo.
 echo [INFO] Lay du lieu tu GitHub...
 git fetch origin main
 echo.
+where node >nul 2>nul
+if not errorlevel 1 (
+  echo [INFO] Kiem tra du lieu de thi...
+  node tools\check-data.js
+  if errorlevel 1 ( echo [LOI] Du lieu de thi co loi - sua truoc khi day len. & pause & exit /b 1 )
+)
 set "MSG=%~1"
 if not defined MSG set /p "MSG=Mo ta thay doi lan nay (Enter = tu dong theo ngay gio): "
 if not defined MSG call :AUTOMSG
