@@ -9,12 +9,13 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="English Fun Zone 🚀 Luyện Tiếng Anh lớp 4–12">
 <meta property="og:description" content="Học tiếng Anh qua game: từ vựng, ngữ pháp, đề HSA, THPT, IELTS.">
-<meta property="og:image" content="icon.svg">
+<meta property="og:image" content="icons/icon-512.png">
 <meta property="og:locale" content="vi_VN">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon.svg">
-<title>English Fun Zone 🚀 Luyện Tiếng Anh 4-5-6-7-8-9-10</title>
+<link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>English Fun Zone 🚀 Luyện Tiếng Anh lớp 4–12 · IELTS · HSA · THPT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/app.css">
@@ -39,7 +40,7 @@
       </div>
       <span class="lvl" id="pLvl">Lv.1</span>
     </div>
-    <button id="sndToggleBtn" onclick="toggleSound()" title="Bật/tắt âm thanh" style="background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);border-radius:50%;width:38px;height:38px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0" onmouseover="this.style.background='rgba(255,255,255,.3)'" onmouseout="this.style.background='rgba(255,255,255,.18)'">🔊</button>
+    <button id="sndToggleBtn" onclick="toggleSound()" title="Bật/tắt âm thanh" class="theme-toggle">🔊</button>
     <button id="themeToggleBtn" onclick="toggleDarkMode()" title="Chế độ sáng/tối" class="theme-toggle">🌙</button>
   </header>
 
@@ -147,6 +148,7 @@
     </div>
     <div class="card">
       <h2>📈 Tiến độ của em</h2>
+      <div id="efzCloudBoard" style="margin-bottom:12px"></div>
       <div id="progBox"></div>
     </div>
     <div class="card">

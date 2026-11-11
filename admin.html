@@ -67,7 +67,7 @@ iframe{width:100%;height:78vh;border:0;border-radius:12px;background:#fff}
     <div class="warnbox">
       ⚠️ <b>Nói thẳng để thầy nắm:</b> trang này chạy hoàn toàn trong trình duyệt nên <b>mã quản trị không phải bảo mật thật</b> —
       người nào biết xem mã nguồn trang vẫn đọc được. Nó chỉ để học sinh không vô tình bấm vào.
-      Muốn khoá thật thì bật <b>đăng nhập Google</b> (điền cấu hình Firebase trong <code>index.html</code>),
+      Muốn khoá thật thì bật <b>đăng nhập Google</b> (điền cấu hình Firebase trong <code>js/app.js</code>),
       lúc đó chỉ email của thầy mới mở được.
     </div>
   </div>
@@ -81,6 +81,13 @@ iframe{width:100%;height:78vh;border:0;border-radius:12px;background:#fff}
       <p class="sub">Xem, thử và kiểm tra mọi thay đổi trước khi học sinh dùng.</p>
     </div>
     <button class="btn s sm" onclick="aOut()">Đăng xuất</button>
+  </div>
+
+  <div class="card">
+    <h2>☁️ Tiến độ học sinh (đã đăng nhập Google)</h2>
+    <p class="sub" style="color:var(--muted);margin-bottom:9px">Học sinh bấm “Đăng nhập Google để đồng bộ” ở mục Bảng vàng thì tiến độ sẽ hiện ở đây. Chỉ tài khoản của thầy đọc được danh sách này.</p>
+    <div class="row" style="margin-bottom:8px"><button class="btn s sm" onclick="aCloud()">🔄 Tải danh sách</button><span id="cloudMsg" class="sub" style="color:var(--muted)"></span></div>
+    <div style="overflow:auto"><table id="cloudTbl"></table></div>
   </div>
 
   <div class="card">
@@ -137,8 +144,8 @@ iframe{width:100%;height:78vh;border:0;border-radius:12px;background:#fff}
    ========================================================= */
 const ADMIN_HASH   = '14d15d928ff96e3e240fc0d5335ce02fcd7cb0b7efe847ac26ae4fc68b5ab15a';   // SHA-256(salt+mã). Không lưu mã gốc trong file. Đổi mã: chạy node tools/admin-code.js <mã mới>
 const ADMIN_EMAILS = ['nguyenleader2002@gmail.com'];    // email được vào khi bật Google
-/* Muốn dùng đăng nhập Google: điền EFZ_FIREBASE trong index.html rồi dán y hệt vào đây. */
-const EFZ_FIREBASE = { apiKey:"", authDomain:"", projectId:"", storageBucket:"", messagingSenderId:"", appId:"" };
+/* Đăng nhập Google: cấu hình này phải giống hệt EFZ_FIREBASE trong js/app.js. */
+const EFZ_FIREBASE = { apiKey:"AIzaSyDyStvNh-7tQ6KJ1CnPmUFZTivqXcHZ5qs", authDomain:"english-fun-zone.firebaseapp.com", projectId:"english-fun-zone", storageBucket:"english-fun-zone.firebasestorage.app", messagingSenderId:"698265081745", appId:"1:698265081745:web:190e2b20b7059835dbec30" };
 /* ========================================================= */
 
 const $=id=>document.getElementById(id);
@@ -147,7 +154,7 @@ const cloudOn=()=>!!(EFZ_FIREBASE.apiKey&&EFZ_FIREBASE.projectId);
 /* ---------- cổng vào ---------- */
 function aShowGate(){
   $('gGoogle').classList.toggle('hide',!cloudOn());
-  $('gCode').classList.toggle('hide',cloudOn());
+  $('gCode').classList.remove('hide');   /* vẫn giữ mã quản trị làm đường dự phòng khi không đăng nhập Google được */
   if(cloudOn())aInitFB();
 }
 async function sha256Hex(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')}
@@ -161,7 +168,7 @@ function aCheckCode(){
 function aEnter(label){
   $('gate').classList.add('hide');$('panel').classList.remove('hide');
   $('who').textContent=label;
-  aDump();aReload();aStats();
+  aDump();aReload();aStats();aCloud();
 }
 function aOut(){sessionStorage.removeItem('efz_admin');if(window.__fb)window.__fb.auth.signOut();location.reload()}
 function _s(src){return new Promise((ok,no)=>{const e=document.createElement('script');e.src=src;e.onload=ok;e.onerror=()=>no(0);document.head.appendChild(e)})}
@@ -169,7 +176,7 @@ async function aInitFB(){
   if(window.__fb)return window.__fb;
   const V='10.12.2';
   for(const h of ['https://www.gstatic.com/firebasejs/'+V+'/','https://cdnjs.cloudflare.com/ajax/libs/firebase/'+V+'/']){
-    try{await _s(h+'firebase-app-compat.js');await _s(h+'firebase-auth-compat.js');break}catch(e){}
+    try{await _s(h+'firebase-app-compat.js');await _s(h+'firebase-auth-compat.js');window.__fbBase=h;break}catch(e){}
   }
   if(typeof firebase==='undefined'){$('gErr').textContent='😢 Không tải được Firebase.';return null}
   firebase.initializeApp(EFZ_FIREBASE);
@@ -186,6 +193,26 @@ async function aLogin(){
   const fb=await aInitFB();if(!fb)return;
   try{await fb.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())}
   catch(e){$('gErr').textContent='😢 Đăng nhập lỗi: '+(e&&e.code||'')}
+}
+
+/* ---------- tiến độ học sinh trên đám mây (Firestore: saves/{uid}) ---------- */
+const hEsc=x=>String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function aCloud(){
+  const msg=$('cloudMsg'),tbl=$('cloudTbl');
+  if(!cloudOn()){msg.textContent='Chưa cấu hình Firebase.';return}
+  const fb=await aInitFB();
+  if(!fb||!fb.auth.currentUser){tbl.innerHTML='';msg.textContent='Cần đăng nhập Google bằng email của thầy (bấm Đăng xuất rồi vào lại bằng Google) để xem danh sách.';return}
+  msg.textContent='Đang tải…';
+  try{
+    if(!firebase.firestore)await _s((window.__fbBase||'https://www.gstatic.com/firebasejs/10.12.2/')+'firebase-firestore-compat.js');
+    const snap=await firebase.firestore().collection('saves').get();
+    const rows=[];snap.forEach(d=>{const x=d.data()||{};rows.push({p:x.player||{},who:x.who||'',td:x.td||null,ts:x.ts||0})});
+    rows.sort((a,b)=>(b.p.xp||0)-(a.p.xp||0));
+    let h='<tr><th>#</th><th>Tên trong app</th><th>Tài khoản Google</th><th>XP</th><th>Cấp</th><th>Câu đúng</th><th>Huy hiệu</th><th>Thủ thành</th><th>Cập nhật</th></tr>';
+    rows.forEach((r,i)=>{const p=r.p;
+      h+=`<tr><td>${i+1}</td><td><b>${hEsc(p.ava||'')} ${hEsc(p.name||'(chưa đặt tên)')}</b></td><td>${hEsc(r.who)}</td><td>${p.xp||0}</td><td>${Math.floor(Math.sqrt((p.xp||0)/25))+1}</td><td>${p.correct||0}</td><td>${(p.badges||[]).length}</td><td>${r.td?'đợt '+hEsc(r.td.round):'—'}</td><td>${r.ts?new Date(r.ts).toLocaleString('vi-VN'):'—'}</td></tr>`});
+    tbl.innerHTML=h;msg.textContent=rows.length?rows.length+' học sinh đã đồng bộ.':'Chưa có học sinh nào đăng nhập Google.';
+  }catch(e){tbl.innerHTML='';msg.textContent='😢 Không đọc được: '+(e&&e.code||e&&e.message||'')}
 }
 
 /* ---------- thống kê nội dung (đọc thẳng từ khung xem trước) ---------- */

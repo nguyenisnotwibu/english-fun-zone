@@ -1,0 +1,9 @@
+Dat file mp3 bai nghe vao thu muc nay.
+
+Cach dat ten de web TU NHAN (khong can sua code):
+    lop<LOP>-<SO THU TU BAI>.mp3
+  Vi du:  lop5-1.mp3  = bai nghe thu 1 cua Lop 5
+          lop10-3.mp3 = bai nghe thu 3 cua Lop 10
+
+Co file mp3 thi web phat mp3. Khong co thi web tu dung giong doc cua trinh duyet.
+Bai "De nghe ngau nhien" luon dung giong doc cua trinh duyet.

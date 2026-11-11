@@ -38,9 +38,9 @@ git fetch origin main
 echo.
 where node >nul 2>nul
 if not errorlevel 1 (
-  echo [INFO] Kiem tra du lieu de thi...
+  echo [INFO] Kiem tra toan bo du lieu ^(de thi, lop 4-12, ngu phap, IELTS^)...
   node tools\check-data.js
-  if errorlevel 1 ( echo [LOI] Du lieu de thi co loi - sua truoc khi day len. & pause & exit /b 1 )
+  if errorlevel 1 ( echo [LOI] Du lieu co loi - sua truoc khi day len. & pause & exit /b 1 )
 )
 set "MSG=%~1"
 if not defined MSG set /p "MSG=Mo ta thay doi lan nay (Enter = tu dong theo ngay gio): "
@@ -69,8 +69,22 @@ if defined DIRTY (
 )
 echo [OK] Da commit sach se.
 
-echo [INFO] Gop voi ban tren GitHub (uu tien ban moi tren may)...
-git merge origin/main --allow-unrelated-histories -X ours --no-edit
+echo [INFO] Gop voi ban tren GitHub (neu tren GitHub co thay doi moi)...
+git merge origin/main --no-edit
+if errorlevel 1 (
+  git merge --abort >nul 2>nul
+  echo.
+  echo ================================================
+  echo   [LOI] BAN TREN GITHUB XUNG DOT VOI BAN TREN MAY
+  echo ================================================
+  echo Tren GitHub co thay doi ma may nay chua co, va no dung cung cho voi
+  echo thay doi cua thay. Script KHONG tu ghi de de tranh mat du lieu.
+  echo Ban tren may van nguyen ven ^(da commit^). Hay nho Claude gop giup,
+  echo hoac mo GitHub xem commit moi nhat la gi roi chay lai.
+  echo.
+  pause
+  exit /b 1
+)
 echo [INFO] Push len GitHub...
 git push -u origin main
 if errorlevel 1 ( echo [LOI] Push that bai - xem thong bao phia tren. & pause & exit /b 1 )
@@ -88,6 +102,8 @@ if not "%LOCAL%"=="%REMOTE%" (
   exit /b 1
 )
 echo [OK] Da dong bo. Commit: %LOCAL%
+echo [INFO] Nen gon kho git...
+git gc --quiet >nul 2>nul
 
 echo.
 echo XONG! Doi ~1 phut roi mo (nho bam Ctrl+F5 de bo cache):

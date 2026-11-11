@@ -2,7 +2,15 @@
 (function(){
   /* 1) Đăng ký service worker (chỉ trên https/localhost) */
   if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost')){
-    window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+    window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});
+      /* Sau khi trang đã chạy êm: lặng lẽ tải trước các phần còn lại (qua service worker → được lưu) để lần sau mở là có ngay, kể cả offline.
+         Bỏ qua nếu máy đang bật tiết kiệm dữ liệu. */
+      var c=navigator.connection;if(c&&(c.saveData||/2g/.test(c.effectiveType||'')))return;
+      setTimeout(function(){navigator.serviceWorker.ready.then(function(){
+        var L=['js/chunks/grades.js','js/chunks/grammar.js','js/chunks/games.js','js/chunks/td.js','js/chunks/ielts.js','grammar.html'],i=0;
+        (function next(){if(i>=L.length)return;fetch(L[i++]).then(next,next)})();
+      }).catch(function(){})},6000);
+    });
   }
   /* 2) Phần tử có onclick nhưng không phải button/link -> dùng được bằng bàn phím, screen reader đọc được */
   var NATIVE=/^(A|BUTTON|INPUT|SELECT|TEXTAREA|SUMMARY|LABEL)$/;
