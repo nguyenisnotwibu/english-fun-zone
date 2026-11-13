@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Word Strike 3D</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1026;--panel:rgba(14,20,48,.84);--line:rgba(140,170,255,.25);--txt:#eef2ff;--mut:#9aa6d6;--acc:#7c5cff;--ok:#2ed573;--bad:#ff4757;--gold:#ffc83d}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font-family:Nunito,system-ui,sans-serif;user-select:none}
+#c{position:fixed;inset:0;display:block}
+.hud{position:fixed;pointer-events:none;z-index:5}
+#topcol{top:12px;left:50%;transform:translateX(-50%);width:min(780px,calc(100% - 32px));display:flex;flex-direction:column;align-items:center;gap:8px}
+#mission{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:8px 18px 12px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+#mtag{font:800 12px Nunito;letter-spacing:.08em;color:var(--mut);text-transform:uppercase}
+#sentence{font:800 clamp(17px,2.4vw,27px) 'Baloo 2',Nunito;line-height:1.3;margin-top:2px}
+.gap{display:inline-block;min-width:80px;border-bottom:4px solid var(--gold);color:var(--gold);padding:0 6px}
+.built{color:var(--gold)} .built i{color:var(--mut);font-style:normal}
+.chunk{border-bottom:2px dashed var(--mut);padding:0 2px}.chunk sub{color:var(--gold);font-size:.55em;margin-left:2px}
+s{color:#ff8a95} .fix{color:var(--ok)}
+#toast{width:min(700px,100%);text-align:center;font:700 15px Nunito;padding:8px 14px;border-radius:12px;opacity:0;transition:opacity .25s;background:rgba(14,20,48,.8)}
+#toast.ok{border:1px solid var(--ok);opacity:1;background:rgba(20,80,50,.85)}
+#toast.bad{border:1px solid var(--bad);opacity:1;background:rgba(90,20,35,.88)}
+#toast.info{border:1px solid var(--acc);opacity:1;background:rgba(40,30,100,.85)}
+#stats{top:14px;left:16px;font:800 14px Nunito;line-height:1.5;text-shadow:0 2px 6px #000}
+#stats b{color:var(--gold);font-size:22px}
+#combo{color:#ff9ff3}
+#hpwrap{bottom:20px;left:20px;width:min(280px,32vw)}
+.lbl{font:800 12px Nunito;letter-spacing:.1em;color:var(--mut);margin-bottom:4px}
+.bar{height:16px;border-radius:10px;background:rgba(255,255,255,.12);overflow:hidden;border:1px solid var(--line)}
+#hp{height:100%;width:100%;background:linear-gradient(90deg,#ff4757,#ffa502,#2ed573);transition:width .2s}
+#hpTxt{font:800 13px Nunito;margin-top:3px}
+#cross{top:50%;left:50%;width:34px;height:34px;transform:translate(-50%,-50%)}
+#cross:before,#cross:after{content:"";position:absolute;background:#fff;box-shadow:0 0 6px #000}
+#cross:before{left:16px;top:4px;width:2px;height:26px}
+#cross:after{top:16px;left:4px;height:2px;width:26px}
+#cross.on:before,#cross.on:after{background:var(--gold)}
+#cross.wide{width:70px;height:70px;border:2px solid rgba(255,255,255,.7);border-radius:50%}
+#cross.wide:before{left:33px;top:20px}#cross.wide:after{left:20px;top:33px}
+#radar{top:14px;right:14px;width:120px;height:120px;border-radius:50%;background:rgba(10,16,40,.7);border:1px solid var(--line)}
+#flash{inset:0;background:radial-gradient(circle,transparent 40%,rgba(255,40,60,.55));opacity:0;transition:opacity .35s}
+#tint{inset:0;opacity:0;transition:opacity .3s}
+#banner{top:42%;left:50%;transform:translate(-50%,-50%);text-align:center;font:800 clamp(30px,6vw,60px) 'Baloo 2';line-height:1.05;text-shadow:0 6px 24px rgba(124,92,255,.9);opacity:0;transition:opacity .4s}
+#banner small{display:block;font:800 clamp(14px,2vw,20px) Nunito;color:#dfe4ff;margin-top:8px}
+#dock{bottom:14px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px}
+.row2{display:flex;gap:8px}
+.slot{position:relative;width:56px;height:56px;border-radius:14px;background:rgba(14,20,48,.88);border:2px solid var(--line);display:grid;place-items:center;font-size:25px;pointer-events:auto;cursor:pointer}
+.slot.small{width:46px;height:46px;font-size:20px}
+.slot .k{position:absolute;top:1px;left:5px;font:800 11px Nunito;color:#fff}
+.slot .cd{position:absolute;inset:0;border-radius:12px;background:conic-gradient(rgba(0,0,0,.72) var(--p,0%),transparent 0)}
+.slot .t{position:absolute;bottom:-1px;font:800 11px Nunito;color:#fff;text-shadow:0 1px 3px #000}
+.slot.sel{border-color:var(--gold);box-shadow:0 0 12px rgba(255,200,61,.6)}
+.slot.lock{opacity:.3}
+.slot.ready{border-color:#ff6bd6;box-shadow:0 0 16px #ff6bd6;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.07)}}
+#wepname{font:800 12px Nunito;color:var(--mut);letter-spacing:.06em}
+.ov{position:fixed;inset:0;z-index:20;display:flex;align-items:flex-start;justify-content:center;padding:16px;background:radial-gradient(ellipse at top,rgba(60,40,140,.55),rgba(5,8,22,.93));overflow:auto}
+.hide{display:none!important}
+.card{width:min(1000px,100%);margin:auto;background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+h1{font:800 clamp(32px,6vw,54px) 'Baloo 2';line-height:1;background:linear-gradient(90deg,#00d2ff,#a66bff,#ff6bd6);-webkit-background-clip:text;background-clip:text;color:transparent}
+h3{font:800 15px Nunito;letter-spacing:.1em;color:var(--mut);margin:16px 0 8px;text-transform:uppercase}
+.sub{color:var(--mut);margin:6px 0 4px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.pick{cursor:pointer;border:2px solid transparent;border-radius:16px;padding:12px 14px;text-align:left;color:#fff;font-family:inherit;background:#1a2252;transition:transform .15s}
+.pick:hover{transform:translateY(-2px)}
+.pick.sel{border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.15)}
+.pick .t{font:800 20px 'Baloo 2'}
+.pick .d{font-size:13px;opacity:.92;font-weight:700;line-height:1.45}
+.pick.locked{opacity:.4;cursor:not-allowed}
+.stg .n{font:800 12px Nunito;color:var(--gold)}
+.stars{color:var(--gold);letter-spacing:2px}
+.howto{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:6px 22px;font-size:13.5px;font-weight:700;color:#d6dcff;line-height:1.6}
+kbd{background:#1d2656;border:1px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:0 6px;font:800 12px Nunito;color:#fff}
+.btn{cursor:pointer;border:0;border-radius:14px;padding:12px 24px;font:800 17px Nunito;color:#fff;background:linear-gradient(90deg,#7c5cff,#ff6bd6);box-shadow:0 8px 24px rgba(124,92,255,.45);text-decoration:none;display:inline-block}
+.btn.sec{background:#1d2656;box-shadow:none;border:1px solid var(--line)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+select{background:#1d2656;color:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:800 14px Nunito}
+.mk{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px;font-size:14px;font-weight:700}
+.mk .s{font-size:16px;color:#fff}.mk u{color:var(--ok);text-decoration:none;border-bottom:2px solid var(--ok)}
+.mk .p{color:#ff8a95}.mk .v{color:#c7cff7}
+.st{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.st div{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center;font-weight:700}
+.st b{display:block;font:800 26px 'Baloo 2';color:var(--gold)}
+#vword{font:800 clamp(34px,7vw,58px) 'Baloo 2';text-align:center;color:#fff;margin:6px 0 2px}
+#vmean{text-align:center;color:var(--mut);font-weight:700;margin-bottom:12px}
+#vres{text-align:center;font-weight:800;min-height:24px;margin:10px 0}
+#vtype{width:100%;font:800 22px Nunito;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:#0e1430;color:#fff;text-align:center}
+a.dict{color:#8fd3ff;font-weight:800}
+#touch{position:fixed;inset:0;z-index:6;pointer-events:none}
+#joy{position:absolute;left:22px;bottom:120px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.08);border:2px solid var(--line);pointer-events:auto}
+#knob{position:absolute;left:35px;top:35px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.35)}
+#fireB,#pauseB{position:absolute;pointer-events:auto;border-radius:50%;border:2px solid #fff;color:#fff;font:800 14px Nunito;background:rgba(255,71,87,.55)}
+#fireB{right:24px;bottom:150px;width:84px;height:84px}
+#pauseB{right:150px;top:14px;width:42px;height:42px;background:rgba(20,30,70,.7)}
+@media (max-width:760px){#topcol{top:6px;width:calc(100% - 150px);left:12px;transform:none}#mission{padding:6px 10px}#sentence{font-size:16px}#radar{width:90px;height:90px}#stats{top:auto;bottom:240px;left:14px}#hpwrap{bottom:auto;top:auto;bottom:96px;width:40vw}.slot{width:46px;height:46px;font-size:20px}.st{grid-template-columns:repeat(2,1fr)}#wepname{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="hudAll" class="hide">
+  <div id="tint" class="hud"></div>
+  <div id="topcol" class="hud"><div id="mission"><div id="mtag"></div><div id="sentence"></div></div><div id="toast"></div></div>
+  <div id="stats" class="hud"><span id="stg"></span><br>Điểm <b id="score">0</b><br><span id="combo"></span></div>
+  <div id="hpwrap" class="hud"><div class="lbl" id="heroLbl">HP</div><div class="bar"><div id="hp"></div></div><div id="hpTxt"></div></div>
+  <div id="cross" class="hud"></div>
+  <canvas id="radar" class="hud" width="240" height="240"></canvas>
+  <div id="flash" class="hud"></div>
+  <div id="banner" class="hud"></div>
+  <div id="dock" class="hud">
+    <div id="wepname"></div>
+    <div class="row2" id="weps"></div>
+    <div class="row2" id="skills"></div>
+  </div>
+</div>
+
+<div id="touch" class="hide">
+  <div id="joy"><div id="knob"></div></div>
+  <button id="fireB">BẮN</button>
+  <button id="pauseB">❚❚</button>
+</div>
+
+<!-- MENU -->
+<div id="menu" class="ov">
+  <div class="card">
+    <h1>WORD STRIKE 3D</h1>
+    <div class="sub">Bắn đúng từ, cứu thành phố Lexicon khỏi bọn Glitch! · 6 ải · 5 dạng bài · 4 vũ khí · 3 anh hùng</div>
+    <h3>1 · Cấp độ</h3><div class="grid" id="trk"></div>
+    <h3>2 · Chọn anh hùng</h3><div class="grid" id="heroes"></div>
+    <h3>3 · Chọn ải <span id="unlockAll" style="cursor:pointer;font-size:11px;color:#8fd3ff;text-transform:none;letter-spacing:0">(🔓 giáo viên: mở tất cả)</span></h3><div class="grid" id="stages"></div>
+    <h3>Cách chơi</h3>
+    <div class="howto">
+      <div>🎯 Đọc nhiệm vụ ở trên → bắn robot mang <b>đáp án đúng</b>. Bắn nhầm: mất máu + hiện giải thích.</div>
+      <div>🖱️ <kbd>WASD</kbd> đi · <kbd>Chuột</kbd> ngắm · <kbd>Click</kbd>/<kbd>F</kbd> bắn · <kbd>Shift</kbd> chạy · <kbd>Space</kbd> nhảy · <kbd>←→</kbd> xoay</div>
+      <div>🔫 <kbd>1</kbd>–<kbd>4</kbd> hoặc lăn chuột: đổi vũ khí. Railgun: <b>chuột phải</b> để ngắm xa.</div>
+      <div>✨ <kbd>Q</kbd> <kbd>E</kbd> kỹ năng anh hùng · <kbd>R</kbd> tuyệt chiêu <b>Voice Blast</b>: đọc to từ tiếng Anh!</div>
+      <div>🤖 Quái: Grunt · Runner (nhanh) · Tank (3 máu, có giáp) · Sniper (bắn đạn từ xa).</div>
+      <div>⭐ Mỗi ải 3 đợt + Boss. Chính xác ≥70% được 2 sao, ≥90% được 3 sao, qua ải mở ải sau.</div>
+    </div>
+    <div class="row" style="margin-top:16px"><button class="btn" id="startB">▶ VÀO ẢI</button>
+      <label class="row" style="gap:6px;font-weight:800;color:var(--mut)">Đồ hoạ <select id="qualSel"><option value="auto">Tự động</option><option value="high">Cao</option><option value="low">Thấp (mượt)</option></select></label>
+      <a class="btn sec" href="./">← English Fun Zone</a></div>
+  </div>
+</div>
+
+<div id="pause" class="ov hide" style="align-items:center">
+  <div class="card" style="max-width:460px;text-align:center">
+    <h1 style="font-size:40px">TẠM DỪNG</h1>
+    <div class="sub">Click để tiếp tục chiến đấu</div>
+    <div class="row" style="justify-content:center;margin-top:12px"><button class="btn" id="resumeB">▶ Tiếp tục</button><button class="btn sec" id="quitB">Thoát</button></div>
+  </div>
+</div>
+
+<div id="vmodal" class="ov hide" style="align-items:center">
+  <div class="card" style="max-width:520px">
+    <div class="lbl" style="text-align:center">🎤 VOICE BLAST · ĐỌC TO TỪ NÀY</div>
+    <div id="vword"></div><div id="vmean"></div>
+    <div style="text-align:center;font-size:14px;font-weight:700;margin-bottom:12px">🔊 Nghe phát âm chuẩn: <a class="dict" id="vcam" target="_blank" rel="noopener">Cambridge</a> · <a class="dict" id="vox" target="_blank" rel="noopener">Oxford</a></div>
+    <div id="vtypeWrap" class="hide"><div class="sub" style="text-align:center;margin:0 0 8px">Trình duyệt không hỗ trợ micro → gõ đầy đủ từ còn thiếu chữ:</div><input id="vtype" autocomplete="off"></div>
+    <div id="vres"></div>
+    <div class="row" style="justify-content:center"><button class="btn" id="vgo">🎤 Bấm rồi nói</button><button class="btn sec" id="vclose">Quay lại</button></div>
+  </div>
+</div>
+
+<div id="end" class="ov hide">
+  <div class="card">
+    <h1 id="etitle"></h1>
+    <div class="sub" id="esub"></div>
+    <div class="st"><div><b id="eScore">0</b>Điểm</div><div><b id="eAcc">0%</b>Chính xác</div><div><b id="eStars">☆☆☆</b>Sao</div><div><b id="eBest">0</b>Kỷ lục ải</div></div>
+    <div class="lbl">📒 SỔ TAY LỖI SAI – ÔN LẠI NGAY</div>
+    <div id="elist"></div>
+    <div class="row" style="margin-top:18px"><button class="btn" id="nextB">Ải tiếp theo ▶</button><button class="btn sec" id="againB">↻ Chơi lại ải</button><button class="btn sec" id="menuB">Menu</button></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+<script>
+'use strict';
+/* =====================================================================
+   DATA (data-driven: sửa nội dung/ chỉ số ở đây)
+   gap:   [câu có ___, đáp án, [nhiễu], giải thích]
+   vocab: [nghĩa VI, đáp án EN, [nhiễu]]
+   spell: [từ đúng, [viết sai]]
+   order: [[các từ theo thứ tự], nghĩa VI]
+   error: [[4 phần], chỉ số phần sai, sửa thành, giải thích]
+   ===================================================================== */
+const TRACKS={
+kids:{name:'KIDS',desc:'Cambridge 4–6 · Family & Friends · A1–A2',grad:'linear-gradient(135deg,#22c1c3,#2ed573)',spd:1.15,aim:1.35,
+gap:[
+["She ___ to school every day.","goes",["go","going","went"],"Chủ ngữ số ít (she) + hiện tại đơn → goes."],
+["There ___ two cats under the table.","are",["is","am","be"],"“two cats” số nhiều → are."],
+["I have ___ apple in my bag.","an",["a","two","many"],"apple bắt đầu bằng nguyên âm → an."],
+["He is ___ than his brother.","taller",["tall","tallest","more tall"],"Có “than” → so sánh hơn: taller."],
+["We ___ football yesterday.","played",["play","plays","playing"],"“yesterday” → quá khứ đơn."],
+["Look! The baby ___ .","is sleeping",["sleeps","sleep","slept"],"“Look!” → đang xảy ra → hiện tại tiếp diễn."],
+["My birthday is ___ May.","in",["on","at","to"],"Trước tháng dùng in."],
+["Can you ___ a bike?","ride",["rides","riding","rode"],"Sau can là động từ nguyên mẫu."],
+["This is ___ book.","my",["I","me","mine"],"Trước danh từ dùng tính từ sở hữu: my."],
+["How ___ apples do you have?","many",["much","old","long"],"apples đếm được số nhiều → many."],
+["I get up ___ 6 o'clock.","at",["in","on","for"],"Trước giờ cụ thể dùng at."],
+["They ___ in the park now.","are playing",["play","plays","played"],"“now” → hiện tại tiếp diễn."],
+["My sister ___ like spiders.","doesn't",["don't","isn't","aren't"],"Chủ ngữ số ít + V thường → doesn't."],
+["Would you like ___ ice cream?","some",["any","many","a"],"Câu mời dùng some."],
+["There isn't ___ milk.","any",["some","many","a"],"Câu phủ định → any."],
+["She sings very ___ .","well",["good","nice","beautiful"],"Bổ nghĩa động từ → trạng từ well."],
+["If it rains, I ___ stay at home.","will",["am","did","was"],"Điều kiện loại 1: will + V."],
+["It is cold, ___ I wear a coat.","so",["but","because","or"],"so = vì vậy."],
+["Tom is ___ boy in our class.","the tallest",["taller","tall","most tall"],"So sánh nhất: the + -est."],
+["What ___ you do last weekend?","did",["do","does","are"],"Quá khứ → did."]],
+vocab:[["thư viện","library",["kitchen","garden","hospital"]],["con voi","elephant",["giraffe","monkey","tiger"]],["bữa sáng","breakfast",["lunch","dinner","snack"]],["cái ô","umbrella",["raincoat","boots","hat"]],["con bướm","butterfly",["bee","spider","ladybird"]],["thứ Tư","Wednesday",["Tuesday","Thursday","Monday"]],["rau củ","vegetables",["fruit","meat","bread"]],["bác sĩ","doctor",["nurse","teacher","farmer"]],["bãi biển","beach",["mountain","river","forest"]],["mùa đông","winter",["summer","spring","autumn"]],["cầu vồng","rainbow",["cloud","thunder","snow"]],["đói bụng","hungry",["thirsty","tired","sleepy"]],["bàn chải đánh răng","toothbrush",["toothpaste","comb","towel"]],["leo trèo","climb",["swim","jump","run"]]],
+spell:[["beautiful",["beatiful","beautifull","butiful"]],["friend",["freind","frend","friand"]],["because",["becuase","becos","beacause"]],["Wednesday",["Wensday","Wednesdey","Wendsday"]],["February",["Febuary","Februery","Febrary"]],["chocolate",["chocolat","choclate","chokolate"]],["different",["diffrent","diferent","differant"]],["library",["libary","liberary","librery"]],["tomorrow",["tommorow","tomorow","tommorrow"]],["family",["famliy","familly","femily"]],["school",["shcool","scool","skool"]],["favourite",["favourit","favorit","favrite"]]],
+order:[[["I","like","to","play","football"],"Tôi thích chơi bóng đá."],[["She","is","my","best","friend"],"Cô ấy là bạn thân nhất của tôi."],[["We","go","to","school","by bus"],"Chúng tôi đi học bằng xe buýt."],[["The","cat","is","very","cute"],"Con mèo rất dễ thương."],[["What","time","is","it","now?"],"Bây giờ là mấy giờ?"],[["Can","you","ride","a","bike?"],"Bạn có biết đi xe đạp không?"],[["My","mum","is","a","doctor"],"Mẹ tôi là bác sĩ."],[["He","doesn't","like","milk"],"Cậu ấy không thích sữa."]],
+error:[[["She","go","to school","every day"],1,"goes","Chủ ngữ she → goes."],[["There","is","two","apples"],1,"are","two apples số nhiều → are."],[["I","have","a","apple"],2,"an","apple → an."],[["He","can","swims","very well"],2,"swim","can + V nguyên mẫu."],[["We","play","football","yesterday"],1,"played","yesterday → quá khứ."],[["My","birthday","is","on May"],3,"in May","Tháng → in."],[["They","is","in","the park"],1,"are","They → are."],[["This","is","mine","book"],2,"my","Trước danh từ → my."],[["How","much","apples","do you have?"],1,"many","apples đếm được → many."],[["She","don't","like","spiders"],1,"doesn't","She → doesn't."]],
+voice:[["elephant","con voi"],["beautiful","xinh đẹp"],["library","thư viện"],["birthday","sinh nhật"],["vegetables","rau củ"],["Wednesday","thứ Tư"],["chocolate","sô-cô-la"],["breakfast","bữa sáng"],["crocodile","cá sấu"],["umbrella","cái ô"],["butterfly","con bướm"],["computer","máy tính"]]},
+
+toeic:{name:'TOEIC',desc:'Part 5–6 · Công sở · 450–750+',grad:'linear-gradient(135deg,#1e90ff,#7c5cff)',spd:1.45,aim:1.15,
+gap:[
+["The report must be submitted ___ Friday.","by",["until","since","during"],"by + mốc = hạn chót."],
+["Ms. Tran is responsible ___ training new staff.","for",["to","of","with"],"be responsible for."],
+["All employees are required to ___ the guidelines.","follow",["following","followed","follows"],"be required to + V."],
+["The meeting has been ___ until Monday.","postponed",["postpone","postponing","postpones"],"Bị động: has been + V3."],
+["Please send the invoice ___ possible.","as soon as",["as long as","so that","even if"],"as soon as possible."],
+["The new software is ___ easier to use.","much",["very","more","many"],"Nhấn mạnh so sánh hơn: much."],
+["Applicants should have ___ experience.","extensive",["extend","extensively","extension"],"Trước danh từ cần tính từ."],
+["___ the heavy rain, the event went ahead.","Despite",["Although","Because","However"],"Despite + cụm danh từ."],
+["Please keep this document ___ .","confidential",["confide","confidence","confidentially"],"keep + O + tính từ."],
+["Sales increased ___ 20 percent.","by",["at","on","with"],"Tăng một lượng → by."],
+["Mr. Lee, ___ joined us in 2019, was promoted.","who",["which","whom","whose"],"Người, làm chủ ngữ → who."],
+["The package will arrive ___ three days.","within",["among","between","along"],"within = trong vòng."],
+["The conference room is ___ this afternoon.","available",["avail","availability","availably"],"Sau to be cần tính từ."],
+["Neither the manager ___ the assistant was in.","nor",["or","and","but"],"neither … nor."],
+["We look forward to ___ from you.","hearing",["hear","heard","be heard"],"look forward to + V-ing."],
+["The proposal was ___ approved.","unanimously",["unanimous","unanimity","unanimousness"],"Bổ nghĩa động từ → trạng từ."],
+["Ms. Kim handles complaints ___ .","herself",["her","hers","she"],"Phản thân nhấn mạnh → herself."],
+["The item is currently out of ___ .","stock",["store","shelf","supply"],"out of stock = hết hàng."],
+["The CEO will ___ a speech tonight.","deliver",["say","tell","speak"],"deliver a speech."],
+["The shipment arrived later ___ expected.","than",["then","as","that"],"so sánh hơn … than."]],
+vocab:[["hoá đơn","invoice",["contract","refund","estimate"]],["đồng nghiệp","colleague",["client","supervisor","applicant"]],["hạn chót","deadline",["agenda","survey","branch"]],["nhà kho","warehouse",["headquarters","branch","lobby"]],["đàm phán","negotiate",["postpone","recruit","inspect"]],["tuyển dụng","recruit",["resign","promote","retire"]],["hoàn tiền","refund",["discount","deposit","invoice"]],["chi nhánh","branch",["headquarters","warehouse","lobby"]],["ứng viên","applicant",["employer","supervisor","client"]],["hợp đồng","contract",["proposal","receipt","invoice"]],["thăng chức","promote",["resign","hire","transfer"]],["chương trình họp","agenda",["minutes","memo","brochure"]],["giảm giá","discount",["refund","tax","fee"]],["trì hoãn","postpone",["confirm","attend","approve"]]],
+spell:[["receive",["recieve","receeve","resieve"]],["schedule",["schedual","shedule","skedule"]],["colleague",["collegue","coleague","colleage"]],["necessary",["neccessary","necesary","neccesary"]],["business",["buisness","busness","bussiness"]],["separate",["seperate","separete","seperete"]],["guarantee",["garantee","guarentee","gaurantee"]],["accommodation",["accomodation","acommodation","accommadation"]],["occurred",["occured","ocurred","occurrd"]],["maintenance",["maintainance","maintenence","maintanance"]],["questionnaire",["questionaire","questionnair","questionnare"]],["committee",["commitee","comittee","committe"]]],
+order:[[["The","meeting","has been","postponed"],"Cuộc họp đã bị hoãn."],[["Please","submit","the report","by","Friday"],"Vui lòng nộp báo cáo trước thứ Sáu."],[["We","look forward","to","hearing","from you"],"Chúng tôi mong nhận phản hồi từ bạn."],[["All","staff","must","attend","the training"],"Tất cả nhân viên phải dự buổi đào tạo."],[["The package","will","arrive","within","three days"],"Gói hàng sẽ đến trong vòng ba ngày."],[["Could","you","send","me","the invoice?"],"Bạn có thể gửi tôi hoá đơn không?"],[["Our","sales","increased","by","20 percent"],"Doanh số tăng 20%."],[["The","position","requires","extensive","experience"],"Vị trí này yêu cầu nhiều kinh nghiệm."]],
+error:[[["The report","must be submitted","until","Friday"],2,"by","Hạn chót → by."],[["Ms. Tran","is responsible","to","training staff"],2,"for","responsible for."],[["We look forward","to","hear","from you"],2,"hearing","look forward to + V-ing."],[["The meeting","has been","postpone","until Monday"],2,"postponed","has been + V3."],[["Neither the manager","or","the assistant","was present"],1,"nor","neither … nor."],[["The new system","is","very","easier to use"],2,"much","so sánh hơn → much."],[["Despite","it rained,","the event","was held"],0,"Although","Although + mệnh đề."],[["The shipment","arrived","later","then expected"],3,"than expected","so sánh → than."],[["Mr. Lee,","which","joined us,","was promoted"],1,"who","người → who."],[["Please keep","this document","confidentially","at all times"],2,"confidential","keep + O + tính từ."]],
+voice:[["schedule","lịch trình"],["invoice","hoá đơn"],["colleague","đồng nghiệp"],["deadline","hạn chót"],["purchase","mua hàng"],["receipt","biên lai"],["conference","hội nghị"],["budget","ngân sách"],["negotiate","đàm phán"],["warehouse","nhà kho"],["available","có sẵn"],["appointment","cuộc hẹn"]]},
+
+ielts:{name:'IELTS',desc:'Writing Task 1 & 2 · Band 5.5–7+',grad:'linear-gradient(135deg,#ff6bd6,#ff4757)',spd:1.75,aim:1.0,
+gap:[
+["The government should ___ measures to cut pollution.","take",["make","do","give"],"take measures."],
+["There has been a ___ increase in online shopping.","significant",["significance","signify","significantly"],"Trước danh từ cần tính từ."],
+["The graph ___ the number of tourists.","illustrates",["illustrate","illustrating","illustration"],"Chủ ngữ số ít → -s."],
+["Technology has a profound impact ___ education.","on",["in","to","for"],"impact on."],
+["The figure rose ___ 15% to 30%.","from",["by","at","since"],"rise from X to Y."],
+["Not only ___ exercise improve health, but …","does",["is","has","do"],"Đảo ngữ Not only + trợ động từ."],
+["If we had acted earlier, the problem ___ smaller now.","would be",["will be","would have been","is"],"Điều kiện hỗn hợp: kết quả ở hiện tại."],
+["Students who ___ part-time jobs gain skills.","take on",["take off","take after","take over"],"take on = nhận làm."],
+["The elderly population is expected to ___ sharply.","rise",["raise","arise","rose"],"rise là nội động từ."],
+["___ the fact that cars are convenient, they pollute.","Despite",["Although","Even though","In spite"],"Despite the fact that…"],
+["In conclusion, the advantages ___ the drawbacks.","outweigh",["overlook","overtake","overcome"],"outweigh = lớn hơn."],
+["Fast food is closely ___ to obesity.","linked",["link","linking","links"],"be linked to."],
+["The number of cars ___ steadily since 2000.","has increased",["increased","increases","was increasing"],"since → hiện tại hoàn thành."],
+["Renewable energy is ___ for development.","essential",["essence","essentially","essentials"],"Sau to be cần tính từ."],
+["Children are ___ to advertising than adults.","more vulnerable",["vulnerable","most vulnerable","vulnerably"],"than → so sánh hơn."],
+["It is widely ___ that education is key.","believed",["believe","believing","belief"],"It is widely believed that…"],
+["Crime rates have ___ in many cities.","declined",["declining","decline","declines"],"have + V3."],
+["Governments must ___ a balance between growth and nature.","strike",["hit","beat","make"],"strike a balance."],
+["The pie chart ___ spending into five categories.","breaks down",["puts down","takes down","cuts down"],"break down into."],
+["Had I known, I ___ applied.","would have",["will have","would","had"],"Đảo ngữ điều kiện loại 3."]],
+vocab:[["cơ sở hạ tầng","infrastructure",["architecture","institution","framework"]],["hiện tượng","phenomenon",["hypothesis","principle","tendency"]],["tính bền vững","sustainability",["stability","durability","availability"]],["ô nhiễm","pollution",["population","poverty","pressure"]],["đô thị hoá","urbanisation",["modernisation","globalisation","industrialisation"]],["xấp xỉ","approximately",["accurately","apparently","absolutely"]],["giảm bớt (vấn đề)","alleviate",["aggravate","accelerate","allocate"]],["đáng kể","considerable",["considerate","consistent","conservative"]],["thất nghiệp","unemployment",["employment","retirement","recruitment"]],["khí thải","emissions",["admissions","omissions","missions"]],["nhược điểm","drawback",["benefit","outcome","feature"]],["dao động","fluctuate",["stabilise","plummet","soar"]],["tuổi thọ","life expectancy",["birth rate","workforce","living standard"]],["ưu tiên","prioritise",["criticise","minimise","summarise"]]],
+spell:[["environment",["enviroment","environmant","enviornment"]],["government",["goverment","governmant","govenment"]],["definitely",["definately","definitly","defenitely"]],["argument",["arguement","argumant","arguemant"]],["phenomenon",["phenomenom","phenomenun","phenomonon"]],["occasionally",["occasionaly","ocasionally","occassionally"]],["independent",["independant","indipendent","independint"]],["disappear",["dissapear","disapear","dissappear"]],["recommend",["reccomend","recomend","reccommend"]],["privilege",["priviledge","privelege","privilige"]],["existence",["existance","existense","exsistence"]],["achievement",["acheivement","achievment","achievemant"]]],
+order:[[["The graph","illustrates","changes","in","spending"],"Biểu đồ thể hiện sự thay đổi trong chi tiêu."],[["Technology","has","transformed","the way","we live"],"Công nghệ đã thay đổi cách chúng ta sống."],[["Governments","should","invest","in","public transport"],"Chính phủ nên đầu tư vào giao thông công cộng."],[["The figure","rose","sharply","after","2010"],"Số liệu tăng mạnh sau năm 2010."],[["Not only","does","exercise","improve","health"],"Tập thể dục không chỉ cải thiện sức khoẻ…"],[["This essay","will","discuss","both","views"],"Bài luận này sẽ bàn về cả hai quan điểm."],[["Unemployment","remained","stable","throughout","the period"],"Thất nghiệp ổn định suốt giai đoạn."],[["It","is","widely","believed","that…"],"Người ta tin rằng…"]],
+error:[[["The number","of cars","have increased","since 2000"],2,"has increased","The number of → số ít."],[["Technology","has","an impact","in education"],3,"on education","impact on."],[["The graph","illustrate","the changes","over time"],1,"illustrates","Chủ ngữ số ít."],[["People","is","becoming","more aware"],1,"are","People số nhiều."],[["The proportion","is expected","to raise","sharply"],2,"to rise","rise nội động từ."],[["In spite","the fact","that cars","are convenient"],0,"Despite / In spite of","In spite cần of."],[["The government","should","make","measures"],2,"take","take measures."],[["Children","are more vulnerable","then","adults"],2,"than","so sánh → than."],[["We","collected","many informations","last year"],2,"much information","information không đếm được."],[["If I had known,","I","would apply","for it"],2,"would have applied","Điều kiện loại 3."]],
+voice:[["environment","môi trường"],["significant","đáng kể"],["development","sự phát triển"],["statistics","số liệu"],["phenomenon","hiện tượng"],["particularly","đặc biệt là"],["sustainability","tính bền vững"],["consequently","do đó"],["infrastructure","cơ sở hạ tầng"],["approximately","xấp xỉ"],["comfortable","thoải mái"],["technology","công nghệ"]]}
+};
+
+const QTYPES={gap:{name:'Điền từ',icon:'🧩',how:'Bắn robot mang từ đúng điền vào chỗ trống'},vocab:{name:'Nghĩa từ',icon:'📖',how:'Đọc nghĩa tiếng Việt → bắn từ tiếng Anh đúng'},spell:{name:'Chính tả',icon:'🔤',how:'Bắn từ viết ĐÚNG chính tả'},order:{name:'Xếp câu',icon:'🔗',how:'Bắn các từ theo ĐÚNG THỨ TỰ để tạo câu'},error:{name:'Tìm lỗi sai',icon:'🔍',how:'Câu có 1 phần SAI → bắn đúng phần sai'},mix:{name:'Tổng hợp',icon:'🌀',how:'Trộn tất cả dạng bài'}};
+
+const STAGES=[
+{name:'Neon Plaza',type:'gap',waves:[3,3,4],boss:'Glitch Brute',bossCol:0xff4757,enemies:{grunt:1},
+ th:{floor:'#3b4a7a',stud:'#6b7fc0',sky:['#05071a','#2a1f6b','#ff6bd6','#ffb36b'],fog:0x141a3c,wall:0x26306a,trim:0x8fe3ff,pal:[0xff4757,0x1e90ff,0xffc83d,0x2ed573,0xa55eea]}},
+{name:'Cyber Docks',type:'vocab',waves:[3,4,4],boss:'Vocab Kraken',bossCol:0x00cec9,enemies:{grunt:.6,runner:.4},
+ th:{floor:'#1f4b4f',stud:'#3fa7a0',sky:['#020d14','#08394a','#00d2ff','#ffd27a'],fog:0x0b2a33,wall:0x123a40,trim:0xffb347,pal:[0xff7f50,0x00b5ad,0xf4f1de,0xe07a5f,0x3d405b]}},
+{name:'Sky Lab',type:'spell',waves:[3,4,4],boss:'Typo Titan',bossCol:0x1e90ff,enemies:{grunt:.5,runner:.3,tank:.2},
+ th:{floor:'#55618c',stud:'#7884b3',sky:['#1b4f9c','#4aa3ff','#bfe3ff','#ffffff'],fog:0x8fb4dc,wall:0x5e6fa3,trim:0x00e5ff,pal:[0xf1f2f6,0x70a1ff,0x5352ed,0xdfe4ea,0x2f3542]}},
+{name:'Frozen Archive',type:'order',waves:[2,3,3],boss:'Syntax Yeti',bossCol:0x74b9ff,enemies:{grunt:.4,runner:.2,tank:.2,shooter:.2},
+ th:{floor:'#3d5a80',stud:'#5f84b3',sky:['#0a1a33','#28508a','#9fd8ff','#e8f6ff'],fog:0x5f86b0,wall:0x3d5f8a,trim:0xb8f1ff,pal:[0xdff6ff,0x74b9ff,0x0984e3,0xa29bfe,0x81ecec]}},
+{name:'Glitch Core',type:'error',waves:[3,4,4],boss:'Error Hydra',bossCol:0xff2e63,enemies:{grunt:.3,runner:.3,tank:.2,shooter:.2},
+ th:{floor:'#2a0f1f',stud:'#7a1a3f',sky:['#000000','#2b0010','#ff2e63','#5a00ff'],fog:0x1a0010,wall:0x3a0f25,trim:0xff2e63,pal:[0xff2e63,0x252a34,0x08d9d6,0x5a00ff,0xeaeaea]}},
+{name:'Grammar Throne',type:'mix',waves:[4,4,5],boss:'Grammar Golem',bossCol:0x7c5cff,enemies:{grunt:.3,runner:.25,tank:.25,shooter:.2},
+ th:{floor:'#2b2140',stud:'#5a4580',sky:['#07030f','#3a1d6b','#ffc83d','#ff6b6b'],fog:0x1d1033,wall:0x2a1a4a,trim:0xffc83d,pal:[0xffc83d,0x7c5cff,0xff6b6b,0x1e1e3f,0xa55eea]}}
+];
+const BOSS_Q=3;
+
+// Enemy kinds
+const KINDS={grunt:{s:1,hp:1,spd:1,dmg:12},runner:{s:.82,hp:1,spd:1.7,dmg:9},tank:{s:1.3,hp:3,spd:.6,dmg:18,armor:true},shooter:{s:1,hp:2,spd:.9,dmg:10,ranged:true}};
+
+// Weapons (unlock theo ải: ải 1 có 1 súng, ải 2 có 2…)
+const WEPS=[
+{name:'Blaster',icon:'🔫',cd:.2,dmg:1,auto:true,armorMul:.5,col:0x00d2ff,desc:'Bắn nhanh liên thanh (yếu với Tank có giáp)',snd:'blaster'},
+{name:'Scatter',icon:'💥',cd:.7,dmg:1,pellets:7,spread:.075,range:22,col:0xffa502,desc:'Shotgun 7 viên – mạnh tầm gần, phá Tank',snd:'scatter'},
+{name:'Railgun',icon:'⚡',cd:1.05,dmg:3,pierce:true,col:0xa66bff,desc:'3 sát thương, xuyên tường, chuột phải ngắm xa',snd:'rail'},
+{name:'Nova Launcher',icon:'🚀',cd:1.3,dmg:3,splash:6,col:0xff4757,desc:'Tên lửa: 3 sát thương + đẩy lùi & choáng quái xung quanh',snd:'rocket'}];
+
+// Heroes & skills
+const HEROES={
+nova:{name:'NOVA',role:'Sát thủ tốc độ',col:'#00d2ff',grad:'linear-gradient(135deg,#0abde3,#3742fa)',hp:90,spd:1.15,
+ q:{icon:'💨',name:'Lướt',desc:'Lướt 8m theo hướng đi, bất tử 0.5s',cd:4,fn:'dash'},
+ e:{icon:'⏳',name:'Ngưng đọng',desc:'Làm chậm toàn bộ quái 65% trong 5s',cd:14,fn:'warp'},
+ passive:'Chạy nhanh hơn 15%'},
+atlas:{name:'ATLAS',role:'Đấu sĩ đỡ đòn',col:'#ffa502',grad:'linear-gradient(135deg,#ff9f43,#ee5253)',hp:140,spd:.92,
+ q:{icon:'🛡️',name:'Khiên năng lượng',desc:'Giảm 80% sát thương trong 5s',cd:12,fn:'shield'},
+ e:{icon:'💥',name:'Dậm đất',desc:'Đẩy lùi + choáng 2s mọi quái trong 10m',cd:10,fn:'slam'},
+ passive:'Máu 140'},
+iris:{name:'IRIS',role:'Học giả',col:'#a66bff',grad:'linear-gradient(135deg,#a66bff,#ff6bd6)',hp:100,spd:1,
+ q:{icon:'🔎',name:'Lexi Scan',desc:'Đóng băng 1 robot SAI (xếp câu: chỉ từ tiếp theo)',cd:13,fn:'scan'},
+ e:{icon:'💚',name:'Hồi phục',desc:'+35 HP và xoá hiệu ứng xấu',cd:16,fn:'heal'},
+ passive:'+20% điểm, Voice Blast nạp nhanh hơn'}};
+const ULT={icon:'🎤',name:'Voice Blast',desc:'Đọc to 1 từ → quét sạch robot sai, hồi 25 HP'};
+
+/* ===================== UTIL ===================== */
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const isTouch=matchMedia('(pointer:coarse)').matches&&!matchMedia('(any-pointer:fine)').matches;
+const clamp=THREE.MathUtils.clamp;
+function wpick(obj){let r=Math.random()*Object.values(obj).reduce((a,b)=>a+b,0);for(const k in obj){r-=obj[k];if(r<=0)return k}return Object.keys(obj)[0]}
+
+/* ===================== AUDIO (synth, không TTS) ===================== */
+let AC=null;
+function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();return AC}
+function tone(f,d,type,v,f2){const a=AC;if(!a)return;const o=a.createOscillator(),g=a.createGain();o.type=type||'square';o.frequency.setValueAtTime(f,a.currentTime);if(f2)o.frequency.exponentialRampToValueAtTime(f2,a.currentTime+d);g.gain.setValueAtTime(v||.08,a.currentTime);g.gain.exponentialRampToValueAtTime(.0001,a.currentTime+d);o.connect(g).connect(a.destination);o.start();o.stop(a.currentTime+d)}
+let NB=null;
+function noise(d,v,lp){const a=AC;if(!a)return;if(!NB){NB=a.createBuffer(1,a.sampleRate,a.sampleRate);const ch=NB.getChannelData(0);for(let i=0;i<ch.length;i++)ch[i]=Math.random()*2-1}
+ const s=a.createBufferSource();s.buffer=NB;const f=a.createBiquadFilter();f.type='lowpass';f.frequency.value=lp||1200;const g=a.createGain();g.gain.setValueAtTime(v||.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.0001,a.currentTime+d);s.connect(f).connect(g).connect(a.destination);s.start();s.stop(a.currentTime+d)}
+const SFX={blaster(){tone(900,.08,'square',.04,200);noise(.06,.06,3000)},scatter(){noise(.25,.22,1800);tone(140,.18,'square',.06,60)},rail(){tone(1600,.35,'sawtooth',.05,120);noise(.2,.08,5000)},rocket(){tone(300,.4,'sawtooth',.05,90);noise(.3,.08,800)},
+ok(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,.12,'triangle',.08),i*60))},step(){tone(880,.1,'triangle',.07,1320)},bad(){tone(160,.3,'sawtooth',.08,90)},hurt(){tone(220,.2,'square',.07,80);noise(.15,.1,600)},boom(){noise(.5,.25,900)},
+blast(){noise(1,.3,500);tone(80,1,'sine',.2,30)},wave(){[392,523,659].forEach((f,i)=>setTimeout(()=>tone(f,.25,'triangle',.07),i*120))},skill(){tone(660,.15,'sine',.08,1320)},hit(){tone(500,.05,'square',.04,300)},swap(){tone(400,.06,'triangle',.05,700)},enemyShot(){tone(700,.12,'sine',.03,300)}};
+
+/* ===================== RENDERER / QUALITY ===================== */
+const canvas=$('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:!isTouch,powerPreference:'high-performance'});
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x0b1026);
+scene.fog=new THREE.Fog(0x141a3c,30,90);
+const camera=new THREE.PerspectiveCamera(72,innerWidth/innerHeight,.05,320);
+const yawObj=new THREE.Object3D(),pitchObj=new THREE.Object3D();
+yawObj.add(pitchObj);pitchObj.add(camera);scene.add(yawObj);yawObj.position.set(0,1.7,0);
+
+let composer=null,useBloom=false;
+if(THREE.EffectComposer&&THREE.UnrealBloomPass){composer=new THREE.EffectComposer(renderer);composer.addPass(new THREE.RenderPass(scene,camera));composer.addPass(new THREE.UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.6,.4,.86))}
+const hemi=new THREE.HemisphereLight(0x9fb8ff,0x2a1840,.8);scene.add(hemi);
+const sun=new THREE.DirectionalLight(0xfff0dd,1.05);sun.position.set(25,40,15);
+sun.shadow.mapSize.set(1024,1024);Object.assign(sun.shadow.camera,{left:-34,right:34,top:34,bottom:-34,near:1,far:110});sun.shadow.bias=-.0008;scene.add(sun);
+
+let QUAL=store.get('ws_qual')||'auto',qLevel='high';
+function applyQuality(){const hi=qLevel==='high';renderer.setPixelRatio(hi?Math.min(devicePixelRatio,1.5):Math.min(devicePixelRatio,1));renderer.setSize(innerWidth,innerHeight);if(composer)composer.setSize(innerWidth,innerHeight);sun.castShadow=hi;useBloom=hi&&!!composer}
+function initQuality(){qLevel=QUAL==='auto'?(isTouch?'low':'high'):QUAL;applyQuality()}
+initQuality();
+
+/* ===================== SKY ===================== */
+const skyCv=document.createElement('canvas');skyCv.width=2;skyCv.height=256;const skyTex=new THREE.CanvasTexture(skyCv);
+scene.add(new THREE.Mesh(new THREE.SphereGeometry(220,24,12),new THREE.MeshBasicMaterial({map:skyTex,side:THREE.BackSide,fog:false})));
+(function(){const p=[];for(let i=0;i<500;i++){const th=Math.random()*Math.PI*2,ph=Math.random()*Math.PI*.4;p.push(210*Math.sin(ph)*Math.cos(th),210*Math.cos(ph),210*Math.sin(ph)*Math.sin(th))}
+const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));scene.add(new THREE.Points(g,new THREE.PointsMaterial({color:0xffffff,size:.8,fog:false})))})();
+function drawSky(st,fog){const g=skyCv.getContext('2d');const gr=g.createLinearGradient(0,0,0,256);gr.addColorStop(0,st[0]);gr.addColorStop(.42,st[1]);gr.addColorStop(.6,st[2]);gr.addColorStop(.7,st[3]);gr.addColorStop(1,'#'+fog.toString(16).padStart(6,'0'));g.fillStyle=gr;g.fillRect(0,0,2,256);skyTex.needsUpdate=true}
+
+/* ===================== ARENA (per stage) ===================== */
+const ARENA=30;const COVERS=[];let arena=null;const FLOATS=[];
+const MC={};const lam=c=>MC[c]||(MC[c]=new THREE.MeshLambertMaterial({color:c}));
+function seeded(s){s=s%2147483647||7;return()=>(s=s*16807%2147483647)/2147483647}
+function buildArena(st,idx){
+ if(arena){scene.remove(arena);arena.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material&&o.material.map)o.material.map.dispose()})}
+ arena=new THREE.Group();COVERS.length=0;FLOATS.length=0;const th=st.th;
+ scene.fog.color.setHex(th.fog);scene.background.setHex(th.fog);drawSky(th.sky,th.fog);
+ // floor
+ const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');g.fillStyle=th.floor;g.fillRect(0,0,128,128);g.strokeStyle='rgba(0,0,0,.25)';g.lineWidth=3;g.strokeRect(0,0,128,128);g.fillStyle=th.stud;g.beginPath();g.arc(64,64,28,0,7);g.fill();g.fillStyle='rgba(255,255,255,.18)';g.beginPath();g.arc(56,56,12,0,7);g.fill();
+ const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(ARENA,ARENA);t.anisotropy=4;
+ const fl=new THREE.Mesh(new THREE.PlaneGeometry(ARENA*2,ARENA*2),new THREE.MeshLambertMaterial({map:t}));fl.rotation.x=-Math.PI/2;fl.receiveShadow=true;arena.add(fl);
+ const out=new THREE.Mesh(new THREE.PlaneGeometry(500,500),new THREE.MeshBasicMaterial({color:th.fog}));out.rotation.x=-Math.PI/2;out.position.y=-.03;arena.add(out);
+ const trimM=new THREE.MeshBasicMaterial({color:th.trim});
+ const block=(x,z,w,h,d,col,shadow)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),lam(col));m.position.set(x,h/2,z);m.castShadow=shadow;m.receiveShadow=true;arena.add(m);
+  const tr=new THREE.Mesh(new THREE.BoxGeometry(w+.05,.12,d+.05),trimM);tr.position.set(x,h-.06,z);arena.add(tr);m.updateMatrixWorld();COVERS.push({mesh:m,box:new THREE.Box3().setFromObject(m)})};
+ block(0,-ARENA-.5,ARENA*2+2,3.2,1,th.wall,false);block(0,ARENA+.5,ARENA*2+2,3.2,1,th.wall,false);block(-ARENA-.5,0,1,3.2,ARENA*2,th.wall,false);block(ARENA+.5,0,1,3.2,ARENA*2,th.wall,false);
+ const R=seeded((idx+1)*7919);let n=0;
+ for(let k=0;k<40&&n<7;k++){const x=(R()*2-1)*24,z=(R()*2-1)*24;if(Math.hypot(x,z)<8)continue;const w=1.4+R()*4,d=1.4+R()*4,h=1.4+R()*3.6;
+  if(COVERS.slice(4).some(o=>Math.abs(o.mesh.position.x-x)<(w+o.mesh.geometry.parameters.width)/2+2&&Math.abs(o.mesh.position.z-z)<(d+o.mesh.geometry.parameters.depth)/2+2))continue;
+  const col=th.pal[n%th.pal.length];block(x,z,w,h,d,col,true);block(-x,-z,w,h,d,th.pal[(n+2)%th.pal.length],true);n++}
+ // pillars (emissive, no point lights → rẻ)
+ const pm=new THREE.MeshBasicMaterial({color:th.trim});[[-26,-26],[26,-26],[-26,26],[26,26]].forEach(([x,z])=>{const p=new THREE.Mesh(new THREE.CylinderGeometry(.45,.45,11,10),pm);p.position.set(x,5.5,z);arena.add(p)});
+ const fg=new THREE.BoxGeometry(1,1,1);for(let i=0;i<14;i++){const m=new THREE.Mesh(fg,new THREE.MeshBasicMaterial({color:th.pal[i%th.pal.length]}));const s=rnd(.8,2.4);m.scale.setScalar(s);const a=Math.random()*Math.PI*2,r=rnd(45,75);m.position.set(Math.cos(a)*r,rnd(8,28),Math.sin(a)*r);arena.add(m);FLOATS.push(m)}
+ const ring=new THREE.Mesh(new THREE.TorusGeometry(3,.08,6,48),new THREE.MeshBasicMaterial({color:th.trim}));ring.rotation.x=Math.PI/2;ring.position.y=.05;arena.add(ring);
+ scene.add(arena);
+}
+function blocked(x,z,r){for(let i=0;i<COVERS.length;i++){const b=COVERS[i].box;if(x>b.min.x-r&&x<b.max.x+r&&z>b.min.z-r&&z<b.max.z+r)return true}return false}
+
+/* ===================== WEAPON VIEWMODELS ===================== */
+const GUNS=[];
+(function(){const B=(w,h,d,m,x,y,z,rx)=>{const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x||0,y||0,z||0);if(rx)o.rotation.x=rx;return o};
+ const C=(r1,r2,l,m,x,y,z)=>{const o=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,l,10),m);o.rotation.x=Math.PI/2;o.position.set(x,y,z);return o};
+ const dark=lam(0x3a4370),mid=lam(0x8d97c8);
+ WEPS.forEach((w,i)=>{const g=new THREE.Group();const glow=new THREE.MeshBasicMaterial({color:w.col});
+  if(i===0){g.add(B(.14,.16,.6,mid),B(.1,.06,.4,dark,0,.11,-.02),C(.035,.045,.42,dark,0,.02,-.5),B(.16,.05,.22,glow,0,-.02,.05),B(.1,.22,.12,dark,0,-.17,.15,.3))}
+  if(i===1){g.add(B(.2,.18,.7,dark),C(.05,.05,.5,mid,-.05,.03,-.55),C(.05,.05,.5,mid,.05,.03,-.55),B(.22,.06,.3,glow,0,-.1,-.2),B(.12,.24,.14,dark,0,-.18,.2,.3))}
+  if(i===2){g.add(B(.12,.14,.9,dark,0,0,-.1),B(.06,.06,.7,glow,0,.1,-.25),C(.03,.03,.5,mid,0,0,-.75));for(let k=0;k<3;k++){const r=new THREE.Mesh(new THREE.TorusGeometry(.08,.015,6,16),glow);r.position.set(0,0,-.45-k*.13);g.add(r)}g.add(B(.1,.22,.12,dark,0,-.17,.2,.3))}
+  if(i===3){g.add(C(.11,.11,.8,mid,0,.02,-.2),C(.12,.12,.08,glow,0,.02,-.62),B(.16,.12,.3,dark,0,-.1,.05),B(.1,.24,.12,dark,0,-.2,.15,.3))}
+  g.scale.setScalar(.5);g.visible=false;camera.add(g);GUNS.push(g)})})();
+const GUN_BASE=new THREE.Vector3(.19,-.17,-.4);
+const flashTex=(()=>{const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d');const gr=g.createRadialGradient(32,32,0,32,32,32);gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.3,'rgba(160,230,255,.8)');gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.fillRect(0,0,64,64);return new THREE.CanvasTexture(c)})();
+const muzzle=new THREE.Sprite(new THREE.SpriteMaterial({map:flashTex,blending:THREE.AdditiveBlending,depthTest:false,transparent:true}));muzzle.position.set(.19,-.15,-.78);muzzle.scale.setScalar(.25);muzzle.visible=false;muzzle.renderOrder=20;camera.add(muzzle);
+
+/* ===================== LABELS ===================== */
+function drawLabel(sp){const u=sp.userData,g=u.cv.getContext('2d');const W=u.cv.width;g.clearRect(0,0,W,128);
+ const st=u.state;const bg={bad:'rgba(170,20,40,.92)',ok:'rgba(20,150,80,.92)',hint:'rgba(20,110,70,.92)',frozen:'rgba(60,90,120,.92)'}[st]||'rgba(12,18,48,.9)';
+ const bd={bad:'#ff8a95',ok:'#7dffb0',hint:'#7dffb0',frozen:'#cfe8ff'}[st]||'#8fe3ff';
+ g.fillStyle=bg;g.strokeStyle=bd;g.lineWidth=8;const r=40,x1=6,y1=6,x2=W-6,y2=122;g.beginPath();g.moveTo(x1+r,y1);g.arcTo(x2,y1,x2,y2,r);g.arcTo(x2,y2,x1,y2,r);g.arcTo(x1,y2,x1,y1,r);g.arcTo(x1,y1,x2,y1,r);g.closePath();g.fill();g.stroke();
+ g.font='800 60px Nunito,Arial';g.fillStyle='#fff';g.textAlign='center';g.textBaseline='middle';
+ const pre=st==='bad'||st==='frozen'?'✖ ':st==='hint'?'➜ ':'';g.fillText(pre+u.text,W/2,u.max>1?56:66);
+ if(u.max>1){for(let i=0;i<u.max;i++){g.fillStyle=i<u.hp?'#ffc83d':'rgba(255,255,255,.25)';g.fillRect(W/2-u.max*22+i*44+4,94,36,12)}}
+ u.t.needsUpdate=true}
+const measCtx=document.createElement('canvas').getContext('2d');
+function makeLabel(text,hpMax){measCtx.font='800 60px Nunito,Arial';const W=clamp(Math.ceil(measCtx.measureText('✖ '+text).width)+90,240,1024);
+ const cv=document.createElement('canvas');cv.width=W;cv.height=128;const t=new THREE.CanvasTexture(cv);t.minFilter=THREE.LinearFilter;t.generateMipmaps=false;
+ const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:t,depthTest:false,transparent:true}));sp.scale.set(W/160,.8,1);sp.renderOrder=10;
+ sp.userData={cv,t,text,state:'',hp:hpMax||1,max:hpMax||1};drawLabel(sp);return sp}
+function setLabel(sp,state,hp){sp.userData.state=state;if(hp!==undefined)sp.userData.hp=hp;drawLabel(sp)}
+function disposeLabel(sp){sp.material.map.dispose();sp.material.dispose()}
+
+/* ===================== BOTS ===================== */
+const BG={torso:new THREE.BoxGeometry(1,.9,.5),belt:new THREE.BoxGeometry(1.02,.12,.52),head:new THREE.BoxGeometry(.62,.58,.58),visor:new THREE.BoxGeometry(.5,.14,.05),leg:new THREE.BoxGeometry(.42,.8,.42),arm:new THREE.BoxGeometry(.34,.82,.34),hand:new THREE.BoxGeometry(.3,.2,.3),plate:new THREE.BoxGeometry(1.15,.55,.62),pad:new THREE.BoxGeometry(.5,.25,.5),gunarm:new THREE.BoxGeometry(.22,.22,.7),hit:new THREE.BoxGeometry(1.5,3.3,1.2),orb:new THREE.SphereGeometry(.75,16,12),orbHit:new THREE.SphereGeometry(1.3,8,6)};
+const BM={skin:lam(0xf5d06b),dark:lam(0x1b1f33),plate:lam(0x8a93b8),visor:new THREE.MeshBasicMaterial({color:0xff3355}),angry:new THREE.MeshLambertMaterial({color:0xff3030,emissive:0x550000}),frozen:new THREE.MeshLambertMaterial({color:0x9fd8ff,emissive:0x1a4a6a}),hit:new THREE.MeshBasicMaterial({visible:false}),gun:lam(0x2f3542)};
+const BOTCOL=[0xff4757,0x1e90ff,0x2ed573,0xffa502,0xa55eea,0xff6b81,0x00cec9];
+let BOTS=[],BOSS=null,HIT_ALL=[],HIT_T=[];
+function rebuildHits(){HIT_T.length=0;for(const b of BOTS)if(!b.userData.dying)HIT_T.push(b.userData.hit);
+ if(BOSS&&!BOSS.userData.dying){HIT_T.push(BOSS.userData.hit);for(const o of BOSS.userData.orbs)if(!o.userData.dying)HIT_T.push(o.userData.hit)}
+ HIT_ALL=HIT_T.concat(COVERS.map(c=>c.mesh))}
+function makeBot(word,kind,color,scale){
+ const K=KINDS[kind]||KINDS.grunt;const g=new THREE.Group();const mat=lam(color);
+ const M=(geo,m,x,y,z,sh)=>{const o=new THREE.Mesh(geo,m);o.position.set(x,y,z);if(sh)o.castShadow=true;return o};
+ const torso=M(BG.torso,mat,0,1.25,0,true);g.add(torso,M(BG.belt,BM.dark,0,.84,0),M(BG.head,BM.skin,0,2,0,true),M(BG.visor,BM.visor,0,2.03,.3));
+ const legs=[],arms=[];
+ for(const x of [-.25,.25]){const p=new THREE.Group();p.position.set(x,.8,0);p.add(M(BG.leg,BM.dark,0,-.4,0));g.add(p);legs.push(p)}
+ for(const x of [-.68,.68]){const p=new THREE.Group();p.position.set(x,1.65,0);p.add(M(BG.arm,mat,0,-.38,0),M(BG.hand,BM.skin,0,-.86,0));g.add(p);arms.push(p)}
+ if(K.armor){g.add(M(BG.plate,BM.plate,0,1.3,0));g.add(M(BG.pad,BM.plate,-.68,1.72,0),M(BG.pad,BM.plate,.68,1.72,0))}
+ if(K.ranged){const ga=M(BG.gunarm,BM.gun,0,-.7,.3);arms[1].add(ga)}
+ const label=makeLabel(word,K.hp);label.position.y=2.85;g.add(label);
+ const hit=new THREE.Mesh(BG.hit,BM.hit);hit.position.y=1.65;hit.scale.set(TR.aim,1,TR.aim);g.add(hit);
+ const sc=(scale||1)*K.s;g.scale.setScalar(sc);
+ g.userData={isBot:true,kind,word,color,legs,arms,label,hit,torso,mat,hp:K.hp,max:K.hp,dmg:K.dmg,ranged:K.ranged,speed:TR.spd*K.spd*(1+S.waveIdx*.06)*rnd(.88,1.1),t:Math.random()*6,hurtCd:0,shotCd:rnd(2,3.5),stun:0,flash:0,base:sc,dying:false,revealed:false,frozen:false};
+ hit.userData.root=g;return g}
+function spawnPos(minR,maxR,clear){for(let k=0;k<50;k++){const a=Math.random()*Math.PI*2,r=rnd(minR,maxR);const x=clamp(yawObj.position.x+Math.cos(a)*r,-ARENA+2,ARENA-2),z=clamp(yawObj.position.z+Math.sin(a)*r,-ARENA+2,ARENA-2);
+ if(Math.hypot(x-yawObj.position.x,z-yawObj.position.z)<10)continue;if(blocked(x,z,clear||.9))continue;if(BOTS.some(b=>Math.hypot(b.position.x-x,b.position.z-z)<3))continue;return [x,z]}return [rnd(-20,20),rnd(-20,20)]}
+function removeObj(o){scene.remove(o);o.traverse(c=>{if(c.isSprite)disposeLabel(c)})}
+
+/* ===================== BOSS ===================== */
+function makeBoss(){const st=STAGES[S.stage];const b=makeBot(st.boss.toUpperCase(),'grunt',st.bossCol,2.8);const u=b.userData;u.isBoss=true;u.speed=.7+S.stage*.06;u.dmg=22;u.hp=BOSS_Q;u.orbs=[];u.ranged=S.stage>0;u.shotCd=3;
+ const core=new THREE.Mesh(new THREE.IcosahedronGeometry(.25,0),new THREE.MeshBasicMaterial({color:0xff6bd6}));core.position.set(0,1.3,.3);b.add(core);u.core=core;
+ const sh=new THREE.Mesh(new THREE.SphereGeometry(1.5,20,12),new THREE.MeshBasicMaterial({color:0x7c5cff,transparent:true,opacity:.16,depthWrite:false}));sh.position.y=1.5;b.add(sh);u.shield=sh;
+ const crown=new THREE.Mesh(new THREE.ConeGeometry(.35,.5,5),new THREE.MeshBasicMaterial({color:0xffc83d}));crown.position.y=2.55;b.add(crown);
+ return b}
+function bossOrbs(){const B=BOSS,q=S.q;for(const o of B.userData.orbs)removeObj(o);B.userData.orbs=[];
+ const R=q.choices.length>4?7:5.5;
+ q.choices.forEach((w,i)=>{const o=new THREE.Group();const col=BOTCOL[i%BOTCOL.length];const sph=new THREE.Mesh(BG.orb,new THREE.MeshBasicMaterial({color:col}));o.add(sph);
+  const lb=makeLabel(w);lb.position.y=1.35;o.add(lb);const hit=new THREE.Mesh(BG.orbHit,BM.hit);hit.scale.setScalar(TR.aim);o.add(hit);
+  o.userData={isOrb:true,word:w,label:lb,hit,ang:i/q.choices.length*Math.PI*2,R,sph,hp:1,max:1,dying:false,revealed:false};hit.userData.root=o;scene.add(o);B.userData.orbs.push(o)});rebuildHits()}
+
+/* ===================== FX POOLS (không tạo object trong vòng lặp) ===================== */
+const PN=360;const pMesh=new THREE.InstancedMesh(new THREE.BoxGeometry(.18,.18,.18),new THREE.MeshBasicMaterial({color:0xffffff}),PN);
+pMesh.frustumCulled=false;scene.add(pMesh);
+const pPos=new Float32Array(PN*3),pVel=new Float32Array(PN*3),pLife=new Float32Array(PN),pMax=new Float32Array(PN);let pHead=0;
+const _d=new THREE.Object3D(),_c=new THREE.Color();
+for(let i=0;i<PN;i++){_d.position.set(0,-99,0);_d.scale.setScalar(0);_d.updateMatrix();pMesh.setMatrixAt(i,_d.matrix);pMesh.setColorAt(i,_c.setHex(0xffffff))}
+function burst(p,color,n,spd){_c.setHex(color);for(let k=0;k<n;k++){const i=pHead;pHead=(pHead+1)%PN;pPos[i*3]=p.x;pPos[i*3+1]=p.y;pPos[i*3+2]=p.z;const s=spd*rnd(.4,1);pVel[i*3]=rnd(-1,1)*s;pVel[i*3+1]=rnd(.3,1.4)*s;pVel[i*3+2]=rnd(-1,1)*s;pLife[i]=pMax[i]=rnd(.5,1.1);pMesh.setColorAt(i,_c)}pMesh.instanceColor.needsUpdate=true}
+function updParts(dt){let any=false;for(let i=0;i<PN;i++){if(pLife[i]<=0)continue;any=true;pLife[i]-=dt;const j=i*3;pVel[j+1]-=14*dt;pPos[j]+=pVel[j]*dt;pPos[j+1]+=pVel[j+1]*dt;pPos[j+2]+=pVel[j+2]*dt;if(pPos[j+1]<.1){pPos[j+1]=.1;pVel[j+1]*=-.4;pVel[j]*=.7;pVel[j+2]*=.7}
+ _d.position.set(pPos[j],pPos[j+1],pPos[j+2]);_d.rotation.set(pLife[i]*7,pLife[i]*5,0);_d.scale.setScalar(pLife[i]>0?Math.max(.01,pLife[i]/pMax[i]):0);_d.updateMatrix();pMesh.setMatrixAt(i,_d.matrix)}if(any)pMesh.instanceMatrix.needsUpdate=true}
+// tracers
+const TR_POOL=[];for(let i=0;i<10;i++){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(6),3));const l=new THREE.Line(g,new THREE.LineBasicMaterial({color:0xffffff,transparent:true}));l.visible=false;l.frustumCulled=false;l.userData.life=0;scene.add(l);TR_POOL.push(l)}
+let trHead=0;function tracer(a,b,col,life){const l=TR_POOL[trHead];trHead=(trHead+1)%TR_POOL.length;const p=l.geometry.attributes.position.array;p[0]=a.x;p[1]=a.y;p[2]=a.z;p[3]=b.x;p[4]=b.y;p[5]=b.z;l.geometry.attributes.position.needsUpdate=true;l.material.color.setHex(col);l.userData.life=l.userData.max=life||.08;l.visible=true}
+// shock rings
+const RINGS=[];for(let i=0;i<4;i++){const m=new THREE.Mesh(new THREE.TorusGeometry(1,.15,6,48),new THREE.MeshBasicMaterial({color:0xff6bd6,transparent:true}));m.rotation.x=Math.PI/2;m.visible=false;m.userData.life=0;scene.add(m);RINGS.push(m)}
+let rHead=0;function shock(p,col,size){const m=RINGS[rHead];rHead=(rHead+1)%RINGS.length;m.position.set(p.x,1,p.z);m.material.color.setHex(col||0xff6bd6);m.userData.life=1;m.userData.size=size||30;m.visible=true}
+// projectiles: enemy bullets + rockets
+const PROJ=[];const projGeo=new THREE.SphereGeometry(.22,8,6);
+for(let i=0;i<24;i++){const m=new THREE.Mesh(projGeo,new THREE.MeshBasicMaterial({color:0xff3355}));m.visible=false;m.userData={v:new THREE.Vector3(),life:0,kind:''};scene.add(m);PROJ.push(m)}
+function spawnProj(from,vel,kind,col,extra){const m=PROJ.find(p=>!p.visible);if(!m)return;m.position.copy(from);m.userData.v.copy(vel);m.userData.life=kind==='rocket'?extra.t:4;m.userData.kind=kind;m.userData.extra=extra||null;m.material.color.setHex(col);m.scale.setScalar(kind==='rocket'?1.3:1);m.visible=true}
+
+/* ===================== STATE ===================== */
+let TRK=store.get('ws_trk')||'kids',HERO_K=store.get('ws_hero')||'nova',STG=+(store.get('ws_stg')||0);
+let TR=TRACKS[TRK],HERO=HEROES[HERO_K];
+const S={running:false,paused:false,modal:false,ended:true,stage:0,waveIdx:0};
+const PROG=(()=>{try{return JSON.parse(store.get('ws_prog')||'{}')}catch(e){return{}}})();
+function prog(t){return PROG[t]||(PROG[t]={unlocked:1,stars:[],best:[]})}
+function saveProg(){store.set('ws_prog',JSON.stringify(PROG))}
+
+function resetState(stage){Object.assign(S,{stage,hp:HERO.hp,maxHp:HERO.hp,score:0,combo:0,waveIdx:0,qInWave:0,ult:0,ok:0,bad:0,mistakes:[],q:null,qMissed:false,boss:false,fireCd:0,vy:0,nextQAt:0,ended:false,
+ wep:0,wepCount:Math.min(WEPS.length,stage+1),cdQ:0,cdE:0,slow:0,shieldT:0,invuln:0,dashT:0,zoom:false,decks:{},swapT:0,hudDirty:true,fpsT:0,fpsN:0,fpsLow:0})}
+function draw(type){const d=S.decks[type];if(!d||d.i>=d.a.length)S.decks[type]={a:shuffle(TR[type]),i:0};return S.decks[type].a[S.decks[type].i++]}
+
+/* ===================== QUESTIONS ===================== */
+function makeQ(type){
+ if(type==='mix')type=['gap','vocab','spell','order','error'][Math.random()*5|0];
+ const it=draw(type),q={type,step:0};
+ if(type==='gap'){const [s,a,d,ex]=it,p=s.split('___');q.ans=a;q.choices=shuffle([a,...d]);q.explain=ex;
+  q.html=done=>`${esc(p[0])}<span class="gap">${done?esc(a):'&nbsp;?&nbsp;'}</span>${esc(p[1]||'')}`;q.review=`${esc(p[0])}<u>${esc(a)}</u>${esc(p[1]||'')}`}
+ if(type==='vocab'){const [vi,a,d]=it;q.ans=a;q.choices=shuffle([a,...d]);q.explain=`${a} = ${vi}`;
+  q.html=done=>`📖 “${esc(vi)}” = <span class="gap">${done?esc(a):'?'}</span>`;q.review=`“${esc(vi)}” = <u>${esc(a)}</u>`}
+ if(type==='spell'){const [a,d]=it;q.ans=a;q.choices=shuffle([a,...d]);q.explain=`Viết đúng: ${a}`;
+  q.html=done=>done?`🔤 <span class="gap">${esc(a)}</span>`:'🔤 Bắn từ viết <span class="gap">ĐÚNG</span> chính tả';q.review=`<u>${esc(a)}</u>`}
+ if(type==='order'){const [w,vi]=it;q.seq=w;q.choices=shuffle(w.slice());q.explain='Trật tự đúng: '+w.join(' ');
+  q.html=()=>`🔗 ${esc(vi)}<br><span class="built">${w.map((x,i)=>i<q.step?esc(x):'<i>___</i>').join(' ')}</span>`;q.review=`<u>${esc(w.join(' '))}</u> — ${esc(vi)}`}
+ if(type==='error'){const [ch,bad,fix,ex]=it,L='ABCD';q.ans=L[bad]+' · '+ch[bad];q.choices=ch.map((c,i)=>L[i]+' · '+c);q.explain=`${ch[bad]} → ${fix}. ${ex}`;
+  q.html=done=>'🔍 '+ch.map((c,i)=>i===bad&&done?`<s>${esc(c)}</s> <b class="fix">${esc(fix)}</b>`:`<span class="chunk">${esc(c)}<sub>${L[i]}</sub></span>`).join(' ');
+  q.review=ch.map((c,i)=>i===bad?`<s>${esc(c)}</s> <u>${esc(fix)}</u>`:esc(c)).join(' ')}
+ q.isOk=w=>q.seq?w===q.seq[q.step]:w===q.ans;
+ return q}
+
+/* ===================== FLOW ===================== */
+function updTag(){const st=STAGES[S.stage],qt=QTYPES[S.q?S.q.type:st.type];
+ $('mtag').textContent=S.boss?`👹 BOSS ${st.boss} · Khiên ${BOSS?BOSS.userData.hp:0}/${BOSS_Q} · ${qt.icon} ${qt.how}`:`Ải ${S.stage+1} · Wave ${S.waveIdx+1}/${st.waves.length} · Câu ${S.qInWave+1}/${st.waves[S.waveIdx]} · ${qt.icon} ${qt.how}`}
+function renderQ(done){$('sentence').innerHTML=S.q.html(done)}
+function nextQuestion(){
+ S.q=makeQ(STAGES[S.stage].type);S.qMissed=false;renderQ(false);updTag();
+ if(S.boss){bossOrbs();return}
+ const cols=shuffle(BOTCOL),en=STAGES[S.stage].enemies;
+ S.q.choices.forEach((w,i)=>{const b=makeBot(w,wpick(en),cols[i%cols.length]);const [x,z]=spawnPos(15,26);b.position.set(x,0,z);scene.add(b);BOTS.push(b);_v.set(x,1.5,z);burst(_v,0x8fe3ff,8,4)});
+ rebuildHits()}
+function startWave(){S.qInWave=0;banner(`WAVE ${S.waveIdx+1}`,QTYPES[STAGES[S.stage].type].how);SFX.wave();setTimeout(()=>{if(S.running&&!S.ended)nextQuestion()},1100)}
+function startBoss(){const st=STAGES[S.stage];S.boss=true;banner('👹 '+st.boss.toUpperCase(),'Bắn QUẢ CẦU mang đáp án đúng để phá khiên!');SFX.wave();
+ setTimeout(()=>{if(!S.running||S.ended)return;BOSS=makeBoss();const [x,z]=spawnPos(20,26,2.5);BOSS.position.set(x,0,z);scene.add(BOSS);nextQuestion()},1500)}
+const _v=new THREE.Vector3(),_v2=new THREE.Vector3();
+
+function questionDone(root){
+ S.ok++;S.combo++;const pts=Math.round(100*(1+Math.min(S.combo-1,10)*.2)*(HERO_K==='iris'?1.2:1));S.score+=pts;S.ult=Math.min(100,S.ult+(HERO_K==='iris'?32:25));
+ SFX.ok();renderQ(true);toast(`✔ ${S.q.explain}  (+${pts})`,'ok',2600);S.hudDirty=true;
+ if(S.boss){const B=BOSS;B.userData.hp--;root.getWorldPosition(_v);burst(_v,0xffc83d,40,9);SFX.boom();
+  for(const o of B.userData.orbs){o.getWorldPosition(_v);burst(_v,0x7c5cff,8,4);removeObj(o)}B.userData.orbs=[];
+  B.userData.shield.material.opacity=.16*B.userData.hp/BOSS_Q+.02;B.userData.stun=1.2;dirFromPlayer(B,_v);B.position.addScaledVector(_v,6);B.position.x=clamp(B.position.x,-ARENA+3,ARENA-3);B.position.z=clamp(B.position.z,-ARENA+3,ARENA-3);updTag();rebuildHits();
+  if(B.userData.hp<=0){_v.copy(B.position);_v.y=3;for(let i=0;i<4;i++)setTimeout(()=>{burst(_v,STAGES[S.stage].th.pal[i%5],60,14);SFX.boom()},i*200);removeObj(B);BOSS=null;rebuildHits();setTimeout(()=>endStage(true),1600);return}
+  S.nextQAt=performance.now()+1200;return}
+ for(const b of BOTS)if(!b.userData.dying)killBot(b,b===root);
+ S.nextQAt=performance.now()+1100}
+function onTargetDead(root){ // một mục tiêu đúng bị hạ
+ const q=S.q;
+ if(q.seq){q.step++;S.score+=30;S.ult=Math.min(100,S.ult+6);SFX.step();renderQ(false);
+  if(root.userData.isOrb){root.getWorldPosition(_v);burst(_v,0x2ed573,14,5);root.userData.dying=true;removeObj(root);BOSS.userData.orbs=BOSS.userData.orbs.filter(o=>o!==root);rebuildHits()}else killBot(root,true);
+  if(q.step>=q.seq.length)questionDone(root);else{S.hudDirty=true;markHint(false)}return}
+ questionDone(root)}
+function onHitTarget(root,dmg){
+ const u=root.userData;if(u.dying)return;
+ if(u.isBoss){root.getWorldPosition(_v);_v.y+=4;burst(_v,0x7c5cff,6,3);toast('🛡️ Khiên chặn! Bắn QUẢ CẦU mang đáp án đúng.','info',1500);return}
+ if(S.q.isOk(u.word)){u.hp-=dmg;u.flash=.12;SFX.hit();
+  if(u.hp>.001){setLabel(u.label,u.label.userData.state,u.hp);return}
+  onTargetDead(root);return}
+ // sai
+ if(u.revealed||u.frozen){u.hp-=dmg;u.flash=.12;if(u.hp<=0&&!u.isOrb)killBot(root,false);else setLabel(u.label,u.label.userData.state,Math.max(0,u.hp));return}
+ S.bad++;S.combo=0;hurt(8);SFX.bad();S.hudDirty=true;
+ if(!S.qMissed){S.qMissed=true;S.mistakes.push({review:S.q.review,pick:u.word,explain:S.q.explain})}
+ toast(`✖ “${u.word}” chưa đúng. ${S.q.seq?'Gợi ý: từ tiếp theo đứng sau “'+(S.q.step?S.q.seq[S.q.step-1]:'đầu câu')+'”':'💡 '+S.q.explain}`,'bad',4200);
+ if(S.q.seq){u.flash=.3;setLabel(u.label,'bad');setTimeout(()=>{if(!u.dying)setLabel(u.label,'')},900);return}
+ u.revealed=true;setLabel(u.label,'bad');
+ if(u.isOrb){if(BOSS)BOSS.userData.speed*=1.12;return}
+ u.angry=true;u.speed*=1.35;u.torso.material=BM.angry}
+function killBot(b,good){const u=b.userData;if(u.dying)return;u.dying=true;if(good)setLabel(u.label,'ok');b.getWorldPosition(_v2);const p=_v2.clone();p.y=1.4;
+ setTimeout(()=>{burst(p,good?0xffc83d:u.color,good?36:16,good?9:5);if(good)SFX.boom();removeObj(b);BOTS=BOTS.filter(x=>x!==b);rebuildHits()},good?100:250+Math.random()*300)}
+function dirFromPlayer(o,out){return out.set(o.position.x-yawObj.position.x,0,o.position.z-yawObj.position.z).normalize()}
+function afterQuestion(){
+ if(S.boss){if(BOSS)nextQuestion();return}
+ S.qInWave++;const st=STAGES[S.stage];
+ if(S.qInWave>=st.waves[S.waveIdx]){S.waveIdx++;S.hp=Math.min(S.maxHp,S.hp+15);S.hudDirty=true;toast('+15 HP · Qua đợt!','info',1800);
+  if(S.waveIdx>=st.waves.length)startBoss();else startWave()}else nextQuestion()}
+function hurt(n){if(S.invuln>0||S.ended)return;if(S.shieldT>0)n*=.2;S.hp=Math.max(0,S.hp-n);S.hudDirty=true;const f=$('flash');f.style.transition='none';f.style.opacity=1;requestAnimationFrame(()=>{f.style.transition='opacity .5s';f.style.opacity=0});if(S.hp<=0)setTimeout(()=>endStage(false),300)}
+
+/* ===================== HUD ===================== */
+let toastT=0;
+function toast(msg,cls,ms){const t=$('toast');t.textContent=msg;t.className=cls;clearTimeout(toastT);toastT=setTimeout(()=>t.className='',ms||2000)}
+let banT=0;function banner(t,sub){const b=$('banner');b.innerHTML=esc(t)+(sub?`<small>${esc(sub)}</small>`:'');b.style.opacity=1;clearTimeout(banT);banT=setTimeout(()=>b.style.opacity=0,2000)}
+function buildDock(){
+ $('weps').innerHTML=WEPS.map((w,i)=>`<div class="slot small" data-w="${i}"><span class="k">${i+1}</span>${w.icon}</div>`).join('');
+ const sk=[['Q',HERO.q],['E',HERO.e],['R',ULT]];
+ $('skills').innerHTML=sk.map(([k,s])=>`<div class="slot" data-s="${k}" title="${esc(s.name+': '+s.desc)}"><span class="k">${k}</span>${s.icon}<div class="cd"></div></div>`).join('');
+ document.querySelectorAll('#weps .slot').forEach(e=>e.onclick=ev=>{ev.stopPropagation();setWep(+e.dataset.w)});
+ document.querySelectorAll('#skills .slot').forEach(e=>e.onclick=ev=>{ev.stopPropagation();const k=e.dataset.s;k==='R'?openVoice():useSkill(k)});
+ $('heroLbl').textContent=HERO.name+' · '+HERO.role}
+let lastCd='';
+function updHUD(){
+ if(S.hudDirty){S.hudDirty=false;$('score').textContent=S.score;$('combo').textContent=S.combo>1?`🔥 Combo x${S.combo}`:'';$('hp').style.width=(S.hp/S.maxHp*100)+'%';$('hpTxt').textContent=Math.ceil(S.hp)+' / '+S.maxHp;
+  $('stg').textContent=`Ải ${S.stage+1} · ${STAGES[S.stage].name}`;
+  document.querySelectorAll('#weps .slot').forEach((e,i)=>{e.classList.toggle('sel',i===S.wep);e.classList.toggle('lock',i>=S.wepCount)});
+  $('wepname').textContent=WEPS[S.wep].name+' – '+WEPS[S.wep].desc}
+ const cq=S.cdQ>0?S.cdQ/HERO.q.cd*100:0,ce=S.cdE>0?S.cdE/HERO.e.cd*100:0,cr=100-S.ult;const key=(cq|0)+'|'+(ce|0)+'|'+(cr|0);
+ if(key!==lastCd){lastCd=key;const sl=document.querySelectorAll('#skills .slot');[cq,ce,cr].forEach((p,i)=>{sl[i].querySelector('.cd').style.setProperty('--p',p+'%');sl[i].classList.toggle('ready',i===2&&S.ult>=100)})}}
+const rctx=$('radar').getContext('2d');
+function drawRadar(){const c=rctx;c.clearRect(0,0,240,240);c.strokeStyle='rgba(140,170,255,.3)';c.lineWidth=2;for(const r of [40,80,115]){c.beginPath();c.arc(120,120,r,0,7);c.stroke()}
+ c.fillStyle='#fff';c.beginPath();c.moveTo(120,106);c.lineTo(129,128);c.lineTo(111,128);c.fill();
+ const yaw=yawObj.rotation.y,sc=115/30,cs=Math.cos(yaw),sn=Math.sin(yaw);
+ const dot=(o,col,r)=>{const dx=o.position.x-yawObj.position.x,dz=o.position.z-yawObj.position.z;let px=(dx*cs-dz*sn)*sc,pz=(dx*sn+dz*cs)*sc;const d=Math.hypot(px,pz);if(d>112){px*=112/d;pz*=112/d}c.fillStyle=col;c.beginPath();c.arc(120+px,120+pz,r,0,7);c.fill()};
+ for(const b of BOTS)if(!b.userData.dying)dot(b,b.userData.revealed?'#777':'#'+b.userData.color.toString(16).padStart(6,'0'),9);
+ for(const p of PROJ)if(p.visible&&p.userData.kind==='enemy')dot(p,'#ff3355',4);
+ if(BOSS)dot(BOSS,'#ff6bd6',15)}
+
+/* ===================== INPUT ===================== */
+const keys={};let locked=false,noLock=false,wasLocked=false,drag=null,mouseHeld=false;
+addEventListener('keydown',e=>{keys[e.code]=true;if(e.target.tagName==='INPUT')return;
+ if(!S.running||S.paused||S.modal)return;
+ if(e.code==='KeyR'||e.code==='KeyV')openVoice();
+ if(e.code==='KeyQ')useSkill('Q');if(e.code==='KeyE')useSkill('E');
+ if(e.code.startsWith('Digit')){const n=+e.code.slice(5)-1;if(n>=0&&n<4)setWep(n)}
+ if(e.code==='KeyF'||e.code==='Enter')fire();
+ if(e.code==='Space'||e.code.startsWith('Arrow'))e.preventDefault()});
+addEventListener('keyup',e=>keys[e.code]=false);
+addEventListener('wheel',e=>{if(!S.running||S.paused||S.modal)return;setWep((S.wep+(e.deltaY>0?1:-1)+S.wepCount)%S.wepCount)},{passive:true});
+function lockReq(){if(noLock||isTouch)return;try{const r=canvas.requestPointerLock();if(r&&r.catch)r.catch(()=>lockFail())}catch(e){lockFail()}}
+function lockFail(){if(noLock)return;noLock=true;toast('🖱️ Chế độ chuột tự do: GIỮ chuột trái + KÉO để xoay · CLICK để bắn · F bắn · ←→ xoay','info',6000)}
+document.addEventListener('pointerlockerror',lockFail);
+document.addEventListener('pointerlockchange',()=>{locked=document.pointerLockElement===canvas;if(locked)wasLocked=true;else{mouseHeld=false;if(wasLocked&&S.running&&!S.ended&&!S.modal&&!isTouch){wasLocked=false;pauseGame()}}});
+function sens(){return camera.fov/72}
+addEventListener('mousemove',e=>{if(locked){look(e.movementX,e.movementY,.0022*sens());return}if(drag&&(e.buttons&1)){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.moved+=Math.abs(dx)+Math.abs(dy);drag.x=e.clientX;drag.y=e.clientY;look(dx,dy,.005*sens())}});
+addEventListener('mouseup',e=>{if(e.button===0){mouseHeld=false;if(drag&&!locked&&noLock&&drag.moved<6&&S.running&&!S.paused&&!S.modal)fire();drag=null}if(e.button===2)S.zoom=false});
+function look(dx,dy,s){yawObj.rotation.y-=dx*s;pitchObj.rotation.x=clamp(pitchObj.rotation.x-dy*s,-1.35,1.35)}
+canvas.addEventListener('contextmenu',e=>e.preventDefault());
+canvas.addEventListener('mousedown',e=>{if(!S.running||S.paused||S.modal)return;
+ if(e.button===2){S.zoom=true;return}if(e.button!==0)return;
+ if(locked){mouseHeld=true;fire();return}drag={x:e.clientX,y:e.clientY,moved:0};if(!noLock){lockReq();setTimeout(()=>{if(!locked)lockFail()},450)}});
+// touch
+const joy={x:0,y:0,id:null},lookT={id:null,x:0,y:0};let touchFire=false;
+if('ontouchstart' in window){const J=$('joy'),K=$('knob');
+ J.addEventListener('touchstart',e=>{e.preventDefault();joy.id=e.changedTouches[0].identifier},{passive:false});
+ addEventListener('touchmove',e=>{for(const t of e.changedTouches){if(t.identifier===joy.id){const r=J.getBoundingClientRect();let dx=t.clientX-(r.left+60),dy=t.clientY-(r.top+60);const d=Math.hypot(dx,dy);if(d>50){dx*=50/d;dy*=50/d}joy.x=dx/50;joy.y=dy/50;K.style.left=35+dx+'px';K.style.top=35+dy+'px'}else if(t.identifier===lookT.id){look(t.clientX-lookT.x,t.clientY-lookT.y,.005*sens());lookT.x=t.clientX;lookT.y=t.clientY}}},{passive:false});
+ addEventListener('touchend',e=>{for(const t of e.changedTouches){if(t.identifier===joy.id){joy.id=null;joy.x=joy.y=0;K.style.left=K.style.top='35px'}if(t.identifier===lookT.id)lookT.id=null}});
+ canvas.addEventListener('touchstart',e=>{const t=e.changedTouches[0];if(t.clientX>innerWidth*.35){lookT.id=t.identifier;lookT.x=t.clientX;lookT.y=t.clientY}},{passive:true});
+ $('fireB').addEventListener('touchstart',e=>{e.preventDefault();touchFire=true;fire()},{passive:false});
+ $('fireB').addEventListener('touchend',()=>touchFire=false);
+ $('pauseB').addEventListener('click',pauseGame)}
+
+/* ===================== WEAPONS ===================== */
+const ray=new THREE.Raycaster(),CENTER=new THREE.Vector2(),_dir=new THREE.Vector3(),_o=new THREE.Vector3(),_from=new THREE.Vector3(),_q=new THREE.Quaternion();
+let recoil=0;
+function setWep(i){if(i>=S.wepCount){toast(`🔒 ${WEPS[i].name} mở khoá ở Ải ${i+1}`,'info',1500);return}if(i===S.wep)return;S.wep=i;S.swapT=.25;S.zoom=false;SFX.swap();GUNS.forEach((g,k)=>g.visible=k===i);S.hudDirty=true}
+function muzzleFrom(out){return GUNS[S.wep].localToWorld(out.set(0,.02,-.75))}
+function castFrom(spreadX,spreadY,list){ray.setFromCamera(CENTER,camera);if(spreadX||spreadY){_dir.copy(ray.ray.direction);_o.set(spreadX,spreadY,0).applyQuaternion(camera.getWorldQuaternion(_q));_dir.add(_o).normalize();ray.ray.direction.copy(_dir)}return ray.intersectObjects(list,false)}
+function fire(){if(S.fireCd>0||S.ended||S.swapT>0||S.paused||S.modal)return;const W=WEPS[S.wep];S.fireCd=W.cd;recoil=S.wep===0?.6:1;muzzle.visible=true;muzzle.material.rotation=Math.random()*6;muzzle.scale.setScalar(S.wep===1?.45:.28);SFX[W.snd]();
+ muzzleFrom(_from);
+ if(W.pellets){const hits=new Map();for(let k=0;k<W.pellets;k++){const h=castFrom(rnd(-W.spread,W.spread),rnd(-W.spread,W.spread),HIT_ALL)[0];if(!h||h.distance>W.range){tracer(_from,ray.ray.at(W.range,_v),W.col,.06);continue}tracer(_from,h.point,W.col,.06);const r=h.object.userData.root;if(r)hits.set(r,(hits.get(r)||0)+1);else{_v.copy(h.point);burst(_v,0x8fe3ff,2,2)}}
+  let good=null;for(const [r] of hits)if(S.q&&S.q.isOk(r.userData.word)&&!r.userData.dying){good=r;break}
+  if(good)onHitTarget(good,Math.min(3,hits.get(good)));else{let best=null,n=0;for(const [r,c] of hits)if(c>n){best=r;n=c}if(best)onHitTarget(best,Math.min(3,n))}
+  if(good||hits.size){for(const [r] of hits)if(!r.userData.dying&&!r.userData.isOrb&&!r.userData.isBoss){dirFromPlayer(r,_v);r.position.addScaledVector(_v,1.2)}}
+  return}
+ const h=castFrom(0,0,W.pierce?HIT_T:HIT_ALL)[0];
+ if(!h){tracer(_from,ray.ray.at(80,_v),W.col,W.pierce?.25:.08);return}
+ if(W.splash){const p=h.point.clone(),root=h.object.userData.root,dist=h.distance;_dir.copy(p).sub(_from).normalize().multiplyScalar(45);spawnProj(_from,_dir,'rocket',W.col,{t:dist/45,root,p});return}
+ tracer(_from,h.point,W.col,W.pierce?.25:.08);
+ const root=h.object.userData.root;if(!root){_v.copy(h.point);burst(_v,0x8fe3ff,4,3);return}
+ onHitTarget(root,W.dmg*(root.userData.kind==='tank'&&W.armorMul?W.armorMul:1));S.hudDirty=true}
+function rocketHit(ex){_v.copy(ex.p);burst(_v,0xff7f50,30,8);shock(_v,0xff7f50,8);SFX.boom();
+ for(const b of BOTS){if(b.userData.dying)continue;const d=b.position.distanceTo(_v2.set(_v.x,0,_v.z));if(d<WEPS[3].splash){_o.set(b.position.x-_v.x,0,b.position.z-_v.z).normalize();b.position.addScaledVector(_o,(WEPS[3].splash-d)+1);b.userData.stun=Math.max(b.userData.stun,1)}}
+ if(ex.root&&!ex.root.userData.dying)onHitTarget(ex.root,WEPS[3].dmg);S.hudDirty=true}
+
+/* ===================== SKILLS ===================== */
+function useSkill(k){if(!S.running||S.ended)return;const sk=k==='Q'?HERO.q:HERO.e;const cdKey=k==='Q'?'cdQ':'cdE';
+ if(S[cdKey]>0){toast(`${sk.icon} ${sk.name} hồi chiêu ${S[cdKey].toFixed(1)}s`,'info',900);return}
+ const okUse=SKILL[sk.fn]();if(okUse===false)return;S[cdKey]=sk.cd;SFX.skill();S.hudDirty=true}
+const SKILL={
+ dash(){let f=0,s=0;if(keys.KeyW)f++;if(keys.KeyS)f--;if(keys.KeyD)s++;if(keys.KeyA)s--;if(isTouch){f-=joy.y;s+=joy.x}if(!f&&!s)f=1;const y=yawObj.rotation.y,l=Math.hypot(f,s);S.dashDir={x:(-Math.sin(y)*f+Math.cos(y)*s)/l,z:(-Math.cos(y)*f-Math.sin(y)*s)/l};S.dashT=.16;S.invuln=.5;tint('rgba(0,210,255,.18)',.4)},
+ warp(){S.slow=5;tint('rgba(120,80,255,.18)',5);banner('⏳ NGƯNG ĐỌNG','Quái chậm 65% trong 5 giây')},
+ shield(){S.shieldT=5;tint('rgba(255,165,2,.16)',5);banner('🛡️ KHIÊN NĂNG LƯỢNG','-80% sát thương trong 5 giây')},
+ slam(){shock(yawObj.position,0xffa502,22);SFX.boom();for(const b of [...BOTS,...(BOSS?[BOSS]:[])]){const d=Math.hypot(b.position.x-yawObj.position.x,b.position.z-yawObj.position.z);if(d<10){dirFromPlayer(b,_v);b.position.addScaledVector(_v,b.userData.isBoss?4:11-d);b.position.x=clamp(b.position.x,-ARENA+1,ARENA-1);b.position.z=clamp(b.position.z,-ARENA+1,ARENA-1);b.userData.stun=2}}},
+ scan(){const q=S.q;if(!q)return false;
+  if(q.seq)return markHint(true);
+  const pool=S.boss&&BOSS?BOSS.userData.orbs:BOTS;const c=pool.filter(b=>!b.userData.dying&&!b.userData.revealed&&!q.isOk(b.userData.word));
+  if(!c.length){toast('Không còn đáp án sai để loại!','info',1200);return false}
+  const b=c[Math.random()*c.length|0];b.userData.revealed=b.userData.frozen=true;setLabel(b.userData.label,'frozen');if(b.userData.torso)b.userData.torso.material=BM.frozen;b.getWorldPosition(_v);_v.y+=2;burst(_v,0x9fd8ff,16,4);toast(`🔎 Lexi Scan: “${b.userData.word}” là đáp án SAI`,'info',1800)},
+ heal(){S.hp=Math.min(S.maxHp,S.hp+35);S.slow=Math.max(S.slow,0);tint('rgba(46,213,115,.2)',.6);burst(yawObj.position,0x2ed573,20,4)}};
+function markHint(announce){const q=S.q;if(!q||!q.seq)return false;const pool=S.boss&&BOSS?BOSS.userData.orbs:BOTS;const t=pool.find(b=>!b.userData.dying&&b.userData.word===q.seq[q.step]);
+ if(!announce){for(const b of pool)if(b.userData.label.userData.state==='hint')setLabel(b.userData.label,'');return true}
+ if(!t)return false;setLabel(t.userData.label,'hint');toast(`🔎 Lexi Scan: từ tiếp theo là “${t.userData.word}”`,'info',1800);return true}
+let tintT=0;function tint(col,dur){const t=$('tint');t.style.background=`radial-gradient(circle,transparent 45%,${col})`;t.style.opacity=1;clearTimeout(tintT);tintT=setTimeout(()=>t.style.opacity=0,dur*1000)}
+
+/* ===================== VOICE BLAST ===================== */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let vTarget=null,vTries=0;
+function lev(a,b){const m=[];for(let i=0;i<=a.length;i++){m[i]=[i];for(let j=1;j<=b.length;j++)m[i][j]=i?Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1)):j}return m[a.length][b.length]}
+const sim=(a,b)=>1-lev(a,b)/Math.max(a.length,b.length,1);
+const norm=s=>s.toLowerCase().replace(/[^a-z ]/g,'').trim();
+function openVoice(){if(!S.running||S.ended)return;if(S.ult<100){toast(`🎤 Voice Blast: ${S.ult|0}% – trả lời đúng để nạp`,'info',1400);return}
+ S.modal=true;mouseHeld=false;if(document.pointerLockElement)document.exitPointerLock();
+ vTarget=TR.voice[Math.random()*TR.voice.length|0];vTries=0;$('vmean').textContent='Nghĩa: '+vTarget[1];$('vres').textContent='';
+ const w=vTarget[0].toLowerCase();$('vcam').href='https://dictionary.cambridge.org/dictionary/english/'+encodeURIComponent(w);$('vox').href='https://www.oxfordlearnersdictionaries.com/definition/english/'+encodeURIComponent(w);
+ if(SR){$('vword').textContent=vTarget[0];$('vtypeWrap').classList.add('hide');$('vgo').textContent='🎤 Bấm rồi nói'}
+ else{$('vword').textContent=vTarget[0].split('').map((c,i)=>i%2?'_':c).join('');$('vtypeWrap').classList.remove('hide');$('vtype').value='';$('vgo').textContent='✔ Kiểm tra';setTimeout(()=>$('vtype').focus(),50)}
+ $('vmodal').classList.remove('hide')}
+function closeVoice(){$('vmodal').classList.add('hide');S.modal=false;lockReq()}
+function voiceSuccess(){$('vres').innerHTML='<span style="color:#2ed573">✔ Chuẩn rồi! VOICE BLAST!</span>';S.ult=0;S.hp=Math.min(S.maxHp,S.hp+25);S.score+=150;S.hudDirty=true;
+ setTimeout(()=>{closeVoice();SFX.blast();shock(yawObj.position,0xff6bd6,30);banner('💥 VOICE BLAST!','Sóng âm quét sạch đáp án sai');const q=S.q;
+  if(q&&q.seq){const pool=S.boss&&BOSS?BOSS.userData.orbs:BOTS;const t=pool.find(b=>!b.userData.dying&&b.userData.word===q.seq[q.step]);if(t)onTargetDead(t)}
+  else if(q){for(const b of BOTS)if(!b.userData.dying&&!q.isOk(b.userData.word))killBot(b,false);
+   if(BOSS){for(const o of BOSS.userData.orbs)if(!q.isOk(o.userData.word)){o.getWorldPosition(_v);burst(_v,0x7c5cff,10,5);removeObj(o)}BOSS.userData.orbs=BOSS.userData.orbs.filter(o=>q.isOk(o.userData.word))}}
+  for(const b of BOTS)b.userData.stun=3;rebuildHits()},700)}
+function voiceFail(heard){vTries++;$('vres').innerHTML=`<span style="color:#ff8a95">✖ Nghe được: “${esc(heard||'…')}”. Thử lại (${vTries}/3) – mở Cambridge để nghe mẫu.</span>`+(vTries>=3?'<br><span style="color:#9aa6d6">Năng lượng vẫn giữ – luyện thêm rồi quay lại!</span>':'')}
+$('vgo').onclick=()=>{if(!SR){const v=norm($('vtype').value);v===norm(vTarget[0])?voiceSuccess():voiceFail(v);return}
+ const r=new SR();r.lang='en-US';r.maxAlternatives=5;r.interimResults=false;$('vres').innerHTML='<span style="color:#8fe3ff">🎙️ Đang nghe… đọc to và rõ</span>';
+ r.onresult=e=>{const t=norm(vTarget[0]);let best=0,heard='';for(const alt of e.results[0]){const s=norm(alt.transcript);heard=heard||alt.transcript;const sc=Math.max(sim(s,t),...s.split(' ').map(x=>sim(x,t)));if(sc>best)best=sc}best>=.8?voiceSuccess():voiceFail(heard)};
+ r.onerror=e=>{$('vres').innerHTML=`<span style="color:#ff8a95">Micro lỗi (${esc(e.error)}). Cho phép micro rồi thử lại.</span>`};try{r.start()}catch(e){}};
+$('vtype').addEventListener('keydown',e=>{if(e.key==='Enter')$('vgo').click()});$('vclose').onclick=closeVoice;
+
+/* ===================== MENU / FLOW ===================== */
+function buildMenu(){
+ $('trk').innerHTML=Object.entries(TRACKS).map(([k,t])=>`<button class="pick ${k===TRK?'sel':''}" data-k="${k}" style="background:${t.grad}"><div class="t">${t.name}</div><div class="d">${t.desc}</div></button>`).join('');
+ $('heroes').innerHTML=Object.entries(HEROES).map(([k,h])=>`<button class="pick ${k===HERO_K?'sel':''}" data-h="${k}" style="background:${h.grad}"><div class="t">${h.name} <span style="font-size:13px">· ${h.role}</span></div><div class="d">❤️ ${h.hp} HP · ${h.passive}<br><kbd>Q</kbd> ${h.q.icon} <b>${h.q.name}</b>: ${h.q.desc}<br><kbd>E</kbd> ${h.e.icon} <b>${h.e.name}</b>: ${h.e.desc}<br><kbd>R</kbd> 🎤 <b>Voice Blast</b>: đọc to để quét robot sai</div></button>`).join('');
+ const P=prog(TRK);if(STG>=P.unlocked)STG=P.unlocked-1;
+ $('stages').innerHTML=STAGES.map((s,i)=>{const lock=i>=P.unlocked,st=P.stars[i]||0;const qt=QTYPES[s.type];const w=i<WEPS.length?`+ ${WEPS[i].icon} ${WEPS[i].name}`:'Đủ 4 vũ khí';
+  return `<button class="pick stg ${i===STG?'sel':''} ${lock?'locked':''}" data-s="${i}" style="background:linear-gradient(135deg,${s.th.sky[1]},${s.th.sky[2]})"><div class="n">ẢI ${i+1} ${lock?'🔒':''}</div><div class="t">${s.name}</div><div class="d">${qt.icon} ${qt.name} · 👹 ${s.boss}<br>${w}</div><div class="stars">${'★'.repeat(st)}${'☆'.repeat(3-st)}</div></button>`}).join('');
+ document.querySelectorAll('#trk .pick').forEach(b=>b.onclick=()=>{TRK=b.dataset.k;TR=TRACKS[TRK];store.set('ws_trk',TRK);buildMenu()});
+ document.querySelectorAll('#heroes .pick').forEach(b=>b.onclick=()=>{HERO_K=b.dataset.h;HERO=HEROES[HERO_K];store.set('ws_hero',HERO_K);buildMenu()});
+ document.querySelectorAll('#stages .pick').forEach(b=>b.onclick=()=>{const i=+b.dataset.s;if(i>=prog(TRK).unlocked){toast('Qua ải trước để mở khoá','info',1200);return}STG=i;store.set('ws_stg',STG);buildMenu()});
+ $('qualSel').value=QUAL}
+$('unlockAll').onclick=()=>{prog(TRK).unlocked=STAGES.length;saveProg();buildMenu()};
+$('qualSel').onchange=e=>{QUAL=e.target.value;store.set('ws_qual',QUAL);initQuality()};
+function clearAll(){for(const b of BOTS)removeObj(b);BOTS=[];if(BOSS){for(const o of BOSS.userData.orbs)removeObj(o);removeObj(BOSS);BOSS=null}for(const p of PROJ)p.visible=false;rebuildHits()}
+function startStage(i){ac();TR=TRACKS[TRK];HERO=HEROES[HERO_K];STG=i;clearAll();resetState(i);buildArena(STAGES[i],i);rebuildHits();
+ yawObj.position.set(0,1.7,0);yawObj.rotation.y=0;pitchObj.rotation.x=0;camera.fov=72;camera.updateProjectionMatrix();
+ GUNS.forEach((g,k)=>g.visible=k===0);buildDock();
+ ['menu','end','pause'].forEach(x=>$(x).classList.add('hide'));$('hudAll').classList.remove('hide');if(isTouch)$('touch').classList.remove('hide');
+ S.running=true;S.paused=false;S.modal=false;S.hudDirty=true;updHUD();const st=STAGES[i];$('sentence').textContent='Chuẩn bị…';$('mtag').textContent='';
+ banner(`ẢI ${i+1}: ${st.name.toUpperCase()}`,`${QTYPES[st.type].icon} Dạng bài: ${QTYPES[st.type].name} – ${QTYPES[st.type].how}`);
+ if(i>0&&i<WEPS.length)setTimeout(()=>toast(`🔓 Vũ khí mới: ${WEPS[i].icon} ${WEPS[i].name} (phím ${i+1}) – ${WEPS[i].desc}`,'info',4500),2200);
+ lockReq();setTimeout(()=>{if(S.running&&!S.ended)startWave()},2300)}
+function pauseGame(){if(!S.running||S.ended)return;S.paused=true;mouseHeld=false;$('pause').classList.remove('hide')}
+function resume(){S.paused=false;$('pause').classList.add('hide');lockReq()}
+function toMenu(){S.running=false;S.ended=true;clearAll();['end','pause'].forEach(x=>$(x).classList.add('hide'));$('hudAll').classList.add('hide');$('touch').classList.add('hide');buildMenu();$('menu').classList.remove('hide')}
+function endStage(win){if(S.ended)return;S.ended=true;S.running=false;mouseHeld=false;if(document.pointerLockElement)document.exitPointerLock();
+ const tot=S.ok+S.bad,acc=tot?S.ok/tot:0;const stars=win?(acc>=.9?3:acc>=.7?2:1):0;const P=prog(TRK);
+ if(win){P.stars[S.stage]=Math.max(P.stars[S.stage]||0,stars);if(S.stage+1<STAGES.length)P.unlocked=Math.max(P.unlocked,S.stage+2)}
+ P.best[S.stage]=Math.max(P.best[S.stage]||0,S.score);saveProg();
+ $('etitle').textContent=win?'🏆 QUA ẢI!':'💀 THẤT THỦ!';
+ $('esub').textContent=win?`Hạ ${STAGES[S.stage].boss} – Ải ${S.stage+1} ${STAGES[S.stage].name} · ${TR.name} · ${HERO.name}`+(S.stage+1<STAGES.length?` · Đã mở Ải ${S.stage+2}!`:' · Bạn đã chinh phục toàn bộ Lexicon!'):`Dừng ở ${S.boss?'trận Boss':'Wave '+(S.waveIdx+1)} – ôn lỗi sai rồi chiến tiếp!`;
+ $('eScore').textContent=S.score;$('eAcc').textContent=Math.round(acc*100)+'%';$('eStars').textContent='★'.repeat(stars)+'☆'.repeat(3-stars);$('eBest').textContent=P.best[S.stage];
+ $('elist').innerHTML=S.mistakes.length?S.mistakes.map(m=>`<div class="mk"><div class="s">${m.review}</div><div class="p">Bạn bắn: ${esc(m.pick)}</div><div class="v">💡 ${esc(m.explain)}</div></div>`).join(''):'<div class="mk">🎉 Không sai câu nào – xuất sắc!</div>';
+ $('nextB').classList.toggle('hide',!(win&&S.stage+1<STAGES.length));
+ $('hudAll').classList.add('hide');$('touch').classList.add('hide');$('end').classList.remove('hide')}
+$('startB').onclick=()=>startStage(STG);$('againB').onclick=()=>startStage(S.stage);$('nextB').onclick=()=>startStage(S.stage+1);$('menuB').onclick=toMenu;$('resumeB').onclick=resume;$('quitB').onclick=toMenu;
+
+/* ===================== UPDATE ===================== */
+function movePlayer(dt){let f=0,s=0;if(keys.KeyW||keys.ArrowUp)f+=1;if(keys.KeyS||keys.ArrowDown)f-=1;if(keys.KeyD)s+=1;if(keys.KeyA)s-=1;
+ if(keys.ArrowLeft)yawObj.rotation.y+=2.4*dt;if(keys.ArrowRight)yawObj.rotation.y-=2.4*dt;
+ if(isTouch){f-=joy.y;s+=joy.x}
+ const sp=((keys.ShiftLeft||keys.ShiftRight)?10:6.5)*HERO.spd*(S.zoom?.5:1);const len=Math.hypot(f,s);if(len>1){f/=len;s/=len}
+ const y=yawObj.rotation.y;let dx=(-Math.sin(y)*f+Math.cos(y)*s)*sp*dt,dz=(-Math.cos(y)*f-Math.sin(y)*s)*sp*dt;
+ if(S.dashT>0){S.dashT-=dt;dx=S.dashDir.x*50*dt;dz=S.dashDir.z*50*dt;if(Math.random()<.6)burst(yawObj.position,0x00d2ff,1,1)}
+ const p=yawObj.position;if(!blocked(p.x+dx,p.z,.4))p.x+=dx;if(!blocked(p.x,p.z+dz,.4))p.z+=dz;
+ p.x=clamp(p.x,-ARENA+.6,ARENA-.6);p.z=clamp(p.z,-ARENA+.6,ARENA-.6);
+ if(keys.Space&&p.y<=1.71)S.vy=6;S.vy-=18*dt;p.y+=S.vy*dt;if(p.y<1.7){p.y=1.7;S.vy=0}
+ const t=performance.now()/1000,mv=len>.1;const g=GUNS[S.wep];
+ g.position.set(GUN_BASE.x+(mv?Math.sin(t*9)*.012:0),GUN_BASE.y+(mv?Math.abs(Math.cos(t*9))*.012:Math.sin(t*2)*.004)-S.swapT*.6,GUN_BASE.z+recoil*.08);g.rotation.x=recoil*.12;
+ const tf=S.zoom&&S.wep===2?30:72;if(Math.abs(camera.fov-tf)>.5){camera.fov+=(tf-camera.fov)*Math.min(1,dt*12);camera.updateProjectionMatrix()}
+ g.visible=!(S.zoom&&S.wep===2&&camera.fov<40)}
+function updBot(b,dt){const u=b.userData;u.t+=dt;if(u.dying){b.scale.multiplyScalar(1-dt*1.5);return}
+ const p=yawObj.position,dx=p.x-b.position.x,dz=p.z-b.position.z,d=Math.hypot(dx,dz)||1;
+ b.rotation.y=Math.atan2(dx,dz);
+ if(u.flash>0){u.flash-=dt;b.scale.setScalar(u.base*(1+u.flash*.8))}else if(b.scale.x!==u.base)b.scale.setScalar(u.base);
+ const slowF=S.slow>0?.35:1;
+ if(u.frozen||u.stun>0){u.stun-=dt;return}
+ let mx=dx/d,mz=dz/d;
+ if(u.ranged&&!u.isBoss&&d<13){const side=Math.sin(u.t*.7)>0?1:-1;mx=-dz/d*side*.8;mz=dx/d*side*.8;if(d<9){mx-=dx/d*.6;mz-=dz/d*.6}}
+ const sp=u.speed*dt*slowF;const r=u.isBoss?2:.6;const nx=b.position.x+mx*sp,nz=b.position.z+mz*sp;
+ if(!blocked(nx,b.position.z,r))b.position.x=nx;else b.position.z+=(mz>=0?1:-1)*sp*.7;
+ if(!blocked(b.position.x,nz,r))b.position.z=nz;else b.position.x+=(mx>=0?1:-1)*sp*.7;
+ b.position.x=clamp(b.position.x,-ARENA+1,ARENA-1);b.position.z=clamp(b.position.z,-ARENA+1,ARENA-1);
+ for(const o of BOTS){if(o===b)continue;const ox=b.position.x-o.position.x,oz=b.position.z-o.position.z,od=Math.hypot(ox,oz);if(od<1.6&&od>0){b.position.x+=ox/od*(1.6-od)*.5;b.position.z+=oz/od*(1.6-od)*.5}}
+ const sw=Math.sin(u.t*(u.angry?13:8)*slowF)*.7;u.legs[0].rotation.x=sw;u.legs[1].rotation.x=-sw;u.arms[0].rotation.x=u.angry?-1.4:-sw;u.arms[1].rotation.x=u.ranged?-1.5:(u.angry?-1.4:sw);
+ if(u.ranged){u.shotCd-=dt*slowF;if(u.shotCd<=0&&d<34){u.shotCd=u.isBoss?2.6:rnd(2.6,3.8);b.getWorldPosition(_v);_v.y=u.isBoss?4:1.6;_dir.set(p.x-_v.x,p.y-.3-_v.y,p.z-_v.z).normalize().multiplyScalar(u.isBoss?14:11);spawnProj(_v,_dir,'enemy',0xff3355);SFX.enemyShot()}}
+ u.hurtCd-=dt;const reach=u.isBoss?3.6:1.3;
+ if(d<reach&&u.hurtCd<=0){u.hurtCd=1;hurt(u.dmg);SFX.hurt();S.combo=0;const k=u.isBoss?8:7;b.position.x-=dx/d*k;b.position.z-=dz/d*k;b.position.x=clamp(b.position.x,-ARENA+1,ARENA-1);b.position.z=clamp(b.position.z,-ARENA+1,ARENA-1)}}
+function updProj(dt){const p=yawObj.position;const sf=S.slow>0?.35:1;for(const m of PROJ){if(!m.visible)continue;const u=m.userData;
+ if(u.kind==='rocket'){m.position.addScaledVector(u.v,dt);u.life-=dt;if(u.life<=0){m.visible=false;rocketHit(u.extra)}continue}
+ m.position.addScaledVector(u.v,dt*sf);u.life-=dt;
+ if(m.position.distanceTo(p)<.9){m.visible=false;hurt(9);SFX.hurt();continue}
+ if(u.life<=0||m.position.y<0||blocked(m.position.x,m.position.z,0)&&m.position.y<3)m.visible=false}}
+let attract=0,frame=0,lastCross='';const clock=new THREE.Clock();
+function loop(){requestAnimationFrame(loop);const dt=Math.min(clock.getDelta(),.05);const t=performance.now()/1000;frame++;
+ for(let i=0;i<FLOATS.length;i++){const m=FLOATS[i];m.rotation.x+=dt*.3;m.rotation.y+=dt*.4}
+ if(S.running&&!S.paused&&!S.modal&&!S.ended){
+  S.fireCd-=dt;S.swapT=Math.max(0,S.swapT-dt);recoil=Math.max(0,recoil-dt*8);if(muzzle.visible&&S.fireCd<WEPS[S.wep].cd-.05)muzzle.visible=false;
+  S.cdQ=Math.max(0,S.cdQ-dt);S.cdE=Math.max(0,S.cdE-dt);S.slow=Math.max(0,S.slow-dt);S.shieldT=Math.max(0,S.shieldT-dt);S.invuln=Math.max(0,S.invuln-dt);
+  if((mouseHeld||touchFire)&&WEPS[S.wep].auto)fire();
+  movePlayer(dt);for(const b of BOTS)updBot(b,dt);
+  if(BOSS){updBot(BOSS,dt);const U=BOSS.userData;U.core.rotation.y+=dt*3;U.shield.rotation.y+=dt;
+   for(let i=0;i<U.orbs.length;i++){const o=U.orbs[i];o.userData.ang+=dt*(.6+S.stage*.05)*(S.slow>0?.35:1);o.position.set(BOSS.position.x+Math.cos(o.userData.ang)*o.userData.R,3.4+Math.sin(t*2+i)*.6,BOSS.position.z+Math.sin(o.userData.ang)*o.userData.R);if(o.userData.flash>0)o.userData.flash-=dt}}
+  updProj(dt);
+  if(S.nextQAt&&performance.now()>S.nextQAt){S.nextQAt=0;afterQuestion()}
+  if(frame%4===0){ray.setFromCamera(CENTER,camera);const h=ray.intersectObjects(HIT_ALL,false)[0];const cn='hud'+(h&&h.object.userData.root?' on':'')+(S.wep===1?' wide':'');if(cn!==lastCross){lastCross=cn;$('cross').className=cn}}
+  if(frame%3===0)drawRadar();
+  updHUD();
+  // auto quality
+  if(QUAL==='auto'&&qLevel==='high'){S.fpsT+=dt;S.fpsN++;if(S.fpsT>=2){const fps=S.fpsN/S.fpsT;S.fpsT=0;S.fpsN=0;if(fps<40){S.fpsLow++;if(S.fpsLow>=2){qLevel='low';applyQuality();toast('⚙️ Đã tự giảm đồ hoạ để chơi mượt hơn','info',2500)}}else S.fpsLow=0}}
+ }else if(!S.running){attract+=dt*.1;yawObj.position.set(Math.cos(attract)*16,7,Math.sin(attract)*16);yawObj.rotation.y=Math.PI/2-attract;pitchObj.rotation.x=-.28}
+ updParts(dt);
+ for(const l of TR_POOL){if(!l.visible)continue;l.userData.life-=dt;l.material.opacity=Math.max(0,l.userData.life/l.userData.max);if(l.userData.life<=0)l.visible=false}
+ for(const r of RINGS){if(!r.visible)continue;r.userData.life-=dt*1.4;r.scale.setScalar(1+(1-r.userData.life)*r.userData.size);r.material.opacity=Math.max(0,r.userData.life);if(r.userData.life<=0)r.visible=false}
+ if(useBloom)composer.render();else renderer.render(scene,camera)}
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);if(composer)composer.setSize(innerWidth,innerHeight)});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&S.running&&!S.ended&&!S.modal)pauseGame()});
+buildArena(STAGES[0],0);buildMenu();loop();
+window.__WS={S,BOTS:()=>BOTS,BOSS:()=>BOSS,fire,startStage,onHitTarget,setWep,useSkill,camera,yawObj,pitchObj,renderer};
+</script>
+</body>
+</html>

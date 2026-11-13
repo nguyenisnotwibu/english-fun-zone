@@ -2011,6 +2011,7 @@ function gamesHome(){
       <button class="gcard gc7" onclick="td2Enter('normal')"><span class="em">🏰</span><h3>Thủ thành</h3><p>Đặt trụ thú, thủ thành thật sự</p></button>
       <button class="gcard gc5" onclick="startTowerSurvival()"><span class="em">🔥</span><h3>Thủ thành Sinh Tồn</h3><p>5 địa hình · vô hạn đợt · 🦸 gọi đệ tử</p></button>
       <button class="gcard gc8" onclick="startGold()"><span class="em">🏆</span><h3>Đua vàng</h3><p>Gom vàng thắng máy</p></button>
+      <button class="gcard" style="background:linear-gradient(140deg,#7c5cff,#ff6bd6)" onclick="location.href='word-strike-3d.html'"><span class="em">🎯</span><h3>Word Strike 3D</h3><p>FPS 3D · 6 ải · 4 súng · 🎤 phát âm</p></button>
     </div>
     <div class="sect-title">♟️ Cờ vua học tiếng Anh</div>
     <div class="game-grid">
