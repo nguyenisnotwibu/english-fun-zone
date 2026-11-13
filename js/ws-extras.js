@@ -250,10 +250,12 @@ function mkMission(sp){
   if(t==='wep')  return{txt:`Hạ ${b} quái bằng ${WEPS[a].name}`,prog:()=>`${R.wk[a]|0}/${b}`,ok:()=>(R.wk[a]|0)>=b};
   return{txt:'?',prog:()=>'',ok:()=>false}}
 function genMissions(i){R.list=(MIS[i]||MIS[MIS.length-1]).map(mkMission)}
+let _misHtml='';   /* chỉ ghi lại DOM khi nội dung đổi (tránh layout lại mỗi 500 ms) */
 function renderMis(){
-  if(!S.running||S.ended||!R.list.length){misBox.style.display='none';return}
-  misBox.style.display='';
-  misBox.innerHTML='<div class="h">🎯 NHIỆM VỤ ẢI'+(R.daily?' · 📅':'')+'</div>'+R.list.map(m=>{const ok=m.ok();return`<div class="m ${ok?'ok':''}"><span>${ok?'✔':'○'} ${m.txt}</span><span>${m.prog()}</span></div>`}).join('')}
+  if(!S.running||S.ended||!R.list.length){if(misBox.style.display!=='none')misBox.style.display='none';return}
+  if(misBox.style.display!=='')misBox.style.display='';
+  const html='<div class="h">🎯 NHIỆM VỤ ẢI'+(R.daily?' · 📅':'')+'</div>'+R.list.map(m=>{const ok=m.ok();return`<div class="m ${ok?'ok':''}"><span>${ok?'✔':'○'} ${m.txt}</span><span>${m.prog()}</span></div>`}).join('');
+  if(html!==_misHtml){_misHtml=html;misBox.innerHTML=html}}
 setInterval(renderMis,500);
 
 /* ===================== WRAP: LUỒNG GAME ===================== */
@@ -322,7 +324,9 @@ const _fire=fire;
 fire=function(){const c=S.fireCd;_fire();if(S.fireCd>c){shake(S.wep>=2?.1:.035)}};
 
 const _mb=makeBot;
-makeBot=function(w,k,c,s){const g=_mb(w,k,c,s);if(R.daily==='swift')g.userData.speed*=1.4;return g};
+makeBot=function(w,k,c,s){const g=_mb(w,k,c,s);if(R.daily==='swift')g.userData.speed*=1.4;
+  g.traverse(o=>{if(o.isMesh)o.castShadow=false});   /* bóng tròn dưới chân (makeBlob) thay đổ bóng thật: tiết kiệm ~2 draw call mỗi bot */
+  return g};
 
 const _bm=buildMenu;
 buildMenu=function(){
@@ -437,6 +441,12 @@ function musicTick(){
 musicTick();
 
 /* ===================== BỐI CẢNH 3D MỖI ẢI ===================== */
+/* Ngân sách draw call: performance.draw_call_limit = 80 (project.yaml).
+   - Mọi thứ TĨNH được gộp theo vật liệu (bake) hoặc dựng bằng InstancedMesh (rig):
+     N vật thể → 1-3 draw call.
+   - "Lõi" (đường chân trời + mặt trời + đấu trường đã gộp) có ở MỌI mức đồ hoạ.
+   - "Deco" (biển hiệu, xe bay, mây, sách bay, tuyết…) CHỈ có ở mức Cao; tự bật/tắt khi
+     đồ hoạ đổi giữa trận (tự giảm FPS hoặc người chơi chọn lại). */
 const ANIM=[];
 function glowTex(hex){
   const k=new THREE.Color(hex),c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');
@@ -448,10 +458,57 @@ function textTex(text,o){
   g.font=o.font||"800 70px 'Baloo 2',Nunito,sans-serif";g.textAlign='center';g.textBaseline='middle';
   if(o.glow){g.shadowColor=o.glow;g.shadowBlur=20}
   g.fillStyle=o.color||'#fff';g.fillText(text,w/2,h/2);g.fillText(text,w/2,h/2);return new THREE.CanvasTexture(c)}
+/* nhiều ô chữ trong MỘT canvas (atlas): cols × rows ô, mỗi ô cw × ch */
+function atlasTex(items,cols,rows,cw,ch,font,colorOf,glowOf){
+  const c=document.createElement('canvas');c.width=cols*cw;c.height=rows*ch;const g=c.getContext('2d');
+  g.font=font;g.textAlign='center';g.textBaseline='middle';
+  items.forEach((s,i)=>{const x=(i%cols)*cw+cw/2,y=((i/cols)|0)*ch+ch/2;g.shadowColor=glowOf(i);g.shadowBlur=20;g.fillStyle=colorOf(i);g.fillText(s,x,y);g.fillText(s,x,y)});
+  return new THREE.CanvasTexture(c)}
+/* trỏ UV của mặt phẳng i vào ô (i % cols, i / cols) của atlas */
+function atlasUV(geo,i,cols,rows){
+  const uv=geo.attributes.uv,col=i%cols,row=(i/cols)|0;
+  for(let k=0;k<uv.count;k++)uv.setXY(k,(col+uv.getX(k))/cols,1-(row+1)/rows+uv.getY(k)/rows)}
 function winTex(col){
   const c=document.createElement('canvas');c.width=64;c.height=128;const g=c.getContext('2d');g.fillStyle='#0b0e22';g.fillRect(0,0,64,128);
   for(let y=4;y<124;y+=8)for(let x=4;x<60;x+=8)if(Math.random()<.42){g.fillStyle=Math.random()<.18?'#ffffff':col;g.globalAlpha=.5+Math.random()*.5;g.fillRect(x,y,4,5)}
   const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t}
+
+/* ---- GỘP GEOMETRY / INSTANCING ---- */
+function mergeGeos(geos){
+  const attrs=['position','normal','uv'].filter(a=>geos.every(g=>g.attributes[a]));
+  const indexed=geos.every(g=>g.index);let vt=0,it=0;
+  geos.forEach(g=>{vt+=g.attributes.position.count;if(indexed)it+=g.index.count});
+  const out=new THREE.BufferGeometry();
+  for(const a of attrs){const sz=geos[0].attributes[a].itemSize,arr=new Float32Array(vt*sz);let o=0;
+    for(const g of geos){arr.set(g.attributes[a].array,o);o+=g.attributes[a].array.length}
+    out.setAttribute(a,new THREE.BufferAttribute(arr,sz))}
+  if(indexed){const idx=vt>65535?new Uint32Array(it):new Uint16Array(it);let io=0,vo=0;
+    for(const g of geos){const ia=g.index.array;for(let i=0;i<ia.length;i++)idx[io+i]=ia[i]+vo;io+=ia.length;vo+=g.attributes.position.count}
+    out.setIndex(new THREE.BufferAttribute(idx,1))}
+  return out}
+const worldGeo=m=>{m.updateWorldMatrix(true,false);const g=m.geometry.clone();g.applyMatrix4(m.matrixWorld);return g};
+/* các mesh (CHƯA vào scene) dùng chung 1 vật liệu → 1 mesh gộp mỗi vật liệu */
+function bake(g,list){
+  const by=new Map();
+  for(const m of list){m.updateMatrix();(by.get(m.material)||by.set(m.material,[]).get(m.material)).push(m)}
+  for(const [mat,ms] of by){
+    const geo=mergeGeos(ms.map(m=>{const ge=m.geometry.clone();ge.applyMatrix4(m.matrix);return ge}));
+    const out=new THREE.Mesh(geo,mat);out.frustumCulled=false;g.add(out)}}
+/* nhiều khung dây (EdgesGeometry) → 1 LineSegments */
+function bakeLines(g,list,mat){
+  const parts=list.map(m=>{m.updateMatrix();const ge=m.geometry.clone();ge.applyMatrix4(m.matrix);return ge.attributes.position.array});
+  const n=parts.reduce((s,a)=>s+a.length,0),arr=new Float32Array(n);let o=0;parts.forEach(a=>{arr.set(a,o);o+=a.length});
+  const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(arr,3));
+  const out=new THREE.LineSegments(geo,mat);out.frustumCulled=false;g.add(out)}
+/* n bản thể động, mỗi "bộ phận" = 1 InstancedMesh (1 draw call). parts:[{geo,mat,off,scl,colors}] */
+function rig(g,n,parts){
+  const ims=parts.map(p=>{const im=new THREE.InstancedMesh(p.geo,p.mat,n);im.frustumCulled=false;
+    im.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    if(p.colors){const c=new THREE.Color();for(let i=0;i<n;i++)im.setColorAt(i,c.setHex(p.colors[i%p.colors.length]))}
+    g.add(im);return im});
+  const loc=parts.map(p=>new THREE.Matrix4().compose(new THREE.Vector3(...(p.off||[0,0,0])),new THREE.Quaternion(),new THREE.Vector3(...(p.scl||[1,1,1])))),tmp=new THREE.Matrix4();
+  return{ims,set(i,obj){obj.updateMatrix();for(let k=0;k<ims.length;k++){tmp.multiplyMatrices(obj.matrix,loc[k]);ims[k].setMatrixAt(i,tmp)}},
+    done(){ims.forEach(im=>{im.instanceMatrix.needsUpdate=true})}}}
 function skyline(g,th,R,count,rMin,rMax,hMin,hMax){
   const im=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({map:winTex(css(th.trim))}),count);
   const d=new THREE.Object3D(),col=new THREE.Color(),wall=new THREE.Color(th.wall),fog=new THREE.Color(th.fog);
@@ -463,120 +520,187 @@ function skyline(g,th,R,count,rMin,rMax,hMin,hMax){
 const boxG=new THREE.BoxGeometry(1,1,1);
 const mesh=(geo,mat,x,y,z)=>{const m=new THREE.Mesh(geo,mat);m.position.set(x,y,z);return m};
 const bas=(c,o)=>new THREE.MeshBasicMaterial(Object.assign({color:c},o||{}));
-const hideOut=g=>{const o=arena.children.find(x=>x.geometry&&x.geometry.parameters&&x.geometry.parameters.width===500);if(o)o.visible=false};
-function orbit(m,r,y,sp,ph,bob){let a=ph;ANIM.push((dt,t)=>{a+=sp*dt;m.position.set(Math.cos(a)*r,y+(bob?Math.sin(t*.8+ph)*bob:0),Math.sin(a)*r);m.rotation.y=-a})}
+const hideOut=()=>{const o=arena.children.find(x=>x.geometry&&x.geometry.parameters&&x.geometry.parameters.width===500);if(o)o.visible=false};
+const pointsOf=(arr,mat)=>{const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(arr,3));const p=new THREE.Points(geo,mat);p.frustumCulled=false;return p};
 
-const PROPS=[
-/* 0 Neon Plaza: phố đêm, biển hiệu, xe bay */
+/* ---- ĐẤU TRƯỜNG GỐC: 57 mesh → ~15 draw call ----
+   Mesh cũ của khối che (COVERS) vẫn ở trong scene nhưng vô hình: va chạm (box) và tia bắn
+   (HIT_ALL) dùng chúng như trước, chỉ phần HIỂN THỊ chuyển sang mesh gộp. */
+function consolidateBase(){
+  const groups=new Map();
+  for(const c of COVERS){const m=c.mesh,k=m.material.uuid+(m.castShadow?'s':'n');(groups.get(k)||groups.set(k,[]).get(k)).push(m)}
+  for(const ms of groups.values()){
+    const out=new THREE.Mesh(mergeGeos(ms.map(worldGeo)),ms[0].material);
+    out.castShadow=ms[0].castShadow;out.receiveShadow=true;out.frustumCulled=false;arena.add(out);ms.forEach(m=>{m.visible=false})}
+  const take=pred=>{const l=arena.children.filter(o=>o.isMesh&&o.geometry&&pred(o.geometry));l.forEach(o=>arena.remove(o));return l};
+  for(const l of [take(g=>g.type==='BoxGeometry'&&g.parameters.height===.12),      /* viền sáng */
+                  take(g=>g.type==='CylinderGeometry'&&g.parameters.height===11)]){ /* cột */
+    if(!l.length)continue;const out=new THREE.Mesh(mergeGeos(l.map(worldGeo)),l[0].material);out.frustumCulled=false;arena.add(out);l.forEach(o=>o.geometry.dispose())}
+  if(FLOATS.length){   /* khối bay: giữ mesh làm "người lái" (vòng lặp game xoay chúng), vẽ bằng 1 InstancedMesh */
+    const im=new THREE.InstancedMesh(boxG,new THREE.MeshBasicMaterial({color:0xffffff}),FLOATS.length),c=new THREE.Color();
+    im.instanceMatrix.setUsage(THREE.DynamicDrawUsage);im.frustumCulled=false;
+    FLOATS.forEach((m,i)=>{im.setColorAt(i,c.copy(m.material.color));m.visible=false});arena.add(im);
+    ANIM.push(()=>{for(let i=0;i<FLOATS.length;i++){const m=FLOATS[i];m.updateMatrix();im.setMatrixAt(i,m.matrix)}im.instanceMatrix.needsUpdate=true})}}
+
+/* ---- LÕI: có ở mọi mức đồ hoạ (2 draw call) ---- */
+const SKY=[[70,78,128,28,100],[36,95,135,22,60],null,[28,100,140,18,46],[40,90,135,25,80],[34,95,135,24,70]];
+function sunDisc(g,th){
+  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(th.pal[2]),blending:THREE.AdditiveBlending,depthWrite:false,fog:false}));
+  s.scale.set(110,110,1);s.position.set(-70,42,-175);g.add(s)}
+
+/* ---- DECO: chỉ mức Cao. Mỗi ải ≤ 8 draw call (+6 sprite chữ) ---- */
+const DECO=[
+/* 0 Neon Plaza: biển hiệu (1 atlas → 1 mesh), xe bay (3 draw call cho 7 xe) */
 (g,th,R)=>{
-  skyline(g,th,R,70,78,128,28,100);
-  ['OPEN','LEXI','WORD','24H','STRIKE','NEON'].forEach((w,i)=>{
-    const a=i/6*Math.PI*2+.3,tex=textTex(w,{glow:css(th.pal[i%5]),color:'#fff',font:"800 80px 'Baloo 2',Nunito,sans-serif"});
-    const m=mesh(new THREE.PlaneGeometry(15,7.5),bas(0xffffff,{map:tex,transparent:true,side:THREE.DoubleSide,depthWrite:false}),Math.cos(a)*42,11+R()*6,Math.sin(a)*42);
-    m.lookAt(0,m.position.y,0);g.add(m);ANIM.push((dt,t)=>{m.material.opacity=.72+Math.sin(t*3+i*2)*.28})});
-  for(let i=0;i<7;i++){
-    const car=new THREE.Group();car.add(mesh(boxG,bas(th.pal[i%5]),0,0,0));car.children[0].scale.set(3.4,.8,1.5);
-    const l1=mesh(boxG,bas(0xffffff),1.8,0,.4),l2=mesh(boxG,bas(0xff2e63),-1.8,0,.4);l1.scale.set(.2,.3,.3);l2.scale.set(.2,.3,.3);car.add(l1,l2);
-    g.add(car);let a=R()*6.28;const r=48+R()*26,y=14+R()*14,sp=(.12+R()*.1)*(i%2?1:-1);
-    ANIM.push(dt=>{a+=sp*dt;car.position.set(Math.cos(a)*r,y,Math.sin(a)*r);car.rotation.y=-a+(sp>0?0:Math.PI)})}
+  const words=['OPEN','LEXI','WORD','24H','STRIKE','NEON'];
+  const tex=atlasTex(words,3,2,256,128,"800 78px 'Baloo 2',Nunito,sans-serif",()=>'#fff',i=>css(th.pal[i%5]));
+  const mat=bas(0xffffff,{map:tex,transparent:true,side:THREE.DoubleSide,depthWrite:false});
+  const signs=words.map((w,i)=>{const a=i/6*Math.PI*2+.3,geo=new THREE.PlaneGeometry(15,7.5);atlasUV(geo,i,3,2);
+    const m=mesh(geo,mat,Math.cos(a)*42,11+R()*6,Math.sin(a)*42);m.lookAt(0,m.position.y,0);return m});
+  bake(g,signs);ANIM.push((dt,t)=>{mat.opacity=.72+Math.sin(t*3)*.28});
+  const N=7,cars=rig(g,N,[
+    {geo:boxG,mat:bas(0xffffff),scl:[3.4,.8,1.5],colors:th.pal},
+    {geo:boxG,mat:bas(0xffffff),off:[1.8,0,.4],scl:[.2,.3,.3],colors:[0xffffff]},
+    {geo:boxG,mat:bas(0xffffff),off:[-1.8,0,.4],scl:[.2,.3,.3],colors:[0xff2e63]}]);
+  const st=[],o=new THREE.Object3D();for(let i=0;i<N;i++)st.push({a:R()*6.28,r:48+R()*26,y:14+R()*14,sp:(.12+R()*.1)*(i%2?1:-1)});
+  ANIM.push(dt=>{st.forEach((s,i)=>{s.a+=s.sp*dt;o.position.set(Math.cos(s.a)*s.r,s.y,Math.sin(s.a)*s.r);o.rotation.set(0,-s.a+(s.sp>0?0:Math.PI),0);cars.set(i,o)});cars.done()})
 },
-/* 1 Cyber Docks: cảng, container, cần cẩu, mặt nước */
+/* 1 Cyber Docks: container gộp theo màu, cần cẩu gộp, đèn cảnh báo 1 Points, mặt nước */
 (g,th,R)=>{
-  skyline(g,th,R,36,95,135,22,60);hideOut();
+  hideOut();
   const wc=document.createElement('canvas');wc.width=wc.height=128;const wg=wc.getContext('2d');wg.fillStyle='#0b3d47';wg.fillRect(0,0,128,128);
   wg.strokeStyle='rgba(120,240,230,.35)';wg.lineWidth=2;for(let y=8;y<128;y+=16){wg.beginPath();for(let x=0;x<=128;x+=8)wg.lineTo(x,y+Math.sin(x/10+y)*3);wg.stroke()}
   const wt=new THREE.CanvasTexture(wc);wt.wrapS=wt.wrapT=THREE.RepeatWrapping;wt.repeat.set(50,50);
   const water=mesh(new THREE.PlaneGeometry(500,500),bas(0xffffff,{map:wt}),0,-.01,0);water.rotation.x=-Math.PI/2;g.add(water);
   ANIM.push(dt=>{wt.offset.x+=dt*.02;wt.offset.y+=dt*.012});
+  const list=[];
   for(let i=0;i<26;i++){const a=R()*6.28,r=38+R()*16,n=1+(R()*3|0);
-    for(let k=0;k<n;k++){const m=mesh(boxG,lam(th.pal[(i+k)%5]),Math.cos(a)*r,1.6+k*3.2,Math.sin(a)*r);m.scale.set(12,3,3.6);m.rotation.y=-a+Math.PI/2;g.add(m)}}
-  for(let i=0;i<4;i++){const a=i/4*6.28+.4,r=58,cx=Math.cos(a)*r,cz=Math.sin(a)*r,crane=new THREE.Group();
-    const dark=bas(0x1c2a33);[-6,6].forEach(o=>{const l=mesh(boxG,dark,o,22,0);l.scale.set(1.2,44,1.2);crane.add(l)});
-    const beam=mesh(boxG,dark,0,44,0);beam.scale.set(34,2,2);crane.add(beam);
-    const lamp=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(0xff3b3b),blending:THREE.AdditiveBlending,depthWrite:false,fog:false}));lamp.scale.set(8,8,1);lamp.position.set(-16,46,0);crane.add(lamp);
-    crane.position.set(cx,0,cz);crane.rotation.y=-a+Math.PI/2;g.add(crane);ANIM.push((dt,t)=>{lamp.material.opacity=.5+.5*Math.sin(t*2+i)})}
+    for(let k=0;k<n;k++){const m=mesh(boxG,lam(th.pal[(i+k)%5]),Math.cos(a)*r,1.6+k*3.2,Math.sin(a)*r);m.scale.set(12,3,3.6);m.rotation.y=-a+Math.PI/2;list.push(m)}}
+  const dark=bas(0x1c2a33),lamps=new Float32Array(12);
+  for(let i=0;i<4;i++){const a=i/4*6.28+.4,r=58,cx=Math.cos(a)*r,cz=Math.sin(a)*r,ca=Math.cos(-a+Math.PI/2),sa=Math.sin(-a+Math.PI/2);
+    const put=(m,lx,ly)=>{m.position.set(cx+lx*ca,ly,cz-lx*sa);m.rotation.y=-a+Math.PI/2;list.push(m)};
+    [-6,6].forEach(o=>{const l=mesh(boxG,dark,0,0,0);l.scale.set(1.2,44,1.2);put(l,o,22)});
+    const beam=mesh(boxG,dark,0,0,0);beam.scale.set(34,2,2);put(beam,0,44);
+    lamps[i*3]=cx-16*ca;lamps[i*3+1]=46;lamps[i*3+2]=cz+16*sa}
+  bake(g,list);
+  const lm=new THREE.PointsMaterial({map:glowTex(0xff3b3b),size:9,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,fog:false});
+  g.add(pointsOf(lamps,lm));ANIM.push((dt,t)=>{lm.opacity=.5+.5*Math.sin(t*2)})
 },
-/* 2 Sky Lab: phòng thí nghiệm trên mây, tháp kính, vòng quay */
+/* 2 Sky Lab: biển mây, mây = 1 Points (thay 38 sprite), tháp kính + khung gộp, 3 vòng quay */
 (g,th,R)=>{
   hideOut();
   const sea=mesh(new THREE.PlaneGeometry(500,500),bas(0xe8f4ff),0,-14,0);sea.rotation.x=-Math.PI/2;g.add(sea);
-  const ct=glowTex(0xffffff);
-  for(let i=0;i<38;i++){const s=new THREE.Sprite(new THREE.SpriteMaterial({map:ct,transparent:true,opacity:.75,depthWrite:false,fog:false}));
-    const a=R()*6.28,r=48+R()*95;s.position.set(Math.cos(a)*r,-8+R()*34,Math.sin(a)*r);const sc=22+R()*36;s.scale.set(sc*1.8,sc*.7,1);g.add(s);
-    ANIM.push(dt=>{s.position.x+=dt*.6;if(s.position.x>150)s.position.x=-150})}
+  const N=30,cp=new Float32Array(N*3);
+  for(let i=0;i<N;i++){const a=R()*6.28,r=48+R()*95;cp[i*3]=Math.cos(a)*r;cp[i*3+1]=-8+R()*34;cp[i*3+2]=Math.sin(a)*r}
+  const clouds=pointsOf(cp,new THREE.PointsMaterial({map:glowTex(0xffffff),size:46,transparent:true,opacity:.7,depthWrite:false,fog:false}));g.add(clouds);
+  const pa=clouds.geometry.attributes.position;
+  ANIM.push(dt=>{const p=pa.array;for(let i=0;i<N;i++){p[i*3]+=dt*.6;if(p[i*3]>150)p[i*3]=-150}pa.needsUpdate=true});
+  const tm=bas(th.pal[1],{transparent:true,opacity:.32,depthWrite:false}),towers=[],edges=[];
   for(let i=0;i<9;i++){const a=i/9*6.28+R()*.3,r=52+R()*22,h=26+R()*34;
-    const t=mesh(boxG,bas(th.pal[1],{transparent:true,opacity:.32,depthWrite:false}),Math.cos(a)*r,h/2-2,Math.sin(a)*r);t.scale.set(9,h,9);g.add(t);
-    const e=new THREE.LineSegments(new THREE.EdgesGeometry(boxG),new THREE.LineBasicMaterial({color:th.trim}));e.position.copy(t.position);e.scale.copy(t.scale);g.add(e)}
+    const t=mesh(boxG,tm,Math.cos(a)*r,h/2-2,Math.sin(a)*r);t.scale.set(9,h,9);towers.push(t);
+    const e=mesh(new THREE.EdgesGeometry(boxG),null,t.position.x,t.position.y,t.position.z);e.scale.copy(t.scale);edges.push(e)}
+  bake(g,towers);bakeLines(g,edges,new THREE.LineBasicMaterial({color:th.trim}));
   for(let i=0;i<3;i++){const ring=mesh(new THREE.TorusGeometry(38+i*9,.35,6,72),bas(th.trim),0,30+i*7,0);ring.rotation.x=Math.PI/2+.25*(i-1);g.add(ring);
-    ANIM.push((dt)=>{ring.rotation.z+=dt*(.12+i*.05)*(i%2?-1:1)})}
+    ANIM.push(dt=>{ring.rotation.z+=dt*(.12+i*.05)*(i%2?-1:1)})}
 },
-/* 3 Frozen Archive: băng tuyết, sách bay */
+/* 3 Frozen Archive: tinh thể gộp, sách bay = 2 InstancedMesh, tuyết = 1 Points */
 (g,th,R)=>{
-  skyline(g,th,R,28,100,140,18,46);
-  const ice=bas(th.pal[1],{transparent:true,opacity:.5,depthWrite:false});
-  for(let i=0;i<22;i++){const a=R()*6.28,r=38+R()*30,h=8+R()*20,c=mesh(new THREE.ConeGeometry(2+R()*3,h,6),ice,Math.cos(a)*r,h/2-1,Math.sin(a)*r);c.rotation.z=(R()-.5)*.25;g.add(c)}
-  for(let i=0;i<18;i++){const b=new THREE.Group(),cover=mesh(boxG,lam(th.pal[i%5]),0,0,0);cover.scale.set(2.2,.5,3);const pg=mesh(boxG,bas(0xffffff),0,.05,0);pg.scale.set(2,.42,2.8);b.add(cover,pg);g.add(b);
-    orbit(b,34+R()*18,8+R()*16,.06+R()*.06,R()*6.28,1.5);ANIM.push((dt,t)=>{b.rotation.z=Math.sin(t+i)*.4;b.rotation.x+=dt*.5})}
-  const N=520,pos=new Float32Array(N*3);for(let i=0;i<N;i++){pos[i*3]=(R()-.5)*100;pos[i*3+1]=R()*34;pos[i*3+2]=(R()-.5)*100}
-  const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  g.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:.45,transparent:true,opacity:.85,fog:false})));
-  ANIM.push(dt=>{const p=sg.attributes.position.array;for(let i=0;i<N;i++){p[i*3+1]-=dt*(2+(i%5)*.4);p[i*3]+=Math.sin(i+p[i*3+1])*dt*.4;if(p[i*3+1]<0)p[i*3+1]=34}sg.attributes.position.needsUpdate=true})
+  const ice=bas(th.pal[1],{transparent:true,opacity:.5,depthWrite:false}),cr=[];
+  for(let i=0;i<22;i++){const a=R()*6.28,r=38+R()*30,h=8+R()*20,c=mesh(new THREE.ConeGeometry(2+R()*3,h,6),ice,Math.cos(a)*r,h/2-1,Math.sin(a)*r);c.rotation.z=(R()-.5)*.25;cr.push(c)}
+  bake(g,cr);
+  const N=18,books=rig(g,N,[{geo:boxG,mat:bas(0xffffff),scl:[2.2,.5,3],colors:th.pal},{geo:boxG,mat:bas(0xffffff),off:[0,.05,0],scl:[2,.42,2.8],colors:[0xffffff]}]);
+  const st=[],o=new THREE.Object3D();for(let i=0;i<N;i++)st.push({a:R()*6.28,r:34+R()*18,y:8+R()*16,sp:.06+R()*.06,rx:0});
+  ANIM.push((dt,t)=>{st.forEach((s,i)=>{s.a+=s.sp*dt;s.rx+=dt*.5;o.position.set(Math.cos(s.a)*s.r,s.y+Math.sin(t*.8+i)*1.5,Math.sin(s.a)*s.r);o.rotation.set(s.rx,-s.a,Math.sin(t+i)*.4);books.set(i,o)});books.done()});
+  const SN=520,pos=new Float32Array(SN*3);for(let i=0;i<SN;i++){pos[i*3]=(R()-.5)*100;pos[i*3+1]=R()*34;pos[i*3+2]=(R()-.5)*100}
+  const snow=pointsOf(pos,new THREE.PointsMaterial({color:0xffffff,size:.45,transparent:true,opacity:.85,fog:false}));g.add(snow);
+  ANIM.push(dt=>{const p=snow.geometry.attributes.position.array;for(let i=0;i<SN;i++){p[i*3+1]-=dt*(2+(i%5)*.4);p[i*3]+=Math.sin(i+p[i*3+1])*dt*.4;if(p[i*3+1]<0)p[i*3+1]=34}snow.geometry.attributes.position.needsUpdate=true})
 },
-/* 4 Glitch Core: lõi dữ liệu vỡ, tia đỏ, mưa số */
+/* 4 Glitch Core: 22 khối dữ liệu = 2 InstancedMesh (đặc + khung dây), tia đỏ gộp, mưa số gộp */
 (g,th,R)=>{
-  skyline(g,th,R,40,90,135,25,80);
-  const cubes=[];
-  for(let i=0;i<22;i++){const cu=new THREE.Group(),s=2+R()*5;
-    const ed=new THREE.LineSegments(new THREE.EdgesGeometry(boxG),new THREE.LineBasicMaterial({color:th.pal[i%3]}));ed.scale.setScalar(s);
-    const so=mesh(boxG,bas(th.pal[i%3],{transparent:true,opacity:.12,depthWrite:false}),0,0,0);so.scale.setScalar(s);cu.add(ed,so);
-    const a=R()*6.28,r=40+R()*40;cu.position.set(Math.cos(a)*r,6+R()*28,Math.sin(a)*r);g.add(cu);cubes.push(cu)}
-  let jt=0;ANIM.push((dt,t)=>{jt+=dt;cubes.forEach((c,i)=>{c.rotation.x+=dt*(.2+i%3*.1);c.rotation.y+=dt*.3;if(jt>.12&&Math.random()<.08){c.position.x+=(Math.random()-.5)*2.4;c.visible=Math.random()>.12}});if(jt>.12)jt=0});
-  for(let i=0;i<8;i++){const a=i/8*6.28,r=46+R()*18,b=mesh(new THREE.CylinderGeometry(.3,.3,90,6),bas(th.trim,{transparent:true,opacity:.35,blending:THREE.AdditiveBlending,depthWrite:false}),Math.cos(a)*r,40,Math.sin(a)*r);g.add(b);
-    ANIM.push((dt,t)=>{b.material.opacity=.2+.25*Math.abs(Math.sin(t*1.7+i))})}
+  const N=22,cubes=rig(g,N,[
+    {geo:boxG,mat:bas(0xffffff,{transparent:true,opacity:.14,depthWrite:false}),colors:[th.pal[0],th.pal[1],th.pal[2]]},
+    {geo:boxG,mat:bas(0xffffff,{wireframe:true}),colors:[th.pal[0],th.pal[1],th.pal[2]]}]);
+  const cs=[],o=new THREE.Object3D();
+  for(let i=0;i<N;i++){const a=R()*6.28,r=40+R()*40;cs.push({x:Math.cos(a)*r,y:6+R()*28,z:Math.sin(a)*r,s:2+R()*5,rx:0,ry:0,on:true})}
+  let jt=0;ANIM.push(dt=>{jt+=dt;cs.forEach((c,i)=>{c.rx+=dt*(.2+i%3*.1);c.ry+=dt*.3;if(jt>.12&&Math.random()<.08){c.x+=(Math.random()-.5)*2.4;c.on=Math.random()>.12}
+    o.position.set(c.x,c.y,c.z);o.rotation.set(c.rx,c.ry,0);o.scale.setScalar(c.on?c.s:.001);cubes.set(i,o)});if(jt>.12)jt=0;cubes.done()});
+  const bm=bas(th.trim,{transparent:true,opacity:.35,blending:THREE.AdditiveBlending,depthWrite:false}),beams=[];
+  for(let i=0;i<8;i++){const a=i/8*6.28,r=46+R()*18;beams.push(mesh(new THREE.CylinderGeometry(.3,.3,90,6),bm,Math.cos(a)*r,40,Math.sin(a)*r))}
+  bake(g,beams);ANIM.push((dt,t)=>{bm.opacity=.2+.25*Math.abs(Math.sin(t*1.7))});
   const rc=document.createElement('canvas');rc.width=64;rc.height=256;const rg=rc.getContext('2d');rg.font='700 14px monospace';
   for(let y=10;y<256;y+=16)for(let x=4;x<64;x+=14){rg.fillStyle=`rgba(255,${60+R()*100|0},${100+R()*120|0},${.25+R()*.75})`;rg.fillText(R()<.5?'0':'1',x,y)}
   const rt=new THREE.CanvasTexture(rc);rt.wrapS=rt.wrapT=THREE.RepeatWrapping;rt.repeat.set(3,2);
-  for(let i=0;i<10;i++){const a=i/10*6.28+.2,p=mesh(new THREE.PlaneGeometry(14,48),bas(0xffffff,{map:rt,transparent:true,opacity:.55,side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending}),Math.cos(a)*56,24,Math.sin(a)*56);p.lookAt(0,24,0);g.add(p)}
-  ANIM.push(dt=>{rt.offset.y-=dt*.35})
+  const rm=bas(0xffffff,{map:rt,transparent:true,opacity:.55,side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending}),rain=[];
+  for(let i=0;i<10;i++){const a=i/10*6.28+.2,p=mesh(new THREE.PlaneGeometry(14,48),rm,Math.cos(a)*56,24,Math.sin(a)*56);p.lookAt(0,24,0);rain.push(p)}
+  bake(g,rain);ANIM.push(dt=>{rt.offset.y-=dt*.35})
 },
-/* 5 Grammar Throne: ngai vàng, chữ khổng lồ, dấu câu bay */
+/* 5 Grammar Throne: 8 chữ vàng trong 1 atlas → 1 mesh (xoay chậm quanh đấu trường), ngai vàng gộp */
 (g,th,R)=>{
-  skyline(g,th,R,34,95,135,24,70);
-  ['A','B','C','?','!','"',',','.'].forEach((ch,i)=>{
-    const a=i/8*6.28+.2,tex=textTex(ch,{w:256,h:256,font:"800 220px 'Baloo 2',Nunito,serif",glow:'#ffc83d',color:'#ffd878'});
-    const m=mesh(new THREE.PlaneGeometry(16,16),bas(0xffffff,{map:tex,transparent:true,side:THREE.DoubleSide,depthWrite:false}),Math.cos(a)*52,12+R()*6,Math.sin(a)*52);m.lookAt(0,m.position.y,0);g.add(m);
-    ANIM.push((dt,t)=>{m.position.y+=Math.sin(t*.9+i)*dt*.8;m.material.opacity=.7+.3*Math.sin(t*1.5+i)})});
-  const gold=bas(th.trim),purple=lam(th.wall);
-  for(let k=0;k<5;k++){const s=mesh(boxG,purple,0,k*1.6,-78-k*3);s.scale.set(34-k*5,3.2,10);g.add(s);const tr=mesh(boxG,gold,0,k*1.6+1.6,-78-k*3);tr.scale.set(34.2-k*5,.25,10.2);g.add(tr)}
-  const back=mesh(boxG,purple,0,22,-94);back.scale.set(18,34,3);g.add(back);const crown=mesh(new THREE.ConeGeometry(4,8,5),gold,0,43,-94);g.add(crown);
-  const gl=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(th.trim),blending:THREE.AdditiveBlending,depthWrite:false,fog:false}));gl.scale.set(60,60,1);gl.position.set(0,26,-90);g.add(gl);
+  const ch=['A','B','C','?','!','"',',','.'];
+  const tex=atlasTex(ch,4,2,256,256,"800 220px 'Baloo 2',Nunito,serif",()=>'#ffd878',()=>'#ffc83d');
+  const lm=bas(0xffffff,{map:tex,transparent:true,side:THREE.DoubleSide,depthWrite:false});
+  const letters=ch.map((c,i)=>{const a=i/8*6.28+.2,geo=new THREE.PlaneGeometry(16,16);atlasUV(geo,i,4,2);
+    const m=mesh(geo,lm,Math.cos(a)*52,12+R()*6,Math.sin(a)*52);m.lookAt(0,m.position.y,0);return m});
+  const before=g.children.length;bake(g,letters);const lmesh=g.children[before];
+  ANIM.push((dt,t)=>{lmesh.rotation.y+=dt*.03;lm.opacity=.7+.3*Math.sin(t*1.5)});
+  const gold=bas(th.trim),purple=lam(th.wall),list=[];
+  for(let k=0;k<5;k++){const s=mesh(boxG,purple,0,k*1.6,-78-k*3);s.scale.set(34-k*5,3.2,10);list.push(s);const tr=mesh(boxG,gold,0,k*1.6+1.6,-78-k*3);tr.scale.set(34.2-k*5,.25,10.2);list.push(tr)}
+  const back=mesh(boxG,purple,0,22,-94);back.scale.set(18,34,3);list.push(back);list.push(mesh(new THREE.ConeGeometry(4,8,5),gold,0,43,-94));
+  bake(g,list);
+  const gl=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(th.trim),blending:THREE.AdditiveBlending,depthWrite:false,fog:false}));gl.scale.set(60,60,1);gl.position.set(0,26,-90);g.add(gl)
 }
 ];
 
-/* các từ vựng lơ lửng như hạt sáng – mọi ải */
+/* từ vựng lơ lửng như hạt sáng: 3 sprite (chỉ mức Cao) */
 function floatingWords(g,th){
-  if(qLevel==='ultra'||!TR||!TR.voice)return;
-  const ws=shuffle(TR.voice).slice(0,14);
-  ws.forEach((w,i)=>{
+  if(!TR||!TR.voice)return;
+  shuffle(TR.voice).slice(0,3).forEach((w,i)=>{
     const tex=textTex(w[0],{w:384,h:96,font:"800 56px 'Baloo 2',Nunito,sans-serif",color:'#fff',glow:css(th.pal[i%5])});
     const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,opacity:.5,blending:THREE.AdditiveBlending,depthWrite:false,fog:false}));
     s.scale.set(11,2.8,1);const a=Math.random()*6.28,r=44+Math.random()*50;let y=6+Math.random()*26;s.position.set(Math.cos(a)*r,y,Math.sin(a)*r);g.add(s);
     ANIM.push((dt,t)=>{y+=dt*.8;if(y>36)y=5;s.position.y=y+Math.sin(t+i)*.6})})}
-/* mặt trời / hành tinh phía chân trời */
-function sunDisc(g,th){
-  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(th.pal[2]),blending:THREE.AdditiveBlending,depthWrite:false,fog:false}));
-  s.scale.set(110,110,1);s.position.set(-70,42,-175);g.add(s)}
+
+/* ---- BÓNG TRÒN DƯỚI CHÂN BOT: thay đổ bóng thật của bot (mỗi bot tốn 2 draw call bóng).
+   Mọi bot + boss dùng chung 1 InstancedMesh = 1 draw call. Có ở Cao và Thấp, không ở Siêu nhẹ. ---- */
+let blob=null;
+function makeBlob(g){
+  const geo=new THREE.CircleGeometry(1,16);geo.rotateX(-Math.PI/2);
+  blob=new THREE.InstancedMesh(geo,new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.38,depthWrite:false}),12);
+  blob.frustumCulled=false;blob.count=0;blob.instanceMatrix.setUsage(THREE.DynamicDrawUsage);g.add(blob);
+  const o=new THREE.Object3D();
+  ANIM.push(()=>{
+    if(!blob.visible)return;
+    let n=0;const add=b=>{if(n>=12||!b||b.userData.dying&&b.scale.x<.15)return;
+      o.position.set(b.position.x,.03,b.position.z);o.scale.setScalar(.85*b.scale.x);o.updateMatrix();blob.setMatrixAt(n++,o.matrix)};
+    for(const b of BOTS)add(b);if(BOSS)add(BOSS);
+    blob.count=n;blob.instanceMatrix.needsUpdate=true})}
+
+/* ---- dựng / bật tắt deco theo mức đồ hoạ ---- */
+let deco=null,lastBuild=null;
+function buildDeco(){
+  if(deco||!lastBuild||!arena)return;
+  const {stg,idx}=lastBuild,n0=ANIM.length;deco=new THREE.Group();arena.add(deco);
+  try{const th=stg.th,R=seeded((idx+3)*104729);(DECO[idx]||DECO[0])(deco,th,R);floatingWords(deco,th)}
+  catch(e){console.warn('[WS extras] deco lỗi:',e)}
+  for(let i=n0;i<ANIM.length;i++)ANIM[i].deco=true}
+function updateDeco(){
+  if(!arena||!lastBuild)return;
+  const hi=qLevel==='high';if(hi&&!deco)buildDeco();if(deco)deco.visible=hi;
+  if(blob)blob.visible=qLevel!=='ultra'}
 
 const _ba=buildArena;
 buildArena=function(stg,idx){
-  _ba(stg,idx);
-  ANIM.length=0;
+  _ba(stg,idx);ANIM.length=0;deco=null;lastBuild={stg,idx};
   try{
     const th=stg.th,R=seeded((idx+3)*104729);
-    sunDisc(arena,th);
-    if(qLevel==='ultra'){skyline(arena,th,R,30,80,125,26,80)}
-    else{(PROPS[idx]||PROPS[0])(arena,th,R);floatingWords(arena,th)}
+    consolidateBase();
+    sunDisc(arena,th);if(SKY[idx])skyline(arena,th,R,...SKY[idx]);
+    makeBlob(arena);
+    updateDeco();
   }catch(e){console.warn('[WS extras] props lỗi:',e)}};
+/* đồ hoạ đổi giữa trận (tự giảm FPS hoặc chọn lại) → bật/tắt deco */
+const _applyQ=applyQuality;
+applyQuality=function(){_applyQ();try{updateDeco()}catch(e){}};
 
 /* vòng cập nhật phụ: bối cảnh + thời gian + rung */
 let _lt=performance.now();
@@ -585,7 +709,8 @@ let _lt=performance.now();
   const now=performance.now(),rdt=Math.min(.1,(now-_lt)/1000);_lt=now;const t=now/1000;
   if(TS.hold>0){TS.hold-=rdt;TS.v=TS.tgt}else{TS.v+=(1-TS.v)*Math.min(1,rdt*9);TS.tgt=1;if(Math.abs(1-TS.v)<.01)TS.v=1}
   sh.amp*=Math.exp(-rdt*8);
-  for(let i=0;i<ANIM.length;i++)ANIM[i](rdt,t)
+  const decoOn=deco&&deco.visible;   /* chỉ chạy hoạt ảnh deco khi deco đang hiện */
+  for(let i=0;i<ANIM.length;i++){const f=ANIM[i];if(f.deco&&!decoOn)continue;f(rdt,t)}
 })();
 
 /* hiệu ứng nghiêng 3D khi rê chuột vào thẻ */
