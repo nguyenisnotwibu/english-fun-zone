@@ -93,6 +93,25 @@ a.dict{color:#8fd3ff;font-weight:800}
 #fireB,#pauseB{position:absolute;pointer-events:auto;border-radius:50%;border:2px solid #fff;color:#fff;font:800 14px Nunito;background:rgba(255,71,87,.55)}
 #fireB{right:24px;bottom:150px;width:84px;height:84px}
 #pauseB{right:150px;top:14px;width:42px;height:42px;background:rgba(20,30,70,.7)}
+.touchui #c,#touch{touch-action:none}
+#jumpB,#zoomB{position:absolute;pointer-events:auto;border-radius:50%;border:2px solid #fff;color:#fff;font:800 20px Nunito;background:rgba(30,144,255,.5)}
+#jumpB{right:126px;bottom:34px;width:58px;height:58px}#zoomB{right:40px;bottom:132px;width:50px;height:50px;background:rgba(166,107,255,.55)}
+#rotate{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;text-align:center;padding:24px;background:rgba(5,8,22,.96);font:800 20px Nunito}
+#rotate .ph{font-size:64px;animation:rot 1.6s infinite}@keyframes rot{50%{transform:rotate(90deg)}}
+@media (orientation:portrait){body.touchui.playing:not(.portraitOK) #rotate{display:flex}body.touchui #dock{bottom:170px}body.touchui #topcol{width:calc(100% - 110px);left:auto;right:100px;transform:none}body.touchui #hpwrap{width:28vw}body.touchui #stats{top:60px}}
+body.touchui #hpwrap{top:8px;left:10px;bottom:auto;width:min(150px,20vw)}
+body.touchui #hpwrap .lbl{display:none}body.touchui #hpTxt{font-size:11px}
+body.touchui #stats{top:44px;left:10px;bottom:auto;font-size:12px}body.touchui #stats b{font-size:17px}
+body.touchui #topcol{top:6px;left:50%;transform:translateX(-50%);width:min(54vw,600px)}
+body.touchui #mission{padding:5px 10px 7px}body.touchui #mtag{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}body.touchui #sentence{font-size:clamp(14px,2.4vw,22px)}
+body.touchui #toast{font-size:12.5px;padding:5px 10px}
+body.touchui #radar{top:8px;right:8px;width:84px;height:84px}
+body.touchui #pauseB{right:14px;top:100px;left:auto}
+body.touchui #dock{bottom:6px}body.touchui #wepname{display:none}
+body.touchui .slot{width:44px;height:44px;font-size:19px}body.touchui .slot.small{width:40px;height:40px;font-size:17px}
+body.touchui #joy{left:18px;bottom:18px;width:132px;height:132px}body.touchui #knob{left:41px;top:41px}
+body.touchui #fireB{right:22px;bottom:24px;width:92px;height:92px;font-size:15px}
+body.touchui #banner{font-size:clamp(24px,5vw,44px)}
 @media (max-width:760px){#topcol{top:6px;width:calc(100% - 150px);left:12px;transform:none}#mission{padding:6px 10px}#sentence{font-size:16px}#radar{width:90px;height:90px}#stats{top:auto;bottom:240px;left:14px}#hpwrap{bottom:auto;top:auto;bottom:96px;width:40vw}.slot{width:46px;height:46px;font-size:20px}.st{grid-template-columns:repeat(2,1fr)}#wepname{display:none}}
 </style>
 </head>
@@ -102,7 +121,7 @@ a.dict{color:#8fd3ff;font-weight:800}
 <div id="hudAll" class="hide">
   <div id="tint" class="hud"></div>
   <div id="topcol" class="hud"><div id="mission"><div id="mtag"></div><div id="sentence"></div></div><div id="toast"></div></div>
-  <div id="stats" class="hud"><span id="stg"></span><br>Điểm <b id="score">0</b><br><span id="combo"></span></div>
+  <div id="stats" class="hud"><span id="stg"></span><br>Điểm <b id="score">0</b><br><span id="combo"></span><br><span id="perkHud"></span></div>
   <div id="hpwrap" class="hud"><div class="lbl" id="heroLbl">HP</div><div class="bar"><div id="hp"></div></div><div id="hpTxt"></div></div>
   <div id="cross" class="hud"></div>
   <canvas id="radar" class="hud" width="240" height="240"></canvas>
@@ -119,13 +138,16 @@ a.dict{color:#8fd3ff;font-weight:800}
   <div id="joy"><div id="knob"></div></div>
   <button id="fireB">BẮN</button>
   <button id="pauseB">❚❚</button>
+  <button id="jumpB">⤒</button>
+  <button id="zoomB">🔭</button>
 </div>
 
+<div id="rotate"><div class="ph">📱</div><div>Xoay ngang điện thoại để chơi tốt nhất</div><button class="btn sec" id="portraitOK">Vẫn chơi màn dọc</button></div>
 <!-- MENU -->
 <div id="menu" class="ov">
   <div class="card">
     <h1>WORD STRIKE 3D</h1>
-    <div class="sub">Bắn đúng từ, cứu thành phố Lexicon khỏi bọn Glitch! · 6 ải · 5 dạng bài · 4 vũ khí · 3 anh hùng</div>
+    <div class="sub">Bắn đúng từ, cứu thành phố Lexicon khỏi bọn Glitch! · 6 ải · 6 dạng bài · 4 vũ khí · 3 anh hùng · thử thách & phần thưởng</div>
     <h3>1 · Cấp độ</h3><div class="grid" id="trk"></div>
     <h3>2 · Chọn anh hùng</h3><div class="grid" id="heroes"></div>
     <h3>3 · Chọn ải <span id="unlockAll" style="cursor:pointer;font-size:11px;color:#8fd3ff;text-transform:none;letter-spacing:0">(🔓 giáo viên: mở tất cả)</span></h3><div class="grid" id="stages"></div>
@@ -133,13 +155,13 @@ a.dict{color:#8fd3ff;font-weight:800}
     <div class="howto">
       <div>🎯 Đọc nhiệm vụ ở trên → bắn robot mang <b>đáp án đúng</b>. Bắn nhầm: mất máu + hiện giải thích.</div>
       <div>🖱️ <kbd>WASD</kbd> đi · <kbd>Chuột</kbd> ngắm · <kbd>Click</kbd>/<kbd>F</kbd> bắn · <kbd>Shift</kbd> chạy · <kbd>Space</kbd> nhảy · <kbd>←→</kbd> xoay</div>
-      <div>🔫 <kbd>1</kbd>–<kbd>4</kbd> hoặc lăn chuột: đổi vũ khí. Railgun: <b>chuột phải</b> để ngắm xa.</div>
+      <div>🔫 Đổi súng: <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> · lăn chuột · <kbd>X</kbd>/<kbd>Tab</kbd> · bấm ô súng. Đủ 4 súng ngay từ đầu. Railgun: <b>chuột phải</b> ngắm xa.</div>
       <div>✨ <kbd>Q</kbd> <kbd>E</kbd> kỹ năng anh hùng · <kbd>R</kbd> tuyệt chiêu <b>Voice Blast</b>: đọc to từ tiếng Anh!</div>
-      <div>🤖 Quái: Grunt · Runner (nhanh) · Tank (3 máu, có giáp) · Sniper (bắn đạn từ xa).</div>
-      <div>⭐ Mỗi ải 3 đợt + Boss. Chính xác ≥70% được 2 sao, ≥90% được 3 sao, qua ải mở ải sau.</div>
+      <div>📱 Điện thoại/tablet (xoay ngang): cần gạt trái đi (đẩy hết cỡ = chạy) · vuốt nửa phải để ngắm · giữ <b>BẮN</b> · ⤒ nhảy · 🔭 ngắm Railgun · chạm ô súng/kỹ năng. Có hỗ trợ ngắm tự động.</div><div>🤖 Quái: Grunt · Runner (nhanh) · Tank (3 máu, có giáp) · Sniper (bắn đạn từ xa).</div>
+      <div>⭐ Sau mỗi đợt: <b>THỬ THÁCH KHÓ</b> 20 giây – đúng thì chọn 1 phần thưởng (sát thương, tốc bắn, máu, điểm x2…). Gặp <b>CÂU VÀNG</b> trong trận: x3 điểm!</div><div>🏆 Mỗi ải 3 đợt + Boss. Chính xác ≥70% được 2 sao, ≥90% được 3 sao, qua ải mở ải sau.</div>
     </div>
     <div class="row" style="margin-top:16px"><button class="btn" id="startB">▶ VÀO ẢI</button>
-      <label class="row" style="gap:6px;font-weight:800;color:var(--mut)">Đồ hoạ <select id="qualSel"><option value="auto">Tự động</option><option value="high">Cao</option><option value="low">Thấp (mượt)</option></select></label>
+      <label class="row" style="gap:6px;font-weight:800;color:var(--mut)">Đồ hoạ <select id="qualSel"><option value="auto">Tự động</option><option value="high">Cao</option><option value="low">Thấp (mượt)</option><option value="ultra">Siêu nhẹ (máy yếu)</option></select></label>
       <a class="btn sec" href="./">← English Fun Zone</a></div>
   </div>
 </div>
@@ -163,6 +185,17 @@ a.dict{color:#8fd3ff;font-weight:800}
   </div>
 </div>
 
+<div id="chal" class="ov hide" style="align-items:center">
+  <div class="card" style="max-width:640px">
+    <div class="lbl" style="text-align:center;color:#ffc83d">⭐ THỬ THÁCH KHÓ · TRẢ LỜI ĐÚNG ĐỂ CHỌN PHẦN THƯỞNG</div>
+    <div class="bar" style="height:8px;margin:8px 0 12px"><div id="chBar" style="height:100%;width:100%;background:linear-gradient(90deg,#ffc83d,#ff6bd6)"></div></div>
+    <div id="chQ" style="font:800 clamp(18px,3vw,26px) 'Baloo 2';text-align:center;margin-bottom:14px"></div>
+    <div id="chOpts" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))"></div>
+    <div id="chRes" style="text-align:center;font-weight:800;margin-top:12px"></div>
+    <div id="chPerks" class="grid" style="margin-top:8px"></div>
+    <div class="row" style="justify-content:center;margin-top:12px"><button class="btn hide" id="chGo">Tiếp tục chiến đấu ▶</button></div>
+  </div>
+</div>
 <div id="end" class="ov hide">
   <div class="card">
     <h1 id="etitle"></h1>
@@ -213,7 +246,28 @@ gap:[
 ["If it rains, I ___ stay at home.","will",["am","did","was"],"Điều kiện loại 1: will + V."],
 ["It is cold, ___ I wear a coat.","so",["but","because","or"],"so = vì vậy."],
 ["Tom is ___ boy in our class.","the tallest",["taller","tall","most tall"],"So sánh nhất: the + -est."],
-["What ___ you do last weekend?","did",["do","does","are"],"Quá khứ → did."]],
+["What ___ you do last weekend?","did",["do","does","are"],"Quá khứ → did."],
+["Mary ___ a shower every morning.","takes",["take","taking","took"],"Chủ ngữ số ít + hiện tại đơn → takes."],
+["Where ___ you yesterday?","were",["was","are","did"],"you + quá khứ của be → were."],
+["I'm afraid ___ dogs.","of",["about","with","from"],"be afraid of."],
+["There are ___ books on the shelf.","some",["any","much","a"],"Câu khẳng định, danh từ số nhiều → some."],
+["Let's ___ to the zoo!","go",["goes","going","to go"],"Let's + V nguyên mẫu."],
+["It's raining. Take ___ umbrella.","an",["a","two","some"],"umbrella bắt đầu bằng nguyên âm → an."],
+["My dad is ___ engineer.","an",["a","one","any"],"engineer bắt đầu bằng nguyên âm → an."],
+["___ is your teacher? – Mr. Brown.","Who",["What","Where","When"],"Hỏi người → Who."]],
+hard:[
+["I've lived here ___ 2020.","since",["for","from","at"],"Mốc thời gian + hiện tại hoàn thành → since."],
+["She is very good ___ drawing.","at",["in","on","with"],"good at + V-ing."],
+["There are ___ people in the park than yesterday.","more",["much","many","most"],"than → so sánh hơn của many là more."],
+["He ___ TV when the phone rang.","was watching",["watched","watches","is watching"],"Hành động đang diễn ra thì bị xen ngang → quá khứ tiếp diễn."],
+["The film was so ___ that I fell asleep.","boring",["bored","bore","bores"],"Tính từ -ing tả thứ gây ra cảm xúc."],
+["I don't have ___ money left.","much",["many","a few","some"],"money không đếm được, câu phủ định → much."],
+["Have you ever ___ to London?","been",["go","went","going"],"Have you ever been to…? = đã từng đến…"],
+["This is the boy ___ won the race.","who",["which","where","what"],"Thay cho người → who."],
+["We'll go out if it ___ rain.","doesn't",["won't","didn't","isn't"],"If + hiện tại đơn (không dùng will)."],
+["My brother is ___ than me at maths.","better",["gooder","best","more good"],"good → better (bất quy tắc)."],
+["Neither Tom ___ Anna likes fish.","nor",["or","and","but"],"neither … nor."],
+["You ___ run in the corridor. It's dangerous!","mustn't",["don't have to","needn't","can"],"mustn't = cấm; don't have to = không cần."]],
 vocab:[["thư viện","library",["kitchen","garden","hospital"]],["con voi","elephant",["giraffe","monkey","tiger"]],["bữa sáng","breakfast",["lunch","dinner","snack"]],["cái ô","umbrella",["raincoat","boots","hat"]],["con bướm","butterfly",["bee","spider","ladybird"]],["thứ Tư","Wednesday",["Tuesday","Thursday","Monday"]],["rau củ","vegetables",["fruit","meat","bread"]],["bác sĩ","doctor",["nurse","teacher","farmer"]],["bãi biển","beach",["mountain","river","forest"]],["mùa đông","winter",["summer","spring","autumn"]],["cầu vồng","rainbow",["cloud","thunder","snow"]],["đói bụng","hungry",["thirsty","tired","sleepy"]],["bàn chải đánh răng","toothbrush",["toothpaste","comb","towel"]],["leo trèo","climb",["swim","jump","run"]]],
 spell:[["beautiful",["beatiful","beautifull","butiful"]],["friend",["freind","frend","friand"]],["because",["becuase","becos","beacause"]],["Wednesday",["Wensday","Wednesdey","Wendsday"]],["February",["Febuary","Februery","Febrary"]],["chocolate",["chocolat","choclate","chokolate"]],["different",["diffrent","diferent","differant"]],["library",["libary","liberary","librery"]],["tomorrow",["tommorow","tomorow","tommorrow"]],["family",["famliy","familly","femily"]],["school",["shcool","scool","skool"]],["favourite",["favourit","favorit","favrite"]]],
 order:[[["I","like","to","play","football"],"Tôi thích chơi bóng đá."],[["She","is","my","best","friend"],"Cô ấy là bạn thân nhất của tôi."],[["We","go","to","school","by bus"],"Chúng tôi đi học bằng xe buýt."],[["The","cat","is","very","cute"],"Con mèo rất dễ thương."],[["What","time","is","it","now?"],"Bây giờ là mấy giờ?"],[["Can","you","ride","a","bike?"],"Bạn có biết đi xe đạp không?"],[["My","mum","is","a","doctor"],"Mẹ tôi là bác sĩ."],[["He","doesn't","like","milk"],"Cậu ấy không thích sữa."]],
@@ -241,7 +295,28 @@ gap:[
 ["Ms. Kim handles complaints ___ .","herself",["her","hers","she"],"Phản thân nhấn mạnh → herself."],
 ["The item is currently out of ___ .","stock",["store","shelf","supply"],"out of stock = hết hàng."],
 ["The CEO will ___ a speech tonight.","deliver",["say","tell","speak"],"deliver a speech."],
-["The shipment arrived later ___ expected.","than",["then","as","that"],"so sánh hơn … than."]],
+["The shipment arrived later ___ expected.","than",["then","as","that"],"so sánh hơn … than."],
+["The seminar is scheduled ___ 9 a.m. Monday.","for",["on","in","of"],"be scheduled for + thời điểm."],
+["Employees must ___ their ID badges at all times.","wear",["wearing","worn","wears"],"must + V nguyên mẫu."],
+["Please ___ the attached form.","complete",["completion","completely","completed"],"Please + V nguyên mẫu."],
+["Our office is located ___ the third floor.","on",["in","at","to"],"Tầng → on the … floor."],
+["Mr. Diaz ___ here since 2015.","has worked",["works","is working","working"],"since → hiện tại hoàn thành."],
+["Sales were ___ than expected.","higher",["high","highest","highly"],"than → so sánh hơn."],
+["Please call us if you have ___ questions.","any",["much","every","a"],"Câu điều kiện/hỏi → any."],
+["The hotel offers a free shuttle ___ the airport.","to",["at","on","by"],"đi tới → to."]],
+hard:[
+["___ the contract been signed earlier, we could have started.","Had",["If","Has","Should"],"Đảo ngữ điều kiện loại 3: Had + S + V3."],
+["The manager insisted that the report ___ revised.","be",["is","was","will be"],"Thể giả định: insist that + S + (be) V nguyên mẫu."],
+["No sooner had she arrived ___ the meeting began.","than",["when","then","as"],"No sooner … than."],
+["The applicant ___ résumé impressed us was hired.","whose",["who","whom","which"],"Sở hữu → whose."],
+["Please refrain ___ using mobile phones.","from",["to","of","for"],"refrain from + V-ing."],
+["All prices are subject ___ change.","to",["for","with","of"],"be subject to = có thể bị."],
+["Only after the audit ___ the errors.","did they find",["they found","they did find","found they"],"Only after … → đảo ngữ trợ động từ."],
+["The new policy takes effect ___ January 1.","as of",["as for","in case","by means of"],"as of + ngày = kể từ."],
+["Ms. Park is ___ qualified for the position.","highly",["high","height","heighten"],"highly qualified (collocation)."],
+["Extra funds have been ___ to marketing.","allocated",["allocating","allocate","allocation"],"Bị động have been + V3."],
+["___ you need assistance, contact the front desk.","Should",["Would","Had","Unless"],"Đảo ngữ loại 1: Should + S + V."],
+["The committee consists ___ five members.","of",["in","with","on"],"consist of."]],
 vocab:[["hoá đơn","invoice",["contract","refund","estimate"]],["đồng nghiệp","colleague",["client","supervisor","applicant"]],["hạn chót","deadline",["agenda","survey","branch"]],["nhà kho","warehouse",["headquarters","branch","lobby"]],["đàm phán","negotiate",["postpone","recruit","inspect"]],["tuyển dụng","recruit",["resign","promote","retire"]],["hoàn tiền","refund",["discount","deposit","invoice"]],["chi nhánh","branch",["headquarters","warehouse","lobby"]],["ứng viên","applicant",["employer","supervisor","client"]],["hợp đồng","contract",["proposal","receipt","invoice"]],["thăng chức","promote",["resign","hire","transfer"]],["chương trình họp","agenda",["minutes","memo","brochure"]],["giảm giá","discount",["refund","tax","fee"]],["trì hoãn","postpone",["confirm","attend","approve"]]],
 spell:[["receive",["recieve","receeve","resieve"]],["schedule",["schedual","shedule","skedule"]],["colleague",["collegue","coleague","colleage"]],["necessary",["neccessary","necesary","neccesary"]],["business",["buisness","busness","bussiness"]],["separate",["seperate","separete","seperete"]],["guarantee",["garantee","guarentee","gaurantee"]],["accommodation",["accomodation","acommodation","accommadation"]],["occurred",["occured","ocurred","occurrd"]],["maintenance",["maintainance","maintenence","maintanance"]],["questionnaire",["questionaire","questionnair","questionnare"]],["committee",["commitee","comittee","committe"]]],
 order:[[["The","meeting","has been","postponed"],"Cuộc họp đã bị hoãn."],[["Please","submit","the report","by","Friday"],"Vui lòng nộp báo cáo trước thứ Sáu."],[["We","look forward","to","hearing","from you"],"Chúng tôi mong nhận phản hồi từ bạn."],[["All","staff","must","attend","the training"],"Tất cả nhân viên phải dự buổi đào tạo."],[["The package","will","arrive","within","three days"],"Gói hàng sẽ đến trong vòng ba ngày."],[["Could","you","send","me","the invoice?"],"Bạn có thể gửi tôi hoá đơn không?"],[["Our","sales","increased","by","20 percent"],"Doanh số tăng 20%."],[["The","position","requires","extensive","experience"],"Vị trí này yêu cầu nhiều kinh nghiệm."]],
@@ -269,7 +344,28 @@ gap:[
 ["Crime rates have ___ in many cities.","declined",["declining","decline","declines"],"have + V3."],
 ["Governments must ___ a balance between growth and nature.","strike",["hit","beat","make"],"strike a balance."],
 ["The pie chart ___ spending into five categories.","breaks down",["puts down","takes down","cuts down"],"break down into."],
-["Had I known, I ___ applied.","would have",["will have","would","had"],"Đảo ngữ điều kiện loại 3."]],
+["Had I known, I ___ applied.","would have",["will have","would","had"],"Đảo ngữ điều kiện loại 3."],
+["Air pollution poses a serious threat ___ public health.","to",["for","on","with"],"pose a threat to."],
+["The figures for 2010 and 2020 were ___ similar.","remarkably",["remarkable","remark","remarked"],"Bổ nghĩa cho tính từ → trạng từ."],
+["Many people ___ that tourism damages local culture.","argue",["argument","arguing","argues"],"Many people (số nhiều) + V nguyên mẫu."],
+["___, the chart shows a steady upward trend.","Overall",["Overly","Over","Overtime"],"Overall = nhìn chung (mở đầu đoạn tổng quan Task 1)."],
+["Unemployment ___ by half between 2000 and 2010.","fell",["felt","fall","falled"],"fall – fell – fallen."],
+["Online learning offers greater ___ to students.","flexibility",["flexible","flexibly","flex"],"Sau tính từ greater cần danh từ."],
+["Governments should ___ greater emphasis on vocational training.","place",["make","do","set"],"place emphasis on."],
+["Violent media may ___ to aggressive behaviour.","contribute",["attribute","distribute","constitute"],"contribute to = góp phần gây ra."]],
+hard:[
+["Scarcely had the policy been introduced ___ protests began.","when",["than","then","that"],"Scarcely/Hardly … when."],
+["It is high time governments ___ action on climate change.","took",["take","will take","have taken"],"It's high time + S + quá khứ đơn."],
+["The data, ___ was collected in 2019, is outdated.","which",["that","what","who"],"Mệnh đề có dấu phẩy không dùng that."],
+["___ its benefits, nuclear power remains controversial.","Notwithstanding",["Nevertheless","Although","Whereas"],"Notwithstanding + cụm danh từ = mặc dù."],
+["Were the government ___ taxes, consumption would fall.","to raise",["raise","raising","raised"],"Đảo ngữ loại 2: Were + S + to V."],
+["Applications rose sharply, ___ a record high in 2021.","reaching",["reached","reach","to reaching"],"V-ing diễn tả kết quả đi kèm."],
+["Rarely ___ such a dramatic shift in public opinion.","has there been",["there has been","there was","was it"],"Rarely đầu câu → đảo ngữ."],
+["The rise in obesity can be attributed ___ poor diets.","to",["for","by","with"],"attribute A to B."],
+["Not until the 1990s ___ widely available.","did the internet become",["the internet became","became the internet","the internet did become"],"Not until … → đảo ngữ."],
+["So severe ___ the drought that crops failed.","was",["is","did","had"],"So + adj + be + S + that…"],
+["Renewables ___ to 40% of supply by 2030.","are projected to rise",["project rising","are projecting to rise","projected rising"],"Dự báo trong Task 1: be projected to + V."],
+["Urban sprawl has a detrimental effect ___ wildlife.","on",["to","for","at"],"have an effect on."]],
 vocab:[["cơ sở hạ tầng","infrastructure",["architecture","institution","framework"]],["hiện tượng","phenomenon",["hypothesis","principle","tendency"]],["tính bền vững","sustainability",["stability","durability","availability"]],["ô nhiễm","pollution",["population","poverty","pressure"]],["đô thị hoá","urbanisation",["modernisation","globalisation","industrialisation"]],["xấp xỉ","approximately",["accurately","apparently","absolutely"]],["giảm bớt (vấn đề)","alleviate",["aggravate","accelerate","allocate"]],["đáng kể","considerable",["considerate","consistent","conservative"]],["thất nghiệp","unemployment",["employment","retirement","recruitment"]],["khí thải","emissions",["admissions","omissions","missions"]],["nhược điểm","drawback",["benefit","outcome","feature"]],["dao động","fluctuate",["stabilise","plummet","soar"]],["tuổi thọ","life expectancy",["birth rate","workforce","living standard"]],["ưu tiên","prioritise",["criticise","minimise","summarise"]]],
 spell:[["environment",["enviroment","environmant","enviornment"]],["government",["goverment","governmant","govenment"]],["definitely",["definately","definitly","defenitely"]],["argument",["arguement","argumant","arguemant"]],["phenomenon",["phenomenom","phenomenun","phenomonon"]],["occasionally",["occasionaly","ocasionally","occassionally"]],["independent",["independant","indipendent","independint"]],["disappear",["dissapear","disapear","dissappear"]],["recommend",["reccomend","recomend","reccommend"]],["privilege",["priviledge","privelege","privilige"]],["existence",["existance","existense","exsistence"]],["achievement",["acheivement","achievment","achievemant"]]],
 order:[[["The graph","illustrates","changes","in","spending"],"Biểu đồ thể hiện sự thay đổi trong chi tiêu."],[["Technology","has","transformed","the way","we live"],"Công nghệ đã thay đổi cách chúng ta sống."],[["Governments","should","invest","in","public transport"],"Chính phủ nên đầu tư vào giao thông công cộng."],[["The figure","rose","sharply","after","2010"],"Số liệu tăng mạnh sau năm 2010."],[["Not only","does","exercise","improve","health"],"Tập thể dục không chỉ cải thiện sức khoẻ…"],[["This essay","will","discuss","both","views"],"Bài luận này sẽ bàn về cả hai quan điểm."],[["Unemployment","remained","stable","throughout","the period"],"Thất nghiệp ổn định suốt giai đoạn."],[["It","is","widely","believed","that…"],"Người ta tin rằng…"]],
@@ -277,7 +373,7 @@ error:[[["The number","of cars","have increased","since 2000"],2,"has increased"
 voice:[["environment","môi trường"],["significant","đáng kể"],["development","sự phát triển"],["statistics","số liệu"],["phenomenon","hiện tượng"],["particularly","đặc biệt là"],["sustainability","tính bền vững"],["consequently","do đó"],["infrastructure","cơ sở hạ tầng"],["approximately","xấp xỉ"],["comfortable","thoải mái"],["technology","công nghệ"]]}
 };
 
-const QTYPES={gap:{name:'Điền từ',icon:'🧩',how:'Bắn robot mang từ đúng điền vào chỗ trống'},vocab:{name:'Nghĩa từ',icon:'📖',how:'Đọc nghĩa tiếng Việt → bắn từ tiếng Anh đúng'},spell:{name:'Chính tả',icon:'🔤',how:'Bắn từ viết ĐÚNG chính tả'},order:{name:'Xếp câu',icon:'🔗',how:'Bắn các từ theo ĐÚNG THỨ TỰ để tạo câu'},error:{name:'Tìm lỗi sai',icon:'🔍',how:'Câu có 1 phần SAI → bắn đúng phần sai'},mix:{name:'Tổng hợp',icon:'🌀',how:'Trộn tất cả dạng bài'}};
+const QTYPES={gap:{name:'Điền từ',icon:'🧩',how:'Bắn robot mang từ đúng điền vào chỗ trống'},vocab:{name:'Nghĩa từ',icon:'📖',how:'Đọc nghĩa tiếng Việt → bắn từ tiếng Anh đúng'},spell:{name:'Chính tả',icon:'🔤',how:'Bắn từ viết ĐÚNG chính tả'},order:{name:'Xếp câu',icon:'🔗',how:'Bắn các từ theo ĐÚNG THỨ TỰ để tạo câu'},error:{name:'Tìm lỗi sai',icon:'🔍',how:'Câu có 1 phần SAI → bắn đúng phần sai'},hard:{name:'Câu khó',icon:'⭐',how:'⭐ CÂU VÀNG: đúng được x3 điểm + năng lượng'},mix:{name:'Tổng hợp',icon:'🌀',how:'Trộn tất cả dạng bài'}};
 
 const STAGES=[
 {name:'Neon Plaza',type:'gap',waves:[3,3,4],boss:'Glitch Brute',bossCol:0xff4757,enemies:{grunt:1},
@@ -293,7 +389,10 @@ const STAGES=[
 {name:'Grammar Throne',type:'mix',waves:[4,4,5],boss:'Grammar Golem',bossCol:0x7c5cff,enemies:{grunt:.3,runner:.25,tank:.25,shooter:.2},
  th:{floor:'#2b2140',stud:'#5a4580',sky:['#07030f','#3a1d6b','#ffc83d','#ff6b6b'],fog:0x1d1033,wall:0x2a1a4a,trim:0xffc83d,pal:[0xffc83d,0x7c5cff,0xff6b6b,0x1e1e3f,0xa55eea]}}
 ];
-const BOSS_Q=3;
+const bossQ=()=>3+(S.stage>>1); // số câu của boss: ải 1-2 → 3, ải 3-4 → 4, ải 5-6 → 5
+const STAGE_SPD=.05;            // mỗi ải quái nhanh hơn 5%
+const GOLDEN_CHANCE=.15;        // tỉ lệ ra câu vàng
+const CAP={dmg:2.5,rate:2,cd:.4}; // trần cộng dồn perk
 
 // Enemy kinds
 const KINDS={grunt:{s:1,hp:1,spd:1,dmg:12},runner:{s:.82,hp:1,spd:1.7,dmg:9},tank:{s:1.3,hp:3,spd:.6,dmg:18,armor:true},shooter:{s:1,hp:2,spd:.9,dmg:10,ranged:true}};
@@ -311,10 +410,10 @@ nova:{name:'NOVA',role:'Sát thủ tốc độ',col:'#00d2ff',grad:'linear-gradi
  q:{icon:'💨',name:'Lướt',desc:'Lướt 8m theo hướng đi, bất tử 0.5s',cd:4,fn:'dash'},
  e:{icon:'⏳',name:'Ngưng đọng',desc:'Làm chậm toàn bộ quái 65% trong 5s',cd:14,fn:'warp'},
  passive:'Chạy nhanh hơn 15%'},
-atlas:{name:'ATLAS',role:'Đấu sĩ đỡ đòn',col:'#ffa502',grad:'linear-gradient(135deg,#ff9f43,#ee5253)',hp:140,spd:.92,
+atlas:{name:'ATLAS',role:'Đấu sĩ đỡ đòn',col:'#ffa502',grad:'linear-gradient(135deg,#ff9f43,#ee5253)',hp:125,spd:.92,
  q:{icon:'🛡️',name:'Khiên năng lượng',desc:'Giảm 80% sát thương trong 5s',cd:12,fn:'shield'},
  e:{icon:'💥',name:'Dậm đất',desc:'Đẩy lùi + choáng 2s mọi quái trong 10m',cd:10,fn:'slam'},
- passive:'Máu 140'},
+ passive:'Máu 125'},
 iris:{name:'IRIS',role:'Học giả',col:'#a66bff',grad:'linear-gradient(135deg,#a66bff,#ff6bd6)',hp:100,spd:1,
  q:{icon:'🔎',name:'Lexi Scan',desc:'Đóng băng 1 robot SAI (xếp câu: chỉ từ tiếp theo)',cd:13,fn:'scan'},
  e:{icon:'💚',name:'Hồi phục',desc:'+35 HP và xoá hiệu ứng xấu',cd:16,fn:'heal'},
@@ -327,7 +426,8 @@ const rnd=(a,b)=>a+Math.random()*(b-a);
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
-const isTouch=matchMedia('(pointer:coarse)').matches&&!matchMedia('(any-pointer:fine)').matches;
+let isTouch=matchMedia('(pointer:coarse)').matches&&!matchMedia('(any-pointer:fine)').matches;
+if(isTouch)document.body.classList.add('touchui');
 const clamp=THREE.MathUtils.clamp;
 function wpick(obj){let r=Math.random()*Object.values(obj).reduce((a,b)=>a+b,0);for(const k in obj){r-=obj[k];if(r<=0)return k}return Object.keys(obj)[0]}
 
@@ -360,7 +460,7 @@ const sun=new THREE.DirectionalLight(0xfff0dd,1.05);sun.position.set(25,40,15);
 sun.shadow.mapSize.set(1024,1024);Object.assign(sun.shadow.camera,{left:-34,right:34,top:34,bottom:-34,near:1,far:110});sun.shadow.bias=-.0008;scene.add(sun);
 
 let QUAL=store.get('ws_qual')||'auto',qLevel='high';
-function applyQuality(){const hi=qLevel==='high';renderer.setPixelRatio(hi?Math.min(devicePixelRatio,1.5):Math.min(devicePixelRatio,1));renderer.setSize(innerWidth,innerHeight);if(composer)composer.setSize(innerWidth,innerHeight);sun.castShadow=hi;useBloom=hi&&!!composer}
+function applyQuality(){const hi=qLevel==='high';renderer.setPixelRatio(hi?Math.min(devicePixelRatio,1.5):qLevel==='ultra'?Math.min(devicePixelRatio,.75):Math.min(devicePixelRatio,1));scene.fog.far=qLevel==='ultra'?65:90;renderer.setSize(innerWidth,innerHeight);if(composer)composer.setSize(innerWidth,innerHeight);sun.castShadow=hi;useBloom=hi&&!!composer}
 function initQuality(){qLevel=QUAL==='auto'?(isTouch?'low':'high'):QUAL;applyQuality()}
 initQuality();
 
@@ -452,14 +552,14 @@ function makeBot(word,kind,color,scale){
  const label=makeLabel(word,K.hp);label.position.y=2.85;g.add(label);
  const hit=new THREE.Mesh(BG.hit,BM.hit);hit.position.y=1.65;hit.scale.set(TR.aim,1,TR.aim);g.add(hit);
  const sc=(scale||1)*K.s;g.scale.setScalar(sc);
- g.userData={isBot:true,kind,word,color,legs,arms,label,hit,torso,mat,hp:K.hp,max:K.hp,dmg:K.dmg,ranged:K.ranged,speed:TR.spd*K.spd*(1+S.waveIdx*.06)*rnd(.88,1.1),t:Math.random()*6,hurtCd:0,shotCd:rnd(2,3.5),stun:0,flash:0,base:sc,dying:false,revealed:false,frozen:false};
+ g.userData={isBot:true,kind,word,color,legs,arms,label,hit,torso,mat,hp:K.hp,max:K.hp,dmg:K.dmg,ranged:K.ranged,speed:TR.spd*K.spd*(1+S.waveIdx*.06)*(1+S.stage*STAGE_SPD)*rnd(.88,1.1),t:Math.random()*6,hurtCd:0,shotCd:rnd(2,3.5),stun:0,flash:0,base:sc,dying:false,revealed:false,frozen:false};
  hit.userData.root=g;return g}
 function spawnPos(minR,maxR,clear){for(let k=0;k<50;k++){const a=Math.random()*Math.PI*2,r=rnd(minR,maxR);const x=clamp(yawObj.position.x+Math.cos(a)*r,-ARENA+2,ARENA-2),z=clamp(yawObj.position.z+Math.sin(a)*r,-ARENA+2,ARENA-2);
  if(Math.hypot(x-yawObj.position.x,z-yawObj.position.z)<10)continue;if(blocked(x,z,clear||.9))continue;if(BOTS.some(b=>Math.hypot(b.position.x-x,b.position.z-z)<3))continue;return [x,z]}return [rnd(-20,20),rnd(-20,20)]}
 function removeObj(o){scene.remove(o);o.traverse(c=>{if(c.isSprite)disposeLabel(c)})}
 
 /* ===================== BOSS ===================== */
-function makeBoss(){const st=STAGES[S.stage];const b=makeBot(st.boss.toUpperCase(),'grunt',st.bossCol,2.8);const u=b.userData;u.isBoss=true;u.speed=.7+S.stage*.06;u.dmg=22;u.hp=BOSS_Q;u.orbs=[];u.ranged=S.stage>0;u.shotCd=3;
+function makeBoss(){const st=STAGES[S.stage];const b=makeBot(st.boss.toUpperCase(),'grunt',st.bossCol,2.8);const u=b.userData;u.isBoss=true;u.speed=.7+S.stage*.06;u.dmg=22;u.hp=bossQ();u.orbs=[];u.ranged=S.stage>0;u.shotCd=3;
  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(.25,0),new THREE.MeshBasicMaterial({color:0xff6bd6}));core.position.set(0,1.3,.3);b.add(core);u.core=core;
  const sh=new THREE.Mesh(new THREE.SphereGeometry(1.5,20,12),new THREE.MeshBasicMaterial({color:0x7c5cff,transparent:true,opacity:.16,depthWrite:false}));sh.position.y=1.5;b.add(sh);u.shield=sh;
  const crown=new THREE.Mesh(new THREE.ConeGeometry(.35,.5,5),new THREE.MeshBasicMaterial({color:0xffc83d}));crown.position.y=2.55;b.add(crown);
@@ -499,14 +599,14 @@ function prog(t){return PROG[t]||(PROG[t]={unlocked:1,stars:[],best:[]})}
 function saveProg(){store.set('ws_prog',JSON.stringify(PROG))}
 
 function resetState(stage){Object.assign(S,{stage,hp:HERO.hp,maxHp:HERO.hp,score:0,combo:0,waveIdx:0,qInWave:0,ult:0,ok:0,bad:0,mistakes:[],q:null,qMissed:false,boss:false,fireCd:0,vy:0,nextQAt:0,ended:false,
- wep:0,wepCount:Math.min(WEPS.length,stage+1),cdQ:0,cdE:0,slow:0,shieldT:0,invuln:0,dashT:0,zoom:false,decks:{},swapT:0,hudDirty:true,fpsT:0,fpsN:0,fpsLow:0})}
+ wep:0,wepCount:WEPS.length,dmgMul:1,rateMul:1,cdMul:1,x2:false,perks:[],cdQ:0,cdE:0,slow:0,shieldT:0,invuln:0,dashT:0,zoom:false,decks:{},swapT:0,hudDirty:true,fpsT:0,fpsN:0,fpsLow:0})}
 function draw(type){const d=S.decks[type];if(!d||d.i>=d.a.length)S.decks[type]={a:shuffle(TR[type]),i:0};return S.decks[type].a[S.decks[type].i++]}
 
 /* ===================== QUESTIONS ===================== */
 function makeQ(type){
  if(type==='mix')type=['gap','vocab','spell','order','error'][Math.random()*5|0];
  const it=draw(type),q={type,step:0};
- if(type==='gap'){const [s,a,d,ex]=it,p=s.split('___');q.ans=a;q.choices=shuffle([a,...d]);q.explain=ex;
+ if(type==='gap'||type==='hard'){const [s,a,d,ex]=it,p=s.split('___');q.ans=a;q.choices=shuffle([a,...d]);q.explain=ex;
   q.html=done=>`${esc(p[0])}<span class="gap">${done?esc(a):'&nbsp;?&nbsp;'}</span>${esc(p[1]||'')}`;q.review=`${esc(p[0])}<u>${esc(a)}</u>${esc(p[1]||'')}`}
  if(type==='vocab'){const [vi,a,d]=it;q.ans=a;q.choices=shuffle([a,...d]);q.explain=`${a} = ${vi}`;
   q.html=done=>`📖 “${esc(vi)}” = <span class="gap">${done?esc(a):'?'}</span>`;q.review=`“${esc(vi)}” = <u>${esc(a)}</u>`}
@@ -522,10 +622,10 @@ function makeQ(type){
 
 /* ===================== FLOW ===================== */
 function updTag(){const st=STAGES[S.stage],qt=QTYPES[S.q?S.q.type:st.type];
- $('mtag').textContent=S.boss?`👹 BOSS ${st.boss} · Khiên ${BOSS?BOSS.userData.hp:0}/${BOSS_Q} · ${qt.icon} ${qt.how}`:`Ải ${S.stage+1} · Wave ${S.waveIdx+1}/${st.waves.length} · Câu ${S.qInWave+1}/${st.waves[S.waveIdx]} · ${qt.icon} ${qt.how}`}
+ $('mtag').textContent=S.boss?`👹 BOSS ${st.boss} · Khiên ${BOSS?BOSS.userData.hp:0}/${bossQ()} · ${qt.icon} ${qt.how}`:`Ải ${S.stage+1} · Wave ${S.waveIdx+1}/${st.waves.length} · Câu ${S.qInWave+1}/${st.waves[S.waveIdx]} · ${qt.icon} ${qt.how}`}
 function renderQ(done){$('sentence').innerHTML=S.q.html(done)}
 function nextQuestion(){
- S.q=makeQ(STAGES[S.stage].type);S.qMissed=false;renderQ(false);updTag();
+ S.q=(!S.boss&&Math.random()<GOLDEN_CHANCE)?Object.assign(makeQ('hard'),{golden:true}):makeQ(STAGES[S.stage].type);if(S.q.golden){banner('⭐ CÂU VÀNG','Câu khó – đúng được x3 điểm + 50% Voice Blast');SFX.wave()}S.qMissed=false;renderQ(false);updTag();
  if(S.boss){bossOrbs();return}
  const cols=shuffle(BOTCOL),en=STAGES[S.stage].enemies;
  S.q.choices.forEach((w,i)=>{const b=makeBot(w,wpick(en),cols[i%cols.length]);const [x,z]=spawnPos(15,26);b.position.set(x,0,z);scene.add(b);BOTS.push(b);_v.set(x,1.5,z);burst(_v,0x8fe3ff,8,4)});
@@ -536,11 +636,11 @@ function startBoss(){const st=STAGES[S.stage];S.boss=true;banner('👹 '+st.boss
 const _v=new THREE.Vector3(),_v2=new THREE.Vector3();
 
 function questionDone(root){
- S.ok++;S.combo++;const pts=Math.round(100*(1+Math.min(S.combo-1,10)*.2)*(HERO_K==='iris'?1.2:1));S.score+=pts;S.ult=Math.min(100,S.ult+(HERO_K==='iris'?32:25));
+ S.ok++;S.combo++;const pts=Math.round(100*(1+Math.min(S.combo-1,10)*.2)*(HERO_K==='iris'?1.2:1)*(S.q.golden?3:1)*(S.x2?2:1));if(S.q.golden){S.ult=Math.min(100,S.ult+50);S.hp=Math.min(S.maxHp,S.hp+10)}S.score+=pts;S.ult=Math.min(100,S.ult+(HERO_K==='iris'?32:25));
  SFX.ok();renderQ(true);toast(`✔ ${S.q.explain}  (+${pts})`,'ok',2600);S.hudDirty=true;
  if(S.boss){const B=BOSS;B.userData.hp--;root.getWorldPosition(_v);burst(_v,0xffc83d,40,9);SFX.boom();
   for(const o of B.userData.orbs){o.getWorldPosition(_v);burst(_v,0x7c5cff,8,4);removeObj(o)}B.userData.orbs=[];
-  B.userData.shield.material.opacity=.16*B.userData.hp/BOSS_Q+.02;B.userData.stun=1.2;dirFromPlayer(B,_v);B.position.addScaledVector(_v,6);B.position.x=clamp(B.position.x,-ARENA+3,ARENA-3);B.position.z=clamp(B.position.z,-ARENA+3,ARENA-3);updTag();rebuildHits();
+  B.userData.shield.material.opacity=.16*B.userData.hp/bossQ()+.02;B.userData.stun=1.2;dirFromPlayer(B,_v);B.position.addScaledVector(_v,6);B.position.x=clamp(B.position.x,-ARENA+3,ARENA-3);B.position.z=clamp(B.position.z,-ARENA+3,ARENA-3);updTag();rebuildHits();
   if(B.userData.hp<=0){_v.copy(B.position);_v.y=3;for(let i=0;i<4;i++)setTimeout(()=>{burst(_v,STAGES[S.stage].th.pal[i%5],60,14);SFX.boom()},i*200);removeObj(B);BOSS=null;rebuildHits();setTimeout(()=>endStage(true),1600);return}
   S.nextQAt=performance.now()+1200;return}
  for(const b of BOTS)if(!b.userData.dying)killBot(b,b===root);
@@ -573,7 +673,7 @@ function afterQuestion(){
  if(S.boss){if(BOSS)nextQuestion();return}
  S.qInWave++;const st=STAGES[S.stage];
  if(S.qInWave>=st.waves[S.waveIdx]){S.waveIdx++;S.hp=Math.min(S.maxHp,S.hp+15);S.hudDirty=true;toast('+15 HP · Qua đợt!','info',1800);
-  if(S.waveIdx>=st.waves.length)startBoss();else startWave()}else nextQuestion()}
+  openChallenge(()=>{if(S.waveIdx>=st.waves.length)startBoss();else startWave()})}else nextQuestion()}
 function hurt(n){if(S.invuln>0||S.ended)return;if(S.shieldT>0)n*=.2;S.hp=Math.max(0,S.hp-n);S.hudDirty=true;const f=$('flash');f.style.transition='none';f.style.opacity=1;requestAnimationFrame(()=>{f.style.transition='opacity .5s';f.style.opacity=0});if(S.hp<=0)setTimeout(()=>endStage(false),300)}
 
 /* ===================== HUD ===================== */
@@ -581,7 +681,7 @@ let toastT=0;
 function toast(msg,cls,ms){const t=$('toast');t.textContent=msg;t.className=cls;clearTimeout(toastT);toastT=setTimeout(()=>t.className='',ms||2000)}
 let banT=0;function banner(t,sub){const b=$('banner');b.innerHTML=esc(t)+(sub?`<small>${esc(sub)}</small>`:'');b.style.opacity=1;clearTimeout(banT);banT=setTimeout(()=>b.style.opacity=0,2000)}
 function buildDock(){
- $('weps').innerHTML=WEPS.map((w,i)=>`<div class="slot small" data-w="${i}"><span class="k">${i+1}</span>${w.icon}</div>`).join('');
+ $('weps').innerHTML=WEPS.map((w,i)=>`<div class="slot small" data-w="${i}"><span class="k">${i+1}</span>${w.icon}<span class="t">${w.name.split(' ')[0]}</span></div>`).join('');
  const sk=[['Q',HERO.q],['E',HERO.e],['R',ULT]];
  $('skills').innerHTML=sk.map(([k,s])=>`<div class="slot" data-s="${k}" title="${esc(s.name+': '+s.desc)}"><span class="k">${k}</span>${s.icon}<div class="cd"></div></div>`).join('');
  document.querySelectorAll('#weps .slot').forEach(e=>e.onclick=ev=>{ev.stopPropagation();setWep(+e.dataset.w)});
@@ -589,11 +689,11 @@ function buildDock(){
  $('heroLbl').textContent=HERO.name+' · '+HERO.role}
 let lastCd='';
 function updHUD(){
- if(S.hudDirty){S.hudDirty=false;$('score').textContent=S.score;$('combo').textContent=S.combo>1?`🔥 Combo x${S.combo}`:'';$('hp').style.width=(S.hp/S.maxHp*100)+'%';$('hpTxt').textContent=Math.ceil(S.hp)+' / '+S.maxHp;
+ if(S.hudDirty){S.hudDirty=false;$('score').textContent=S.score;$('combo').textContent=S.combo>1?`🔥 Combo x${S.combo}`:'';$('perkHud').textContent=S.perks.join(' ')+(S.x2?' 💰x2':'');$('hp').style.width=(S.hp/S.maxHp*100)+'%';$('hpTxt').textContent=Math.ceil(S.hp)+' / '+S.maxHp;
   $('stg').textContent=`Ải ${S.stage+1} · ${STAGES[S.stage].name}`;
   document.querySelectorAll('#weps .slot').forEach((e,i)=>{e.classList.toggle('sel',i===S.wep);e.classList.toggle('lock',i>=S.wepCount)});
   $('wepname').textContent=WEPS[S.wep].name+' – '+WEPS[S.wep].desc}
- const cq=S.cdQ>0?S.cdQ/HERO.q.cd*100:0,ce=S.cdE>0?S.cdE/HERO.e.cd*100:0,cr=100-S.ult;const key=(cq|0)+'|'+(ce|0)+'|'+(cr|0);
+ const cq=S.cdQ>0?S.cdQ/(HERO.q.cd*S.cdMul)*100:0,ce=S.cdE>0?S.cdE/(HERO.e.cd*S.cdMul)*100:0,cr=100-S.ult;const key=(cq|0)+'|'+(ce|0)+'|'+(cr|0);
  if(key!==lastCd){lastCd=key;const sl=document.querySelectorAll('#skills .slot');[cq,ce,cr].forEach((p,i)=>{sl[i].querySelector('.cd').style.setProperty('--p',p+'%');sl[i].classList.toggle('ready',i===2&&S.ult>=100)})}}
 const rctx=$('radar').getContext('2d');
 function drawRadar(){const c=rctx;c.clearRect(0,0,240,240);c.strokeStyle='rgba(140,170,255,.3)';c.lineWidth=2;for(const r of [40,80,115]){c.beginPath();c.arc(120,120,r,0,7);c.stroke()}
@@ -610,7 +710,7 @@ addEventListener('keydown',e=>{keys[e.code]=true;if(e.target.tagName==='INPUT')r
  if(!S.running||S.paused||S.modal)return;
  if(e.code==='KeyR'||e.code==='KeyV')openVoice();
  if(e.code==='KeyQ')useSkill('Q');if(e.code==='KeyE')useSkill('E');
- if(e.code.startsWith('Digit')){const n=+e.code.slice(5)-1;if(n>=0&&n<4)setWep(n)}
+ {const m=e.code.match(/^(?:Digit|Numpad)([1-4])$/);if(m)setWep(+m[1]-1)}if(e.code==='KeyX'||e.code==='Tab'){e.preventDefault();setWep((S.wep+1)%S.wepCount)}
  if(e.code==='KeyF'||e.code==='Enter')fire();
  if(e.code==='Space'||e.code.startsWith('Arrow'))e.preventDefault()});
 addEventListener('keyup',e=>keys[e.code]=false);
@@ -629,7 +729,11 @@ canvas.addEventListener('mousedown',e=>{if(!S.running||S.paused||S.modal)return;
  if(locked){mouseHeld=true;fire();return}drag={x:e.clientX,y:e.clientY,moved:0};if(!noLock){lockReq();setTimeout(()=>{if(!locked)lockFail()},450)}});
 // touch
 const joy={x:0,y:0,id:null},lookT={id:null,x:0,y:0};let touchFire=false;
+function enableTouch(){if(isTouch)return;isTouch=true;document.body.classList.add('touchui');if(S.running&&!S.ended)$('touch').classList.remove('hide');if(QUAL==='auto'&&qLevel==='high'){qLevel='low';applyQuality()}}
+addEventListener('touchstart',enableTouch,{passive:true,once:true});
 if('ontouchstart' in window){const J=$('joy'),K=$('knob');
+ $('jumpB').addEventListener('touchstart',e=>{e.preventDefault();keys.Space=true},{passive:false});$('jumpB').addEventListener('touchend',()=>keys.Space=false);
+ $('zoomB').addEventListener('touchstart',e=>{e.preventDefault();if(S.wep!==2)setWep(2);S.zoom=!S.zoom},{passive:false});
  J.addEventListener('touchstart',e=>{e.preventDefault();joy.id=e.changedTouches[0].identifier},{passive:false});
  addEventListener('touchmove',e=>{for(const t of e.changedTouches){if(t.identifier===joy.id){const r=J.getBoundingClientRect();let dx=t.clientX-(r.left+60),dy=t.clientY-(r.top+60);const d=Math.hypot(dx,dy);if(d>50){dx*=50/d;dy*=50/d}joy.x=dx/50;joy.y=dy/50;K.style.left=35+dx+'px';K.style.top=35+dy+'px'}else if(t.identifier===lookT.id){look(t.clientX-lookT.x,t.clientY-lookT.y,.005*sens());lookT.x=t.clientX;lookT.y=t.clientY}}},{passive:false});
  addEventListener('touchend',e=>{for(const t of e.changedTouches){if(t.identifier===joy.id){joy.id=null;joy.x=joy.y=0;K.style.left=K.style.top='35px'}if(t.identifier===lookT.id)lookT.id=null}});
@@ -644,27 +748,32 @@ let recoil=0;
 function setWep(i){if(i>=S.wepCount){toast(`🔒 ${WEPS[i].name} mở khoá ở Ải ${i+1}`,'info',1500);return}if(i===S.wep)return;S.wep=i;S.swapT=.25;S.zoom=false;SFX.swap();GUNS.forEach((g,k)=>g.visible=k===i);S.hudDirty=true}
 function muzzleFrom(out){return GUNS[S.wep].localToWorld(out.set(0,.02,-.75))}
 function castFrom(spreadX,spreadY,list){ray.setFromCamera(CENTER,camera);if(spreadX||spreadY){_dir.copy(ray.ray.direction);_o.set(spreadX,spreadY,0).applyQuaternion(camera.getWorldQuaternion(_q));_dir.add(_o).normalize();ray.ray.direction.copy(_dir)}return ray.intersectObjects(list,false)}
-function fire(){if(S.fireCd>0||S.ended||S.swapT>0||S.paused||S.modal)return;const W=WEPS[S.wep];S.fireCd=W.cd;recoil=S.wep===0?.6:1;muzzle.visible=true;muzzle.material.rotation=Math.random()*6;muzzle.scale.setScalar(S.wep===1?.45:.28);SFX[W.snd]();
+function fire(){if(S.fireCd>0||S.ended||S.swapT>0||S.paused||S.modal)return;const W=WEPS[S.wep];S.fireCd=W.cd/S.rateMul;recoil=S.wep===0?.6:1;muzzle.visible=true;muzzle.material.rotation=Math.random()*6;muzzle.scale.setScalar(S.wep===1?.45:.28);SFX[W.snd]();
  muzzleFrom(_from);
  if(W.pellets){const hits=new Map();for(let k=0;k<W.pellets;k++){const h=castFrom(rnd(-W.spread,W.spread),rnd(-W.spread,W.spread),HIT_ALL)[0];if(!h||h.distance>W.range){tracer(_from,ray.ray.at(W.range,_v),W.col,.06);continue}tracer(_from,h.point,W.col,.06);const r=h.object.userData.root;if(r)hits.set(r,(hits.get(r)||0)+1);else{_v.copy(h.point);burst(_v,0x8fe3ff,2,2)}}
+  if(isTouch&&!hits.size){const a=assistHit();if(a)hits.set(a.object.userData.root,3)}
   let good=null;for(const [r] of hits)if(S.q&&S.q.isOk(r.userData.word)&&!r.userData.dying){good=r;break}
-  if(good)onHitTarget(good,Math.min(3,hits.get(good)));else{let best=null,n=0;for(const [r,c] of hits)if(c>n){best=r;n=c}if(best)onHitTarget(best,Math.min(3,n))}
+  if(good)onHitTarget(good,Math.min(3,hits.get(good))*S.dmgMul);else{let best=null,n=0;for(const [r,c] of hits)if(c>n){best=r;n=c}if(best)onHitTarget(best,Math.min(3,n)*S.dmgMul)}
   if(good||hits.size){for(const [r] of hits)if(!r.userData.dying&&!r.userData.isOrb&&!r.userData.isBoss){dirFromPlayer(r,_v);r.position.addScaledVector(_v,1.2)}}
   return}
- const h=castFrom(0,0,W.pierce?HIT_T:HIT_ALL)[0];
+ let h=castFrom(0,0,W.pierce?HIT_T:HIT_ALL)[0];if(isTouch&&(!h||!h.object.userData.root)){const a=assistHit();if(a)h=a}
  if(!h){tracer(_from,ray.ray.at(80,_v),W.col,W.pierce?.25:.08);return}
  if(W.splash){const p=h.point.clone(),root=h.object.userData.root,dist=h.distance;_dir.copy(p).sub(_from).normalize().multiplyScalar(45);spawnProj(_from,_dir,'rocket',W.col,{t:dist/45,root,p});return}
  tracer(_from,h.point,W.col,W.pierce?.25:.08);
  const root=h.object.userData.root;if(!root){_v.copy(h.point);burst(_v,0x8fe3ff,4,3);return}
- onHitTarget(root,W.dmg*(root.userData.kind==='tank'&&W.armorMul?W.armorMul:1));S.hudDirty=true}
+ onHitTarget(root,W.dmg*S.dmgMul*(root.userData.kind==='tank'&&W.armorMul?W.armorMul:1));S.hudDirty=true}
+const _aw=new THREE.Vector3(),_ap=new THREE.Vector3();
+function assistHit(){let best=null,bd=1e9;const R=Math.min(innerWidth,innerHeight)*.11;
+ for(const m of HIT_T){const r=m.userData.root;if(!r||r.userData.dying||r.userData.isBoss)continue;m.getWorldPosition(_aw);_ap.copy(_aw).project(camera);if(_ap.z>1)continue;const d=Math.hypot(_ap.x*innerWidth/2,_ap.y*innerHeight/2);if(d<R&&d<bd){bd=d;best=m}}
+ if(!best)return null;best.getWorldPosition(_aw);return{object:best,point:_aw.clone(),distance:_aw.distanceTo(yawObj.position)}}
 function rocketHit(ex){_v.copy(ex.p);burst(_v,0xff7f50,30,8);shock(_v,0xff7f50,8);SFX.boom();
  for(const b of BOTS){if(b.userData.dying)continue;const d=b.position.distanceTo(_v2.set(_v.x,0,_v.z));if(d<WEPS[3].splash){_o.set(b.position.x-_v.x,0,b.position.z-_v.z).normalize();b.position.addScaledVector(_o,(WEPS[3].splash-d)+1);b.userData.stun=Math.max(b.userData.stun,1)}}
- if(ex.root&&!ex.root.userData.dying)onHitTarget(ex.root,WEPS[3].dmg);S.hudDirty=true}
+ if(ex.root&&!ex.root.userData.dying)onHitTarget(ex.root,WEPS[3].dmg*S.dmgMul);S.hudDirty=true}
 
 /* ===================== SKILLS ===================== */
 function useSkill(k){if(!S.running||S.ended)return;const sk=k==='Q'?HERO.q:HERO.e;const cdKey=k==='Q'?'cdQ':'cdE';
  if(S[cdKey]>0){toast(`${sk.icon} ${sk.name} hồi chiêu ${S[cdKey].toFixed(1)}s`,'info',900);return}
- const okUse=SKILL[sk.fn]();if(okUse===false)return;S[cdKey]=sk.cd;SFX.skill();S.hudDirty=true}
+ const okUse=SKILL[sk.fn]();if(okUse===false)return;S[cdKey]=sk.cd*S.cdMul;SFX.skill();S.hudDirty=true}
 const SKILL={
  dash(){let f=0,s=0;if(keys.KeyW)f++;if(keys.KeyS)f--;if(keys.KeyD)s++;if(keys.KeyA)s--;if(isTouch){f-=joy.y;s+=joy.x}if(!f&&!s)f=1;const y=yawObj.rotation.y,l=Math.hypot(f,s);S.dashDir={x:(-Math.sin(y)*f+Math.cos(y)*s)/l,z:(-Math.cos(y)*f-Math.sin(y)*s)/l};S.dashT=.16;S.invuln=.5;tint('rgba(0,210,255,.18)',.4)},
  warp(){S.slow=5;tint('rgba(120,80,255,.18)',5);banner('⏳ NGƯNG ĐỌNG','Quái chậm 65% trong 5 giây')},
@@ -707,12 +816,39 @@ $('vgo').onclick=()=>{if(!SR){const v=norm($('vtype').value);v===norm(vTarget[0]
  r.onerror=e=>{$('vres').innerHTML=`<span style="color:#ff8a95">Micro lỗi (${esc(e.error)}). Cho phép micro rồi thử lại.</span>`};try{r.start()}catch(e){}};
 $('vtype').addEventListener('keydown',e=>{if(e.key==='Enter')$('vgo').click()});$('vclose').onclick=closeVoice;
 
+
+/* ===================== THỬ THÁCH KHÓ + PHẦN THƯỞNG ===================== */
+const PERKS=[
+{icon:'🔥',name:'Đạn cường hoá',desc:'+50% sát thương mọi súng',apply(){S.dmgMul=Math.min(CAP.dmg,S.dmgMul*1.5)}},
+{icon:'⚡',name:'Tay nhanh',desc:'+30% tốc độ bắn',apply(){S.rateMul=Math.min(CAP.rate,S.rateMul*1.3)}},
+{icon:'❤️',name:'Tim thép',desc:'+30 máu tối đa & hồi đầy máu',apply(){S.maxHp+=30;S.hp=S.maxHp}},
+{icon:'🎤',name:'Năng lượng âm',desc:'+60% Voice Blast ngay',apply(){S.ult=Math.min(100,S.ult+60)}},
+{icon:'⏱️',name:'Hồi chiêu nhanh',desc:'Q/E hồi nhanh hơn 30% + hồi ngay',apply(){S.cdMul=Math.max(CAP.cd,S.cdMul*.7);S.cdQ=0;S.cdE=0}},
+{icon:'💰',name:'Điểm x2',desc:'Nhân đôi điểm cho tới thử thách sau',apply(){S.x2=true}}];
+let chT=0,chLeft=0,chQ=null,chNext=null;
+function openChallenge(next){S.x2=false;chNext=next;S.modal=true;mouseHeld=false;if(document.pointerLockElement)document.exitPointerLock();
+ chQ=makeQ('hard');$('chQ').innerHTML=chQ.html(false);$('chRes').innerHTML='';$('chPerks').innerHTML='';$('chGo').classList.add('hide');
+ $('chOpts').innerHTML=chQ.choices.map((c,i)=>`<button class="btn sec chopt" data-i="${i}">${String.fromCharCode(65+i)}. ${esc(c)}</button>`).join('');
+ document.querySelectorAll('.chopt').forEach(b=>b.onclick=()=>chAnswer(chQ.choices[+b.dataset.i],b));
+ chLeft=20;$('chBar').style.width='100%';clearInterval(chT);chT=setInterval(()=>{chLeft-=.1;$('chBar').style.width=Math.max(0,chLeft/20*100)+'%';if(chLeft<=0)chAnswer(null)},100);
+ $('chal').classList.remove('hide');SFX.wave()}
+function chAnswer(pick,btn){if(!chQ||chQ.done)return;chQ.done=true;clearInterval(chT);
+ document.querySelectorAll('.chopt').forEach(b=>{b.disabled=true;const c=chQ.choices[+b.dataset.i];if(c===chQ.ans)b.style.background='#1f8a4c';else if(b===btn)b.style.background='#a3192e'});
+ $('chQ').innerHTML=chQ.html(true);
+ if(pick===chQ.ans){S.ok++;S.score+=300;S.hudDirty=true;SFX.ok();$('chRes').innerHTML=`<span style="color:#2ed573">✔ Xuất sắc! +300 điểm. 💡 ${esc(chQ.explain)}</span><div class="sub" style="margin-top:8px">Chọn 1 phần thưởng:</div>`;
+  const opts=shuffle(PERKS).slice(0,3);$('chPerks').innerHTML=opts.map((p,i)=>`<button class="pick perk" data-i="${i}" style="background:#26306a"><div class="t">${p.icon} ${p.name}</div><div class="d">${p.desc}</div></button>`).join('');
+  document.querySelectorAll('.perk').forEach(b=>b.onclick=()=>{const p=opts[+b.dataset.i];p.apply();S.perks.push(p.icon);S.hudDirty=true;SFX.skill();closeChallenge();toast(`${p.icon} Nhận thưởng: ${p.name} – ${p.desc}`,'ok',3000)})}
+ else{S.bad++;S.mistakes.push({review:chQ.review,pick:pick||'(hết giờ)',explain:chQ.explain});SFX.bad();
+  $('chRes').innerHTML=`<span style="color:#ff8a95">✖ ${pick?'Chưa đúng':'Hết giờ'}! Đáp án: <b>${esc(chQ.ans)}</b>. 💡 ${esc(chQ.explain)}</span><div class="sub" style="margin-top:6px">An ủi: +10 HP</div>`;S.hp=Math.min(S.maxHp,S.hp+10);S.hudDirty=true;$('chGo').classList.remove('hide')}}
+function closeChallenge(){$('chal').classList.add('hide');S.modal=false;chQ=null;lockReq();const n=chNext;chNext=null;if(n&&S.running&&!S.ended)n()}
+$('chGo').onclick=closeChallenge;
+
 /* ===================== MENU / FLOW ===================== */
 function buildMenu(){
  $('trk').innerHTML=Object.entries(TRACKS).map(([k,t])=>`<button class="pick ${k===TRK?'sel':''}" data-k="${k}" style="background:${t.grad}"><div class="t">${t.name}</div><div class="d">${t.desc}</div></button>`).join('');
  $('heroes').innerHTML=Object.entries(HEROES).map(([k,h])=>`<button class="pick ${k===HERO_K?'sel':''}" data-h="${k}" style="background:${h.grad}"><div class="t">${h.name} <span style="font-size:13px">· ${h.role}</span></div><div class="d">❤️ ${h.hp} HP · ${h.passive}<br><kbd>Q</kbd> ${h.q.icon} <b>${h.q.name}</b>: ${h.q.desc}<br><kbd>E</kbd> ${h.e.icon} <b>${h.e.name}</b>: ${h.e.desc}<br><kbd>R</kbd> 🎤 <b>Voice Blast</b>: đọc to để quét robot sai</div></button>`).join('');
  const P=prog(TRK);if(STG>=P.unlocked)STG=P.unlocked-1;
- $('stages').innerHTML=STAGES.map((s,i)=>{const lock=i>=P.unlocked,st=P.stars[i]||0;const qt=QTYPES[s.type];const w=i<WEPS.length?`+ ${WEPS[i].icon} ${WEPS[i].name}`:'Đủ 4 vũ khí';
+ $('stages').innerHTML=STAGES.map((s,i)=>{const lock=i>=P.unlocked,st=P.stars[i]||0;const qt=QTYPES[s.type];const w=['Quái: Grunt','+ Runner (chạy nhanh)','+ Tank (có giáp)','+ Sniper (bắn xa)','Mọi loại quái','Mọi loại quái'][i];
   return `<button class="pick stg ${i===STG?'sel':''} ${lock?'locked':''}" data-s="${i}" style="background:linear-gradient(135deg,${s.th.sky[1]},${s.th.sky[2]})"><div class="n">ẢI ${i+1} ${lock?'🔒':''}</div><div class="t">${s.name}</div><div class="d">${qt.icon} ${qt.name} · 👹 ${s.boss}<br>${w}</div><div class="stars">${'★'.repeat(st)}${'☆'.repeat(3-st)}</div></button>`}).join('');
  document.querySelectorAll('#trk .pick').forEach(b=>b.onclick=()=>{TRK=b.dataset.k;TR=TRACKS[TRK];store.set('ws_trk',TRK);buildMenu()});
  document.querySelectorAll('#heroes .pick').forEach(b=>b.onclick=()=>{HERO_K=b.dataset.h;HERO=HEROES[HERO_K];store.set('ws_hero',HERO_K);buildMenu()});
@@ -727,12 +863,13 @@ function startStage(i){ac();TR=TRACKS[TRK];HERO=HEROES[HERO_K];STG=i;clearAll();
  ['menu','end','pause'].forEach(x=>$(x).classList.add('hide'));$('hudAll').classList.remove('hide');if(isTouch)$('touch').classList.remove('hide');
  S.running=true;S.paused=false;S.modal=false;S.hudDirty=true;updHUD();const st=STAGES[i];$('sentence').textContent='Chuẩn bị…';$('mtag').textContent='';
  banner(`ẢI ${i+1}: ${st.name.toUpperCase()}`,`${QTYPES[st.type].icon} Dạng bài: ${QTYPES[st.type].name} – ${QTYPES[st.type].how}`);
- if(i>0&&i<WEPS.length)setTimeout(()=>toast(`🔓 Vũ khí mới: ${WEPS[i].icon} ${WEPS[i].name} (phím ${i+1}) – ${WEPS[i].desc}`,'info',4500),2200);
+ setTimeout(()=>toast('🔫 ĐỔI SÚNG: phím 1 2 3 4 · lăn chuột · phím X/Tab · hoặc bấm ô súng dưới màn hình','info',5000),2300);
+ document.body.classList.add('playing');if(isTouch){try{const d=document.documentElement;if(!document.fullscreenElement&&d.requestFullscreen)d.requestFullscreen().then(()=>screen.orientation&&screen.orientation.lock&&screen.orientation.lock('landscape').catch(()=>{})).catch(()=>{})}catch(e){}}
  lockReq();setTimeout(()=>{if(S.running&&!S.ended)startWave()},2300)}
 function pauseGame(){if(!S.running||S.ended)return;S.paused=true;mouseHeld=false;$('pause').classList.remove('hide')}
 function resume(){S.paused=false;$('pause').classList.add('hide');lockReq()}
-function toMenu(){S.running=false;S.ended=true;clearAll();['end','pause'].forEach(x=>$(x).classList.add('hide'));$('hudAll').classList.add('hide');$('touch').classList.add('hide');buildMenu();$('menu').classList.remove('hide')}
-function endStage(win){if(S.ended)return;S.ended=true;S.running=false;mouseHeld=false;if(document.pointerLockElement)document.exitPointerLock();
+function toMenu(){document.body.classList.remove('playing');S.running=false;S.ended=true;clearAll();['end','pause'].forEach(x=>$(x).classList.add('hide'));$('hudAll').classList.add('hide');$('touch').classList.add('hide');buildMenu();$('menu').classList.remove('hide')}
+function endStage(win){if(S.ended)return;S.ended=true;document.body.classList.remove('playing');S.running=false;mouseHeld=false;if(document.pointerLockElement)document.exitPointerLock();
  const tot=S.ok+S.bad,acc=tot?S.ok/tot:0;const stars=win?(acc>=.9?3:acc>=.7?2:1):0;const P=prog(TRK);
  if(win){P.stars[S.stage]=Math.max(P.stars[S.stage]||0,stars);if(S.stage+1<STAGES.length)P.unlocked=Math.max(P.unlocked,S.stage+2)}
  P.best[S.stage]=Math.max(P.best[S.stage]||0,S.score);saveProg();
@@ -742,13 +879,14 @@ function endStage(win){if(S.ended)return;S.ended=true;S.running=false;mouseHeld=
  $('elist').innerHTML=S.mistakes.length?S.mistakes.map(m=>`<div class="mk"><div class="s">${m.review}</div><div class="p">Bạn bắn: ${esc(m.pick)}</div><div class="v">💡 ${esc(m.explain)}</div></div>`).join(''):'<div class="mk">🎉 Không sai câu nào – xuất sắc!</div>';
  $('nextB').classList.toggle('hide',!(win&&S.stage+1<STAGES.length));
  $('hudAll').classList.add('hide');$('touch').classList.add('hide');$('end').classList.remove('hide')}
+$('portraitOK').onclick=()=>document.body.classList.add('portraitOK');
 $('startB').onclick=()=>startStage(STG);$('againB').onclick=()=>startStage(S.stage);$('nextB').onclick=()=>startStage(S.stage+1);$('menuB').onclick=toMenu;$('resumeB').onclick=resume;$('quitB').onclick=toMenu;
 
 /* ===================== UPDATE ===================== */
 function movePlayer(dt){let f=0,s=0;if(keys.KeyW||keys.ArrowUp)f+=1;if(keys.KeyS||keys.ArrowDown)f-=1;if(keys.KeyD)s+=1;if(keys.KeyA)s-=1;
  if(keys.ArrowLeft)yawObj.rotation.y+=2.4*dt;if(keys.ArrowRight)yawObj.rotation.y-=2.4*dt;
  if(isTouch){f-=joy.y;s+=joy.x}
- const sp=((keys.ShiftLeft||keys.ShiftRight)?10:6.5)*HERO.spd*(S.zoom?.5:1);const len=Math.hypot(f,s);if(len>1){f/=len;s/=len}
+ const sp=((keys.ShiftLeft||keys.ShiftRight||(isTouch&&Math.hypot(joy.x,joy.y)>.93))?10:6.5)*HERO.spd*(S.zoom?.5:1);const len=Math.hypot(f,s);if(len>1){f/=len;s/=len}
  const y=yawObj.rotation.y;let dx=(-Math.sin(y)*f+Math.cos(y)*s)*sp*dt,dz=(-Math.cos(y)*f-Math.sin(y)*s)*sp*dt;
  if(S.dashT>0){S.dashT-=dt;dx=S.dashDir.x*50*dt;dz=S.dashDir.z*50*dt;if(Math.random()<.6)burst(yawObj.position,0x00d2ff,1,1)}
  const p=yawObj.position;if(!blocked(p.x+dx,p.z,.4))p.x+=dx;if(!blocked(p.x,p.z+dz,.4))p.z+=dz;
@@ -796,7 +934,7 @@ function loop(){requestAnimationFrame(loop);const dt=Math.min(clock.getDelta(),.
   if(frame%3===0)drawRadar();
   updHUD();
   // auto quality
-  if(QUAL==='auto'&&qLevel==='high'){S.fpsT+=dt;S.fpsN++;if(S.fpsT>=2){const fps=S.fpsN/S.fpsT;S.fpsT=0;S.fpsN=0;if(fps<40){S.fpsLow++;if(S.fpsLow>=2){qLevel='low';applyQuality();toast('⚙️ Đã tự giảm đồ hoạ để chơi mượt hơn','info',2500)}}else S.fpsLow=0}}
+  if(QUAL==='auto'&&qLevel!=='ultra'){S.fpsT+=dt;S.fpsN++;if(S.fpsT>=2){const fps=S.fpsN/S.fpsT;S.fpsT=0;S.fpsN=0;if(fps<(qLevel==='high'?40:28)){S.fpsLow++;if(S.fpsLow>=2){S.fpsLow=0;qLevel=qLevel==='high'?'low':'ultra';applyQuality();toast('⚙️ Đã tự giảm đồ hoạ để chơi mượt hơn','info',2500)}}else S.fpsLow=0}}
  }else if(!S.running){attract+=dt*.1;yawObj.position.set(Math.cos(attract)*16,7,Math.sin(attract)*16);yawObj.rotation.y=Math.PI/2-attract;pitchObj.rotation.x=-.28}
  updParts(dt);
  for(const l of TR_POOL){if(!l.visible)continue;l.userData.life-=dt;l.material.opacity=Math.max(0,l.userData.life/l.userData.max);if(l.userData.life<=0)l.visible=false}
