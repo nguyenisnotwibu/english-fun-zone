@@ -16,6 +16,13 @@ const CFG={
   startCoins:60,
   coinPerQ:10, coinPerCombo:2, comboCap:10, coinGolden:25, coinBoss:60,
   clearBonus:50, starBonus:25, missionReward:40, allMissionsBonus:80, dailyBonus:120,
+  /* MỤC TIÊU TẠM (chưa playtest): 1 ải ≈ 150–200 xu; mua được 1 nâng cấp sau ≈ 1,5 ải.
+     Chưa chỉnh giá. Chỉnh lại sau playtest bằng /balance-check economy. */
+  voiceMission:40,      /* nhiệm vụ thưởng "dùng Voice Blast 1 lần": có ở MỌI ải, ngoài 3 nhiệm vụ chính */
+  voiceFirstTry:20,     /* phát âm đúng ngay lần đầu */
+  voiceNudgeSec:15,     /* thanh Voice Blast đầy quá N giây thì nhắc nhẹ (không bắt buộc) */
+  revivePrice:150, reviveCap:3, reviveHp:.5, reviveInvuln:2,   /* "Hồi sinh": chỗ tiêu xu dùng mãi */
+  reviewCap:40,         /* số câu sai tối đa giữ lại để ôn ngắt quãng */
   invCap:9,
   hitStop:.06, slowMo:.35,
   musicVol:1
@@ -31,6 +38,9 @@ const CONS=[
  {id:'hint',  icon:'💡',name:'Gợi ý',desc:'Lộ 1 đáp án sai (xếp câu: chỉ từ kế tiếp)',price:50,
   use(){return SKILL.scan()!==false}}
 ];
+/* Bảo hiểm (dùng mãi, mua lại bao nhiêu lần cũng được): tự kích hoạt khi hết máu, 1 lần mỗi ải */
+const REVIVE={id:'revive',icon:'🔄',name:'Hồi sinh',price:CFG.revivePrice,
+  desc:`Hết máu → sống lại với ${CFG.reviveHp*100}% máu, bất tử ${CFG.reviveInvuln}s, đẩy lùi quái. Tự dùng, 1 lần mỗi ải`};
 /* Nâng cấp vĩnh viễn – mua 1 lần */
 const BASE={armor:WEPS[0].armorMul,pellets:WEPS[1].pellets,railCd:WEPS[2].cd,splash:WEPS[3].splash};
 const MODS=[
@@ -53,15 +63,17 @@ const SKINS=[
 ];
 /* Nhiệm vụ mỗi ải: [loại, tham số...]
    acc: chính xác ≥ N% · combo: đạt combo N · perk: nhận N phần thưởng thử thách · ult: dùng Voice Blast
-   clean: N đợt không mất máu · kind: quét N quái loại X · wep: hạ N quái bằng súng #i */
+   clean: N đợt không mất máu · kind: quét N quái loại X · wep: hạ N quái bằng súng #i
+   MỖI ải có 3 nhiệm vụ chính ở đây (đủ cả 3 → thưởng thêm) + 1 nhiệm vụ Voice Blast thưởng riêng (VOICE_MISSION). */
 const MIS=[
  [['acc',80],['combo',6],['perk',1]],
- [['acc',80],['kind','runner',8],['ult',1]],
+ [['acc',80],['kind','runner',8],['perk',1]],
  [['clean',2],['wep',2,3],['perk',2]],
  [['acc',85],['kind','tank',4],['combo',9]],
- [['clean',2],['kind','shooter',4],['ult',1]],
+ [['clean',2],['kind','shooter',4],['combo',8]],
  [['acc',90],['wep',3,4],['combo',12]]
 ];
+const VOICE_MISSION=['ult',1];
 /* Thử thách hôm nay (đổi theo ngày) */
 const DAILY=[
  {id:'blaster',name:'Chỉ dùng Blaster',desc:'Các súng khác bị khoá'},
@@ -74,7 +86,7 @@ const MILESTONES=[{n:10,c:60},{n:25,c:120},{n:50,c:220},{n:100,c:400},{n:200,c:8
 const KEY='ws_x1';
 let X={};try{X=JSON.parse(store.get(KEY)||'{}')||{}}catch(e){X={}}
 X.coins=X.coins|0;X.inv=X.inv||{};X.mods=X.mods||{};X.skin=X.skin||{};X.words=X.words||{};
-X.mis=X.mis||{};X.daily=X.daily||{};X.ms=X.ms||{};
+X.mis=X.mis||{};X.daily=X.daily||{};X.ms=X.ms||{};X.rev=X.rev||[];   /* rev: câu từng bắn nhầm, chờ ôn lại */
 if(!X.init){X.init=1;X.coins+=CFG.startCoins;X.inv.heal=1}
 if(X.music===undefined)X.music=true;
 X.skin.hud=X.skin.hud||'hud:violet';X.skin.fx=X.skin.fx||'fx:default';
@@ -85,7 +97,8 @@ const today=()=>new Date().toISOString().slice(0,10);
 const dailyRule=()=>DAILY[Math.floor(Date.now()/864e5)%DAILY.length];
 
 /* ===================== TRẠNG THÁI MỖI LẦN CHƠI ===================== */
-function newRun(){return{coins:0,maxCombo:0,golden:0,ult:0,kind:{},wk:{},cleanWaves:0,waveHurt:false,lastWave:0,daily:null,list:[],p2:false}}
+function newRun(){return{coins:0,maxCombo:0,golden:0,ult:0,kind:{},wk:{},cleanWaves:0,waveHurt:false,lastWave:0,daily:null,list:[],p2:false,
+  bonus:null,fullT:0,nudged:false,revived:false,revUsed:{}}}
 let R=newRun(),pendingDaily=null;
 
 /* ===================== CSS ===================== */
@@ -173,7 +186,7 @@ function popup(text,color,pos){
   if(popBox.childElementCount>16)popBox.firstChild.remove();
   const e=document.createElement('div');e.className='xp';e.textContent=text;e.style.cssText=`left:${x}px;top:${y}px;color:${color||'#fff'}`;
   e.addEventListener('animationend',()=>e.remove());popBox.appendChild(e)}
-function coinHud(){const e=$('xcoins');if(e)e.textContent='🪙 '+X.coins+(R.coins?`  (+${R.coins})`:'')}
+function coinHud(){const e=$('xcoins');if(e)e.textContent='🪙 '+X.coins+(R.coins?`  (+${R.coins})`:'')+((X.inv.revive|0)>0?`  ${REVIVE.icon}×${X.inv.revive}${R.revived?' (đã dùng)':''}`:'')}
 function addCoins(n,pos,raw){
   if(!raw&&X.mods.magnet)n=Math.round(n*1.25);
   if(!raw&&R.daily)n*=2;
@@ -224,12 +237,39 @@ burst=function(p,color,n,spd){
   return _burst(p,color,n,spd)};
 
 /* ===================== SỔ TỪ ===================== */
-const BOOKQ={gap:1,vocab:1,spell:1,hard:1};
+/* Mỗi dạng bài ghi theo khoá riêng:
+   điền từ / nghĩa từ / chính tả / câu khó → đáp án đúng · xếp câu → cả câu (kèm nghĩa) · tìm lỗi → "phần sai → phần đúng" */
+function bookEntry(q){
+  if(!q)return null;
+  if(q.type==='order'&&q.seq)return{key:q.seq.join(' '),ex:'🔗 '+(q.vi||'')};
+  if(q.type==='error'&&q.wrong)return{key:q.wrong+' → '+q.fix,ex:String(q.explain||'').slice(0,90)};
+  if((q.type==='gap'||q.type==='vocab'||q.type==='spell'||q.type==='hard')&&q.ans)return{key:q.ans,ex:String(q.explain||'').slice(0,90)};
+  return null}
 function noteWord(ok){
-  const q=S.q;if(!q||q.seq||!q.ans||!BOOKQ[q.type])return;
-  const w=X.words[q.ans]||(X.words[q.ans]={ok:0,bad:0,ex:String(q.explain||'').slice(0,90)});
+  const e=bookEntry(S.q);if(!e)return;
+  const w=X.words[e.key]||(X.words[e.key]={ok:0,bad:0,ex:e.ex});
   if(ok)w.ok++;else w.bad++;
   if(ok&&w.ok===1)checkMilestones()}
+
+/* ===== ÔN TẬP NGẮT QUÃNG =====
+   Câu bắn nhầm được giữ lại (X.rev) và quay lại ở các ải SAU: mỗi wave tối đa 1 câu ôn, ở đầu wave.
+   Bắn đúng sạch (không nhầm) thì câu rời hàng đợi; bắn nhầm nữa thì ở lại và ưu tiên hơn. */
+const revKey=q=>TRK+'|'+q.raw.type+'|'+JSON.stringify(q.raw.item);
+function addReview(q){
+  if(!q||!q.raw)return;
+  const k=revKey(q),e=X.rev.find(x=>x.k===k);
+  if(e){e.miss++;e.st=S.stage}
+  else{X.rev.push({k,trk:TRK,type:q.raw.type,item:q.raw.item,st:S.stage,miss:1});
+    if(X.rev.length>CFG.reviewCap){X.rev.sort((a,b)=>b.miss-a.miss||b.st-a.st);X.rev.length=CFG.reviewCap}}
+  save()}
+function clearReview(q){
+  if(!q||!q.raw)return;const k=revKey(q),n=X.rev.length;
+  X.rev=X.rev.filter(x=>x.k!==k);if(X.rev.length!==n)save()}
+window.wsReview=function(){
+  if(!S.running||S.ended||S.boss||S.qInWave!==0||R.revUsed[S.waveIdx])return null;
+  const c=X.rev.filter(e=>e.trk===TRK&&e.st<S.stage);if(!c.length)return null;
+  c.sort((a,b)=>b.miss-a.miss||a.st-b.st);R.revUsed[S.waveIdx]=true;
+  return{type:c[0].type,item:c[0].item}};
 function learned(){return Object.values(X.words).filter(w=>w.ok>0).length}
 function checkMilestones(){
   const n=learned();
@@ -249,14 +289,21 @@ function mkMission(sp){
   if(t==='kind') return{txt:`Quét ${b} quái ${KN[a]}`,prog:()=>`${R.kind[a]|0}/${b}`,ok:()=>(R.kind[a]|0)>=b};
   if(t==='wep')  return{txt:`Hạ ${b} quái bằng ${WEPS[a].name}`,prog:()=>`${R.wk[a]|0}/${b}`,ok:()=>(R.wk[a]|0)>=b};
   return{txt:'?',prog:()=>'',ok:()=>false}}
-function genMissions(i){R.list=(MIS[i]||MIS[MIS.length-1]).map(mkMission)}
+function genMissions(i){R.list=(MIS[i]||MIS[MIS.length-1]).map(mkMission);R.bonus=mkMission(VOICE_MISSION)}
 let _misHtml='';   /* chỉ ghi lại DOM khi nội dung đổi (tránh layout lại mỗi 500 ms) */
 function renderMis(){
   if(!S.running||S.ended||!R.list.length){if(misBox.style.display!=='none')misBox.style.display='none';return}
   if(misBox.style.display!=='')misBox.style.display='';
-  const html='<div class="h">🎯 NHIỆM VỤ ẢI'+(R.daily?' · 📅':'')+'</div>'+R.list.map(m=>{const ok=m.ok();return`<div class="m ${ok?'ok':''}"><span>${ok?'✔':'○'} ${m.txt}</span><span>${m.prog()}</span></div>`}).join('');
+  const line=(m,cls)=>{const ok=m.ok();return`<div class="m ${ok?'ok':''} ${cls||''}"><span>${ok?'✔':'○'} ${m.txt}</span><span>${m.prog()}</span></div>`};
+  const html='<div class="h">🎯 NHIỆM VỤ ẢI'+(R.daily?' · 📅':'')+'</div>'+R.list.map(m=>line(m)).join('')
+    +(R.bonus?'<div class="h" style="margin-top:6px">🎤 THƯỞNG THÊM +'+CFG.voiceMission+' 🪙</div>'+line(R.bonus):'');
   if(html!==_misHtml){_misHtml=html;misBox.innerHTML=html}}
-setInterval(renderMis,500);
+/* nhắc nhẹ Voice Blast: thanh đầy quá voiceNudgeSec giây mà chưa dùng (không bắt buộc) */
+function voiceNudge(){
+  if(!S.running||S.ended||S.paused||S.modal||S.ult<100){R.fullT=0;R.nudged=false;return}
+  R.fullT+=.5;
+  if(R.fullT>=CFG.voiceNudgeSec&&!R.nudged){R.nudged=true;toast('🎤 Voice Blast đã đầy: nhấn R để đọc (không bắt buộc)','info',4500)}}
+setInterval(()=>{renderMis();voiceNudge()},500);
 
 /* ===================== WRAP: LUỒNG GAME ===================== */
 const _startStage=startStage;
@@ -274,11 +321,11 @@ startStage=function(i){
 const _qd=questionDone;
 questionDone=function(root){
   const gold=!!(S.q&&S.q.golden),wasBoss=S.boss;
-  const s0=S.score;_pv.set(0,0,0);
+  const s0=S.score,clean=!S.qMissed,q0=S.q;_pv.set(0,0,0);
   const pos=root?root.getWorldPosition(new THREE.Vector3()):null;if(pos)pos.y+=2;
   _qd(root);
   R.maxCombo=Math.max(R.maxCombo,S.combo);if(gold)R.golden++;
-  noteWord(true);
+  noteWord(true);if(clean)clearReview(q0);   /* bắn đúng sạch → câu rời hàng đợi ôn tập */
   const got=S.score-s0;if(got>0)popup('+'+got,gold?'#ffd34d':'#8fe3ff',pos);
   addCoins(CFG.coinPerQ+Math.min(S.combo,CFG.comboCap)*CFG.coinPerCombo+(gold?CFG.coinGolden:0),pos);
   timeFx(CFG.slowMo,.32);shake(gold?.22:.12);
@@ -296,9 +343,9 @@ function bossPhase2(){
 const _oht=onHitTarget;
 onHitTarget=function(root,dmg){
   const u=root&&root.userData;if(!u)return _oht(root,dmg);
-  const was=!!u.dying,bad0=S.bad;
+  const was=!!u.dying,bad0=S.bad,miss0=S.qMissed,q0=S.q;
   _oht(root,dmg);
-  if(S.bad>bad0){noteWord(false);const p=root.getWorldPosition(new THREE.Vector3());p.y+=2;popup('✖','#ff6b81',p)}
+  if(S.bad>bad0){noteWord(false);if(!miss0&&S.qMissed)addReview(q0);const p=root.getWorldPosition(new THREE.Vector3());p.y+=2;popup('✖','#ff6b81',p)}
   if(!was&&u.dying&&!u.isOrb&&!u.isBoss){R.wk[S.wep]=(R.wk[S.wep]|0)+1;if(TS.hold<=0)timeFx(.12,CFG.hitStop)}};
 
 const _kb=killBot;
@@ -318,7 +365,11 @@ afterQuestion=function(){
   if(!S.boss&&S.waveIdx>R.lastWave){if(!R.waveHurt)R.cleanWaves++;R.waveHurt=false;R.lastWave=S.waveIdx}};
 
 const _vs=voiceSuccess;
-voiceSuccess=function(){R.ult++;_vs()};
+voiceSuccess=function(){
+  /* đọc đúng ngay lần đầu (chỉ khi có micro nhận dạng giọng nói; gõ chữ không tính) → +xu */
+  const firstTry=vTries===0&&!!SR;
+  R.ult++;_vs();
+  if(firstTry){addCoins(CFG.voiceFirstTry,null,true);popup('🎤 Chuẩn ngay lần đầu! +'+CFG.voiceFirstTry+'🪙','#ffd34d')}};
 
 const _fire=fire;
 fire=function(){const c=S.fireCd;_fire();if(S.fireCd>c){shake(S.wep>=2?.1:.035)}};
@@ -338,6 +389,14 @@ buildMenu=function(){
 /* kết thúc ải: thưởng + màn hình */
 const _end=endStage;
 endStage=function(win){
+  /* HỒI SINH: hết máu → dùng 1 "Hồi sinh" (1 lần mỗi ải). Lệnh thua cũ còn trong hàng đợi (HP đã hồi) bị bỏ qua. */
+  if(!win&&S.running&&!S.ended){
+    if(S.hp>0)return;
+    if((X.inv.revive|0)>0&&!R.revived){
+      X.inv.revive--;R.revived=true;save();
+      S.hp=Math.round(S.maxHp*CFG.reviveHp);S.invuln=CFG.reviveInvuln;S.hudDirty=true;
+      try{SKILL.slam()}catch(e){}
+      banner('🔄 HỒI SINH','Sống lại với '+(CFG.reviveHp*100)+'% máu');tint('rgba(255,255,255,.25)',.8);shake(.5);coinHud();return}}
   const was=S.ended;_end(win);if(was)return;
   const lines=[];let total=0;
   const acc=S.ok+S.bad?S.ok/(S.ok+S.bad):0,stars=win?(acc>=.9?3:acc>=.7?2:1):0;
@@ -348,6 +407,7 @@ endStage=function(win){
     lines.push(`🎯 Nhiệm vụ ${okN}/${R.list.length}: <b>+${okN*CFG.missionReward}</b>${ml}`);
     if(win&&okN===R.list.length){total+=CFG.allMissionsBonus;const c=CONS[Math.random()*CONS.length|0];X.inv[c.id]=Math.min(CFG.invCap,(X.inv[c.id]|0)+1);lines.push(`🌟 Đủ 3 nhiệm vụ: <b>+${CFG.allMissionsBonus}</b> và 1 ${c.icon} ${c.name}`)}
     const k=TRK+'_'+S.stage;if(win)X.mis[k]=Math.max(X.mis[k]|0,okN)}
+  if(win&&R.bonus&&R.bonus.ok()){total+=CFG.voiceMission;lines.push(`🎤 Dùng Voice Blast: <b>+${CFG.voiceMission}</b>`)}
   if(R.daily){
     if(win&&X.daily.last!==today()){X.daily.last=today();total+=CFG.dailyBonus;lines.push(`📅 Thử thách hôm nay: <b>+${CFG.dailyBonus}</b>`)}
     else if(win)lines.push('📅 Thử thách hôm nay (đã nhận thưởng ngày)')}
@@ -375,6 +435,8 @@ function renderShop(){
   if(tab==='shop'){
     body.innerHTML=`<h3>Vật phẩm dùng 1 lần (phím 5-8 trong ải)</h3><div class="xgrid">${CONS.map(c=>{const n=X.inv[c.id]|0,full=n>=CFG.invCap;
       return itemCard(c,{cnt:n,act:'buyc',dis:full||X.coins<c.price,label:full?'Đầy túi':`Mua · ${c.price} 🪙`})}).join('')}</div>
+    <h3>Bảo hiểm (mua lại được mãi)</h3><div class="xgrid">${(()=>{const n=X.inv.revive|0,full=n>=CFG.reviveCap;
+      return itemCard(REVIVE,{cnt:n,act:'buyr',dis:full||X.coins<REVIVE.price,label:full?'Đầy':`Mua · ${REVIVE.price} 🪙`})})()}</div>
     <h3>Nâng cấp vĩnh viễn</h3><div class="xgrid">${MODS.map(m=>{const has=!!X.mods[m.id];
       return itemCard(m,{owned:has,act:'buym',dis:has||X.coins<m.price,label:has?'✔ Đã sở hữu':`Mua · ${m.price} 🪙`})}).join('')}</div>
     <h3>Giao diện & hiệu ứng</h3><div class="xgrid">${SKINS.map(k=>{const grp=k.id.split(':')[0],own=k.price===0||X.mods['s_'+k.id],eq=X.skin[grp]===k.id;
@@ -395,6 +457,7 @@ $('xbody').onclick=e=>{
   const b=e.target.closest('[data-act]');if(!b||b.disabled)return;
   const id=b.dataset.id,act=b.dataset.act;try{ac()}catch(e){}
   if(act==='buyc'){const c=CONS.find(x=>x.id===id);if(X.coins>=c.price&&(X.inv[id]|0)<CFG.invCap){X.coins-=c.price;X.inv[id]=(X.inv[id]|0)+1}}
+  if(act==='buyr'){if(X.coins>=REVIVE.price&&(X.inv.revive|0)<CFG.reviveCap){X.coins-=REVIVE.price;X.inv.revive=(X.inv.revive|0)+1}}
   if(act==='buym'){const m=MODS.find(x=>x.id===id);if(X.coins>=m.price&&!X.mods[id]){X.coins-=m.price;X.mods[id]=1}}
   if(act==='buys'){const k=SKINS.find(x=>x.id===id);if(X.coins>=k.price&&!X.mods['s_'+id]){X.coins-=k.price;X.mods['s_'+id]=1;X.skin[id.split(':')[0]]=id}}
   if(act==='equip'){X.skin[id.split(':')[0]]=id}
