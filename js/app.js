@@ -417,13 +417,223 @@ function showHSATab(tab){
 }
 
 let _hsaState={};
+/* ==========================================================
+   🎯 HSA — PHÒNG THI MÔ PHỎNG (phần Tiếng Anh)
+   Luồng giống thi thật trên máy: Hướng dẫn → Màn hình chờ 120 giây → Làm bài (đếm ngược, thanh số câu,
+   câu chùm chia đôi: đoạn văn trái / câu hỏi phải) → Nhắc câu chưa làm → Bảng điểm → Xem lại + lời giải.
+   Khi làm bài KHÔNG hiện đáp án; nộp xong mới chấm.
+   ========================================================== */
+let HX=null;
+function hxTitle(p){return 'ĐỀ THI THAM KHẢO SỐ '+String(p||'').replace('eng','')+' - ĐÁNH GIÁ NĂNG LỰC HỌC SINH THPT'}
+function hxCatName(c){return String(c.title||'').replace(/\s*\(\d+\s*[-–]\s*\d+\)\s*$/,'')}
+function hxFmt(sec){sec=Math.max(0,Math.floor(sec));return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')}
+function hxWho(){return {name:(P&&P.name)||'Thí sinh',ava:(P&&P.ava)||'🐣',acc:(typeof efzAccName==='function'&&efzAccName())||'—'}}
+/* mở mục HSA / đổi đề → thẻ giới thiệu, bấm mới vào phòng thi */
 function renderHSAQuiz(data,prefix){
+  hxClose();
+  if(window._hsaTimer){clearInterval(window._hsaTimer);window._hsaTimer=null}
+  const total=data.reduce((s,c)=>s+c.questions.length,0), mins=Math.round(total*1.2);
+  const first=data.length?data[0].questions[0].num:'', lastC=data.length?data[data.length-1].questions:[], last=lastC.length?lastC[lastC.length-1].num:'';
+  $('hsaContent').innerHTML=`<div class="hx-start">
+    <div class="hx-start-t">${hxTitle(prefix)}</div>
+    <div class="hx-start-s">Phần thi <b>TIẾNG ANH</b> · <b>${total} câu</b> (${first}–${last}) · <b>${mins} phút</b></div>
+    <ul>
+      <li><b>📝 Luyện tập:</b> chọn đáp án là hiện ngay đúng/sai + giải thích chi tiết từng câu, không giới hạn thời gian.</li>
+      <li><b>🖥️ Thi thử:</b> giao diện và tiến trình như thi HSA trên máy tính (hướng dẫn → chờ 120 giây → làm bài tính giờ → nộp bài → bảng điểm). Không hiện đáp án khi đang làm; nộp xong mới xem lời giải.</li>
+      <li>Cả hai chế độ: câu hỏi chùm (đọc hiểu, điền từ) hiện <b>đoạn văn bên trái, câu hỏi bên phải</b>.</li>
+    </ul>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="hsa-submit-btn" onclick="hsaPractice('${prefix}')">📝 Luyện tập (có đáp án ngay)</button>
+      <button class="hsa-submit-btn" style="background:linear-gradient(135deg,#2e7d32,#2e5e1e);box-shadow:0 4px 14px rgba(46,94,30,.3)" onclick="hxOpen('${prefix}')">🖥️ Thi thử như thật</button>
+    </div>
+  </div>`;
+}
+function hxOpen(prefix){
+  const data=efzData(prefix);if(!data||!data.length)return;
+  hxClose();
+  const flat=[];data.forEach(c=>c.questions.forEach(q=>flat.push({q,cat:c})));
+  HX={prefix,data,flat,ans:{},secs:Math.round(flat.length*1.2)*60,t:null,endAt:0,startAt:0,done:false};
+  let r=$('hxRoot');
+  if(!r){r=document.createElement('div');r.id='hxRoot';r.className='hx-root';r.setAttribute('role','dialog');r.setAttribute('aria-label','Phòng thi HSA');document.body.appendChild(r)}
+  r.classList.add('show');document.documentElement.classList.add('hx-lock');
+  try{sndClick()}catch(e){}
+  hxGuide();
+}
+function hxClose(){
+  if(HX&&HX.t){clearInterval(HX.t);HX.t=null}
+  const r=$('hxRoot');if(r){r.classList.remove('show');r.innerHTML=''}
+  document.documentElement.classList.remove('hx-lock');
+}
+function hxBar(){return `<div class="hx-top"><div class="hx-top-row"><span class="hx-logo">✅</span><div class="hx-top-mid"><div class="hx-title">${hxTitle(HX.prefix)}</div></div><span class="hx-ava-s">${esc(String(hxWho().ava))}</span></div></div>`}
+/* 1) Hướng dẫn làm bài */
+function hxGuide(){
+  const w=hxWho(),n=HX.flat.length,m=Math.round(HX.secs/60),f=HX.flat[0].q.num,l=HX.flat[n-1].q.num;
+  $('hxRoot').innerHTML=hxBar()+`<div class="hx-body"><div class="hx-guide">
+    <aside class="hx-info"><div class="hx-info-h">Thông tin cá nhân</div>
+      <div class="hx-info-b">Mã số/TĐN: <b>${esc(String(w.acc))}</b><br>Họ tên: <b>${esc(String(w.name))}</b><div class="hx-ava">${esc(String(w.ava))}</div></div></aside>
+    <main class="hx-gmain">
+      <h2 class="hx-h">HƯỚNG DẪN LÀM BÀI</h2>
+      <p>Đây là bài <b>luyện tập mô phỏng</b> phần thi <b>Tiếng Anh</b> trong bài thi Đánh giá năng lực (HSA), giúp em làm quen với giao diện và tiến trình làm bài thi trên máy tính.</p>
+      <p>Phần thi gồm <b>${n} câu hỏi</b> trắc nghiệm khách quan bốn lựa chọn A, B, C hoặc D, được đánh số lần lượt từ <b>${f}</b> đến <b>${l}</b>. Mỗi câu hỏi có <b>một đáp án duy nhất</b>. Em chọn đáp án bằng cách nhấp chuột vào ô tròn trống (○), máy tính sẽ tự động ghi nhận và hiển thị thành ô tròn có chấm (●). Muốn chọn lại, em nhấp vào ô tròn của đáp án mới; ô tròn cũ sẽ trở lại trạng thái ban đầu (○).</p>
+      <p>Mỗi câu trả lời đúng được <b>01 điểm</b>, câu trả lời sai hoặc không trả lời được 0 điểm. Hãy thận trọng trước khi lựa chọn đáp án của mình.</p>
+      <h3 class="hx-h3">Tiến trình làm bài thi trên máy tính</h3>
+      <p>Khi <b>BẮT ĐẦU</b> làm bài, màn hình sẽ hiển thị phần thi:</p>
+      <p><i><b>Phần thi:</b> Tiếng Anh (${n} câu hỏi, ${m} phút)</i></p>
+      <p>Em làm lần lượt các câu hỏi. Thanh số câu phía trên giúp chuyển nhanh tới từng câu; câu đã làm sẽ đổi màu. Với câu hỏi chùm, đoạn văn nằm bên trái và các câu hỏi nằm bên phải. Nếu làm xong trước thời gian quy định, em có thể bấm <b>NỘP BÀI</b> để hoàn thành sớm. Khi hết thời gian, máy tính sẽ tự động <b>NỘP BÀI</b>.</p>
+      <p>Khi <b class="hx-red">KẾT THÚC</b> bài thi, màn hình sẽ hiển thị kết quả thi của em.</p>
+      <p class="hx-sep">------***------</p>
+      <div class="hx-center"><button class="hx-btn green" onclick="hxWait()">Đã đọc</button> <button class="hx-btn gray" onclick="hxClose()">Thoát</button></div>
+    </main></div></div>`;
+}
+/* 2) Màn hình chờ 120 giây */
+function hxWait(){
+  const n=HX.flat.length,m=Math.round(HX.secs/60);let left=120;
+  $('hxRoot').innerHTML=hxBar()+`<div class="hx-body"><div class="hx-wait">
+    <p class="hx-muted">Bài luyện tập gồm phần thi:</p>
+    <p class="hx-blue">TIẾNG ANH (PHẦN THI THỨ BA)</p>
+    <p><b>Khi đã nộp bài, em sẽ không thể quay lại phần thi để sửa đáp án.</b></p>
+    <div class="hx-arrows">${'<span>➤</span>'.repeat(9)}</div>
+    <h2 class="hx-wt">TIẾNG ANH</h2>
+    <p>Thời gian hoàn thành phần thi: ${m} phút</p>
+    <p>Tổng điểm phần thi Tiếng Anh: ${n} điểm</p>
+    <div class="hx-badge"><span>T</span><span>I</span><span>Ế</span><span>N</span><span>G</span><i></i><span>A</span><span>N</span><span>H</span></div>
+    <p>Phần thi tự động bắt đầu sau 120 giây.<br>Nếu đã sẵn sàng, em có thể bấm nút &lt;BẮT ĐẦU&gt; dưới đây để bắt đầu phần thi.</p>
+    <div class="hx-count" id="hxCount">120</div>
+    <button class="hx-btn green" onclick="hxStart()">BẮT ĐẦU</button>
+  </div></div>`;
+  if(HX.t)clearInterval(HX.t);
+  HX.t=setInterval(()=>{left--;const c=$('hxCount');if(c)c.textContent=left;if(left<=0)hxStart()},1000);
+}
+function hxQ(q){
+  return `<div class="hx-q" id="hxq-${q.num}"><div class="hx-qh"><span class="hx-qn">Câu ${q.num}.</span><div class="hx-qt">${fmtExamText(q.text)}</div></div>`+
+    q.opts.map((o,i)=>`<label class="hx-o"><span class="hx-ol">(${'ABCD'[i]})</span><input type="radio" name="hx${q.num}" onchange="hxPick(${q.num},${i})"><span class="hx-ot">${o}</span></label>`).join('')+`</div>`;
+}
+/* 3) Giao diện thi */
+function hxStart(){
+  if(HX.t){clearInterval(HX.t);HX.t=null}
+  let body='';
+  HX.data.forEach(cat=>{
+    const qs=cat.questions.map(hxQ).join(''), nm=hxCatName(cat);
+    if(cat.passage){
+      const a=cat.questions[0].num,b=cat.questions[cat.questions.length-1].num;
+      const ins=/cloze/i.test(cat.title)?'Read the passage and choose the best option (A, B, C or D) to fill in each numbered blank.':'Read the passage below and answer the '+cat.questions.length+' questions that follow.';
+      body+=`<div class="hx-split"><div class="hx-pass"><p><i>Câu ${a} - ${b}:</i></p><p><b><i>${ins}</i></b></p><div class="hx-ptext">${cat.passage}</div></div><div class="hx-qs">${qs}</div></div>`;
+    }else body+=`<div class="hx-cat">${cat.icon||''} ${nm}</div>`+qs;
+  });
+  $('hxRoot').innerHTML=`<div class="hx-top">
+      <div class="hx-top-row"><span class="hx-logo">✅</span><span class="hx-part">3</span>
+        <div class="hx-top-mid"><div class="hx-title">${hxTitle(HX.prefix)}</div><div class="hx-sec">TIẾNG ANH</div></div>
+        <div class="hx-clock" id="hxClock" title="Thời gian còn lại">${hxFmt(HX.secs)}</div>
+        <button class="hx-btn blue sm" onclick="hxAskEnd()">NỘP BÀI</button>
+        <button class="hx-btn gray sm" onclick="hxAskEnd(true)" title="Thoát, không chấm điểm">Thoát</button>
+      </div>
+      <div class="hx-nums" id="hxNums">${HX.flat.map(x=>`<button id="hxn-${x.q.num}" onclick="hxJump(${x.q.num})">${x.q.num}</button>`).join('')}</div>
+    </div>
+    <div class="hx-body" id="hxBody">${body}<div class="hx-center" style="margin:26px 0 40px"><button class="hx-btn blue" onclick="hxAskEnd()">NỘP BÀI</button></div></div>
+    <div class="hx-body hx-confirm" id="hxConfirm" style="display:none"></div>`;
+  hxFit();
+  HX.startAt=Date.now();HX.endAt=HX.startAt+HX.secs*1000;
+  HX.t=setInterval(()=>{
+    const left=(HX.endAt-Date.now())/1000,c=$('hxClock');
+    if(c){c.textContent=hxFmt(left);c.classList.toggle('low',left<=300)}
+    if(left<=0)hxFinish(true);
+  },500);
+}
+/* chiều cao khung đoạn văn = đúng phần màn hình còn lại dưới thanh tiêu đề */
+function hxFit(){const b=$('hxBody'),r=$('hxRoot');if(b&&r)r.style.setProperty('--hxH',b.clientHeight+'px')}
+if(typeof window!=='undefined')window.addEventListener('resize',()=>{try{hxFit()}catch(e){}});
+function hxPick(num,i){
+  if(!HX||HX.done)return;
+  HX.ans[num]=i;
+  const q=$('hxq-'+num);if(q)q.querySelectorAll('.hx-o').forEach((l,k)=>l.classList.toggle('sel',k===i));
+  const p=$('hxn-'+num);if(p)p.classList.add('done');
+}
+function hxJump(num){const e=$('hxq-'+num);if(e)e.scrollIntoView({block:'start'})}
+/* 4) Nhắc nhở trước khi nộp bài (hoặc thoát) */
+function hxAskEnd(exit){
+  if(!HX||HX.done)return;
+  const miss=HX.flat.filter(x=>HX.ans[x.q.num]==null).map(x=>x.q.num);
+  const b=$('hxBody'),c=$('hxConfirm');if(!b||!c)return;
+  b.style.display='none';c.style.display='';
+  c.innerHTML=exit
+    ?`<div class="hx-cbox"><p class="hx-miss">Thoát khỏi phòng thi thì bài làm sẽ <b>không được chấm và không được lưu</b>.</p><p>Em chắc chắn muốn THOÁT?</p>
+       <div><button class="hx-btn blue" onclick="hxClose()">Có</button><button class="hx-btn blue" onclick="hxBack()">Không</button></div></div>`
+    :`<div class="hx-cbox"><p class="hx-miss">${miss.length?'Bạn chưa làm câu: '+miss.join(', '):'Bạn đã trả lời tất cả các câu.'}</p>
+       <p>Khi đã kết thúc phần thi, bạn sẽ không quay lại phần thi được nữa.<br>Bạn chắc chắn KẾT THÚC phần thi này?</p>
+       <div><button class="hx-btn blue" onclick="hxFinish()">Có</button><button class="hx-btn blue" onclick="hxBack()">Không</button></div></div>`;
+}
+function hxBack(){const b=$('hxBody'),c=$('hxConfirm');if(b&&c){c.style.display='none';b.style.display=''}}
+/* 5) Chấm điểm + bảng kết quả */
+function hxFinish(timeUp){
+  if(!HX||HX.done)return;
+  HX.done=true;if(HX.t){clearInterval(HX.t);HX.t=null}
+  const elapsed=Math.min(HX.secs,Math.round((Date.now()-HX.startAt)/1000));
+  const st={answered:HX.flat.length,correct:0,total:HX.flat.length,wrongs:[],catStats:{}};
+  HX.flat.forEach(({q,cat})=>{
+    const ch=HX.ans[q.num],ok=ch===q.ans;
+    const cs=st.catStats[cat.title]||(st.catStats[cat.title]={total:0,correct:0});cs.total++;
+    if(ok){st.correct++;cs.correct++}
+    else{const tm=String(q.explain||'').match(/<b>Phương pháp:<\/b>\s*([^<]+)/);
+      st.wrongs.push({num:q.num,text:q.text,cat:cat.title,topic:tm?tm[1].trim():'Khác',chose:ch==null?'—':'ABCD'[ch],correct:'ABCD'[q.ans],correctText:q.opts[q.ans],level:q.level})}
+    if(ch!=null){try{efzTrack('HSA',cat.title,ok,q,q.ans)}catch(e){}}
+  });
+  _hsaState=st;window._hsaElapsed=elapsed;
+  try{if(P){P.correct+=st.correct;if(st.correct>0)gainXP(st.correct*5);persist();try{checkBadges()}catch(e){}}}catch(e){}
+  hxRenderReview();
+  const w=hxWho(),pct=(a,b)=>b?(Math.round(a/b*1000)/10)+'%':'0%';
+  let rows='';HX.data.forEach(c=>{const s=st.catStats[c.title];rows+=`<tr><td>${hxCatName(c).toUpperCase()}</td><td>${s.total}</td><td>${s.correct}/${s.total}</td><td>${pct(s.correct,s.total)}</td></tr>`});
+  $('hxRoot').innerHTML=hxBar()+`<div class="hx-body"><div class="hx-result">
+    <p class="hx-rt">KẾT QUẢ HOÀN THÀNH BÀI THI</p>
+    ${timeUp?'<p class="hx-red"><b>Đã hết thời gian làm bài — máy tính tự động nộp bài.</b></p>':''}
+    <p>Họ và tên: <b>${esc(String(w.name))}</b> &nbsp;&nbsp; Mã số: <b>${esc(String(w.acc))}</b> &nbsp;&nbsp; Thời gian làm bài: <b>${hxFmt(elapsed)}</b></p>
+    <p><b>Điểm gốc: ${st.correct}/${st.total}</b></p>
+    <p>DIỄN GIẢI CHI TIẾT</p>
+    <div class="hx-tblwrap"><table class="hx-tbl"><tr><th>Phần thi</th><th>Số câu</th><th>Điểm gốc</th><th>% đạt</th></tr>${rows}
+      <tr><td><b>Tổng — TIẾNG ANH</b></td><td><b>${st.total}</b></td><td><b>${st.correct}/${st.total}</b></td><td><b>${pct(st.correct,st.total)}</b></td></tr></table></div>
+    <p class="hx-muted">${st.correct>0?'⭐ +'+(st.correct*5)+' XP · ':''}Đây là bài luyện tập nên em được xem lại đáp án và lời giải chi tiết.<br>(Thi thật: bài thi HSA không công bố đáp án và không phúc khảo.)</p>
+    <div class="hx-center"><button class="hx-btn navy" onclick="hxShowReview()">Xem lại bài thi + lời giải</button> <button class="hx-btn blue" onclick="hxOpen('${HX.prefix}')">Làm lại đề này</button></div>
+  </div></div>`;
+  try{st.correct/st.total>=.7?sndWin():sndClick()}catch(e){}
+}
+function hxShowReview(){hxClose();const e=$('hsaContent');if(e)e.scrollIntoView({block:'start'})}
+/* 6) Bài đã chấm: đáp án đúng/sai + lời giải, câu chùm vẫn chia đôi; bên dưới là lộ trình ôn tập */
+function hxRenderReview(){
+  const prefix=HX.prefix,st=_hsaState;
+  let h=`<div class="hsa-score-bar">
+    <div class="sc-item">📊 Điểm gốc: <b>${st.correct}/${st.total}</b></div>
+    <div class="sc-item">📈 Tỉ lệ: <b>${Math.round(st.correct/st.total*100)}%</b></div>
+    <div class="sc-item">⏱️ <b>${hxFmt(window._hsaElapsed||0)}</b></div>
+    <button class="score-submit-btn ready" onclick="hxOpen('${prefix}')">🔄 Làm lại đề</button>
+  </div>`;
+  HX.data.forEach(cat=>{
+    h+=`<div class="hsa-cat-header">${cat.icon||''} ${cat.title}</div>`;
+    const qs=cat.questions.map(q=>{
+      const qid=prefix+'-'+q.num,ch=HX.ans[q.num];
+      return `<div class="hsa-q-card" id="hq-${qid}" data-done="1">
+        <div class="q-num">Câu ${q.num} ${q.level?'('+q.level+')':''} · ${ch==null?'<span style="color:#b45309">Chưa làm</span>':ch===q.ans?'<span style="color:#16a34a">✅ Đúng</span>':'<span style="color:#dc2626">❌ Sai — em chọn '+'ABCD'[ch]+'</span>'}</div>
+        <div class="q-text">${fmtExamText(q.text)}</div>
+        <div class="hsa-opts">${q.opts.map((o,i)=>`<div class="hsa-opt${i===q.ans?' correct':i===ch?' wrong':''}" style="cursor:default${i!==q.ans&&i!==ch?';opacity:.45':''}"><span class="opt-text-wrap">${'ABCD'[i]}. ${o}</span></div>`).join('')}</div>
+        <div class="hsa-explain show"><div class="exp-title">💡 Giải chi tiết</div><div class="exp-body">${formatExplainHTML(q)}</div></div>
+      </div>`}).join('');
+    h+=cat.passage?`<div class="exam-split"><div class="exam-pass"><div class="q-passage">${cat.passage}</div></div><div class="exam-qs">${qs}</div></div>`:qs;
+  });
+  h+=`<div class="hsa-summary" id="hsa-summary-${prefix}"></div>`;
+  $('hsaContent').innerHTML=h;
+  /* bảng điểm đang che phía trên → không cho trang nền tự cuộn xuống phần tổng kết */
+  try{const sm=$('hsa-summary-'+prefix);if(sm)sm.scrollIntoView=function(){};showHSASummary(prefix)}catch(e){}
+}
+
+/* ===== HSA — CHẾ ĐỘ LUYỆN TẬP: bấm là hiện đáp án + giải thích ngay (như trước), câu chùm chia đôi ===== */
+function hsaPractice(prefix){
+  const data=efzData(prefix);if(!data||!data.length)return;
+  hxClose();
   const el=$('hsaContent');
   _hsaState={answered:0,correct:0,total:data.reduce((s,cat)=>s+cat.questions.length,0),wrongs:[],catStats:{}};
   if(window._hsaTimer)clearInterval(window._hsaTimer);
   window._hsaStartTime=Date.now();
   window._hsaElapsed=0;
-  let h=`<div class="hsa-score-bar" id="hsa-score-${prefix}">
+  let h=`<div style="margin-bottom:10px"><button class="btn ghost sm" onclick="showHSATab('${prefix}')">← Chọn chế độ</button> <span style="font-size:13px;font-weight:700;color:#7c3aed">📝 Chế độ luyện tập — chọn đáp án là xem ngay lời giải</span></div>
+  <div class="hsa-score-bar" id="hsa-score-${prefix}">
     <div class="sc-item">📊 Đã làm: <b><span id="hsa-done-${prefix}">0</span>/${_hsaState.total}</b></div>
     <div class="sc-item">✅ Đúng: <b><span id="hsa-right-${prefix}">0</span></b></div>
     <div class="sc-item">📈 Tỉ lệ: <b><span id="hsa-pct-${prefix}">0</span>%</b></div>
@@ -440,7 +650,8 @@ function renderHSAQuiz(data,prefix){
   },1000);
   data.forEach(cat=>{
     h+=`<div class="hsa-cat-header">${cat.icon} ${cat.title}</div>`;
-    if(cat.passage) h+=`<div class="hsa-q-card"><div class="q-passage">${cat.passage}</div></div>`;
+    const split=!!cat.passage;
+    if(split)h+=`<div class="exam-split"><div class="exam-pass"><div class="q-passage">${cat.passage}</div></div><div class="exam-qs">`;
     cat.questions.forEach(q=>{
       const qid=prefix+'-'+q.num;
       h+=`<div class="hsa-q-card" id="hq-${qid}">`;
@@ -457,6 +668,7 @@ function renderHSAQuiz(data,prefix){
       h+=`<div class="exp-body">${formatExplainHTML(q)}</div>`;
       h+=`</div></div>`;
     });
+    if(split)h+=`</div></div>`;
   });
   h+=`<div style="text-align:center;margin:24px 0"><button class="hsa-submit-btn" id="hsa-submit-${prefix}" onclick="hsaSubmit('${prefix}')">📩 Nộp Bài</button></div>`;
   h+=`<div class="hsa-summary" id="hsa-summary-${prefix}"></div>`;
@@ -515,7 +727,7 @@ function hsaAnswer(qid,idx,prefix,ev){
     _hsaState.wrongs.push({num:qObj.num,text:qObj.text,cat:qCat,topic:qTopic,chose:'ABCD'[idx],correct:'ABCD'[correctIdx],correctText:qObj.opts[correctIdx],level:qObj.level});
   }
   try{sndClick()}catch(e){}
-  if(idx===correctIdx){try{addXP(5);toast('🎯 Chính xác! +5 XP')}catch(e){}}
+  if(idx===correctIdx){try{gainXP(5,ev);toast('🎯 Chính xác! +5 XP')}catch(e){}}
   else{try{toast('❌ Sai rồi! Đáp án đúng: '+'ABCD'[correctIdx])}catch(e){}}
   // Show summary when all questions answered
   if(_hsaState.answered>=_hsaState.total){
@@ -2213,11 +2425,9 @@ function renderTHPTQuiz(data,prefix){
   },1000);
   data.forEach(cat=>{
     h+=`<div class="thpt-cat-header">${cat.icon} ${cat.title}</div>`;
-    if(cat.passage){
-      const pid=prefix+'-passage-'+cat.title.replace(/[^a-zA-Z0-9]/g,'');
-      h+=`<button class="thpt-passage-toggle" onclick="const p=document.getElementById('${pid}');p.style.display=p.style.display==='none'?'block':'none';this.textContent=p.style.display==='none'?'📖 Hiện đoạn văn':'📖 Ẩn đoạn văn'">📖 Ẩn đoạn văn</button>`;
-      h+=`<div class="thpt-passage" id="${pid}" style="display:block">${cat.passage}</div>`;
-    }
+    const split=!!cat.passage;
+    /* có đoạn văn → chia đôi: đoạn văn bên trái (đứng yên), câu hỏi bên phải */
+    if(split)h+=`<div class="exam-split"><div class="exam-pass thpt-passage">${cat.passage}</div><div class="exam-qs">`;
     cat.questions.forEach(q=>{
       const qid=prefix+'-'+q.num;
       h+=`<div class="thpt-q-card" id="tq-${qid}">`;
@@ -2234,6 +2444,7 @@ function renderTHPTQuiz(data,prefix){
       h+=`<div class="exp-body">${formatExplainHTML(q)}</div>`;
       h+=`</div></div>`;
     });
+    if(split)h+=`</div></div>`;
   });
   h+=`<div style="text-align:center;margin:24px 0"><button class="thpt-submit-btn" id="thpt-submit-${prefix}" onclick="thptSubmit('${prefix}')">📩 Nộp Bài</button></div>`;
   h+=`<div class="thpt-summary" id="thpt-summary-${prefix}"></div>`;
