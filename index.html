@@ -143,7 +143,7 @@
   <section id="sec-board">
     <div class="card">
       <h2>🏆 Bảng vàng</h2>
-      <p class="sub">Top bạn học chăm nhất trên máy này. Cố lên top 1 nha!</p>
+      <p class="sub" id="lbSub">Top bạn học chăm nhất. Cố lên top 1 nha!</p>
       <div id="lbList"></div>
     </div>
     <div class="card">
@@ -274,6 +274,25 @@
     <input class="winput" id="nameInput" maxlength="20" placeholder="Tên của em (vd: Minh Anh)" style="text-align:center">
     <div class="ava-pick" id="avaPick"></div>
     <button class="btn" onclick="saveName()">Bắt đầu học! 🚀</button>
+    <div id="nameAcc" style="margin-top:12px;font-size:12px;color:var(--muted);font-weight:600"></div>
+  </div>
+</div>
+
+<!-- CỔNG ĐĂNG NHẬP (bắt buộc khi vào trang) -->
+<div class="modal-bg" id="loginGate" style="z-index:250" role="dialog" aria-modal="true" aria-labelledby="lgTitle">
+  <div class="modal">
+    <div style="font-size:50px">🚀</div>
+    <h3 id="lgTitle">Đăng nhập để vào học</h3>
+    <p>Đăng nhập để lưu điểm và lên <b>Bảng vàng chung</b> với các bạn nhé!</p>
+    <button class="btn" onclick="efzLogin()">🔐 Đăng nhập bằng Google</button>
+    <div style="margin:14px 0 10px;font-size:12.5px;color:var(--muted);font-weight:700">— hoặc dùng tài khoản riêng —</div>
+    <input class="winput" id="lgUser" maxlength="20" placeholder="Tên đăng nhập (vd: minhanh2015)" autocomplete="username" autocapitalize="none" spellcheck="false" style="text-align:center;margin-bottom:8px">
+    <input class="winput" id="lgPass" type="password" maxlength="60" placeholder="Mật khẩu (ít nhất 6 ký tự)" autocomplete="current-password" style="text-align:center;margin-bottom:10px" onkeydown="if(event.key==='Enter')efzPwAuth(false)">
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+      <button class="btn teal" onclick="efzPwAuth(false)">Đăng nhập</button>
+      <button class="btn ghost" onclick="efzPwAuth(true)">Tạo tài khoản mới</button>
+    </div>
+    <div id="lgMsg" aria-live="polite" style="margin-top:12px;font-size:13px;font-weight:600;color:#b45309;line-height:1.5"></div>
   </div>
 </div>
 

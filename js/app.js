@@ -1044,8 +1044,16 @@ function survEnd(){
                allow read: if request.auth != null && request.auth.token.email_verified == true
                            && request.auth.token.email == '<email của thầy>';
              }
+             // bảng vàng chung: ai đã đăng nhập cũng XEM được, mỗi bạn chỉ ghi được dòng của mình
+             match /leaderboard/{uid} {
+               allow read: if request.auth != null;
+               allow write: if request.auth != null && request.auth.uid == uid
+                            && request.resource.data.xp is int && request.resource.data.xp >= 0
+                            && request.resource.data.name is string && request.resource.data.name.size() <= 20;
+             }
            }
          }
+      (Đăng nhập bằng tên + mật khẩu: Authentication → Sign-in method → bật thêm "Email/Password".)
       ✅ ĐÃ LÀM XONG ngày 11/11/2026: project "english-fun-zone", Firestore ở asia-southeast1 (Singapore).
    4) Authentication → Settings → "Authorized domains" → Add domain
       → nhập:  nguyenisnotwibu.github.io
@@ -1067,7 +1075,13 @@ function efzCloudOn(){return !!(EFZ_FIREBASE.apiKey&&EFZ_FIREBASE.projectId)}
 function _efzScript(src){return new Promise((ok,no)=>{
   const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>no(new Error('load '+src));
   document.head.appendChild(s)})}
-async function efzCloudInit(){
+let _efzInitP=null;
+function efzCloudInit(){
+  if(efzFB)return Promise.resolve(efzFB);
+  if(!_efzInitP)_efzInitP=_efzCloudInit0().then(r=>{if(!r)_efzInitP=null;return r},()=>{_efzInitP=null;return null});
+  return _efzInitP;
+}
+async function _efzCloudInit0(){
   if(!efzCloudOn()||efzFB)return efzFB;
   const V='10.12.2', H=['https://www.gstatic.com/firebasejs/'+V+'/','https://cdnjs.cloudflare.com/ajax/libs/firebase/'+V+'/'];
   let ok=false;
@@ -1086,7 +1100,7 @@ async function efzCloudInit(){
     efzUser=u||null;
     try{if(u)localStorage.setItem('efz_cloud','1')}catch(e){}
     efzRenderCloud();
-    if(u)efzCloudPull(true);
+    efzOnAuth(u);
   });
   return efzFB;
 }
@@ -1108,18 +1122,159 @@ function efzCloudBox(){
       <button class="btn ghost sm" onclick="efzLogin()">🔐 Đăng nhập Google để đồng bộ</button>
       <span style="font-size:11.5px;color:var(--muted);font-weight:600">Chơi ở máy nào cũng thấy đúng tiến độ.</span></div>`;
   return `<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <span style="font-size:12px;font-weight:700;color:#0f766e">✅ ${esc(efzUser.displayName||efzUser.email||'Đã đăng nhập')}</span>
+      <span style="font-size:12px;font-weight:700;color:#0f766e">✅ ${esc(efzAccName())}</span>
       <button class="btn teal sm" onclick="efzCloudPush(true)">☁️ Lưu lên đám mây</button>
       <button class="btn sun sm" onclick="efzCloudPull()">⬇️ Tải từ đám mây</button>
       <button class="btn ghost sm" onclick="efzLogout()">Đăng xuất</button></div>`;
 }
 async function efzLogin(){
-  const fb=await efzCloudInit();if(!fb)return;
-  try{await fb.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    sndOK();toast('✅ Đã đăng nhập — tiến độ sẽ tự đồng bộ!')}
-  catch(e){toast('😢 Đăng nhập không thành công: '+(e&&e.code||''))}
+  const fb=await efzCloudInit();if(!fb){efzGateMsg('😢 Không tải được — kiểm tra mạng rồi thử lại nhé!');return}
+  try{await fb.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());sndOK()}
+  catch(e){const c=e&&e.code||'';
+    const m=c==='auth/popup-blocked'?'Trình duyệt đang chặn cửa sổ đăng nhập — cho phép pop-up rồi bấm lại nhé.'
+      :c==='auth/popup-closed-by-user'||c==='auth/cancelled-popup-request'?'Em chưa chọn tài khoản Google. Bấm lại nhé!'
+      :c==='auth/network-request-failed'?'Mất mạng — kiểm tra kết nối rồi thử lại.'
+      :'Đăng nhập Google không thành công ('+c+'). Nếu đang mở trong Zalo/Facebook, hãy mở bằng Chrome hoặc Safari.';
+    efzGateMsg('😢 '+m);toast('😢 '+m)}
 }
-async function efzLogout(){if(efzFB){await efzFB.auth.signOut();try{localStorage.removeItem('efz_cloud')}catch(e){}toast('👋 Đã đăng xuất')}}
+/* tài khoản riêng: tên đăng nhập + mật khẩu (cho bạn chưa có Gmail). Firebase cần dạng email nên ghép tên với 1 tên miền nội bộ. */
+async function efzPwAuth(isNew){
+  const u=($('lgUser').value||'').trim().toLowerCase(), p=$('lgPass').value||'';
+  if(!/^[a-z0-9._-]{3,20}$/.test(u)){efzGateMsg('✏️ Tên đăng nhập dài 3–20 ký tự, viết liền không dấu (chữ, số, dấu . _ -). Ví dụ: <b>minhanh2015</b>');return}
+  if(p.length<6){efzGateMsg('🔑 Mật khẩu cần ít nhất 6 ký tự.');return}
+  efzGateMsg('⏳ Đang xử lý…');
+  const fb=await efzCloudInit();if(!fb){efzGateMsg('😢 Không tải được — kiểm tra mạng rồi thử lại nhé!');return}
+  const mail=u+'@'+EFZ_ACC_DOMAIN;
+  try{
+    if(isNew){const r=await fb.auth.createUserWithEmailAndPassword(mail,p);try{await r.user.updateProfile({displayName:u})}catch(e){}}
+    else await fb.auth.signInWithEmailAndPassword(mail,p);
+    sndOK();$('lgPass').value='';
+  }catch(e){const c=e&&e.code||'';
+    efzGateMsg('😢 '+(c==='auth/email-already-in-use'?'Tên đăng nhập này đã có người dùng. Chọn tên khác, hoặc bấm <b>Đăng nhập</b> nếu đó là tài khoản của em.'
+      :/wrong-password|user-not-found|invalid-credential|invalid-login-credentials/.test(c)?(isNew?'Không tạo được tài khoản.':'Sai tên đăng nhập hoặc mật khẩu. Chưa có tài khoản thì bấm <b>Tạo tài khoản mới</b>.')
+      :c==='auth/operation-not-allowed'?'Thầy chưa bật đăng nhập bằng mật khẩu. Em dùng nút Google nhé.'
+      :c==='auth/too-many-requests'?'Thử sai nhiều lần quá — đợi vài phút rồi thử lại.'
+      :c==='auth/network-request-failed'?'Mất mạng — kiểm tra kết nối rồi thử lại.'
+      :'Không thành công ('+c+').'));
+  }
+}
+async function efzLogout(){
+  if(!efzFB)return;
+  clearTimeout(_efzSoonT);
+  try{await efzCloudPush()}catch(e){}
+  await efzFB.auth.signOut();
+  try{localStorage.removeItem('efz_cloud')}catch(e){}
+  try{$('nameModal').classList.remove('show')}catch(e){}
+  toast('👋 Đã đăng xuất');
+}
+
+/* ==========================================================
+   🔐 BẮT BUỘC ĐĂNG NHẬP + GẮN HỒ SƠ VỚI TÀI KHOẢN + 🏆 BẢNG VÀNG CHUNG
+   - Vào trang là phải đăng nhập (Google hoặc tên đăng nhập + mật khẩu).
+   - Mỗi tài khoản gắn với 1 hồ sơ (tên + avatar + XP). Đổi máy vẫn đúng hồ sơ.
+   - Điểm được chép sang Firestore: leaderboard/{uid} → bảng vàng của TẤT CẢ học sinh.
+   - Máy đã đăng nhập rồi thì lần sau mất mạng vẫn vào học được.
+   ========================================================== */
+const LS_UID='efz_uid', LS_UIDMAP='efz_uidmap', EFZ_ACC_DOMAIN='hs.english-fun-zone.app';
+let _efzLb=null,_efzLbTs=0,_efzLbBusy=false,_efzLbErr=false;
+function efzUidMap(){try{return JSON.parse(localStorage.getItem(LS_UIDMAP))||{}}catch(e){return{}}}
+function efzUidMapSet(uid,name){try{const m=efzUidMap();m[uid]=name;localStorage.setItem(LS_UIDMAP,JSON.stringify(m))}catch(e){}}
+/* tên hồ sơ này trên máy đang thuộc tài khoản KHÁC? (máy dùng chung) */
+function efzNameOwner(n){const m=efzUidMap(),me=efzUser?efzUser.uid:'';for(const k in m)if(m[k]===n&&k!==me)return k;return null}
+function efzAccName(){
+  if(!efzUser)return '';
+  const em=efzUser.email||'';
+  if(em.endsWith('@'+EFZ_ACC_DOMAIN))return em.split('@')[0];
+  return efzUser.displayName||em||'Đã đăng nhập';
+}
+function efzLoginGate(show){const g=$('loginGate');if(g)g.classList.toggle('show',!!show)}
+function efzGateMsg(t){const m=$('lgMsg');if(m)m.innerHTML=t||''}
+function efzOnAuth(u){
+  if(u){try{localStorage.setItem(LS_UID,u.uid)}catch(e){}efzLoginGate(false);efzGateMsg('');efzBind(u)}
+  else{try{localStorage.removeItem(LS_UID)}catch(e){}_efzLb=null;_efzLbTs=0;if(!efzIsAdminView())efzLoginGate(true)}
+}
+/* vừa đăng nhập xong: chọn đúng hồ sơ cho tài khoản này */
+async function efzBind(u){
+  let c=null,online=true;
+  try{const sn=await efzFB.db.collection('saves').doc(u.uid).get();c=sn.exists?sn.data():null}catch(e){online=false}
+  if(!efzUser||efzUser.uid!==u.uid)return;
+  try{
+    const map=efzUidMap(),ps=loadPlayers();
+    const cp=(c&&c.player&&c.player.name)?c.player:null;
+    let pl=null;
+    if(cp){const loc=ps[cp.name];pl=(loc&&!efzNameOwner(cp.name)&&(loc.xp||0)>(cp.xp||0))?loc:cp}   /* XP chỉ tăng → giữ bên nhiều hơn */
+    else if(map[u.uid]&&ps[map[u.uid]])pl=ps[map[u.uid]];
+    else if(P&&P.name&&!efzNameOwner(P.name))pl=P;          /* học sinh cũ: nhận luôn hồ sơ đang có trên máy */
+    if(pl){
+      pl=Object.assign(newPlayer(pl.name,pl.ava||AVAS[0]),pl);if(!Array.isArray(pl.badges))pl.badges=[];
+      ps[pl.name]=pl;savePlayers(ps);P=pl;pickedAva=P.ava;
+      localStorage.setItem(LS_CUR,P.name);efzUidMapSet(u.uid,P.name);
+      $('nameModal').classList.remove('show');renderPlayer();
+    }else if(online){
+      /* tài khoản mới, chưa có hồ sơ → hỏi tên + avatar */
+      P=null;try{localStorage.removeItem(LS_CUR)}catch(e){}
+      $('pName').textContent='Bạn mới';$('pAva').textContent='🐣';$('pXP').textContent='0';$('pLvl').textContent='Lv.1';
+      showNameModal();
+    }
+    if(c&&c.td){const local=td2SaveMeta();if(!(local&&local.ts>=(c.td.ts||0)))localStorage.setItem(TD_SAVE_KEY,JSON.stringify(c.td))}
+  }catch(e){}
+  efzRenderCloud();
+  try{if(curSec==='board'){renderBoard();renderBadges()}}catch(e){}
+  if(online&&P)efzCloudPush();
+}
+/* chép điểm sang bảng vàng chung */
+async function efzLbPush(pl){
+  if(!efzFB||!efzUser||!pl||!pl.name)return;
+  try{await efzFB.db.collection('leaderboard').doc(efzUser.uid).set({
+    name:String(pl.name).slice(0,20), ava:String(pl.ava||'🐣').slice(0,8), gname:String(efzAccName()).slice(0,40),
+    xp:Math.max(0,Math.floor(pl.xp||0)), correct:Math.max(0,Math.floor(pl.correct||0)),
+    badges:(pl.badges||[]).length, ts:Date.now()});
+  }catch(e){}
+}
+async function efzLbFetch(force){
+  if(!efzFB||!efzUser||_efzLbBusy)return;
+  if(!force&&_efzLb&&Date.now()-_efzLbTs<20000)return;
+  _efzLbBusy=true;
+  try{
+    if(P)await efzLbPush(P);
+    const sn=await efzFB.db.collection('leaderboard').orderBy('xp','desc').limit(50).get();
+    const rows=[];sn.forEach(d=>{const x=d.data()||{};rows.push({uid:d.id,name:String(x.name||'?'),ava:String(x.ava||'🐣'),gname:String(x.gname||''),xp:+x.xp||0,correct:+x.correct||0,badges:+x.badges||0})});
+    _efzLb=rows;_efzLbTs=Date.now();_efzLbErr=false;
+  }catch(e){_efzLbErr=true}
+  _efzLbBusy=false;
+  try{if(curSec==='board')efzLbDraw()}catch(e){}
+}
+function efzLbDraw(){
+  const box=$('lbList');if(!box)return;
+  const medals=['🥇','🥈','🥉'],me=efzUser?efzUser.uid:'';
+  let rows,global=!!_efzLb,extra=null;
+  if(global){
+    rows=_efzLb.map(r=>Object.assign({},r));
+    const mine=P?{uid:me,name:P.name,ava:P.ava,gname:efzAccName(),xp:P.xp||0,correct:P.correct||0,badges:(P.badges||[]).length}:null;
+    if(mine){
+      const i=rows.findIndex(r=>r.uid===me);
+      if(i>=0)rows[i]=mine;
+      else if(rows.length<50||mine.xp>rows[rows.length-1].xp)rows.push(mine);
+      else extra=mine;
+      rows.sort((a,b)=>b.xp-a.xp);
+    }
+  }else{
+    rows=Object.values(loadPlayers()).sort((a,b)=>b.xp-a.xp).slice(0,10).map(p=>({uid:(P&&p.name===P.name)?me||'me':'',name:p.name,ava:p.ava,gname:'',xp:p.xp||0,correct:p.correct||0,badges:(p.badges||[]).length}));
+  }
+  const row=(r,rank)=>`
+    <div class="lb-row ${r.uid&&(r.uid===me||r.uid==='me')?'me':''}">
+      <span class="lb-rank">${rank}</span>
+      <span class="lb-ava">${esc(String(r.ava))}</span>
+      <span class="lb-name">${esc(String(r.name))}<small>${r.gname&&r.gname!==r.name?'👤 '+esc(r.gname)+' · ':''}Lv.${lvlOf(r.xp)} · ${r.correct} câu đúng · ${r.badges} huy hiệu</small></span>
+      <span class="lb-xp">⭐ ${r.xp}</span>
+    </div>`;
+  const note=global?'':(_efzLbErr
+    ?'<p class="sub">⚠️ Chưa tải được bảng vàng chung (kiểm tra mạng) — đang hiện điểm lưu trên máy này.</p>'
+    :(efzUser?'<p class="sub">⏳ Đang tải bảng vàng chung…</p>':''));
+  box.innerHTML=note+(rows.length?rows.map((r,i)=>row(r,medals[i]||(i+1))).join(''):'<p class="sub">Chưa có ai. Hãy là người đầu tiên!</p>')
+    +(extra?'<p class="sub" style="margin:8px 0 4px">… vị trí của em (ngoài top 50):</p>'+row(extra,'⋯'):'');
+  const sub=$('lbSub');if(sub)sub.textContent=global?'Top 50 bạn học chăm nhất — xếp hạng chung của tất cả học sinh. Cố lên top 1 nha!':'Top bạn học chăm nhất. Cố lên top 1 nha!';
+}
 /* đẩy tiến độ lên đám mây: hồ sơ người chơi (XP, huy hiệu…) + ván Thủ thành đang lưu (nếu có) */
 async function efzCloudPush(manual){
   if(!efzCloudOn()||!efzFB||!efzUser||efzCloudBusy)return;
@@ -1131,6 +1286,7 @@ async function efzCloudPush(manual){
     const doc={player:pl, who:efzUser.displayName||'', ts:Date.now()};
     if(d)doc.td=d;
     await efzFB.db.collection('saves').doc(efzUser.uid).set(doc,{merge:true});
+    if(pl)efzLbPush(pl);
     if(manual){sndOK();toast('☁️ Đã lưu tiến độ lên tài khoản Google!')}
   }catch(e){if(manual)toast('😢 Không lưu lên đám mây được: '+(e&&e.code||''))}
   efzCloudBusy=false;
@@ -1172,10 +1328,14 @@ async function efzCloudPull(auto){
     if(auto&&!gotP)efzCloudPush();      /* máy này mới hơn → cập nhật lại bản trên mây */
   }catch(e){if(!auto)toast('😢 Không tải được: '+(e&&e.code||''))}
 }
-/* Thư viện Firebase khá nặng → chỉ tự tải lúc mở trang nếu máy này đã từng đăng nhập. Chưa đăng nhập thì bấm nút mới tải. */
+/* Mở trang là kiểm tra đăng nhập. Máy đã từng đăng nhập thì cho vào ngay (kể cả lúc mất mạng), sau đó Firebase xác nhận lại.
+   Khung xem trước trong trang admin của thầy thì không chặn. */
 if(typeof window!=='undefined')window.addEventListener('load',()=>{
-  let was=false;try{was=localStorage.getItem('efz_cloud')==='1'}catch(e){}
-  if(efzCloudOn()&&was)setTimeout(()=>{efzCloudInit()},1500);
+  if(!efzCloudOn())return;
+  let was=false,uid='';try{was=localStorage.getItem('efz_cloud')==='1';uid=localStorage.getItem(LS_UID)||''}catch(e){}
+  if(efzIsAdminView()){if(was)setTimeout(()=>{efzCloudInit()},1500);return}
+  if(!uid)efzLoginGate(true);
+  efzCloudInit().then(fb=>{if(!fb&&!uid)efzGateMsg('😢 Cần có mạng để đăng nhập lần đầu. Kiểm tra kết nối rồi tải lại trang nhé!')});
 });
 /* ==========================================================
    💾 LƯU TIẾN ĐỘ THỦ THÀNH
@@ -1681,15 +1841,7 @@ function renderProgress(){
 function renderBoard(){
   try{renderProgress()}catch(e){}
   try{efzRenderCloud()}catch(e){}
-  const ps=Object.values(loadPlayers()).sort((a,b)=>b.xp-a.xp).slice(0,10);
-  const medals=['🥇','🥈','🥉'];
-  $('lbList').innerHTML=ps.length?ps.map((p,i)=>`
-    <div class="lb-row ${P&&p.name===P.name?'me':''}">
-      <span class="lb-rank">${medals[i]||(i+1)}</span>
-      <span class="lb-ava">${p.ava}</span>
-      <span class="lb-name">${esc(p.name)}<small>Lv.${lvlOf(p.xp)} · ${p.correct} câu đúng · ${p.badges.length} huy hiệu</small></span>
-      <span class="lb-xp">⭐ ${p.xp}</span>
-    </div>`).join(''):'<p class="sub">Chưa có ai. Hãy là người đầu tiên!</p>';
+  efzLbDraw();efzLbFetch();
 }
 function renderBadges(){
   $('badgeRow').innerHTML=BADGES.map(b=>`
@@ -1704,16 +1856,25 @@ function showNameModal(){
   $('avaPick').innerHTML=AVAS.map(a=>`<button class="${a===pickedAva?'on':''}" onclick="pickAva('${a}',this)">${a}</button>`).join('');
   $('nameModal').classList.add('show');
   const known=P?P.name:'';$('nameInput').value=known;
+  const na=$('nameAcc');if(na)na.innerHTML=efzUser?'Tài khoản: <b>'+esc(efzAccName())+'</b> · <a href="#" onclick="efzLogout();return false">Đăng xuất</a>':'';
   setTimeout(()=>$('nameInput').focus(),100);
 }
 function pickAva(a,el){pickedAva=a;sndClick();document.querySelectorAll('#avaPick button').forEach(b=>b.classList.toggle('on',b===el))}
 function saveName(){
   const n=$('nameInput').value.trim();
   if(!n){toast('✏️ Nhập tên của em đã nha!');return}
+  if(efzNameOwner(n)){toast('😅 Tên này đã có bạn khác dùng trên máy này — em chọn tên khác nha!');return}
   const ps=loadPlayers();
   if(ps[n]){P=ps[n];P.ava=pickedAva}
+  else if(efzUser&&P&&P.name&&!efzNameOwner(P.name)){
+    /* đã đăng nhập: đổi tên vẫn giữ nguyên điểm + tiến độ */
+    const old=P.name;
+    try{['efz_prog_','efz_chess_'].forEach(k=>{const v=localStorage.getItem(k+old);if(v!=null){localStorage.setItem(k+n,v);localStorage.removeItem(k+old)}})}catch(e){}
+    delete ps[old];savePlayers(ps);P.name=n;P.ava=pickedAva;
+  }
   else P=newPlayer(n,pickedAva);
   localStorage.setItem(LS_CUR,n);
+  if(efzUser)efzUidMapSet(efzUser.uid,n);
   persist();$('nameModal').classList.remove('show');
   confetti(50);sndWin();toast('🎉 Chào mừng <b>'+esc(n)+'</b>! Cùng học thôi!');
 }

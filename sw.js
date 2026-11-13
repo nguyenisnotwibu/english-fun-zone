@@ -1,7 +1,7 @@
 /* Service worker: chạy offline + cập nhật nhanh.
    - HTML/CSS/JS: ưu tiên mạng (luôn mới), mất mạng thì dùng bản đã lưu.
    - data/*.js (đề thi): ưu tiên bản đã lưu, cập nhật ngầm ở nền. */
-const VER='efz-v2';
+const VER='efz-v3';
 const CORE=['./','index.html','css/app.css','js/data-loader.js','js/app.js','js/a11y.js','manifest.webmanifest','icon.svg','icons/icon-192.png'];
 /* Phần tải theo yêu cầu + trang Ngữ Pháp Master: lưu sẵn ở nền để dùng được offline, không chặn lần mở đầu. */
 const LAZY=['js/chunks/grades.js','js/chunks/grammar.js','js/chunks/games.js','js/chunks/td.js','js/chunks/ielts.js','grammar.html'];
