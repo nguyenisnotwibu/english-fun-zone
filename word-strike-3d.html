@@ -438,6 +438,51 @@ function disposeLabel(sp){sp.material.map.dispose();sp.material.dispose()}
 /* ===================== BOTS ===================== */
 const BG={torso:new THREE.BoxGeometry(1,.9,.5),belt:new THREE.BoxGeometry(1.02,.12,.52),head:new THREE.BoxGeometry(.62,.58,.58),visor:new THREE.BoxGeometry(.5,.14,.05),leg:new THREE.BoxGeometry(.42,.8,.42),arm:new THREE.BoxGeometry(.34,.82,.34),hand:new THREE.BoxGeometry(.3,.2,.3),plate:new THREE.BoxGeometry(1.15,.55,.62),pad:new THREE.BoxGeometry(.5,.25,.5),gunarm:new THREE.BoxGeometry(.22,.22,.7),hit:new THREE.BoxGeometry(1.5,3.3,1.2),orb:new THREE.SphereGeometry(.75,16,12),orbHit:new THREE.SphereGeometry(1.3,8,6)};
 const BM={skin:lam(0xf5d06b),dark:lam(0x1b1f33),plate:lam(0x8a93b8),visor:new THREE.MeshBasicMaterial({color:0xff3355}),angry:new THREE.MeshLambertMaterial({color:0xff3030,emissive:0x550000}),frozen:new THREE.MeshLambertMaterial({color:0x9fd8ff,emissive:0x1a4a6a}),hit:new THREE.MeshBasicMaterial({visible:false}),gun:lam(0x2f3542)};
+/* ===================== ROBOT: 7 InstancedMesh dùng chung =====================
+   Trước: mỗi robot ~12 mesh = ~12 draw call. Nay: thân · (đai+đầu+kính) · chân · tay · bàn tay · giáp · súng, mỗi loại 1 lần vẽ cho TẤT CẢ robot.
+   Animation giữ nguyên: nhóm chân/tay vẫn quay như cũ, mỗi khung ma trận của chúng được chép vào instance. Màu riêng từng con = instanceColor
+   (thân đổi màu khi giận/đóng băng lấy từ chất liệu của mesh thân vô hình). Quá BOTCAP robot thì robot thừa không được vẽ (không xảy ra: tối đa ~12). */
+const BOTCAP=40;
+function mergeParts(parts,withColor){
+  const pos=[],nor=[],col=[],idx=[];let off=0;
+  for(const p of parts){const g=p.g.clone();g.translate(p.x||0,p.y||0,p.z||0);
+    const P=g.attributes.position.array,N=g.attributes.normal.array,I=g.index.array;
+    for(let i=0;i<P.length;i++){pos.push(P[i]);nor.push(N[i])}
+    if(withColor){const c=new THREE.Color(p.c);for(let i=0;i<P.length/3;i++)col.push(c.r,c.g,c.b)}
+    for(let i=0;i<I.length;i++)idx.push(I[i]+off);off+=P.length/3;g.dispose()}
+  const o=new THREE.BufferGeometry();o.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));o.setAttribute('normal',new THREE.Float32BufferAttribute(nor,3));
+  if(withColor)o.setAttribute('color',new THREE.Float32BufferAttribute(col,3));o.setIndex(idx);return o}
+const BOTIM={};
+(function(){
+  const mk=(name,geo,vc)=>{const m=new THREE.InstancedMesh(geo,new THREE.MeshLambertMaterial({color:0xffffff,vertexColors:!!vc}),BOTCAP*2);
+    m.frustumCulled=false;m.visible=false;m.castShadow=false;m.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    for(let i=0;i<BOTCAP*2;i++)m.setColorAt(i,new THREE.Color(0xffffff));   /* tạo mảng màu khi count còn đầy đủ */
+    m.count=0;scene.add(m);BOTIM[name]=m;return m};
+  mk('torso',mergeParts([{g:BG.torso,y:1.25}]));
+  mk('body',mergeParts([{g:BG.belt,y:.84,c:0x1b1f33},{g:BG.head,y:2,c:0xf5d06b},{g:BG.visor,y:2.03,z:.3,c:0xff3355}],true),true);
+  mk('leg',mergeParts([{g:BG.leg,y:-.4}]));
+  mk('arm',mergeParts([{g:BG.arm,y:-.38}]));
+  mk('hand',mergeParts([{g:BG.hand,y:-.86}]));
+  mk('armor',mergeParts([{g:BG.plate,y:1.3},{g:BG.pad,x:-.68,y:1.72},{g:BG.pad,x:.68,y:1.72}]));
+  mk('gun',mergeParts([{g:BG.gunarm,y:-.7,z:.3}]));
+})();
+const _bc=new THREE.Color(),_dark=new THREE.Color(0x1b1f33),_skin=new THREE.Color(0xf5d06b),_plate=new THREE.Color(0x8a93b8),_gunc=new THREE.Color(0x2f3542),_white=new THREE.Color(0xffffff);
+function syncBots(){
+  const cnt={torso:0,body:0,leg:0,arm:0,hand:0,armor:0,gun:0},B=BOTIM;
+  const put=(k,mat,col)=>{const m=B[k],i=cnt[k]++;m.setMatrixAt(i,mat);m.setColorAt(i,col)};
+  let n=0;
+  for(const b of scene.children){const u=b.userData;if(!u||!u.isBot)continue;if(n++>=BOTCAP)break;
+    b.updateMatrixWorld(true);
+    const tm=u.torso.material;_bc.copy(tm.color);if(tm.emissive)_bc.add(tm.emissive);
+    put('torso',b.matrixWorld,_bc);put('body',b.matrixWorld,_white);
+    put('leg',u.legs[0].matrixWorld,_dark);put('leg',u.legs[1].matrixWorld,_dark);
+    put('arm',u.arms[0].matrixWorld,u.mat.color);put('arm',u.arms[1].matrixWorld,u.mat.color);
+    put('hand',u.arms[0].matrixWorld,_skin);put('hand',u.arms[1].matrixWorld,_skin);
+    if(u.armor)put('armor',b.matrixWorld,_plate);
+    if(u.gunArm)put('gun',u.arms[1].matrixWorld,_gunc)}
+  for(const k in B){const m=B[k];m.count=cnt[k];m.visible=cnt[k]>0;m.instanceMatrix.needsUpdate=true;if(m.instanceColor)m.instanceColor.needsUpdate=true}}
+scene.onBeforeRender=syncBots;
+window.__botIM=()=>Object.fromEntries(Object.entries(BOTIM).map(([k,m])=>[k,m.count]));
 const BOTCOL=[0xff4757,0x1e90ff,0x2ed573,0xffa502,0xa55eea,0xff6b81,0x00cec9];
 let BOTS=[],BOSS=null,HIT_ALL=[],HIT_T=[];
 function rebuildHits(){HIT_T.length=0;for(const b of BOTS)if(!b.userData.dying)HIT_T.push(b.userData.hit);
@@ -446,16 +491,14 @@ function rebuildHits(){HIT_T.length=0;for(const b of BOTS)if(!b.userData.dying)H
 function makeBot(word,kind,color,scale){
  const K=KINDS[kind]||KINDS.grunt;const g=new THREE.Group();const mat=lam(color);
  const M=(geo,m,x,y,z,sh)=>{const o=new THREE.Mesh(geo,m);o.position.set(x,y,z);if(sh)o.castShadow=true;return o};
- const torso=M(BG.torso,mat,0,1.25,0,true);g.add(torso,M(BG.belt,BM.dark,0,.84,0),M(BG.head,BM.skin,0,2,0,true),M(BG.visor,BM.visor,0,2.03,.3));
+ const torso=new THREE.Mesh(BG.torso,mat);torso.visible=false;g.add(torso);   /* chỉ giữ chất liệu (đổi sang giận/đóng băng); hình vẽ nằm trong InstancedMesh dùng chung (BOTIM) */
  const legs=[],arms=[];
- for(const x of [-.25,.25]){const p=new THREE.Group();p.position.set(x,.8,0);p.add(M(BG.leg,BM.dark,0,-.4,0));g.add(p);legs.push(p)}
- for(const x of [-.68,.68]){const p=new THREE.Group();p.position.set(x,1.65,0);p.add(M(BG.arm,mat,0,-.38,0),M(BG.hand,BM.skin,0,-.86,0));g.add(p);arms.push(p)}
- if(K.armor){g.add(M(BG.plate,BM.plate,0,1.3,0));g.add(M(BG.pad,BM.plate,-.68,1.72,0),M(BG.pad,BM.plate,.68,1.72,0))}
- if(K.ranged){const ga=M(BG.gunarm,BM.gun,0,-.7,.3);arms[1].add(ga)}
+ for(const x of [-.25,.25]){const p=new THREE.Group();p.position.set(x,.8,0);g.add(p);legs.push(p)}
+ for(const x of [-.68,.68]){const p=new THREE.Group();p.position.set(x,1.65,0);g.add(p);arms.push(p)}
  const label=makeLabel(word,K.hp);label.position.y=2.85;g.add(label);
  const hit=new THREE.Mesh(BG.hit,BM.hit);hit.position.y=1.65;hit.scale.set(TR.aim,1,TR.aim);g.add(hit);
  const sc=(scale||1)*K.s;g.scale.setScalar(sc);
- g.userData={isBot:true,kind,word,color,legs,arms,label,hit,torso,mat,hp:K.hp,max:K.hp,dmg:K.dmg,ranged:K.ranged,speed:TR.spd*K.spd*(1+S.waveIdx*.06)*(1+S.stage*STAGE_SPD)*rnd(.88,1.1),t:Math.random()*6,hurtCd:0,shotCd:rnd(2,3.5),stun:0,flash:0,base:sc,dying:false,revealed:false,frozen:false};
+ g.userData={isBot:true,kind,word,color,legs,arms,label,hit,torso,mat,armor:!!K.armor,gunArm:!!K.ranged,hp:K.hp,max:K.hp,dmg:K.dmg,ranged:K.ranged,speed:TR.spd*K.spd*(1+S.waveIdx*.06)*(1+S.stage*STAGE_SPD)*rnd(.88,1.1),t:Math.random()*6,hurtCd:0,shotCd:rnd(2,3.5),stun:0,flash:0,base:sc,dying:false,revealed:false,frozen:false};
  hit.userData.root=g;return g}
 function spawnPos(minR,maxR,clear){for(let k=0;k<50;k++){const a=Math.random()*Math.PI*2,r=rnd(minR,maxR);const x=clamp(yawObj.position.x+Math.cos(a)*r,-ARENA+2,ARENA-2),z=clamp(yawObj.position.z+Math.sin(a)*r,-ARENA+2,ARENA-2);
  if(Math.hypot(x-yawObj.position.x,z-yawObj.position.z)<10)continue;if(blocked(x,z,clear||.9))continue;if(BOTS.some(b=>Math.hypot(b.position.x-x,b.position.z-z)<3))continue;return [x,z]}return [rnd(-20,20),rnd(-20,20)]}

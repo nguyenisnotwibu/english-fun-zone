@@ -4,6 +4,7 @@
 //   3) js/chunks/ielts.js   - tu vung & paraphrase IELTS
 //   4) js/chunks/grammar.js - chuyen de On Ngu Phap
 //   5) grammar.html         - Ngu Phap Master (GP_DATA)
+//   6) data/ws-questions.js - ngan hang cau hoi + sat thuong khi sai cua Word Strike 3D (WS_DATA)
 const fs=require('fs'),path=require('path'),vm=require('vm');
 const ROOT=path.join(__dirname,'..');
 let err=0,warn=0,tot=0;
@@ -148,6 +149,39 @@ const get=(ctx,name)=>{try{return vm.runInContext('typeof '+name+'==="undefined"
     const walk=(x,at)=>{if(Array.isArray(x))x.forEach((y,i)=>walk(y,at+'['+i+']'));
       else if(x&&typeof x==='object'){if(x.q!==undefined&&Array.isArray(x.o))mcq(at,x.q,x.o,x.a);else for(const [k,v] of Object.entries(x))walk(v,at+'.'+k)}};
     walk(t.qs,'Ngu Phap Master '+t.id)});
+})();
+
+/* ---------- 6) Word Strike 3D: data/ws-questions.js (WS_DATA) ---------- */
+(function(){
+  let src;try{src=read('data/ws-questions.js')}catch(e){E('khong doc duoc data/ws-questions.js');return}
+  const win={};try{new Function('window',src)(win)}catch(e){E('cu phap data/ws-questions.js',e.message);return}
+  const D=win.WS_DATA;if(!D||typeof D!=='object'){E('ws-questions.js: thieu window.WS_DATA');return}
+  const dmg=(D.balance||{}).wrongDmg||{};
+  for(const k of ['kids','toeic','ielts','order'])if(!(typeof dmg[k]==='number'&&dmg[k]>0))E('ws-questions.js: balance.wrongDmg.'+k+' phai la so duong',dmg[k]);
+  const arr=(x,n)=>Array.isArray(x)&&x.length>=n;
+  const noDupe=(at,o)=>{if(new Set(o.map(x=>txt(x).toLowerCase())).size!==o.length)E('lua chon trung nhau',at,JSON.stringify(o))};
+  for(const lv of ['kids','toeic','ielts']){
+    const T=(D.tracks||{})[lv];if(!T){E('ws-questions.js: thieu cap do',lv);continue}
+    for(const ty of ['gap','vocab','spell','order','error','hard','voice']){
+      const L=T[ty];if(!arr(L,3)){E('ws-questions.js: '+lv+'.'+ty+' can it nhat 3 cau');continue}
+      const seen=new Set();
+      L.forEach((q,i)=>{const at='ws '+lv+'.'+ty+'['+i+']';tot++;const key=JSON.stringify(q);if(seen.has(key))W('cau trung',at);seen.add(key);
+        if(ty==='gap'||ty==='hard'){if(!(typeof q[0]==='string'&&q[0].includes('___')))E('thieu cho trong ___',at);
+          if(!arr(q[2],3))E('can 3 dap an nhieu',at);else{if(q[2].includes(q[1]))E('dap an dung nam trong dap an nhieu',at);noDupe(at,[q[1],...q[2]])}
+          if(!txt(q[3]))E('thieu loi giai (bat buoc voi gap/hard)',at)}
+        else if(ty==='vocab'){if(!txt(q[0])||!txt(q[1]))E('thieu nghia/tu',at);if(!arr(q[2],3))E('can 3 dap an nhieu',at);else{if(q[2].includes(q[1]))E('dap an dung nam trong dap an nhieu',at);noDupe(at,[q[1],...q[2]])}}
+        else if(ty==='spell'){if(!txt(q[0]))E('thieu tu',at);if(!arr(q[1],3))E('can 3 cach viet sai',at);else{if(q[1].includes(q[0]))E('cach viet sai trung tu dung',at);noDupe(at,[q[0],...q[1]])}}
+        else if(ty==='order'){if(!arr(q[0],3)||q[0].some(w=>!txt(w)))E('cau xep qua ngan hoac co o rong',at);if(!txt(q[1]))E('thieu ban dich',at)}
+        else if(ty==='error'){if(!arr(q[0],2)){E('thieu cac phan cua cau',at);return}
+          if(!Number.isInteger(q[1])||q[1]<0||q[1]>=q[0].length)E('chi so phan sai nam ngoai cau',at);
+          if(!txt(q[2]))E('thieu phan sua dung',at);else if(txt(q[2])===txt(q[0][q[1]]))E('phan sua giong phan sai',at);
+          if(!txt(q[3]))E('thieu loi giai (bat buoc voi error)',at)}
+        else if(ty==='voice'){if(!txt(q[0])||!txt(q[1]))E('thieu tu / nghia',at)}});
+    }
+    /* ban do (js/ws-maps.js) lay tu ghep chu tu day: can du 6 tu chi gom chu cai, dai tu 4 */
+    const ok=(T.voice||[]).filter(w=>/^[a-z]{4,}$/i.test(w[0])).length;
+    if(ok<6)E('ws-questions.js: '+lv+'.voice can it nhat 6 tu chi gom chu cai (>=4 ky tu) de ban do 6 ai co tu rieng',ok+' tu hop le');
+  }
 })();
 
 console.log(`\n${tot} muc da kiem tra — ${err} loi, ${warn} canh bao`);process.exit(err?1:0);
