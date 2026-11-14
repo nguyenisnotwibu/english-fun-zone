@@ -298,7 +298,7 @@ const _rebuildHits=rebuildHits;
 rebuildHits=function(){_rebuildHits();if(mapOn){HIT_ALL=HIT_ALL.concat(proxies,dynProxies,crates.filter(c=>c.alive).map(c=>c.proxy))}};
 
 /* ===================== CHỮ CÁI GHÉP TỪ + RƯƠNG ===================== */
-const atlas=(()=>{const c=document.createElement('canvas');c.width=512;c.height=256;const g=c.getContext('2d');g.font="800 44px 'Baloo 2',Nunito,sans-serif";g.textAlign='center';g.textBaseline='middle';
+const atlas=(()=>{const c=document.createElement('canvas');c.width=512;c.height=256;const g=c.getContext('2d');g.font="800 44px 'Big Shoulders Display',Barlow Condensed,sans-serif";g.textAlign='center';g.textBaseline='middle';
   for(let i=0;i<26;i++){const x=(i%8)*64+32,y=((i/8)|0)*64+34;g.shadowColor='#00e5ff';g.shadowBlur=10;g.fillStyle='#fff';g.fillText(String.fromCharCode(65+i),x,y)}
   const t=new THREE.CanvasTexture(c);t.flipY=false;return t})();
 /* mỗi ải một từ riêng (theo chỉ số ải) lấy từ ngân hàng "voice" của cấp độ đang chơi (TR) */
@@ -337,14 +337,14 @@ function chestOpen(){
 
 /* ===================== HUD: CHỮ + TRỤ SÚNG, NÚT TƯƠNG TÁC ===================== */
 const css=document.createElement('style');css.textContent=`
-#xword{position:fixed;left:16px;top:176px;z-index:5;pointer-events:none;background:rgba(14,20,48,.72);border:1px solid var(--line);border-radius:14px;padding:8px 14px;font:800 14px Nunito;backdrop-filter:blur(6px);display:none;max-width:260px}
-#xword .w{font:800 22px 'Baloo 2';letter-spacing:.18em;color:#8fe3ff}
-#xword .t{color:#ffe14d}
+#xword{position:fixed;left:16px;top:176px;z-index:5;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0;padding:8px 14px;font:600 14px Barlow Condensed;display:none;max-width:260px}
+#xword .w{font:800 22px 'Big Shoulders Display';letter-spacing:.18em;color:var(--acc)}
+#xword .t{color:var(--acc-hot)}
 body.touchui #xword{top:156px;left:10px;padding:5px 10px;font-size:12px;max-width:200px}body.touchui #xword .w{font-size:17px}
-#xact{position:fixed;left:50%;bottom:158px;transform:translateX(-50%);z-index:8;display:none;pointer-events:auto;cursor:pointer;border:2px solid #00e5ff;background:rgba(8,20,44,.92);color:#fff;border-radius:14px;padding:8px 16px;font:800 15px Nunito;box-shadow:0 0 18px rgba(0,229,255,.5)}
+#xact{position:fixed;left:50%;bottom:158px;transform:translateX(-50%);z-index:8;display:none;pointer-events:auto;cursor:pointer;border:1px solid var(--acc);background:rgba(11,13,15,.92);color:var(--txt);border-radius:0;padding:8px 16px;font:600 15px Barlow Condensed;letter-spacing:.08em;box-shadow:0 0 14px rgba(255,179,71,.4)}
 body.touchui #xact{bottom:190px;font-size:17px;padding:10px 18px}
 #xterm{z-index:21}
-#xterm .q{font:800 clamp(18px,3vw,26px) 'Baloo 2';text-align:center;margin:10px 0 14px}`;
+#xterm .q{font:800 clamp(18px,3vw,26px) 'Big Shoulders Display';text-align:center;margin:10px 0 14px}`;
 document.head.appendChild(css);
 const hudAll=document.getElementById('hudAll');
 const wordBox=document.createElement('div');wordBox.id='xword';hudAll.appendChild(wordBox);
@@ -418,7 +418,7 @@ function eventTick(dt){
   if(ev.type==='meteor'){ev.age+=dt;const w=MAP.events.warnSec;
     for(const m of ev.meteors){if(m.done)continue;const a=ev.age-m.t0;if(a<w)continue;m.done=true;
       const y=floorY(m.x,m.z,9);_v.set(m.x,y+.5,m.z);burst(_v,0xff7f50,36,9);shock(_v,0xff4d4d,7);SFX.boom();API.shake(.35);
-      const p=yawObj.position;if(Math.hypot(p.x-m.x,p.z-m.z)<MAP.events.radius&&Math.abs(p.y-1.7-y)<2.5){hurt(MAP.events.dmg);API.popup('☄️ -'+MAP.events.dmg,'#ff6b81')}}}
+      const p=yawObj.position;if(Math.hypot(p.x-m.x,p.z-m.z)<MAP.events.radius&&Math.abs(p.y-1.7-y)<2.5){hurt(MAP.events.dmg,{x:m.x,z:m.z});API.popup('☄️ -'+MAP.events.dmg,'#ff6b81')}}}
   if(ev.t<=0)endEvent(false)}
 const _startWave=startWave;
 startWave=function(){_startWave();if(!mapOn)return;

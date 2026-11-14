@@ -112,20 +112,20 @@ const el=id=>document.getElementById(id);
 const css=document.createElement('style');
 css.textContent=`#xgacha{z-index:24}#gcReveal{z-index:27;background:rgba(5,8,22,.97);flex-direction:column;align-items:center;justify-content:center;gap:6px}#gcReveal.hide{display:none}
 .gcodds{width:100%;border-collapse:collapse;margin:6px 0;font-size:14px}.gcodds td,.gcodds th{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left}.gcodds th{color:var(--mut);font-size:12px}
-.gcb{font:800 13px Nunito;border:1.5px solid;border-radius:20px;padding:1px 9px;white-space:nowrap}
-.gcpity{height:12px;border-radius:8px;background:#1d2656;overflow:hidden;margin:4px 0}.gcpity i{display:block;height:100%;background:linear-gradient(90deg,#ffa733,#ffd34d)}
+.gcb{font:800 13px Barlow Condensed;border:1.5px solid;border-radius:20px;padding:1px 9px;white-space:nowrap}
+.gcpity{height:12px;border-radius:8px;background:#14181b;overflow:hidden;margin:4px 0}.gcpity i{display:block;height:100%;background:linear-gradient(90deg,#ffa733,#ffb347)}
 .gcbtns{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.gcbtns .btn{min-height:44px}.gcbtns .btn[disabled]{opacity:.45}
-.gcnote{min-height:20px;color:#ffd34d;font-weight:800;margin:4px 0}
+.gcnote{min-height:20px;color:#ffb347;font-weight:800;margin:4px 0}
 .gccol{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:6px;margin:6px 0}
 .gct{border:1px solid var(--line);border-radius:12px;padding:6px;text-align:center;background:rgba(255,255,255,.05);font-size:12px}
 .gct .ic{font-size:26px;line-height:1.1}.gct.no{opacity:.45}.gct.no .ic{filter:grayscale(1) brightness(.6)}
-.gcq{border:1.5px solid var(--acc);border-radius:14px;padding:10px;margin:8px 0;background:rgba(124,92,255,.12)}
+.gcq{border:1.5px solid var(--acc);border-radius:14px;padding:10px;margin:8px 0;background:rgba(255,179,71,.08)}
 .gcq .ch{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}.gcq .ch .btn{min-height:44px}
 .gcstage{position:relative;width:min(92vw,420px);height:min(60vh,380px);display:flex;align-items:center;justify-content:center}
 .gcstage,.gcray,.gcbox,.gccard{pointer-events:none}#gcReveal .row{position:relative;z-index:31}.gcray{position:absolute;inset:-10%;border-radius:50%;-webkit-mask-image:radial-gradient(circle,#000 25%,transparent 70%);mask-image:radial-gradient(circle,#000 25%,transparent 70%);opacity:0;transform:scale(.3);transition:opacity .3s,transform .3s}.gcray.go{opacity:.9;transform:scale(1.1) rotate(25deg);transition:opacity .3s,transform .6s}
 .gcbox{font-size:92px;line-height:1;position:relative;will-change:transform}
 .gccard{position:absolute;display:none;flex-direction:column;align-items:center;gap:6px;padding:18px 26px;border:3px solid;border-radius:20px;background:#10173a;text-align:center;max-width:90%}
-.gccard.show{display:flex;animation:gcflip .5s ease-out}.gccard .ic{font-size:64px;line-height:1}.gccard .nm{font:800 22px 'Baloo 2',Nunito}
+.gccard.show{display:flex;animation:gcflip .5s ease-out}.gccard .ic{font-size:64px;line-height:1}.gccard .nm{font:800 22px 'Big Shoulders Display',Barlow Condensed}
 @keyframes gcflip{from{transform:rotateY(90deg) scale(.6);opacity:0}to{transform:none;opacity:1}}
 .gcflash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:29}.gcflash.go{animation:gcfl .15s}@keyframes gcfl{0%{opacity:.85}100%{opacity:0}}
 #gcConf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:28}
@@ -144,7 +144,7 @@ gc.innerHTML=`<div class="card" style="max-width:760px"><div class="xhead"><h3 s
 <div class="row" style="justify-content:center"><button class="btn sec" id="gcClose">Đóng</button></div></div>`;
 document.body.appendChild(gc);
 const rv=document.createElement('div');rv.id='gcReveal';rv.className='ov hide';rv.setAttribute('role','dialog');rv.setAttribute('aria-label','Mở quà');
-rv.innerHTML=`<div style="position:absolute;right:16px;top:12px;font:800 16px Nunito;color:#ffd34d" id="gcRevCoin"></div>
+rv.innerHTML=`<div style="position:absolute;right:16px;top:12px;font:800 16px Barlow Condensed;color:#ffb347" id="gcRevCoin"></div>
 <div class="gcstage"><div class="gcray" id="gcRay"></div><div class="gcbox" id="gcBox">🎁</div><div class="gccard" id="gcCardBox"></div></div>
 <div id="gcSum" class="hide" style="max-width:min(92vw,640px);text-align:center"></div>
 <div class="row" style="justify-content:center;margin-top:10px"><button class="btn sec" id="gcSkip">Bỏ qua ⏭</button><button class="btn hide" id="gcSumClose">Đóng</button></div>
@@ -170,7 +170,7 @@ function render(){
   <button class="btn" id="gcS10" ${b10.ok?'':'disabled'}>Quay ${D.comboCount} — ${COMBO_PRICE} 🪙 <small>(−${Math.round(D.comboDiscount*100)}%)</small></button>
   ${free>0?`<button class="btn sec" id="gcFree" ${freeState==='used'?'disabled':''}>${freeState==='ready'?'🎁 Quay miễn phí hôm nay':freeState==='used'?'Miễn phí: mai nhé':'🔓 Mở lượt miễn phí (trả lời 1 câu khó)'}</button>`:''}</div>
   <div id="gcWhy" style="font-size:13px;color:var(--mut)">${[b1.ok?'':'Quay 1: '+b1.msg,b10.ok?'':'Quay '+D.comboCount+': '+b10.msg].filter(Boolean).join(' · ')}</div>
-  ${g.used>=D.restNudgeAfter?'<div id="gcRest" style="color:#ffd34d;font-weight:800">Nghỉ ngơi một chút nhé 🌿</div>':''}`;
+  ${g.used>=D.restNudgeAfter?'<div id="gcRest" style="color:#ffb347;font-weight:800">Nghỉ ngơi một chút nhé 🌿</div>':''}`;
   const cols=RARS.map(r=>POOL[r].map(id=>{const s=BYID[id],o=O.owned(id);return`<div class="gct ${o?'':'no'}" style="border-color:${o?RAR[r].color:'var(--line)'}"><div class="ic">${esc(s.icon)}</div><div>${esc(s.name)}</div>${badge(r)}<div>${o?'✔':'chưa có'}</div></div>`}).join('')).join('');
   el('gcCol').innerHTML=`<div class="gccol">${cols}</div>`;
   el('gcHist').innerHTML=g.hist.length?'Lịch sử 10 lượt gần nhất: '+g.hist.map(id=>{const s=BYID[id];return s?esc(s.icon)+' '+esc(s.name):''}).join(' · '):'';
@@ -187,7 +187,7 @@ function renderQuestion(){
   const box=el('gcQ');
   if(!fq){box.innerHTML='';return}
   const q=fq.q;
-  box.innerHTML=`<div class="gcq" id="gcQBox"><div style="font:800 13px Nunito;color:var(--mut)">Câu KHÓ – trả lời đúng để mở lượt miễn phí (sai thì xem lời giải rồi thử câu khác)</div>
+  box.innerHTML=`<div class="gcq" id="gcQBox"><div style="font:800 13px Barlow Condensed;color:var(--mut)">Câu KHÓ – trả lời đúng để mở lượt miễn phí (sai thì xem lời giải rồi thử câu khác)</div>
   <div style="font-size:18px;margin:6px 0" id="gcQText">${q.html(false)}</div>
   <div class="ch" id="gcQCh">${q.choices.map((c,i)=>`<button class="btn sec" data-i="${i}" ${fq.wrong?'disabled':''}>${esc(c)}</button>`).join('')}</div>
   <div id="gcQMsg" style="min-height:20px;font-weight:700">${fq.wrong?'✖ Chưa đúng. '+esc(q.explain):''}</div>
@@ -216,7 +216,7 @@ function shakeBox(ms,rarity){
     loop()})}
 function confetti(){
   const c=el('gcConf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;c.style.display='block';
-  const cols=['#ffa733','#ffd34d','#ff6bd6','#3d8bff','#2ed573','#fff'],P=Array.from({length:120},()=>({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*14,vy:-Math.random()*13-3,r:Math.random()*6+3,c:cols[(Math.random()*cols.length)|0],a:Math.random()*6}));
+  const cols=['#ffa733','#ffb347','#ff6bd6','#3d8bff','#2ed573','#fff'],P=Array.from({length:120},()=>({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*14,vy:-Math.random()*13-3,r:Math.random()*6+3,c:cols[(Math.random()*cols.length)|0],a:Math.random()*6}));
   const t0=performance.now();cancelAnimationFrame(confRaf);
   const f=()=>{const t=(performance.now()-t0)/1000;x.clearRect(0,0,c.width,c.height);
     if(t>3||!run){c.style.display='none';return}
@@ -239,7 +239,7 @@ async function showOne(x,idx,total){
   if(x.r==='legendary'){fl.classList.remove('go');void fl.offsetWidth;fl.classList.add('go');SFX.fanfare();if(!rd)confetti()}else SFX.chime(x.r);
   const s=BYID[x.id];
   card.style.borderColor=col;card.style.boxShadow=`0 0 40px ${col}88`;
-  card.innerHTML=`<div class="ic">${esc(s.icon)}</div><div class="nm">${esc(s.name)}</div>${badge(x.r)}<div id="gcCardTag" style="font-weight:800;color:${x.dup?'#ffd34d':'#2ed573'}">${x.dup?(x.refund?'Đã có – hoàn '+x.refund+' 🪙':'Đã có'):'✨ MỚI!'}</div>${total>1?`<div style="font-size:12px;color:var(--mut)">${idx+1}/${total}</div>`:''}`;
+  card.innerHTML=`<div class="ic">${esc(s.icon)}</div><div class="nm">${esc(s.name)}</div>${badge(x.r)}<div id="gcCardTag" style="font-weight:800;color:${x.dup?'#ffb347':'#2ed573'}">${x.dup?(x.refund?'Đã có – hoàn '+x.refund+' 🪙':'Đã có'):'✨ MỚI!'}</div>${total>1?`<div style="font-size:12px;color:var(--mut)">${idx+1}/${total}</div>`:''}`;
   card.style.opacity=x.dup?'.88':'1';card.classList.add('show');
   el('gcLive').textContent=NAMES[x.r]+': '+s.name+(x.dup?', đã có':', bộ mới');
   if(x.dup&&x.refund&&!rd)flyCoins(card);

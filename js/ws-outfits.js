@@ -149,20 +149,20 @@ css.textContent=`#xwardrobe{z-index:23}
 .xwprev{display:flex;flex-direction:column;align-items:center;gap:8px;background:rgba(10,16,40,.6);border:1px solid var(--line);border-radius:18px;padding:12px}
 #xwCanvas{width:260px;height:340px;border-radius:14px;background:radial-gradient(circle at 50% 30%,#2a2f6b,#0b1026);touch-action:none;cursor:grab}
 .xwright{min-width:0;max-height:70vh;overflow:auto;padding-right:4px}
-.xrb{display:inline-flex;align-items:center;gap:4px;font:800 12px Nunito;border:1.5px solid;border-radius:20px;padding:1px 8px;white-space:nowrap}
+.xrb{display:inline-flex;align-items:center;gap:4px;font:800 12px Barlow Condensed;border:1.5px solid;border-radius:20px;padding:1px 8px;white-space:nowrap}
 .xwcard{position:relative;border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(255,255,255,.05);text-align:center;display:flex;flex-direction:column;gap:5px;align-items:center}
 .xwcard.sel{outline:2px solid var(--acc)}.xwcard.owned{border-color:var(--ok)}
-.xwcard .ic{font-size:30px;line-height:1}.xwcard .nm{font:800 15px Nunito;color:#fff}
-.xwrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:6px 0}.xwrow b{min-width:78px;font:800 13px Nunito;color:var(--mut)}
-.xchip{cursor:pointer;border:1px solid var(--line);background:#1d2656;color:#fff;border-radius:10px;padding:5px 9px;font:800 13px Nunito}
-.xchip.sel{background:linear-gradient(90deg,#7c5cff,#ff6bd6);border-color:transparent}.xchip.lock{opacity:.7}
-#xwMsg{min-height:22px;font-weight:800;color:#ffd34d;margin:6px 0}
+.xwcard .ic{font-size:30px;line-height:1}.xwcard .nm{font:800 15px Barlow Condensed;color:#fff}
+.xwrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:6px 0}.xwrow b{min-width:78px;font:800 13px Barlow Condensed;color:var(--mut)}
+.xchip{cursor:pointer;border:1px solid var(--line);background:#14181b;color:#fff;border-radius:10px;padding:5px 9px;font:800 13px Barlow Condensed}
+.xchip.sel{background:#ffb347;color:#0b0d0f;border-color:transparent}.xchip.lock{opacity:.7}
+#xwMsg{min-height:22px;font-weight:800;color:#ffb347;margin:6px 0}
 @media (max-width:760px){.xwlay{grid-template-columns:1fr}.xwprev{flex-direction:row;flex-wrap:wrap;justify-content:center}#xwCanvas{width:200px;height:260px}.xwright{max-height:none}}`;
 document.head.appendChild(css);
 const wd=document.createElement('div');wd.id='xwardrobe';wd.className='ov hide';
 wd.innerHTML=`<div class="card" style="max-width:1020px"><div class="xhead"><h3 style="margin:0">👕 Tủ đồ</h3><span class="xcoin" id="xwCoin"></span></div>
 <div class="sub" style="margin:4px 0 0">Chỉ đổi <b>ngoại hình</b> – không tăng sức mạnh. Bấm bộ để mặc thử; đã sở hữu thì mix &amp; match từng món.</div>
-<div class="xwlay"><div class="xwprev"><canvas id="xwCanvas" width="260" height="340" aria-label="Xem trước nhân vật"></canvas><div id="xwName" style="font:800 16px 'Baloo 2'"></div>
+<div class="xwlay"><div class="xwprev"><canvas id="xwCanvas" width="260" height="340" aria-label="Xem trước nhân vật"></canvas><div id="xwName" style="font:800 16px 'Big Shoulders Display'"></div>
 <div class="row" style="justify-content:center"><button class="btn" id="xwEquip">Mặc bộ đang thử</button><button class="btn sec" id="xwReset">Về bộ đang mặc</button></div></div>
 <div class="xwright"><div class="xtabs" id="xwTabs"></div><div class="xgrid" id="xwSets" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))"></div>
 <h3 style="margin:14px 0 4px">Chọn từng món</h3><div id="xwSlots"></div></div></div>
