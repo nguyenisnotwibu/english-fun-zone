@@ -163,6 +163,7 @@ body.touchui #banner{font-size:clamp(24px,5vw,44px)}
       <div>🔫 Đổi súng: <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> · lăn chuột · <kbd>X</kbd>/<kbd>Tab</kbd> · bấm ô súng. Súng mở theo ải: Ải 1 Blaster + Scatter · Ải 2 Railgun · Ải 3 Nova. Railgun tốn 1 ⚡, Nova tốn 2 ⚡ (<b>Năng lượng chữ</b>: +1 mỗi câu đúng, +2 câu vàng, tối đa 5). Railgun: <b>chuột phải</b> ngắm xa.</div>
       <div>✨ <kbd>Q</kbd> <kbd>E</kbd> kỹ năng anh hùng · <kbd>R</kbd> tuyệt chiêu <b>Voice Blast</b>: đọc to từ tiếng Anh!</div>
       <div>📱 Điện thoại/tablet (xoay ngang): cần gạt trái đi (đẩy hết cỡ = chạy) · vuốt nửa phải để ngắm · giữ <b>BẮN</b> · ⤒ nhảy · 🔭 ngắm Railgun · chạm ô súng/kỹ năng. Có hỗ trợ ngắm tự động.</div><div>🤖 Quái: Grunt · Runner (nhanh) · Tank (3 máu, có giáp) · Sniper (bắn đạn từ xa).</div>
+      <div>🏙️ <b>Cả 6 ải là bản đồ tương tác</b> (Ải 1 Neon Plaza làm mẫu): 2 sàn cao, lên bằng <b>dốc</b> hoặc đứng lên <b>bệ nhảy</b> (đĩa sáng) rồi bấm <kbd>Space</kbd> · <b>thùng</b> 📦 bắn 2 phát vỡ, rơi xu hoặc bình máu · <b>trạm trả lời</b> 💬: đứng gần + <kbd>F</kbd> (hoặc nút 💬 trên điện thoại), đúng thì <b>trụ súng</b> tự bắn quái sai 15 giây, sai thì khoá tới wave sau · <b>nhặt chữ cái</b> rải trên bản đồ để ghép từ vựng → mở rương thưởng · mỗi wave có 1 sự kiện: <b>Mất điện</b> hoặc <b>Mưa thiên thạch</b> (vòng đỏ báo trước).<br>🔧 <b>Mỗi ải một cơ chế riêng:</b> Ải 2 Cyber Docks – <b>băng chuyền</b> đẩy bạn và quái, <b>container</b> chạy qua lại làm chỗ nấp · Ải 3 Sky Lab – <b>vùng trọng lực thấp</b> (nhảy cao) và <b>cổng dịch chuyển</b> hai đầu bản đồ · Ải 4 Frozen Archive – <b>sàn băng</b> trơn trượt, <b>bắn kệ sách</b> cho đổ chặn đường quái · Ải 5 Glitch Core – <b>ô sàn glitch</b> biến mất (rơi hố mất máu) và <b>laser quét</b> (nhảy qua) · Ải 6 Grammar Throne – <b>sàn Boss sụp từng mảng</b> khi Boss mất khiên (ô giữa luôn an toàn).</div>
       <div>⭐ Sau mỗi đợt: <b>THỬ THÁCH KHÓ</b> 20 giây – đúng thì chọn 1 phần thưởng (sát thương, tốc bắn, máu, điểm x2…). Gặp <b>CÂU VÀNG</b> trong trận: x3 điểm!</div><div>🏆 Mỗi ải 3 đợt + Boss. Chính xác ≥70% được 2 sao, ≥90% được 3 sao, qua ải mở ải sau.</div>
     </div>
     <div class="row" style="margin-top:16px"><button class="btn" id="startB">▶ VÀO ẢI</button>
@@ -807,7 +808,8 @@ function movePlayer(dt){let f=0,s=0;if(keys.KeyW||keys.ArrowUp)f+=1;if(keys.KeyS
  if(S.dashT>0){S.dashT-=dt;dx=S.dashDir.x*50*dt;dz=S.dashDir.z*50*dt;if(Math.random()<.6)burst(yawObj.position,0x00d2ff,1,1)}
  const p=yawObj.position;if(!blocked(p.x+dx,p.z,.4))p.x+=dx;if(!blocked(p.x,p.z+dz,.4))p.z+=dz;
  p.x=clamp(p.x,-ARENA+.6,ARENA-.6);p.z=clamp(p.z,-ARENA+.6,ARENA-.6);
- if(keys.Space&&p.y<=1.71)S.vy=6;S.vy-=18*dt;p.y+=S.vy*dt;if(p.y<1.7){p.y=1.7;S.vy=0}
+ const gy=1.7+(window.wsFloorY?window.wsFloorY(p.x,p.z,p.y-1.7):0);   /* sàn cao/dốc (js/ws-maps.js); không có bản đồ → gy = 1.7 như cũ */
+ if(keys.Space&&p.y<=gy+.01)S.vy=6;S.vy-=18*dt;p.y+=S.vy*dt;if(p.y<gy||(S.vy<=0&&p.y-gy<.3)){p.y=gy;S.vy=0}
  const t=performance.now()/1000,mv=len>.1;const g=GUNS[S.wep];
  g.position.set(GUN_BASE.x+(mv?Math.sin(t*9)*.012:0),GUN_BASE.y+(mv?Math.abs(Math.cos(t*9))*.012:Math.sin(t*2)*.004)-S.swapT*.6,GUN_BASE.z+recoil*.08);g.rotation.x=recoil*.12;
  const tf=S.zoom&&S.wep===2?30:72;if(Math.abs(camera.fov-tf)>.5){camera.fov+=(tf-camera.fov)*Math.min(1,dt*12);camera.updateProjectionMatrix()}
@@ -818,7 +820,7 @@ function updBot(b,dt){const u=b.userData;u.t+=dt;if(u.dying){b.scale.multiplySca
  if(u.flash>0){u.flash-=dt;b.scale.setScalar(u.base*(1+u.flash*.8))}else if(b.scale.x!==u.base)b.scale.setScalar(u.base);
  const slowF=S.slow>0?.35:1;
  if(u.frozen||u.stun>0){u.stun-=dt;return}
- let mx=dx/d,mz=dz/d;
+ let mx=dx/d,mz=dz/d;if(window.wsSteer){const s=window.wsSteer(b,dx,dz);if(s){mx=s[0];mz=s[1]}}   /* quái đi vòng tới dốc khi người chơi ở tầng cao */
  if(u.ranged&&!u.isBoss&&d<13){const side=Math.sin(u.t*.7)>0?1:-1;mx=-dz/d*side*.8;mz=dx/d*side*.8;if(d<9){mx-=dx/d*.6;mz-=dz/d*.6}}
  const sp=u.speed*dt*slowF;const r=u.isBoss?2:.6;const nx=b.position.x+mx*sp,nz=b.position.z+mz*sp;
  if(!blocked(nx,b.position.z,r))b.position.x=nx;else b.position.z+=(mz>=0?1:-1)*sp*.7;
@@ -826,9 +828,9 @@ function updBot(b,dt){const u=b.userData;u.t+=dt;if(u.dying){b.scale.multiplySca
  b.position.x=clamp(b.position.x,-ARENA+1,ARENA-1);b.position.z=clamp(b.position.z,-ARENA+1,ARENA-1);
  for(const o of BOTS){if(o===b)continue;const ox=b.position.x-o.position.x,oz=b.position.z-o.position.z,od=Math.hypot(ox,oz);if(od<1.6&&od>0){b.position.x+=ox/od*(1.6-od)*.5;b.position.z+=oz/od*(1.6-od)*.5}}
  const sw=Math.sin(u.t*(u.angry?13:8)*slowF)*.7;u.legs[0].rotation.x=sw;u.legs[1].rotation.x=-sw;u.arms[0].rotation.x=u.angry?-1.4:-sw;u.arms[1].rotation.x=u.ranged?-1.5:(u.angry?-1.4:sw);
- if(u.ranged){u.shotCd-=dt*slowF;if(u.shotCd<=0&&d<34){u.shotCd=u.isBoss?2.6:rnd(2.6,3.8);b.getWorldPosition(_v);_v.y=u.isBoss?4:1.6;_dir.set(p.x-_v.x,p.y-.3-_v.y,p.z-_v.z).normalize().multiplyScalar(u.isBoss?14:11);spawnProj(_v,_dir,'enemy',0xff3355);SFX.enemyShot()}}
+ if(u.ranged){u.shotCd-=dt*slowF;if(u.shotCd<=0&&d<34){u.shotCd=u.isBoss?2.6:rnd(2.6,3.8);b.getWorldPosition(_v);_v.y=b.position.y+(u.isBoss?4:1.6);_dir.set(p.x-_v.x,p.y-.3-_v.y,p.z-_v.z).normalize().multiplyScalar(u.isBoss?14:11);spawnProj(_v,_dir,'enemy',0xff3355);SFX.enemyShot()}}
  u.hurtCd-=dt;const reach=u.isBoss?3.6:1.3;
- if(d<reach&&u.hurtCd<=0){u.hurtCd=1;hurt(u.dmg);SFX.hurt();S.combo=0;const k=u.isBoss?8:7;b.position.x-=dx/d*k;b.position.z-=dz/d*k;b.position.x=clamp(b.position.x,-ARENA+1,ARENA-1);b.position.z=clamp(b.position.z,-ARENA+1,ARENA-1)}}
+ if(d<reach&&u.hurtCd<=0&&Math.abs(p.y-1.7-b.position.y)<2.2){u.hurtCd=1;hurt(u.dmg);SFX.hurt();S.combo=0;const k=u.isBoss?8:7;b.position.x-=dx/d*k;b.position.z-=dz/d*k;b.position.x=clamp(b.position.x,-ARENA+1,ARENA-1);b.position.z=clamp(b.position.z,-ARENA+1,ARENA-1)}}
 function updProj(dt){const p=yawObj.position;const sf=S.slow>0?.35:1;for(const m of PROJ){if(!m.visible)continue;const u=m.userData;
  if(u.kind==='rocket'){m.position.addScaledVector(u.v,dt);u.life-=dt;if(u.life<=0){m.visible=false;rocketHit(u.extra)}continue}
  m.position.addScaledVector(u.v,dt*sf);u.life-=dt;
@@ -862,5 +864,6 @@ buildArena(STAGES[0],0);buildMenu();loop();
 window.__WS={S,BOTS:()=>BOTS,BOSS:()=>BOSS,fire,startStage,onHitTarget,setWep,useSkill,camera,yawObj,pitchObj,renderer};
 </script>
 <script src="js/ws-extras.js"></script>
+<script src="js/ws-maps.js"></script>
 </body>
 </html>

@@ -248,6 +248,7 @@ function bookEntry(q){
   if(q.type==='error'&&q.wrong)return{key:q.wrong+' → '+q.fix,ex:String(q.explain||'').slice(0,90)};
   if((q.type==='gap'||q.type==='vocab'||q.type==='spell'||q.type==='hard')&&q.ans)return{key:q.ans,ex:String(q.explain||'').slice(0,90)};
   return null}
+function bookAdd(key,ex){const w=X.words[key]||(X.words[key]={ok:0,bad:0,ex:String(ex||'').slice(0,90)});w.ok++;if(w.ok===1)checkMilestones();save()}
 function noteWord(ok){
   const e=bookEntry(S.q);if(!e)return;
   const w=X.words[e.key]||(X.words[e.key]={ok:0,bad:0,ex:e.ex});
@@ -328,7 +329,7 @@ questionDone=function(root){
   const pos=root?root.getWorldPosition(new THREE.Vector3()):null;if(pos)pos.y+=2;
   _qd(root);
   R.maxCombo=Math.max(R.maxCombo,S.combo);if(gold)R.golden++;
-  noteWord(true);if(clean)clearReview(q0);   /* bắn đúng sạch → câu rời hàng đợi ôn tập */
+  noteWord(true);signFlash=1;if(clean)clearReview(q0);   /* bắn đúng sạch → câu rời hàng đợi ôn tập */
   const got=S.score-s0;if(got>0)popup('+'+got,gold?'#ffd34d':'#8fe3ff',pos);
   addCoins(CFG.coinPerQ+Math.min(S.combo,CFG.comboCap)*CFG.coinPerCombo+(gold?CFG.coinGolden:0),pos);
   timeFx(CFG.slowMo,.32);shake(gold?.22:.12);
@@ -487,7 +488,7 @@ setInterval(()=>{
   document.body.classList.toggle('xfire',on&&S.combo>=8)},150);
 const SCALES=[[0,3,5,7,10],[0,2,4,7,9],[0,2,3,7,8],[0,3,5,6,10],[0,1,5,7,8],[0,2,4,6,9]];
 const ROOTS=[110,98,123.47,87.31,103.83,116.54];
-let mStep=0;
+let mStep=0,lastBeat=0,signFlash=0;   /* lastBeat: nhịp nhạc cho vùng sàn phát sáng; signFlash: biển neon nhấp nháy */
 function musicTick(){
   let next=230;
   try{
@@ -497,7 +498,7 @@ function musicTick(){
       next=225-Math.min(S.combo,10)*7-(S.boss?25:0);
       const bass=[0,0,3,0,4,0,3,2][mStep%8];
       tone(fq(bass,.5),.2,'triangle',.05*V);
-      if(mStep%4===0)tone(130,.12,'sine',.06*V,45);
+      if(mStep%4===0){tone(130,.12,'sine',.06*V,45);lastBeat=performance.now()}
       if(S.combo>=3||S.boss)tone(fq((mStep*3)%7,2),.11,'square',.016*V);
       if(S.combo>=6)noise(.03,.02*V,7000);
       if(S.boss&&mStep%8===0)tone(root,.9,'sawtooth',.012*V);
@@ -541,8 +542,8 @@ function winTex(col){
   const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t}
 
 /* ---- GỘP GEOMETRY / INSTANCING ---- */
-function mergeGeos(geos){
-  const attrs=['position','normal','uv'].filter(a=>geos.every(g=>g.attributes[a]));
+function mergeGeos(geos,attrList){
+  const attrs=(attrList||['position','normal','uv']).filter(a=>geos.every(g=>g.attributes[a]));
   const indexed=geos.every(g=>g.index);let vt=0,it=0;
   geos.forEach(g=>{vt+=g.attributes.position.count;if(indexed)it+=g.index.count});
   const out=new THREE.BufferGeometry();
@@ -594,10 +595,19 @@ const pointsOf=(arr,mat)=>{const geo=new THREE.BufferGeometry();geo.setAttribute
    Mesh cũ của khối che (COVERS) vẫn ở trong scene nhưng vô hình: va chạm (box) và tia bắn
    (HIT_ALL) dùng chúng như trước, chỉ phần HIỂN THỊ chuyển sang mesh gộp. */
 function consolidateBase(){
+  /* js/ws-maps.js: gỡ khối che trùng chỗ và trả thêm mesh tĩnh (sàn cao, dốc) để GỘP chung theo vật liệu */
+  const extra=(window.WSX_API&&window.WSX_API.preConsolidate&&lastBuild)?(window.WSX_API.preConsolidate(lastBuild)||[]):[];
   const groups=new Map();
-  for(const c of COVERS){const m=c.mesh,k=m.material.uuid+(m.castShadow?'s':'n');(groups.get(k)||groups.set(k,[]).get(k)).push(m)}
-  for(const ms of groups.values()){
-    const out=new THREE.Mesh(mergeGeos(ms.map(worldGeo)),ms[0].material);
+  /* Mọi khối ĐỔ BÓNG gộp thành 1 mesh dùng màu theo đỉnh (màu của từng khối): 1 lần vẽ + 1 lần vào bản đồ bóng,
+     thay vì 1 nhóm mỗi màu (5-7 nhóm, mỗi nhóm vẽ 2 lần ở mức Cao). Khối không đổ bóng (tường) gộp theo vật liệu. */
+  for(const m of [...COVERS.map(c=>c.mesh),...extra]){const k=m.castShadow?'shadow':m.material.uuid;(groups.get(k)||groups.set(k,[]).get(k)).push(m)}
+  const VCMAT=new THREE.MeshLambertMaterial({color:0xffffff,vertexColors:true});
+  for(const [k,ms] of groups){
+    const vc=k==='shadow';
+    const geos=ms.map(m=>{const g=worldGeo(m);
+      if(vc){const c=m.material.color,n=g.attributes.position.count,a=new Float32Array(n*3);for(let i=0;i<n;i++){a[i*3]=c.r;a[i*3+1]=c.g;a[i*3+2]=c.b}g.setAttribute('color',new THREE.BufferAttribute(a,3))}
+      return g});
+    const out=new THREE.Mesh(vc?mergeGeos(geos,['position','normal','uv','color']):mergeGeos(geos),vc?VCMAT:ms[0].material);
     out.castShadow=ms[0].castShadow;out.receiveShadow=true;out.frustumCulled=false;arena.add(out);ms.forEach(m=>{m.visible=false})}
   const take=pred=>{const l=arena.children.filter(o=>o.isMesh&&o.geometry&&pred(o.geometry));l.forEach(o=>arena.remove(o));return l};
   for(const l of [take(g=>g.type==='BoxGeometry'&&g.parameters.height===.12),      /* viền sáng */
@@ -624,7 +634,7 @@ const DECO=[
   const mat=bas(0xffffff,{map:tex,transparent:true,side:THREE.DoubleSide,depthWrite:false});
   const signs=words.map((w,i)=>{const a=i/6*Math.PI*2+.3,geo=new THREE.PlaneGeometry(15,7.5);atlasUV(geo,i,3,2);
     const m=mesh(geo,mat,Math.cos(a)*42,11+R()*6,Math.sin(a)*42);m.lookAt(0,m.position.y,0);return m});
-  bake(g,signs);ANIM.push((dt,t)=>{mat.opacity=.72+Math.sin(t*3)*.28});
+  bake(g,signs);ANIM.push((dt,t)=>{signFlash=Math.max(0,signFlash-dt*1.4);mat.opacity=signFlash>0?(Math.sin(t*45)>0?1:.3):.72+Math.sin(t*3)*.28});
   const N=7,cars=rig(g,N,[
     {geo:boxG,mat:bas(0xffffff),scl:[3.4,.8,1.5],colors:th.pal},
     {geo:boxG,mat:bas(0xffffff),off:[1.8,0,.4],scl:[.2,.3,.3],colors:[0xffffff]},
@@ -792,6 +802,9 @@ document.addEventListener('mouseout',e=>{const el=e.target.closest&&e.target.clo
 applySkin();musicBtn();renderSlots();coinHud();
 buildMenu();
 buildArena(STAGES[0],0);           // dựng lại nền menu cùng bối cảnh mới
+window.WSX_API={X,save,addCoins,popup,shake,mergeGeos,glowTex,bookAdd,CFG,
+  /* nhịp nhạc 0..1 (1 ngay khi có nhịp, tắt dần trong ~0.26 s); nhạc tắt → nhịp giả 120 bpm */
+  beat(){const n=performance.now();const age=(X.music&&lastBeat&&n-lastBeat<1200)?n-lastBeat:(n%500);return Math.max(0,1-age/260)}};
 window.__WSX={X,get R(){return R},openShop,addCoins,CONS,MODS,MIS,shake,timeFx};
 console.log('[WS extras] đã nạp: shop · túi đồ · nhiệm vụ · hiệu ứng · bối cảnh 3D');
 })();
