@@ -179,7 +179,7 @@ addEventListener('keydown',e=>{
   if(!S.running||S.paused||S.modal||S.ended)return;
   toggle()});
 const css=document.createElement('style');
-css.textContent='#viewB{position:absolute;pointer-events:auto;right:98px;bottom:132px;width:50px;height:50px;border-radius:50%;border:2px solid #fff;color:#fff;font:800 20px Nunito;background:rgba(0,190,140,.55)}';
+css.textContent='#viewB{position:absolute;pointer-events:auto;right:98px;bottom:132px;width:50px;height:50px;border-radius:50%;border:2px solid #fff;color:#fff;font:800 20px Barlow Condensed;background:rgba(0,190,140,.55)}';
 document.head.appendChild(css);
 const touchBox=document.getElementById('touch');
 if(touchBox){
