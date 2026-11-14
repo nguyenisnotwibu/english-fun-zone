@@ -794,7 +794,7 @@ document.addEventListener('mouseout',e=>{const el=e.target.closest&&e.target.clo
 applySkin();musicBtn();renderSlots();coinHud();
 buildMenu();
 buildArena(STAGES[0],0);           // dựng lại nền menu cùng bối cảnh mới
-window.WSX_API={X,save,addCoins,addReview,popup,shake,mergeGeos,glowTex,bookAdd,CFG,
+window.WSX_API={X,save,addCoins,addReview,DECO,SKY,popup,shake,mergeGeos,glowTex,bookAdd,CFG,
   /* nhịp nhạc 0..1 (1 ngay khi có nhịp, tắt dần trong ~0.26 s); nhạc tắt → nhịp giả 120 bpm */
   beat(){const n=performance.now();const age=(X.music&&lastBeat&&n-lastBeat<1200)?n-lastBeat:(n%500);return Math.max(0,1-age/260)}};
 window.__WSX={X,get R(){return R},openShop,addCoins,CONS,MODS,MIS,shake,timeFx};

@@ -28,8 +28,8 @@ ambient:{startAfter:8,every:14,max:3},
 locations:[
   {en:'PIER 4',sub:'CONTAINER YARD',vi:'Bến 4 · Bãi container'},
   {en:'CONTAINER YARD',sub:'STACK ROW C',vi:'Bãi container · Dãy C'},
-  {en:'COLD STORAGE',sub:'FREEZER BLOCK',vi:'Kho lạnh · Khu đông lạnh'},
   {en:'CRANE ROW',sub:'GANTRY LINE',vi:'Dãy cần cẩu · Tuyến giàn'},
+  {en:'COLD STORAGE',sub:'FREEZER BLOCK',vi:'Kho lạnh · Khu đông lạnh'},
   {en:'CARGO SHIP',sub:'MAIN DECK',vi:'Tàu hàng · Boong chính'},
   {en:'LIGHTHOUSE',sub:'SIGNAL TOWER',vi:'Đèn hải đăng · Tháp tín hiệu'}
 ],

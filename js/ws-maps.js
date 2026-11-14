@@ -53,7 +53,9 @@ const STAGE_MAPS=[
  /* 2 Sky Lab: trọng lực thấp + cổng dịch chuyển */
  {decks:[{x0:-27,x1:-15,z0:11,z1:27,h:3}],ramps:[{lowX:-7,dir:-1,len:8,zc:18,w:3,h:3}],pads:[{x:-21,z:8.5}],
   stations:[{x:6,z:-12,tx:9.2,tz:-12}],cand:CAND0,beat:BEAT0,
-  lowg:[{x:-12,z:-10,r:8},{x:14,z:8,r:8}],portals:[{x:-26,z:-2},{x:26,z:2}]},
+  lowg:[{x:-12,z:-10,r:8},{x:14,z:8,r:8}],portals:[{x:-26,z:-2},{x:26,z:2}],
+  /* Crane Row: hai container do cần cẩu chở, trượt qua lại làm chỗ nấp động */
+  movers:[{x:0,z:-20,hx:3,hz:1.2,h:2.6,ax:'x',min:-17,max:17,speed:2.2,ph:0},{x:19,z:16,hx:1.2,hz:3,h:2.6,ax:'z',min:8,max:24,speed:2,ph:1}]},
  /* 3 Frozen Archive: sàn băng + kệ sách đổ */
  {decks:[{x0:-27,x1:-15,z0:-27,z1:-14,h:3}],ramps:[{lowX:-7,dir:-1,len:8,zc:-20.5,w:3,h:3}],pads:[{x:-21,z:-10.5}],
   stations:[{x:12,z:-14,tx:15.2,tz:-14}],cand:CAND0,beat:BEAT0,

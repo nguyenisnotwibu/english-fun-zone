@@ -312,4 +312,28 @@ const get=(ctx,name)=>{try{return vm.runInContext('typeof '+name+'==="undefined"
   if(!Array.isArray(q.types)||!q.types.length||!q.types.every(t=>['vocab','spell','gap','error'].includes(t)))E('ws-combat.js: quick.types chi gom vocab/spell/gap/error');
 })();
 
+/* ---------- 12) Word Strike 3D: data/ws-port.js (WS_PORT, 6 khu cang) – khop voi thanh dia diem cua ws-relay.js ---------- */
+(function(){
+  let src,rsrc;try{src=read('data/ws-port.js');rsrc=read('data/ws-relay.js')}catch(e){E('khong doc duoc data/ws-port.js hoac ws-relay.js');return}
+  const win={},rw={};try{new Function('window',src)(win);new Function('window',rsrc)(rw)}catch(e){E('cu phap data/ws-port.js',e.message);return}
+  const D=win.WS_PORT;if(!D||!Array.isArray(D.zones)||D.zones.length!==6){E('ws-port.js: zones can dung 6 khu');return}
+  const HEXS=/^#[0-9a-f]{6}$/i,isN=v=>typeof v==='number'&&isFinite(v),LOC=(rw.WS_RELAY&&rw.WS_RELAY.locations)||[];
+  D.zones.forEach((z,i)=>{tot++;const at='ws-port.js zones['+i+'] ';
+    if(typeof z.name!=='string'||!z.name||z.name.length>18)E(at+'name la chu 1-18 ky tu');
+    if(!z.sub||!z.vi)E(at+'thieu sub / vi');
+    const th=z.th||{};if(!HEXS.test(th.floor||'')||!HEXS.test(th.stud||''))E(at+'th.floor / th.stud phai la #rrggbb');
+    if(!Array.isArray(th.sky)||th.sky.length!==4||!th.sky.every(c=>HEXS.test(c)))E(at+'th.sky can 4 mau #rrggbb');
+    for(const k of ['fog','wall','trim'])if(!Number.isInteger(th[k])||th[k]<0||th[k]>0xffffff)E(at+'th.'+k+' phai la so mau');
+    if(!Array.isArray(th.pal)||th.pal.length!==5)E(at+'th.pal can 5 mau');
+    if(!Array.isArray(z.fog)||z.fog.length!==2||!(z.fog[0]>=5)||!(z.fog[1]>z.fog[0])||z.fog[1]>300)E(at+'fog = [gan >= 5, xa > gan, <= 300]');
+    const s=z.stacks||{};if(!Number.isInteger(s.count)||s.count<3||s.count>16)E(at+'stacks.count nguyen 3-16');
+    if(!Array.isArray(s.lv)||!s.lv.every(n=>Number.isInteger(n)&&n>=1&&n<=3)||s.lv[0]>s.lv[1])E(at+'stacks.lv = [thap, cao] trong 1-3');
+    if(!Array.isArray(s.long)||!s.long.every(n=>Number.isInteger(n)&&n>=1&&n<=2)||s.long[0]>s.long[1])E(at+'stacks.long = [it, nhieu] trong 1-2');
+    if(!isN(s.minR)||s.minR<8||!isN(s.maxR)||s.maxR>27||s.minR>=s.maxR)E(at+'stacks.minR >= 8 (tam 8 m dau phai trong), maxR <= 27');
+    const l=z.lamps||{};if(!isN(l.every)||l.every<6||l.every>40)E(at+'lamps.every 6-40');
+    if(typeof z.gantry!=='boolean')E(at+'gantry phai la true/false');
+    if(![null,'water','ship','lighthouse'].includes(z.extra===undefined?undefined:z.extra))E(at+'extra phai la water/ship/lighthouse/null');
+    const L=LOC[i];if(!L||L.en!==String(z.name).toUpperCase()||L.sub!==z.sub)E(at+'ten/dia diem phai khop ws-relay.js locations['+i+'] (dang la '+(L&&L.en)+' / '+(L&&L.sub)+')')});
+})();
+
 console.log(`\n${tot} muc da kiem tra — ${err} loi, ${warn} canh bao`);process.exit(err?1:0);

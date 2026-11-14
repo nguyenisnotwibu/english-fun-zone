@@ -377,6 +377,7 @@ body.touchui #banner{font-size:clamp(22px,5vw,40px)}
 <script src="data/ws-gacha.js"></script>
 <script src="data/ws-relay.js"></script>
 <script src="data/ws-combat.js"></script>
+<script src="data/ws-port.js"></script>
 <script>
 'use strict';
 /* =====================================================================
@@ -547,7 +548,7 @@ function buildArena(st,idx){
   const tr=new THREE.Mesh(new THREE.BoxGeometry(w+.05,.12,d+.05),trimM);tr.position.set(x,h-.06,z);arena.add(tr);m.updateMatrixWorld();COVERS.push({mesh:m,box:new THREE.Box3().setFromObject(m)})};
  block(0,-ARENA-.5,ARENA*2+2,3.2,1,th.wall,false);block(0,ARENA+.5,ARENA*2+2,3.2,1,th.wall,false);block(-ARENA-.5,0,1,3.2,ARENA*2,th.wall,false);block(ARENA+.5,0,1,3.2,ARENA*2,th.wall,false);
  const R=seeded((idx+1)*7919);let n=0;
- for(let k=0;k<40&&n<7;k++){const x=(R()*2-1)*24,z=(R()*2-1)*24;if(Math.hypot(x,z)<8)continue;const w=1.4+R()*4,d=1.4+R()*4,h=1.4+R()*3.6;
+ if(!(window.WSPORT&&WSPORT.stacks(idx,block,th)))for(let k=0;k<40&&n<7;k++){const x=(R()*2-1)*24,z=(R()*2-1)*24;if(Math.hypot(x,z)<8)continue;const w=1.4+R()*4,d=1.4+R()*4,h=1.4+R()*3.6;
   if(COVERS.slice(4).some(o=>Math.abs(o.mesh.position.x-x)<(w+o.mesh.geometry.parameters.width)/2+2&&Math.abs(o.mesh.position.z-z)<(d+o.mesh.geometry.parameters.depth)/2+2))continue;
   const col=th.pal[n%th.pal.length];block(x,z,w,h,d,col,true);block(-x,-z,w,h,d,th.pal[(n+2)%th.pal.length],true);n++}
  // pillars (emissive, no point lights → rẻ)
@@ -1155,5 +1156,6 @@ window.__WS={S,BOTS:()=>BOTS,BOSS:()=>BOSS,fire,startStage,onHitTarget,setWep,us
 <script src="js/ws-hud.js"></script>
 <script src="js/ws-relay.js"></script>
 <script src="js/ws-combat.js"></script>
+<script src="js/ws-port.js"></script>
 </body>
 </html>
