@@ -70,10 +70,10 @@ const SKINS=[
    MỖI ải có 3 nhiệm vụ chính ở đây (đủ cả 3 → thưởng thêm) + 1 nhiệm vụ Voice Blast thưởng riêng (VOICE_MISSION). */
 const MIS=[
  [['acc',80],['combo',6],['perk',1]],
- [['acc',80],['kind','runner',8],['perk',1]],
+ [['acc',80],['kind','gull',8],['perk',1]],
  [['clean',2],['wep',2,3],['perk',2]],
- [['acc',85],['kind','tank',4],['combo',9]],
- [['clean',2],['kind','shooter',4],['combo',8]],
+ [['acc',85],['kind','hound',6],['combo',9]],
+ [['clean',2],['kind','heavy',2],['combo',8]],
  [['acc',90],['wep',3,4],['combo',12]]
 ];
 const VOICE_MISSION=['ult',1];
@@ -273,7 +273,7 @@ function checkMilestones(){
   save()}
 
 /* ===================== NHIỆM VỤ ===================== */
-const KN={runner:'Runner',tank:'Tank',shooter:'Sniper',grunt:'Grunt'};
+const KN={runner:'Runner',tank:'Tank',shooter:'Sniper',grunt:'Grunt',gull:'Gull (drone bay)',hound:'Hound (chạy)',heavy:'Heavy (nặng)'};
 const pct=()=>S.ok+S.bad?Math.round(S.ok/(S.ok+S.bad)*100):0;
 function mkMission(sp){
   const [t,a,b]=sp;

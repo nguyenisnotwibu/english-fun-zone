@@ -286,7 +286,8 @@ body.touchui #banner{font-size:clamp(22px,5vw,40px)}
     <div class="gstrip">
       <div class="gs"><b>🎯</b>Bắn robot mang <u>đáp án đúng</u></div>
       <div class="gs"><b>🔫</b><kbd>1</kbd>–<kbd>4</kbd> đổi súng</div>
-      <div class="gs"><b>✨</b><kbd>Q</kbd> <kbd>E</kbd> <kbd>R</kbd> kỹ năng</div>
+      <div class="gs"><b>✨</b><kbd>Q</kbd> <kbd>E</kbd> <kbd>V</kbd> kỹ năng</div>
+      <div class="gs"><b>🔄</b><kbd>R</kbd> nạp đạn · trả lời nhanh = đạn xuyên giáp</div>
       <div class="gs"><b>👁</b><kbd>C</kbd> đổi góc nhìn</div>
       <button class="btn sec" id="guideB" type="button">📖 Field guide<span class="vi">Hướng dẫn đầy đủ</span></button>
     </div>
@@ -357,7 +358,7 @@ body.touchui #banner{font-size:clamp(22px,5vw,40px)}
     <div class="pr"><span>Guide<span class="vi">Hướng dẫn đầy đủ</span></span><button class="btn sec" id="pGuide" type="button">Open</button></div>
   </div>
   <div class="pb hide" id="pbCtl">
-    <h3>PC</h3><div class="pk"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><span>Move · Di chuyển</span><span><kbd>Mouse</kbd></span><span>Aim · Ngắm</span><span><kbd>Click</kbd>/<kbd>F</kbd></span><span>Fire · Bắn</span><span><kbd>Shift</kbd></span><span>Sprint · Chạy nhanh</span><span><kbd>Space</kbd></span><span>Jump · Nhảy</span><span><kbd>1</kbd>–<kbd>4</kbd> <kbd>X</kbd></span><span>Weapon · Đổi súng</span><span><kbd>Q</kbd><kbd>E</kbd></span><span>Skill · Kỹ năng</span><span><kbd>R</kbd></span><span>Voice Blast</span><span><kbd>C</kbd></span><span>Camera · Góc nhìn</span><span><kbd>Esc</kbd></span><span>Pause · Tạm dừng</span></div>
+    <h3>PC</h3><div class="pk"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><span>Move · Di chuyển</span><span><kbd>Mouse</kbd></span><span>Aim · Ngắm</span><span><kbd>Click</kbd>/<kbd>F</kbd></span><span>Fire · Bắn</span><span><kbd>Shift</kbd></span><span>Sprint · Chạy nhanh</span><span><kbd>Space</kbd></span><span>Jump · Nhảy</span><span><kbd>1</kbd>–<kbd>4</kbd> <kbd>X</kbd></span><span>Weapon · Đổi súng</span><span><kbd>Q</kbd><kbd>E</kbd></span><span>Skill · Kỹ năng</span><span><kbd>V</kbd></span><span>Voice Blast</span><span><kbd>R</kbd></span><span>Reload · Nạp đạn (quick question = AP rounds)</span><span><kbd>C</kbd></span><span>Camera · Góc nhìn</span><span><kbd>Esc</kbd></span><span>Pause · Tạm dừng</span></div>
     <h3>TOUCH</h3><div class="pk"><span>Left pad</span><span>Move · Di chuyển</span><span>Drag screen</span><span>Aim · Ngắm</span><span>FIRE</span><span>Fire · Bắn</span><span>⤒</span><span>Jump · Nhảy</span></div>
   </div>
 </aside>
@@ -375,6 +376,7 @@ body.touchui #banner{font-size:clamp(22px,5vw,40px)}
 <script src="data/ws-outfits.js"></script>
 <script src="data/ws-gacha.js"></script>
 <script src="data/ws-relay.js"></script>
+<script src="data/ws-combat.js"></script>
 <script>
 'use strict';
 /* =====================================================================
@@ -628,7 +630,7 @@ function syncBots(){
     b.updateMatrixWorld(true);
     const tm=u.torso.material;_bc.copy(tm.color);if(tm.emissive)_bc.add(tm.emissive);
     put('torso',b.matrixWorld,_bc);put('body',b.matrixWorld,_white);
-    put('leg',u.legs[0].matrixWorld,_dark);put('leg',u.legs[1].matrixWorld,_dark);
+    if(!u.fly){put('leg',u.legs[0].matrixWorld,_dark);put('leg',u.legs[1].matrixWorld,_dark)}   /* GULL bay: không chân */
     put('arm',u.arms[0].matrixWorld,u.mat.color);put('arm',u.arms[1].matrixWorld,u.mat.color);
     put('hand',u.arms[0].matrixWorld,_skin);put('hand',u.arms[1].matrixWorld,_skin);
     if(u.armor)put('armor',b.matrixWorld,_plate);
@@ -789,10 +791,10 @@ function toast(msg,cls,ms){const t=$('toast');t.textContent=msg;t.className=cls;
 let banT=0;function banner(t,sub){const b=$('banner');b.innerHTML=esc(t)+(sub?`<small>${esc(sub)}</small>`:'');b.style.opacity=1;clearTimeout(banT);banT=setTimeout(()=>b.style.opacity=0,2000)}
 function buildDock(){
  $('weps').innerHTML=WEPS.map((w,i)=>`<div class="slot small" data-w="${i}" title="${esc(w.name+': '+w.desc)}"><span class="k">${i+1}</span><span class="ico">${w.icon}</span><span class="t">${w.name.split(' ')[0]}</span>${w.energy?'<span class="en"></span>':''}</div>`).join('');
- const sk=[['Q',HERO.q],['E',HERO.e],['R',ULT]];
+ const sk=[['Q',HERO.q],['E',HERO.e],['V',ULT]];
  $('skills').innerHTML=sk.map(([k,s])=>`<div class="slot" data-s="${k}" title="${esc(s.name+': '+s.desc)}"><span class="k">${k}</span>${s.icon}<div class="cd"></div></div>`).join('');
  document.querySelectorAll('#weps .slot').forEach(e=>e.onclick=ev=>{ev.stopPropagation();setWep(+e.dataset.w)});
- document.querySelectorAll('#skills .slot').forEach(e=>e.onclick=ev=>{ev.stopPropagation();const k=e.dataset.s;k==='R'?openVoice():useSkill(k)});
+ document.querySelectorAll('#skills .slot').forEach(e=>e.onclick=ev=>{ev.stopPropagation();const k=e.dataset.s;k==='V'?openVoice():useSkill(k)});
  $('heroLbl').textContent=HERO.name+' · '+HERO.role}
 let lastCd='';
 function updHUD(){
@@ -802,8 +804,8 @@ function updHUD(){
    e.querySelector('.ico').textContent=lk?'🔒':w.icon;e.querySelector('.t').textContent=lk?'Mở ở Ải '+(w.unlock+1):w.name.split(' ')[0];
    const en=e.querySelector('.en');if(en){en.textContent=lk?'':'⚡'+S.energy;e.classList.toggle('noen',!lk&&S.energy<w.energy)}});
   $('wepname').textContent=WEPS[S.wep].name+' – '+WEPS[S.wep].desc;
-  const wp=WEPS[S.wep];$('ammoL').textContent=wp.name;$('ammoN').textContent=wp.energy?S.energy:'INF';$('ammoN').classList.toggle('dim',!!wp.energy&&S.energy<wp.energy);
-  $('ammoS').textContent=wp.energy?'WORD ENERGY · cost '+wp.energy+' / max '+ENERGY.max:'NO COST · không tốn năng lượng'}
+  if(window.WSCombat&&S.mag)WSCombat.drawAmmo();else{const wp=WEPS[S.wep];$('ammoL').textContent=wp.name;$('ammoN').textContent=wp.energy?S.energy:'INF';$('ammoN').classList.toggle('dim',!!wp.energy&&S.energy<wp.energy);
+  $('ammoS').textContent=wp.energy?'WORD ENERGY · cost '+wp.energy+' / max '+ENERGY.max:'NO COST · không tốn năng lượng'}}
  $('hpwrap').classList.toggle('on',performance.now()<(S.hpShowUntil||0)||S.hp<S.maxHp*.5);
  const cq=S.cdQ>0?S.cdQ/(HERO.q.cd*S.cdMul)*100:0,ce=S.cdE>0?S.cdE/(HERO.e.cd*S.cdMul)*100:0,cr=100-S.ult;const key=(cq|0)+'|'+(ce|0)+'|'+(cr|0);
  if(key!==lastCd){lastCd=key;const sl=document.querySelectorAll('#skills .slot');[cq,ce,cr].forEach((p,i)=>{sl[i].querySelector('.cd').style.setProperty('--p',p+'%');sl[i].classList.toggle('ready',i===2&&S.ult>=100)})}}
@@ -820,7 +822,7 @@ function drawRadar(){const c=rctx;c.clearRect(0,0,240,240);c.strokeStyle='rgba(1
 const keys={};let locked=false,noLock=false,wasLocked=false,drag=null,mouseHeld=false;
 addEventListener('keydown',e=>{keys[e.code]=true;if(e.target.tagName==='INPUT')return;
  if(!S.running||S.paused||S.modal)return;
- if(e.code==='KeyR'||e.code==='KeyV')openVoice();
+ if(e.code==='KeyV')openVoice();
  if(e.code==='KeyQ')useSkill('Q');if(e.code==='KeyE')useSkill('E');
  {const m=e.code.match(/^(?:Digit|Numpad)([1-4])$/);if(m)setWep(+m[1]-1)}if(e.code==='KeyX'||e.code==='Tab'){e.preventDefault();setWep((S.wep+1)%S.wepCount)}
  if(e.code==='KeyF'||e.code==='Enter')fire();
@@ -882,7 +884,7 @@ function fire(){if(S.fireCd>0||S.ended||S.swapT>0||S.paused||S.modal)return;cons
  if(W.splash){const p=h.point.clone(),root=h.object.userData.root,dist=h.distance;_dir.copy(p).sub(_from).normalize().multiplyScalar(45);spawnProj(_from,_dir,'rocket',W.col,{t:dist/45,root,p});return}
  tracer(_from,h.point,W.col,W.pierce?.25:.08);
  const root=h.object.userData.root;if(!root){_v.copy(h.point);burst(_v,0x8fe3ff,4,3);return}
- onHitTarget(root,W.dmg*S.dmgMul*(root.userData.kind==='tank'&&W.armorMul?W.armorMul:1));S.hudDirty=true}
+ onHitTarget(root,W.dmg*S.dmgMul*(root.userData.armor&&W.armorMul&&!(S.ap>0)?W.armorMul:1));S.hudDirty=true}
 const _aw=new THREE.Vector3(),_ap=new THREE.Vector3();
 function assistHit(){let best=null,bd=1e9;const R=Math.min(innerWidth,innerHeight)*.11;
  for(const m of HIT_T){const r=m.userData.root;if(!r||r.userData.dying||r.userData.isBoss)continue;m.getWorldPosition(_aw);_ap.copy(_aw).project(camera);if(_ap.z>1)continue;const d=Math.hypot(_ap.x*innerWidth/2,_ap.y*innerHeight/2);if(d<R&&d<bd){bd=d;best=m}}
@@ -997,7 +999,7 @@ $('chGo').onclick=closeChallenge;
 /* ===================== MENU / FLOW ===================== */
 function buildMenu(){
  $('trk').innerHTML=Object.entries(TRACKS).map(([k,t])=>`<button class="pick ${k===TRK?'sel':''}" data-k="${k}" style="--g:${t.grad}"><div class="t">${t.name}</div><div class="d">${t.desc}</div></button>`).join('');
- $('heroes').innerHTML=Object.entries(HEROES).map(([k,h])=>`<button class="pick ${k===HERO_K?'sel':''}" data-h="${k}" style="--g:${h.grad}"><div class="t">${h.name} <span style="font-size:13px">· ${h.role}</span></div><div class="d">❤️ ${h.hp} HP · ${h.passive}<br><kbd>Q</kbd> ${h.q.icon} <b>${h.q.name}</b>: ${h.q.desc}<br><kbd>E</kbd> ${h.e.icon} <b>${h.e.name}</b>: ${h.e.desc}<br><kbd>R</kbd> 🎤 <b>Voice Blast</b>: đọc to để quét robot sai</div></button>`).join('');
+ $('heroes').innerHTML=Object.entries(HEROES).map(([k,h])=>`<button class="pick ${k===HERO_K?'sel':''}" data-h="${k}" style="--g:${h.grad}"><div class="t">${h.name} <span style="font-size:13px">· ${h.role}</span></div><div class="d">❤️ ${h.hp} HP · ${h.passive}<br><kbd>Q</kbd> ${h.q.icon} <b>${h.q.name}</b>: ${h.q.desc}<br><kbd>E</kbd> ${h.e.icon} <b>${h.e.name}</b>: ${h.e.desc}<br><kbd>V</kbd> 🎤 <b>Voice Blast</b>: đọc to để quét robot sai</div></button>`).join('');
  const P=prog(TRK);if(STG>=P.unlocked)STG=P.unlocked-1;
  $('stages').innerHTML=STAGES.map((s,i)=>{const lock=i>=P.unlocked,st=P.stars[i]||0;const qt=QTYPES[s.type];const w=['Quái: Grunt','+ Runner (chạy nhanh)','+ Tank (có giáp)','+ Sniper (bắn xa)','Mọi loại quái','Mọi loại quái'][i];
   return `<button class="pick stg ${i===STG?'sel':''} ${lock?'locked':''}" data-s="${i}" style="--g:linear-gradient(90deg,${s.th.sky[1]},${s.th.sky[2]})"><div class="n">MISSION ${i+1} ${lock?'🔒':''}</div><div class="t">${s.name}</div><div class="d">${qt.icon} ${qt.name} · 👹 ${s.boss}<br>${w}</div><div class="stars">${'★'.repeat(st)}${'☆'.repeat(3-st)}</div></button>`}).join('');
@@ -1048,7 +1050,7 @@ function guidePages(){
  <span class="k">${K('W A S D')}</span><span>Di chuyển</span><span class="k"><kbd>Chuột</kbd></span><span>Ngắm</span><span class="k"><kbd>Click</kbd> / ${K('F')}</span><span>Bắn (giữ để bắn liên thanh)</span>
  <span class="k">${K('Shift')}</span><span>Chạy nhanh</span><span class="k">${K('Space')}</span><span>Nhảy</span><span class="k">${K('← →')}</span><span>Xoay góc nhìn</span>
  <span class="k">${K('1 2 3 4')}</span><span>Chọn súng (hoặc lăn chuột, ${K('X')})</span><span class="k"><kbd>Chuột phải</kbd></span><span>Ngắm xa (Railgun)</span>
- <span class="k">${K('Q E')}</span><span>Kỹ năng anh hùng</span><span class="k">${K('R')}</span><span>Voice Blast</span><span class="k">${K('C')}</span><span>Góc nhìn thứ 1 ↔ thứ 3</span><span class="k">${K('F')} gần trạm</span><span>Dùng trạm trả lời</span></div></div>
+ <span class="k">${K('Q E')}</span><span>Kỹ năng anh hùng</span><span class="k">${K('V')}</span><span>Voice Blast</span><span class="k">${K('R')}</span><span>Nạp đạn (trả lời câu hỏi 5 giây = nạp ngay + đạn xuyên giáp)</span><span class="k">${K('C')}</span><span>Góc nhìn thứ 1 ↔ thứ 3</span><span class="k">${K('F')} gần trạm</span><span>Dùng trạm trả lời</span></div></div>
  <div class="gc"><div class="tt">📱 Điện thoại / tablet <span class="tag">xoay ngang</span></div><div class="keys">
  <span class="k">🕹️ trái</span><span>Cần gạt đi – đẩy hết cỡ để chạy</span><span class="k">👆 nửa phải</span><span>Vuốt để ngắm</span><span class="k">🔴 BẮN</span><span>Giữ để bắn liên thanh</span>
  <span class="k">⤒</span><span>Nhảy</span><span class="k">🔭</span><span>Ngắm xa Railgun</span><span class="k">👁</span><span>Đổi góc nhìn</span><span class="k">💬</span><span>Dùng trạm trả lời</span><span class="k">Ô dưới</span><span>Chạm để đổi súng / dùng kỹ năng</span></div>
@@ -1060,7 +1062,7 @@ function guidePages(){
  <h4>Mẹo chọn súng</h4><div class="gc">Tank có giáp: dùng <b>Scatter</b> tầm gần hoặc <b>Railgun</b>. Bị vây: <b>Nova</b> đẩy lùi cả đám. Blaster cho quái thường.</div>`},
  {icon:'🦸',name:'Anh hùng & Kỹ năng',html:`<h3>🦸 Anh hùng & Kỹ năng</h3><div class="lead">Chọn anh hùng ở menu. Mỗi người có 2 kỹ năng riêng (${K('Q')} ${K('E')}) và chung tuyệt chiêu ${K('R')}.</div>
  <div class="ggrid">${Object.values(HEROES).map(h=>`<div class="gc" style="border-color:${h.col}"><div class="tt" style="color:${h.col}">${esc(h.name)} <span style="font-size:12px;color:var(--mut)">· ${esc(h.role)}</span></div>❤️ ${h.hp} HP · ${esc(h.passive)}<br><kbd>Q</kbd> ${h.q.icon} <b>${esc(h.q.name)}</b> – ${esc(h.q.desc)} <span class="tag">${h.q.cd}s</span><br><kbd>E</kbd> ${h.e.icon} <b>${esc(h.e.name)}</b> – ${esc(h.e.desc)} <span class="tag">${h.e.cd}s</span></div>`).join('')}</div>
- <h4>🎤 Tuyệt chiêu Voice Blast <kbd>R</kbd></h4><div class="gc">Thanh tuyệt chiêu đầy (trả lời đúng để nạp) → nhấn <kbd>R</kbd> → <b>đọc to</b> từ tiếng Anh hiện ra. Đúng: quét sạch robot sai + hồi máu. Có link nghe phát âm chuẩn Cambridge/Oxford. Không có micro? Bấm <b>⌨️ Gõ thay vì nói</b>.</div>`},
+ <h4>🎤 Tuyệt chiêu Voice Blast <kbd>V</kbd></h4><div class="gc">Thanh tuyệt chiêu đầy (trả lời đúng để nạp) → nhấn <kbd>V</kbd> → <b>đọc to</b> từ tiếng Anh hiện ra. Đúng: quét sạch robot sai + hồi máu. Có link nghe phát âm chuẩn Cambridge/Oxford. Không có micro? Bấm <b>⌨️ Gõ thay vì nói</b>.</div>`},
  {icon:'🗺️',name:'Bản đồ & Ải',html:`<h3>🗺️ Bản đồ tương tác</h3><div class="lead">Đừng đứng yên! Bản đồ có nhiều thứ để leo, phá và dùng.</div>
  <div class="ggrid"><div class="gc"><div class="ic">🛗</div><div class="tt">Sàn cao · dốc · bệ nhảy</div>Đứng lên đĩa sáng rồi ${K('Space')} để bật lên tầng trên.</div><div class="gc"><div class="ic">📦</div><div class="tt">Thùng</div>Bắn 2 phát để phá – rơi xu hoặc bình máu.</div><div class="gc"><div class="ic">💬</div><div class="tt">Trạm trả lời</div>Đứng gần + ${K('F')}: đúng → trụ súng tự bắn quái SAI 15 giây; sai → khoá tới đợt sau.</div><div class="gc"><div class="ic">🔤</div><div class="tt">Chữ cái rơi</div>Nhặt đủ chữ để ghép từ vựng → mở rương thưởng.</div><div class="gc"><div class="ic">⚡</div><div class="tt">Sự kiện mỗi đợt</div><b>Mất điện</b> (chỉ nhãn chữ sáng) hoặc <b>Mưa thiên thạch</b> – né vòng đỏ!</div></div>
  <h4>Cơ chế riêng từng ải</h4>${STAGES.map((st,i)=>`<div class="stg2" style="background:linear-gradient(90deg,${st.th.sky[1]}55,transparent)"><span class="no">Ải ${i+1}</span><div><b>${esc(st.name)}</b> · ${QTYPES[st.type].icon} ${esc(QTYPES[st.type].name)} · 👹 ${esc(st.boss)}<br><span style="color:#cfd6ff">${esc(STAGE_MECH[i]||'')}</span></div></div>`).join('')}`},
@@ -1152,5 +1154,6 @@ window.__WS={S,BOTS:()=>BOTS,BOSS:()=>BOSS,fire,startStage,onHitTarget,setWep,us
 <script src="js/ws-gacha.js"></script>
 <script src="js/ws-hud.js"></script>
 <script src="js/ws-relay.js"></script>
+<script src="js/ws-combat.js"></script>
 </body>
 </html>

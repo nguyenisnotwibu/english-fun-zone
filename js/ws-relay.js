@@ -195,7 +195,7 @@ function clearMeshes(){
 /* ===================== QUÁI "HOSTILE" ===================== */
 const hostiles=()=>BOTS.filter(b=>b.userData.hostile&&!b.userData.dying);
 function spawnHostile(near){
-  const en=STAGES[M.stage].enemies,kind=wpick(en),col=BOTCOL[(Math.random()*BOTCOL.length)|0];
+  const en=STAGES[M.stage].enemies,kind=window.WSCombat?WSCombat.pickHostile():wpick(en),col=BOTCOL[(Math.random()*BOTCOL.length)|0];
   const b=makeBot(kind.toUpperCase(),kind,col);b.userData.hostile=true;
   const [x,z]=spawnPos(near?12:18,near?20:28);b.position.set(x,0,z);scene.add(b);BOTS.push(b);_v.set(x,1.5,z);burst(_v,0xff5a40,10,5);rebuildHits();return b}
 function alarm(n){let k=0;for(let i=0;i<n&&BOTS.length<36;i++){spawnHostile(true);k++}return k}

@@ -288,4 +288,28 @@ const get=(ctx,name)=>{try{return vm.runInContext('typeof '+name+'==="undefined"
   if(avg.kids&&avg.toeic&&avg.ielts&&!(avg.kids<avg.toeic&&avg.toeic<avg.ielts))E('ws-relay.js: cau lenh Relay phai dai dan KIDS < TOEIC < IELTS (dang la '+Math.round(avg.kids)+' / '+Math.round(avg.toeic)+' / '+Math.round(avg.ielts)+' ky tu)');
 })();
 
+
+/* ---------- 11) Word Strike 3D: data/ws-combat.js (WS_COMBAT, quai GULL/HOUND/HEAVY + bang dan + nap nhanh) ---------- */
+(function(){
+  let src;try{src=read('data/ws-combat.js')}catch(e){E('khong doc duoc data/ws-combat.js');return}
+  const win={};try{new Function('window',src)(win)}catch(e){E('cu phap data/ws-combat.js',e.message);return}
+  const D=win.WS_COMBAT;if(!D||typeof D!=='object'){E('ws-combat.js: thieu window.WS_COMBAT');return}
+  tot++;const isN=v=>typeof v==='number'&&isFinite(v),rng=(o,k,lo,hi,at)=>{const v=o&&o[k];if(!isN(v)||v<lo||v>hi)E('ws-combat.js: '+(at||'')+k+' phai trong '+lo+'-'+hi+' (dang la '+v+')')};
+  const K=D.kinds||{};
+  for(const k of ['gull','hound','heavy']){tot++;const o=K[k];if(!o){E('ws-combat.js: thieu kinds.'+k);continue}const at='kinds.'+k+'.';rng(o,'s',.5,2,at);rng(o,'hp',1,6,at);rng(o,'spd',.3,3,at);rng(o,'dmg',1,40,at);rng(o,'tele',.5,2.5,at)}
+  if(K.gull){rng(K.gull,'hover',1.5,6,'kinds.gull.');rng(K.gull,'range',12,50,'kinds.gull.');rng(K.gull,'bullet',6,30,'kinds.gull.');if(!Array.isArray(K.gull.shotEvery)||K.gull.shotEvery.length!==2||!(K.gull.shotEvery[0]>=1.5)||!(K.gull.shotEvery[1]>=K.gull.shotEvery[0]))E('ws-combat.js: kinds.gull.shotEvery = [nhanh, cham], nhanh >= 1.5 giay')}
+  if(K.hound){rng(K.hound,'lungeRange',4,16,'kinds.hound.');rng(K.hound,'lungeSpeed',6,24,'kinds.hound.');rng(K.hound,'lungeTime',.2,1,'kinds.hound.')}
+  if(K.heavy){rng(K.heavy,'slamRange',2.5,8,'kinds.heavy.');rng(K.heavy,'slamCd',2,15,'kinds.heavy.')}
+  /* moi ky nang quai PHAI co bao truoc >= 0.8 giay (quy tac Saltline Ops) */
+  for(const k of ['gull','hound','heavy'])if(K[k]&&isN(K[k].tele)&&K[k].tele<.8)E('ws-combat.js: kinds.'+k+'.tele = '+K[k].tele+' < 0.8 giay (ky nang quai phai co bao truoc >= 0.8 giay)');
+  const KNOWN=['grunt','runner','tank','shooter','gull','hound','heavy'];
+  const wts=(o,at)=>{tot++;if(!o||typeof o!=='object'){E('ws-combat.js: '+at+' phai la bang trong so');return}let s=0;for(const k in o){if(!KNOWN.includes(k))E('ws-combat.js: '+at+': loai quai la "'+k+'"');if(!isN(o[k])||o[k]<0)E('ws-combat.js: '+at+'.'+k+' phai >= 0');else s+=o[k]}if(!(s>0))E('ws-combat.js: '+at+' phai co it nhat 1 trong so > 0')};
+  for(const t of ['gap','vocab','spell','order','error','hard'])wts(D.carrier&&D.carrier[t],'carrier.'+t);
+  wts(D.hostile,'hostile');
+  if(!Array.isArray(D.mag)||D.mag.length!==4||!D.mag.every(n=>Number.isInteger(n)&&n>=1&&n<=100))E('ws-combat.js: mag can 4 so nguyen 1-100');
+  if(!Array.isArray(D.reload)||D.reload.length!==4||!D.reload.every(n=>isN(n)&&n>=.8&&n<=12))E('ws-combat.js: reload can 4 so 0,8-12 giay');
+  const q=D.quick||{};rng(q,'sec',2,10,'quick.');rng(q,'choices',2,4,'quick.');
+  if(!Array.isArray(q.types)||!q.types.length||!q.types.every(t=>['vocab','spell','gap','error'].includes(t)))E('ws-combat.js: quick.types chi gom vocab/spell/gap/error');
+})();
+
 console.log(`\n${tot} muc da kiem tra — ${err} loi, ${warn} canh bao`);process.exit(err?1:0);
