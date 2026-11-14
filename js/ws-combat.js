@@ -69,11 +69,13 @@ function drawTele(b,u,K,p){
   else if(u.skill==='heavy'&&!u.slamPing&&u.tele<u.teleMax*.5){u.slamPing=true;shock(b.position,RED,CK.heavy.slamRange)}
   u.flash=.1}
 function execTele(b,u,K,p,dx,dz,d){
-  if(u.skill==='hound'){u.act={type:'lunge',t:K.lungeTime,dx:u.teleDir.x,dz:u.teleDir.z,hit:false};u.cd=K.lungeCd}
+  if(u.skill==='hound'){u.act={type:'lunge',t:K.lungeTime,dx:u.teleDir.x,dz:u.teleDir.z,hit:false,moved:0};u.cd=K.lungeCd}
   else if(u.skill==='gull'){_vA.set(b.position.x,b.position.y+1.5,b.position.z);_vB.set(p.x-_vA.x,p.y-.5-_vA.y,p.z-_vA.z).normalize().multiplyScalar(K.bullet);spawnProj(_vA,_vB,'enemy',0xff3355);SFX.enemyShot&&SFX.enemyShot();u.cd=rnd2(K.shotEvery[0],K.shotEvery[1])}
   else if(u.skill==='heavy'){shock(b.position,RED,K.slamRange);SFX.boom&&SFX.boom();
     if(Math.hypot(p.x-b.position.x,p.z-b.position.z)<K.slamRange&&p.y-1.7<.9){hurt(K.dmg,b.position);S.combo=0}   /* nhảy lên là tránh được */
     u.cd=K.slamCd}}
+/* khoảng cách ngắn nhất từ điểm (px,pz) tới đoạn (ax,az)-(bx,bz) < r : không để quái xuyên qua người chơi giữa hai khung hình chậm */
+function sweptNear(ax,az,bx,bz,px,pz,r){const dx=bx-ax,dz=bz-az,l2=dx*dx+dz*dz;let t=l2?((px-ax)*dx+(pz-az)*dz)/l2:0;t=Math.max(0,Math.min(1,t));return Math.hypot(ax+dx*t-px,az+dz*t-pz)<r}
 const _ub=updBot;
 updBot=function(b,dt){
   const u=b.userData,K=u.skill&&CK[u.skill];
@@ -84,11 +86,12 @@ updBot=function(b,dt){
   /* đang lao (HOUND) */
   if(u.act&&u.act.type==='lunge'){
     u.t+=dt;const a=u.act,sp=K.lungeSpeed*sdt,nx=b.position.x+a.dx*sp,nz=b.position.z+a.dz*sp;
-    if(!blocked(nx,b.position.z,.6))b.position.x=nx;if(!blocked(b.position.x,nz,.6))b.position.z=nz;
+    const ox=b.position.x,oz=b.position.z;
+    if(!blocked(nx,b.position.z,.6))b.position.x=nx;if(!blocked(b.position.x,nz,.6))b.position.z=nz;a.moved+=Math.hypot(b.position.x-ox,b.position.z-oz);
     b.position.x=clamp(b.position.x,-ARENA+1,ARENA-1);b.position.z=clamp(b.position.z,-ARENA+1,ARENA-1);
     b.rotation.y=Math.atan2(a.dx,a.dz);u.arms[0].rotation.x=u.arms[1].rotation.x=-1.4;
-    if(!a.hit&&Math.hypot(p.x-b.position.x,p.z-b.position.z)<1.4&&Math.abs(p.y-1.7-b.position.y)<2.2){a.hit=true;hurt(K.dmg,b.position);SFX.hurt();S.combo=0}
-    a.t-=sdt;if(a.t<=0)u.act=null;return}
+    if(!a.hit&&sweptNear(ox,oz,b.position.x,b.position.z,p.x,p.z,1.4)&&Math.abs(p.y-1.7-b.position.y)<2.2){a.hit=true;hurt(K.dmg,b.position);SFX.hurt();S.combo=0}
+    a.t-=sdt;if(a.t<=0){u.lastLunge={moved:a.moved,hit:a.hit};u.act=null}return}
   /* đang báo trước */
   if(u.tele>0){u.tele-=sdt;u.stun=Math.max(u.stun,.05);drawTele(b,u,K,p);
     if(u.tele<=0){u.tele=0;execTele(b,u,K,p,dx,dz,d)}
