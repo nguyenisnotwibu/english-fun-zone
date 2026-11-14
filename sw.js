@@ -6,7 +6,7 @@ const CORE=['./','index.html','css/app.css','js/data-loader.js','js/app.js','js/
 /* Phần tải theo yêu cầu + trang Ngữ Pháp Master: lưu sẵn ở nền để dùng được offline, không chặn lần mở đầu. */
 const LAZY=['js/chunks/grades.js','js/chunks/grammar.js','js/chunks/games.js','js/chunks/td.js','js/chunks/ielts.js','grammar.html',
   /* Word Strike 3D: trang game + script mở rộng + three.js r128 (local) để chơi offline */
-  'word-strike-3d.html','js/ws-extras.js','js/ws-maps.js','data/ws-questions.js',
+  'word-strike-3d.html','js/ws-extras.js','js/ws-maps.js','js/ws-avatar.js','data/ws-questions.js','data/ws-view.js',
   'js/vendor/three/three.min.js','js/vendor/three/CopyShader.js','js/vendor/three/LuminosityHighPassShader.js',
   'js/vendor/three/EffectComposer.js','js/vendor/three/RenderPass.js','js/vendor/three/ShaderPass.js','js/vendor/three/UnrealBloomPass.js'];
 self.addEventListener('install',e=>{

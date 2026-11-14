@@ -5,6 +5,7 @@
 //   4) js/chunks/grammar.js - chuyen de On Ngu Phap
 //   5) grammar.html         - Ngu Phap Master (GP_DATA)
 //   6) data/ws-questions.js - ngan hang cau hoi + sat thuong khi sai cua Word Strike 3D (WS_DATA)
+//   7) data/ws-view.js      - tham so goc nhin thu 3 cua Word Strike 3D (WS_VIEW)
 const fs=require('fs'),path=require('path'),vm=require('vm');
 const ROOT=path.join(__dirname,'..');
 let err=0,warn=0,tot=0;
@@ -182,6 +183,18 @@ const get=(ctx,name)=>{try{return vm.runInContext('typeof '+name+'==="undefined"
     const ok=(T.voice||[]).filter(w=>/^[a-z]{4,}$/i.test(w[0])).length;
     if(ok<6)E('ws-questions.js: '+lv+'.voice can it nhat 6 tu chi gom chu cai (>=4 ky tu) de ban do 6 ai co tu rieng',ok+' tu hop le');
   }
+})();
+
+/* ---------- 7) Word Strike 3D: data/ws-view.js (WS_VIEW, góc nhìn thứ 3) ---------- */
+(function(){
+  let src;try{src=read('data/ws-view.js')}catch(e){E('khong doc duoc data/ws-view.js');return}
+  const win={};try{new Function('window',src)(win)}catch(e){E('cu phap data/ws-view.js',e.message);return}
+  const V=win.WS_VIEW;if(!V||typeof V!=='object'){E('ws-view.js: thieu window.WS_VIEW');return}
+  const R={distance:[2.2,4.5],shoulder:[0,1],height:[0,.8],blend:[.05,.4],minDist:[.5,1.5],fadeDist:[.8,2],recoil:[.05,.2]};
+  for(const [k,[lo,hi]] of Object.entries(R)){tot++;
+    if(typeof V[k]!=='number'||!isFinite(V[k]))E('ws-view.js: '+k+' phai la so',V[k]);
+    else if(V[k]<lo||V[k]>hi)E('ws-view.js: '+k+' = '+V[k]+' ngoai khoang cho phep '+lo+' - '+hi)}
+  if(typeof V.minDist==='number'&&typeof V.fadeDist==='number'&&V.fadeDist<=V.minDist)E('ws-view.js: fadeDist phai lon hon minDist');
 })();
 
 console.log(`\n${tot} muc da kiem tra — ${err} loi, ${warn} canh bao`);process.exit(err?1:0);
