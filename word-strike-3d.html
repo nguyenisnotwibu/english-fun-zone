@@ -185,9 +185,9 @@ body.touchui #banner{font-size:clamp(24px,5vw,44px)}
     <div class="lbl" style="text-align:center">🎤 VOICE BLAST · ĐỌC TO TỪ NÀY</div>
     <div id="vword"></div><div id="vmean"></div>
     <div style="text-align:center;font-size:14px;font-weight:700;margin-bottom:12px">🔊 Nghe phát âm chuẩn: <a class="dict" id="vcam" target="_blank" rel="noopener">Cambridge</a> · <a class="dict" id="vox" target="_blank" rel="noopener">Oxford</a></div>
-    <div id="vtypeWrap" class="hide"><div class="sub" style="text-align:center;margin:0 0 8px">Trình duyệt không hỗ trợ micro → gõ đầy đủ từ còn thiếu chữ:</div><input id="vtype" autocomplete="off"></div>
+    <div id="vtypeWrap" class="hide"><div class="sub" style="text-align:center;margin:0 0 8px">Gõ đầy đủ từ (các chữ bị ẩn là _):</div><input id="vtype" autocomplete="off"></div>
     <div id="vres"></div>
-    <div class="row" style="justify-content:center"><button class="btn" id="vgo">🎤 Bấm rồi nói</button><button class="btn sec" id="vclose">Quay lại</button></div>
+    <div class="row" style="justify-content:center"><button class="btn" id="vgo">🎤 Bấm rồi nói</button><button class="btn sec" id="vtypeB">⌨️ Gõ thay vì nói</button><button class="btn sec" id="vclose">Quay lại</button></div>
   </div>
 </div>
 
@@ -759,10 +759,11 @@ function openVoice(){if(!S.running||S.ended)return;if(S.ult<100){toast(`🎤 Voi
  S.modal=true;mouseHeld=false;if(document.pointerLockElement)document.exitPointerLock();
  vTarget=TR.voice[Math.random()*TR.voice.length|0];vTries=0;$('vmean').textContent='Nghĩa: '+vTarget[1];$('vres').textContent='';
  const w=vTarget[0].toLowerCase();$('vcam').href='https://dictionary.cambridge.org/dictionary/english/'+encodeURIComponent(w);$('vox').href='https://www.oxfordlearnersdictionaries.com/definition/english/'+encodeURIComponent(w);
- if(SR){$('vword').textContent=vTarget[0];$('vtypeWrap').classList.add('hide');$('vgo').textContent='🎤 Bấm rồi nói'}
- else{$('vword').textContent=vTarget[0].split('').map((c,i)=>i%2?'_':c).join('');$('vtypeWrap').classList.remove('hide');$('vtype').value='';$('vgo').textContent='✔ Kiểm tra';setTimeout(()=>$('vtype').focus(),50)}
+ micFails=0;recBusy=false;$('vgo').disabled=false;
+ if(SR){voiceMode='mic';$('vword').textContent=vTarget[0];$('vtypeWrap').classList.add('hide');$('vgo').textContent='🎤 Bấm rồi nói';$('vtypeB').classList.remove('hide')}
+ else setTypeMode('Trình duyệt này không có nhận diện giọng nói (dùng Chrome/Edge để nói). Gõ chữ thay thế:');
  $('vmodal').classList.remove('hide')}
-function closeVoice(){$('vmodal').classList.add('hide');S.modal=false;lockReq()}
+function closeVoice(){if(REC){try{REC.abort()}catch(e){}REC=null}recBusy=false;$('vmodal').classList.add('hide');S.modal=false;lockReq()}
 function voiceSuccess(){$('vres').innerHTML='<span style="color:#2ed573">✔ Chuẩn rồi! VOICE BLAST!</span>';S.ult=0;S.hp=Math.min(S.maxHp,S.hp+25);S.score+=150;S.hudDirty=true;
  setTimeout(()=>{closeVoice();SFX.blast();shock(yawObj.position,0xff6bd6,30);banner('💥 VOICE BLAST!','Sóng âm quét sạch đáp án sai');const q=S.q;
   if(q&&q.seq){const pool=S.boss&&BOSS?BOSS.userData.orbs:BOTS;const t=pool.find(b=>!b.userData.dying&&b.userData.word===q.seq[q.step]);if(t)onTargetDead(t)}
@@ -770,10 +771,39 @@ function voiceSuccess(){$('vres').innerHTML='<span style="color:#2ed573">✔ Chu
    if(BOSS){for(const o of BOSS.userData.orbs)if(!q.isOk(o.userData.word)){o.getWorldPosition(_v);burst(_v,0x7c5cff,10,5);removeObj(o)}BOSS.userData.orbs=BOSS.userData.orbs.filter(o=>q.isOk(o.userData.word))}}
   for(const b of BOTS)b.userData.stun=3;rebuildHits()},700)}
 function voiceFail(heard){vTries++;$('vres').innerHTML=`<span style="color:#ff8a95">✖ Nghe được: “${esc(heard||'…')}”. Thử lại (${vTries}/3) – mở Cambridge để nghe mẫu.</span>`+(vTries>=3?'<br><span style="color:#9aa6d6">Năng lượng vẫn giữ – luyện thêm rồi quay lại!</span>':'')}
-$('vgo').onclick=()=>{if(!SR){const v=norm($('vtype').value);v===norm(vTarget[0])?voiceSuccess():voiceFail(v);return}
- const r=new SR();r.lang='en-US';r.maxAlternatives=5;r.interimResults=false;$('vres').innerHTML='<span style="color:#8fe3ff">🎙️ Đang nghe… đọc to và rõ</span>';
- r.onresult=e=>{const t=norm(vTarget[0]);let best=0,heard='';for(const alt of e.results[0]){const s=norm(alt.transcript);heard=heard||alt.transcript;const sc=Math.max(sim(s,t),...s.split(' ').map(x=>sim(x,t)));if(sc>best)best=sc}best>=.8?voiceSuccess():voiceFail(heard)};
- r.onerror=e=>{$('vres').innerHTML=`<span style="color:#ff8a95">Micro lỗi (${esc(e.error)}). Cho phép micro rồi thử lại.</span>`};try{r.start()}catch(e){}};
+/* ---- Nhận diện giọng nói: xin quyền micro trước, giữ 1 bộ nhận diện toàn cục (tránh bị huỷ giữa chừng), báo lỗi rõ, tự chuyển sang gõ chữ ---- */
+let REC=null,recBusy=false,micOk=false,micFails=0,voiceMode='mic';
+const maskW=w=>w.split('').map((c,i)=>i%2&&c!==' '?'_':c).join('');
+const MICERR={'not-allowed':'Micro đang bị chặn: bấm biểu tượng 🔒 bên trái thanh địa chỉ → Micrô: Cho phép, rồi tải lại trang.',
+ 'service-not-allowed':'Trình duyệt chặn nhận diện giọng nói – hãy dùng Chrome hoặc Edge.',
+ 'audio-capture':'Không tìm thấy micro – kiểm tra tai nghe/micro đã cắm và đang được chọn trong Windows.',
+ 'network':'Nhận diện giọng nói cần Internet (Chrome gửi giọng nói lên máy chủ Google để nhận dạng).',
+ 'no-speech':'Không nghe thấy tiếng – bấm nói rồi đọc to, gần micro hơn.',
+ 'aborted':'Micro bị ngắt giữa chừng.',
+ 'language-not-supported':'Trình duyệt không hỗ trợ nhận diện tiếng Anh.'};
+function setTypeMode(msg){voiceMode='type';recBusy=false;$('vword').textContent=maskW(vTarget[0]);$('vtypeWrap').classList.remove('hide');$('vtype').value='';$('vgo').disabled=false;$('vgo').textContent='✔ Kiểm tra';$('vtypeB').classList.add('hide');if(msg)$('vres').innerHTML=`<span style="color:#ffc83d">${esc(msg)}</span>`;setTimeout(()=>$('vtype').focus(),50)}
+async function ensureMic(){if(micOk||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return true;
+ try{const st=await navigator.mediaDevices.getUserMedia({audio:true});st.getTracks().forEach(t=>t.stop());micOk=true;return true}
+ catch(e){const n=e&&e.name;setTypeMode((n==='NotAllowedError'||n==='SecurityError'?MICERR['not-allowed']:n==='NotFoundError'?MICERR['audio-capture']:'Không mở được micro ('+n+').')+' Tạm thời gõ chữ:');return false}}
+function scoreVoice(results){const t=norm(vTarget[0]);let best=0,heard='';for(const alt of results){const s2=norm(alt.transcript);heard=heard||alt.transcript;const sc=Math.max(sim(s2,t),...s2.split(' ').map(x=>sim(x,t)),sim(s2.replace(/ /g,''),t.replace(/ /g,'')));if(sc>best)best=sc}return{best,heard}}
+async function listen(autoRetry){if(recBusy||voiceMode!=='mic')return;recBusy=true;$('vgo').disabled=true;
+ if(!(await ensureMic())){recBusy=false;return}
+ if(REC){try{REC.abort()}catch(e){}}
+ const r=new SR();REC=r;r.lang='en-US';r.maxAlternatives=5;r.interimResults=false;r.continuous=false;
+ let got=false,err='';$('vgo').textContent='🎙️ Đang nghe…';$('vres').innerHTML='<span style="color:#8fe3ff">🎙️ Đang nghe… đọc to, rõ từ ở trên</span>';
+ const to=setTimeout(()=>{try{r.stop()}catch(e){}},8000);
+ r.onresult=e=>{got=true;const {best,heard}=scoreVoice(e.results[0]);best>=.75?voiceSuccess():voiceFail(heard)};
+ r.onerror=e=>{err=e.error};
+ r.onend=()=>{clearTimeout(to);if(REC===r)REC=null;recBusy=false;$('vgo').disabled=false;if(voiceMode==='mic')$('vgo').textContent='🎤 Bấm rồi nói';
+  if(got||!$('vmodal')||$('vmodal').classList.contains('hide'))return;
+  if(err==='aborted'&&!autoRetry){setTimeout(()=>listen(true),250);return} /* tự thử lại 1 lần khi bị ngắt */
+  micFails++;const hard=['not-allowed','service-not-allowed','audio-capture','network','language-not-supported'].includes(err);
+  const msg=MICERR[err]||(err?'Lỗi nhận diện ('+err+').':'Không nhận được giọng nói.');
+  if(hard||micFails>=3){setTypeMode(msg+' Tạm thời gõ chữ:');return}
+  $('vres').innerHTML=`<span style="color:#ff8a95">${esc(msg)} Bấm nói lại (${micFails}/3) hoặc chọn ⌨️ Gõ.</span>`};
+ try{r.start()}catch(e){clearTimeout(to);recBusy=false;setTypeMode('Không khởi động được micro. Tạm thời gõ chữ:')}}
+$('vgo').onclick=()=>{if(voiceMode==='type'){const v=norm($('vtype').value);if(v===norm(vTarget[0])){vTries=Math.max(vTries,1);voiceSuccess()}else voiceFail(v);return}listen(false)};
+$('vtypeB').onclick=()=>{if(REC){try{REC.abort()}catch(e){}}setTypeMode('')};
 $('vtype').addEventListener('keydown',e=>{if(e.key==='Enter')$('vgo').click()});$('vclose').onclick=closeVoice;
 
 
