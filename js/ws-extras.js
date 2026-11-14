@@ -44,13 +44,16 @@ const REVIVE={id:'revive',icon:'🔄',name:'Hồi sinh',price:CFG.revivePrice,
 /* Nâng cấp vĩnh viễn – mua 1 lần */
 const BASE={armor:WEPS[0].armorMul,pellets:WEPS[1].pellets,railCd:WEPS[2].cd,splash:WEPS[3].splash};
 const MODS=[
- {id:'pierce',icon:'🔫',name:'Đạn xuyên giáp',desc:'Blaster hết yếu với Tank có giáp',price:220,apply(){WEPS[0].armorMul=1}},
- {id:'pellet',icon:'💥',name:'Nòng loe',desc:'Scatter bắn thêm 2 viên đạn',price:240,apply(){WEPS[1].pellets=BASE.pellets+2}},
- {id:'rail',  icon:'⚡',name:'Tụ điện',desc:'Railgun nạp nhanh hơn 20%',price:270,apply(){WEPS[2].cd=BASE.railCd*.8}},
- {id:'blast', icon:'🚀',name:'Đầu nổ lan',desc:'Nova Launcher nổ rộng hơn 35%',price:270,apply(){WEPS[3].splash=BASE.splash*1.35}},
+ {id:'pierce',wep:0,icon:'🔫',name:'Đạn xuyên giáp',desc:'Blaster hết yếu với Tank có giáp',price:220,apply(){WEPS[0].armorMul=1}},
+ {id:'pellet',wep:1,icon:'💥',name:'Nòng loe',desc:'Scatter bắn thêm 2 viên đạn',price:240,apply(){WEPS[1].pellets=BASE.pellets+2}},
+ {id:'rail',  wep:2,icon:'⚡',name:'Tụ điện',desc:'Railgun nạp nhanh hơn 20%',price:270,apply(){WEPS[2].cd=BASE.railCd*.8}},
+ {id:'blast', wep:3,icon:'🚀',name:'Đầu nổ lan',desc:'Nova Launcher nổ rộng hơn 35%',price:270,apply(){WEPS[3].splash=BASE.splash*1.35}},
  {id:'armor', icon:'❤️',name:'Giáp nano',desc:'+15 máu tối đa mỗi ải',price:210,apply(){S.maxHp+=15;S.hp=S.maxHp}},
  {id:'magnet',icon:'🧲',name:'Nam châm xu',desc:'+25% Lexi Coin kiếm được',price:180,apply(){}}
 ];
+/* Nâng cấp súng (có "wep") chỉ MUA được khi súng đó đã mở: người chơi đã mở khoá ải tương ứng ở ít nhất một cấp độ. */
+const maxStageOpen=()=>Math.max(1,...Object.values(PROG).map(p=>(p&&p.unlocked)|0));
+const wepOpen=i=>i===undefined||maxStageOpen()>WEPS[i].unlock;
 /* Mỹ phẩm */
 const SKINS=[
  {id:'hud:violet', icon:'🟣',name:'HUD Tím neon',desc:'Mặc định',price:0,css:'#7c5cff'},
@@ -438,7 +441,8 @@ function renderShop(){
     <h3>Bảo hiểm (mua lại được mãi)</h3><div class="xgrid">${(()=>{const n=X.inv.revive|0,full=n>=CFG.reviveCap;
       return itemCard(REVIVE,{cnt:n,act:'buyr',dis:full||X.coins<REVIVE.price,label:full?'Đầy':`Mua · ${REVIVE.price} 🪙`})})()}</div>
     <h3>Nâng cấp vĩnh viễn</h3><div class="xgrid">${MODS.map(m=>{const has=!!X.mods[m.id];
-      return itemCard(m,{owned:has,act:'buym',dis:has||X.coins<m.price,label:has?'✔ Đã sở hữu':`Mua · ${m.price} 🪙`})}).join('')}</div>
+      const lock=!wepOpen(m.wep);
+      return itemCard(m,{owned:has,act:'buym',dis:has||lock||X.coins<m.price,label:has?'✔ Đã sở hữu':lock?`🔒 Mở ${WEPS[m.wep].name} ở Ải ${WEPS[m.wep].unlock+1}`:`Mua · ${m.price} 🪙`})}).join('')}</div>
     <h3>Giao diện & hiệu ứng</h3><div class="xgrid">${SKINS.map(k=>{const grp=k.id.split(':')[0],own=k.price===0||X.mods['s_'+k.id],eq=X.skin[grp]===k.id;
       return itemCard(k,{owned:eq,sec:own&&!eq,act:own?'equip':'buys',dis:eq||(!own&&X.coins<k.price),label:eq?'✔ Đang dùng':own?'Dùng':`Mua · ${k.price} 🪙`})}).join('')}</div>`}
   if(tab==='bag'){
@@ -458,7 +462,7 @@ $('xbody').onclick=e=>{
   const id=b.dataset.id,act=b.dataset.act;try{ac()}catch(e){}
   if(act==='buyc'){const c=CONS.find(x=>x.id===id);if(X.coins>=c.price&&(X.inv[id]|0)<CFG.invCap){X.coins-=c.price;X.inv[id]=(X.inv[id]|0)+1}}
   if(act==='buyr'){if(X.coins>=REVIVE.price&&(X.inv.revive|0)<CFG.reviveCap){X.coins-=REVIVE.price;X.inv.revive=(X.inv.revive|0)+1}}
-  if(act==='buym'){const m=MODS.find(x=>x.id===id);if(X.coins>=m.price&&!X.mods[id]){X.coins-=m.price;X.mods[id]=1}}
+  if(act==='buym'){const m=MODS.find(x=>x.id===id);if(X.coins>=m.price&&!X.mods[id]&&wepOpen(m.wep)){X.coins-=m.price;X.mods[id]=1}}
   if(act==='buys'){const k=SKINS.find(x=>x.id===id);if(X.coins>=k.price&&!X.mods['s_'+id]){X.coins-=k.price;X.mods['s_'+id]=1;X.skin[id.split(':')[0]]=id}}
   if(act==='equip'){X.skin[id.split(':')[0]]=id}
   save();applySkin();SFX.ok();renderShop();coinHud()};

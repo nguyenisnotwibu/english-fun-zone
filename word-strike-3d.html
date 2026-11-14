@@ -51,7 +51,11 @@ s{color:#ff8a95} .fix{color:var(--ok)}
 .slot .cd{position:absolute;inset:0;border-radius:12px;background:conic-gradient(rgba(0,0,0,.72) var(--p,0%),transparent 0)}
 .slot .t{position:absolute;bottom:-1px;font:800 11px Nunito;color:#fff;text-shadow:0 1px 3px #000}
 .slot.sel{border-color:var(--gold);box-shadow:0 0 12px rgba(255,200,61,.6)}
-.slot.lock{opacity:.3}
+.slot.lock{background:rgba(8,10,26,.94);border-color:#3b4272}
+.slot.lock .ico{filter:grayscale(1);opacity:.55}
+.slot.lock .t{font-size:8.5px;line-height:1;white-space:nowrap;bottom:2px;color:#ffd9a0}
+.slot .en{position:absolute;top:1px;right:3px;font:800 10px Nunito;color:#8fe3ff}
+.slot.noen .en{color:#ff8a95}.slot.noen .ico{opacity:.45}
 .slot.ready{border-color:#ff6bd6;box-shadow:0 0 16px #ff6bd6;animation:pulse 1s infinite}
 @keyframes pulse{50%{transform:scale(1.07)}}
 #wepname{font:800 12px Nunito;color:var(--mut);letter-spacing:.06em}
@@ -156,7 +160,7 @@ body.touchui #banner{font-size:clamp(24px,5vw,44px)}
     <div class="howto">
       <div>🎯 Đọc nhiệm vụ ở trên → bắn robot mang <b>đáp án đúng</b>. Bắn nhầm: mất máu + hiện giải thích.</div>
       <div>🖱️ <kbd>WASD</kbd> đi · <kbd>Chuột</kbd> ngắm · <kbd>Click</kbd>/<kbd>F</kbd> bắn · <kbd>Shift</kbd> chạy · <kbd>Space</kbd> nhảy · <kbd>←→</kbd> xoay</div>
-      <div>🔫 Đổi súng: <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> · lăn chuột · <kbd>X</kbd>/<kbd>Tab</kbd> · bấm ô súng. Đủ 4 súng ngay từ đầu. Railgun: <b>chuột phải</b> ngắm xa.</div>
+      <div>🔫 Đổi súng: <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> · lăn chuột · <kbd>X</kbd>/<kbd>Tab</kbd> · bấm ô súng. Súng mở theo ải: Ải 1 Blaster + Scatter · Ải 2 Railgun · Ải 3 Nova. Railgun tốn 1 ⚡, Nova tốn 2 ⚡ (<b>Năng lượng chữ</b>: +1 mỗi câu đúng, +2 câu vàng, tối đa 5). Railgun: <b>chuột phải</b> ngắm xa.</div>
       <div>✨ <kbd>Q</kbd> <kbd>E</kbd> kỹ năng anh hùng · <kbd>R</kbd> tuyệt chiêu <b>Voice Blast</b>: đọc to từ tiếng Anh!</div>
       <div>📱 Điện thoại/tablet (xoay ngang): cần gạt trái đi (đẩy hết cỡ = chạy) · vuốt nửa phải để ngắm · giữ <b>BẮN</b> · ⤒ nhảy · 🔭 ngắm Railgun · chạm ô súng/kỹ năng. Có hỗ trợ ngắm tự động.</div><div>🤖 Quái: Grunt · Runner (nhanh) · Tank (3 máu, có giáp) · Sniper (bắn đạn từ xa).</div>
       <div>⭐ Sau mỗi đợt: <b>THỬ THÁCH KHÓ</b> 20 giây – đúng thì chọn 1 phần thưởng (sát thương, tốc bắn, máu, điểm x2…). Gặp <b>CÂU VÀNG</b> trong trận: x3 điểm!</div><div>🏆 Mỗi ải 3 đợt + Boss. Chính xác ≥70% được 2 sao, ≥90% được 3 sao, qua ải mở ải sau.</div>
@@ -291,11 +295,16 @@ const CAP={dmg:2.5,rate:2,cd:.4}; // trần cộng dồn perk
 const KINDS={grunt:{s:1,hp:1,spd:1,dmg:12},runner:{s:.82,hp:1,spd:1.7,dmg:9},tank:{s:1.3,hp:3,spd:.6,dmg:18,armor:true},shooter:{s:1,hp:2,spd:.9,dmg:10,ranged:true}};
 
 // Weapons (unlock theo ải: ải 1 có 1 súng, ải 2 có 2…)
+/* unlock = chỉ số ải (0 = Ải 1) mà súng được mở · energy = "Năng lượng chữ" tốn mỗi phát (0 = miễn phí)
+   Nova: splash = bán kính nổ (m), stun = giây choáng (0 = chỉ đẩy lùi). Cân bằng: sửa ở đây và ENERGY bên dưới. */
 const WEPS=[
-{name:'Blaster',icon:'🔫',cd:.2,dmg:1,auto:true,armorMul:.5,col:0x00d2ff,desc:'Bắn nhanh liên thanh (yếu với Tank có giáp)',snd:'blaster'},
-{name:'Scatter',icon:'💥',cd:.7,dmg:1,pellets:7,spread:.075,range:22,col:0xffa502,desc:'Shotgun 7 viên – mạnh tầm gần, phá Tank',snd:'scatter'},
-{name:'Railgun',icon:'⚡',cd:1.05,dmg:3,pierce:true,col:0xa66bff,desc:'3 sát thương, xuyên tường, chuột phải ngắm xa',snd:'rail'},
-{name:'Nova Launcher',icon:'🚀',cd:1.3,dmg:3,splash:6,col:0xff4757,desc:'Tên lửa: 3 sát thương + đẩy lùi & choáng quái xung quanh',snd:'rocket'}];
+{name:'Blaster',icon:'🔫',cd:.2,dmg:1,auto:true,armorMul:.5,unlock:0,energy:0,col:0x00d2ff,desc:'Bắn nhanh liên thanh (yếu với Tank có giáp)',snd:'blaster'},
+{name:'Scatter',icon:'💥',cd:.7,dmg:1,pellets:7,spread:.075,range:22,unlock:0,energy:0,col:0xffa502,desc:'Shotgun 7 viên – mạnh tầm gần, phá Tank',snd:'scatter'},
+{name:'Railgun',icon:'⚡',cd:1.05,dmg:3,pierce:true,unlock:1,energy:1,col:0xa66bff,desc:'3 sát thương, xuyên tường, chuột phải ngắm xa · tốn 1 ⚡',snd:'rail'},
+{name:'Nova Launcher',icon:'🚀',cd:1.3,dmg:3,splash:4,stun:0,unlock:2,energy:2,col:0xff4757,desc:'Tên lửa: 3 sát thương + đẩy lùi quái trong bán kính 4 · tốn 2 ⚡',snd:'rocket'}];
+/* Năng lượng chữ: kiếm bằng trả lời đúng, dùng cho súng mạnh (Railgun, Nova). Bắt đầu mỗi ải với "start". */
+const ENERGY={max:5,start:0,perCorrect:1,perGolden:2};
+const wepsFor=stage=>WEPS.filter(w=>w.unlock<=stage).length;   // số súng đã mở ở ải này (thứ tự mở tăng dần)
 
 // Heroes & skills
 const HEROES={
@@ -492,7 +501,7 @@ function prog(t){return PROG[t]||(PROG[t]={unlocked:1,stars:[],best:[]})}
 function saveProg(){store.set('ws_prog',JSON.stringify(PROG))}
 
 function resetState(stage){Object.assign(S,{stage,hp:HERO.hp,maxHp:HERO.hp,score:0,combo:0,waveIdx:0,qInWave:0,ult:0,ok:0,bad:0,mistakes:[],q:null,qMissed:false,boss:false,fireCd:0,vy:0,nextQAt:0,ended:false,
- wep:0,wepCount:WEPS.length,dmgMul:1,rateMul:1,cdMul:1,x2:false,perks:[],cdQ:0,cdE:0,slow:0,shieldT:0,invuln:0,dashT:0,zoom:false,decks:{},swapT:0,hudDirty:true,fpsT:0,fpsN:0,fpsLow:0})}
+ wep:0,wepCount:wepsFor(stage),energy:ENERGY.start,dmgMul:1,rateMul:1,cdMul:1,x2:false,perks:[],cdQ:0,cdE:0,slow:0,shieldT:0,invuln:0,dashT:0,zoom:false,decks:{},swapT:0,hudDirty:true,fpsT:0,fpsN:0,fpsLow:0})}
 function draw(type){const d=S.decks[type];if(!d||d.i>=d.a.length)S.decks[type]={a:shuffle(TR[type]),i:0};return S.decks[type].a[S.decks[type].i++]}
 
 /* ===================== QUESTIONS ===================== */
@@ -530,7 +539,7 @@ function startBoss(){const st=STAGES[S.stage];S.boss=true;banner('👹 '+st.boss
 const _v=new THREE.Vector3(),_v2=new THREE.Vector3();
 
 function questionDone(root){
- S.ok++;S.combo++;const pts=Math.round(100*(1+Math.min(S.combo-1,10)*.2)*(HERO_K==='iris'?1.2:1)*(S.q.golden?3:1)*(S.x2?2:1));if(S.q.golden){S.ult=Math.min(100,S.ult+50);S.hp=Math.min(S.maxHp,S.hp+10)}S.score+=pts;S.ult=Math.min(100,S.ult+(HERO_K==='iris'?32:25));
+ S.ok++;S.combo++;S.energy=Math.min(ENERGY.max,S.energy+(S.q.golden?ENERGY.perGolden:ENERGY.perCorrect));const pts=Math.round(100*(1+Math.min(S.combo-1,10)*.2)*(HERO_K==='iris'?1.2:1)*(S.q.golden?3:1)*(S.x2?2:1));if(S.q.golden){S.ult=Math.min(100,S.ult+50);S.hp=Math.min(S.maxHp,S.hp+10)}S.score+=pts;S.ult=Math.min(100,S.ult+(HERO_K==='iris'?32:25));
  SFX.ok();renderQ(true);toast(`✔ ${S.q.explain}  (+${pts})`,'ok',2600);S.hudDirty=true;
  if(S.boss){const B=BOSS;B.userData.hp--;root.getWorldPosition(_v);burst(_v,0xffc83d,40,9);SFX.boom();
   for(const o of B.userData.orbs){o.getWorldPosition(_v);burst(_v,0x7c5cff,8,4);removeObj(o)}B.userData.orbs=[];
@@ -577,7 +586,7 @@ let toastT=0;
 function toast(msg,cls,ms){const t=$('toast');t.textContent=msg;t.className=cls;clearTimeout(toastT);toastT=setTimeout(()=>t.className='',ms||2000)}
 let banT=0;function banner(t,sub){const b=$('banner');b.innerHTML=esc(t)+(sub?`<small>${esc(sub)}</small>`:'');b.style.opacity=1;clearTimeout(banT);banT=setTimeout(()=>b.style.opacity=0,2000)}
 function buildDock(){
- $('weps').innerHTML=WEPS.map((w,i)=>`<div class="slot small" data-w="${i}"><span class="k">${i+1}</span>${w.icon}<span class="t">${w.name.split(' ')[0]}</span></div>`).join('');
+ $('weps').innerHTML=WEPS.map((w,i)=>`<div class="slot small" data-w="${i}" title="${esc(w.name+': '+w.desc)}"><span class="k">${i+1}</span><span class="ico">${w.icon}</span><span class="t">${w.name.split(' ')[0]}</span>${w.energy?'<span class="en"></span>':''}</div>`).join('');
  const sk=[['Q',HERO.q],['E',HERO.e],['R',ULT]];
  $('skills').innerHTML=sk.map(([k,s])=>`<div class="slot" data-s="${k}" title="${esc(s.name+': '+s.desc)}"><span class="k">${k}</span>${s.icon}<div class="cd"></div></div>`).join('');
  document.querySelectorAll('#weps .slot').forEach(e=>e.onclick=ev=>{ev.stopPropagation();setWep(+e.dataset.w)});
@@ -587,7 +596,9 @@ let lastCd='';
 function updHUD(){
  if(S.hudDirty){S.hudDirty=false;$('score').textContent=S.score;$('combo').textContent=S.combo>1?`🔥 Combo x${S.combo}`:'';$('perkHud').textContent=S.perks.join(' ')+(S.x2?' 💰x2':'');$('hp').style.width=(S.hp/S.maxHp*100)+'%';$('hpTxt').textContent=Math.ceil(S.hp)+' / '+S.maxHp;
   $('stg').textContent=`Ải ${S.stage+1} · ${STAGES[S.stage].name}`;
-  document.querySelectorAll('#weps .slot').forEach((e,i)=>{e.classList.toggle('sel',i===S.wep);e.classList.toggle('lock',i>=S.wepCount)});
+  document.querySelectorAll('#weps .slot').forEach((e,i)=>{const w=WEPS[i],lk=i>=S.wepCount;e.classList.toggle('sel',i===S.wep);e.classList.toggle('lock',lk);
+   e.querySelector('.ico').textContent=lk?'🔒':w.icon;e.querySelector('.t').textContent=lk?'Mở ở Ải '+(w.unlock+1):w.name.split(' ')[0];
+   const en=e.querySelector('.en');if(en){en.textContent=lk?'':'⚡'+S.energy;e.classList.toggle('noen',!lk&&S.energy<w.energy)}});
   $('wepname').textContent=WEPS[S.wep].name+' – '+WEPS[S.wep].desc}
  const cq=S.cdQ>0?S.cdQ/(HERO.q.cd*S.cdMul)*100:0,ce=S.cdE>0?S.cdE/(HERO.e.cd*S.cdMul)*100:0,cr=100-S.ult;const key=(cq|0)+'|'+(ce|0)+'|'+(cr|0);
  if(key!==lastCd){lastCd=key;const sl=document.querySelectorAll('#skills .slot');[cq,ce,cr].forEach((p,i)=>{sl[i].querySelector('.cd').style.setProperty('--p',p+'%');sl[i].classList.toggle('ready',i===2&&S.ult>=100)})}}
@@ -610,7 +621,14 @@ addEventListener('keydown',e=>{keys[e.code]=true;if(e.target.tagName==='INPUT')r
  if(e.code==='KeyF'||e.code==='Enter')fire();
  if(e.code==='Space'||e.code.startsWith('Arrow'))e.preventDefault()});
 addEventListener('keyup',e=>keys[e.code]=false);
-addEventListener('wheel',e=>{if(!S.running||S.paused||S.modal)return;setWep((S.wep+(e.deltaY>0?1:-1)+S.wepCount)%S.wepCount)},{passive:true});
+let wheelT=0;
+addEventListener('wheel',e=>{if(e.ctrlKey){e.preventDefault();return} /* chặn pinch/Ctrl+lăn làm phóng to trang */
+ if(!S.running||S.paused||S.modal||Math.abs(e.deltaY)<4)return;const now=performance.now();if(now-wheelT<180)return;wheelT=now;setWep((S.wep+(e.deltaY>0?1:-1)+S.wepCount)%S.wepCount)},{passive:false});
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&['Equal','Minus','NumpadAdd','NumpadSubtract'].includes(e.code)&&S.running)e.preventDefault()});
+addEventListener('gesturestart',e=>e.preventDefault());
+/* Nếu trang đang bị phóng to (pinch hoặc Ctrl +), HUD bị đẩy ra ngoài màn hình → nhắc về 100% */
+let zoomWarned=0;function checkZoom(){const vv=window.visualViewport;const z=vv?vv.scale:1;if(S.running&&z>1.02&&performance.now()-zoomWarned>8000){zoomWarned=performance.now();banner('🔍 MÀN HÌNH ĐANG PHÓNG TO','Nhấn Ctrl + 0 (hoặc chụm 2 ngón trên touchpad) để thấy lại câu hỏi')}}
+if(window.visualViewport)visualViewport.addEventListener('resize',checkZoom);setInterval(checkZoom,3000);
 function lockReq(){if(noLock||isTouch)return;try{const r=canvas.requestPointerLock();if(r&&r.catch)r.catch(()=>lockFail())}catch(e){lockFail()}}
 function lockFail(){if(noLock)return;noLock=true;toast('🖱️ Chế độ chuột tự do: GIỮ chuột trái + KÉO để xoay · CLICK để bắn · F bắn · ←→ xoay','info',6000)}
 document.addEventListener('pointerlockerror',lockFail);
@@ -641,10 +659,12 @@ if('ontouchstart' in window){const J=$('joy'),K=$('knob');
 /* ===================== WEAPONS ===================== */
 const ray=new THREE.Raycaster(),CENTER=new THREE.Vector2(),_dir=new THREE.Vector3(),_o=new THREE.Vector3(),_from=new THREE.Vector3(),_q=new THREE.Quaternion();
 let recoil=0;
-function setWep(i){if(i>=S.wepCount){toast(`🔒 ${WEPS[i].name} mở khoá ở Ải ${i+1}`,'info',1500);return}if(i===S.wep)return;S.wep=i;S.swapT=.25;S.zoom=false;SFX.swap();GUNS.forEach((g,k)=>g.visible=k===i);S.hudDirty=true}
+function setWep(i){if(i>=S.wepCount){toast(`🔒 ${WEPS[i].name}: Mở ở Ải ${WEPS[i].unlock+1} (đang ở Ải ${S.stage+1})`,'info',1800);return}if(i===S.wep)return;S.wep=i;S.swapT=.25;S.zoom=false;SFX.swap();GUNS.forEach((g,k)=>g.visible=k===i);S.hudDirty=true}
 function muzzleFrom(out){return GUNS[S.wep].localToWorld(out.set(0,.02,-.75))}
 function castFrom(spreadX,spreadY,list){ray.setFromCamera(CENTER,camera);if(spreadX||spreadY){_dir.copy(ray.ray.direction);_o.set(spreadX,spreadY,0).applyQuaternion(camera.getWorldQuaternion(_q));_dir.add(_o).normalize();ray.ray.direction.copy(_dir)}return ray.intersectObjects(list,false)}
-function fire(){if(S.fireCd>0||S.ended||S.swapT>0||S.paused||S.modal)return;const W=WEPS[S.wep];S.fireCd=W.cd/S.rateMul;recoil=S.wep===0?.6:1;muzzle.visible=true;muzzle.material.rotation=Math.random()*6;muzzle.scale.setScalar(S.wep===1?.45:.28);SFX[W.snd]();
+function fire(){if(S.fireCd>0||S.ended||S.swapT>0||S.paused||S.modal)return;const W=WEPS[S.wep];
+ if(W.energy){if(S.energy<W.energy){const nw=performance.now();if(nw-(S.noEnT||0)>700){S.noEnT=nw;toast(`⚡ ${W.name} cần ${W.energy} Năng lượng chữ (đang có ${S.energy}) – trả lời đúng để nạp`,'info',1600)}return}S.energy-=W.energy;S.hudDirty=true}
+ S.fireCd=W.cd/S.rateMul;recoil=S.wep===0?.6:1;muzzle.visible=true;muzzle.material.rotation=Math.random()*6;muzzle.scale.setScalar(S.wep===1?.45:.28);SFX[W.snd]();
  muzzleFrom(_from);
  if(W.pellets){const hits=new Map();for(let k=0;k<W.pellets;k++){const h=castFrom(rnd(-W.spread,W.spread),rnd(-W.spread,W.spread),HIT_ALL)[0];if(!h||h.distance>W.range){tracer(_from,ray.ray.at(W.range,_v),W.col,.06);continue}tracer(_from,h.point,W.col,.06);const r=h.object.userData.root;if(r)hits.set(r,(hits.get(r)||0)+1);else{_v.copy(h.point);burst(_v,0x8fe3ff,2,2)}}
   if(isTouch&&!hits.size){const a=assistHit();if(a)hits.set(a.object.userData.root,3)}
@@ -662,8 +682,8 @@ const _aw=new THREE.Vector3(),_ap=new THREE.Vector3();
 function assistHit(){let best=null,bd=1e9;const R=Math.min(innerWidth,innerHeight)*.11;
  for(const m of HIT_T){const r=m.userData.root;if(!r||r.userData.dying||r.userData.isBoss)continue;m.getWorldPosition(_aw);_ap.copy(_aw).project(camera);if(_ap.z>1)continue;const d=Math.hypot(_ap.x*innerWidth/2,_ap.y*innerHeight/2);if(d<R&&d<bd){bd=d;best=m}}
  if(!best)return null;best.getWorldPosition(_aw);return{object:best,point:_aw.clone(),distance:_aw.distanceTo(yawObj.position)}}
-function rocketHit(ex){_v.copy(ex.p);burst(_v,0xff7f50,30,8);shock(_v,0xff7f50,8);SFX.boom();
- for(const b of BOTS){if(b.userData.dying)continue;const d=b.position.distanceTo(_v2.set(_v.x,0,_v.z));if(d<WEPS[3].splash){_o.set(b.position.x-_v.x,0,b.position.z-_v.z).normalize();b.position.addScaledVector(_o,(WEPS[3].splash-d)+1);b.userData.stun=Math.max(b.userData.stun,1)}}
+function rocketHit(ex){_v.copy(ex.p);burst(_v,0xff7f50,30,8);shock(_v,0xff7f50,WEPS[3].splash*1.35);SFX.boom();
+ for(const b of BOTS){if(b.userData.dying)continue;const d=b.position.distanceTo(_v2.set(_v.x,0,_v.z));if(d<WEPS[3].splash){_o.set(b.position.x-_v.x,0,b.position.z-_v.z).normalize();b.position.addScaledVector(_o,(WEPS[3].splash-d)+1);b.userData.stun=Math.max(b.userData.stun,WEPS[3].stun||0)}}
  if(ex.root&&!ex.root.userData.dying)onHitTarget(ex.root,WEPS[3].dmg*S.dmgMul);S.hudDirty=true}
 
 /* ===================== SKILLS ===================== */
