@@ -23,9 +23,9 @@ const API=window.WSX_API;
 const MAP={
   step:.7,                                   /* bước chân tối đa leo được (m) */
   padVy:13, padRadius:1.3, padCooldown:.6,   /* bệ nhảy: bật lên ≈ 4,7 m (sàn cao 3 m) */
-  crates:{max:6,hp:2,coinChance:.55,coin:15,potionHp:25,pickRadius:1.5},
+  crates:{max:6,hp:2,coinChance:.55,coin:9,potionHp:25,pickRadius:1.5},
   terminal:{range:3.2,turretSec:15,fireEvery:1.1,turretRange:40},
-  letters:{pickRadius:1.6,chestCoins:120,maxToCollect:8,shortest:6},   /* từ dài hơn maxToCollect chữ được tặng sẵn các chữ đầu */
+  letters:{pickRadius:1.6,chestCoins:70,maxToCollect:8,shortest:6},   /* từ dài hơn maxToCollect chữ được tặng sẵn các chữ đầu */
   events:{delay:[8,14],blackoutSec:10,meteors:5,meteorGap:.9,warnSec:1.5,radius:2.6,dmg:15,blackoutLight:.06},
   beatZones:6,
   conveyorSpeed:3.5,                         /* Ải 2: m/s đẩy người/quái trên băng chuyền */

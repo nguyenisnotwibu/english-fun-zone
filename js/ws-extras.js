@@ -14,11 +14,11 @@ if(typeof S==='undefined'||typeof THREE==='undefined'||typeof WEPS==='undefined'
 /* ===================== CONFIG ===================== */
 const CFG={
   startCoins:60,
-  coinPerQ:10, coinPerCombo:2, comboCap:10, coinGolden:25, coinBoss:60,
-  clearBonus:50, starBonus:25, missionReward:40, allMissionsBonus:80, dailyBonus:120,
-  /* MỤC TIÊU TẠM (chưa playtest): 1 ải ≈ 150–200 xu; mua được 1 nâng cấp sau ≈ 1,5 ải.
-     Chưa chỉnh giá. Chỉnh lại sau playtest bằng /balance-check economy. */
-  voiceMission:40,      /* nhiệm vụ thưởng "dùng Voice Blast 1 lần": có ở MỌI ải, ngoài 3 nhiệm vụ chính */
+  coinPerQ:6, coinPerCombo:1, comboCap:10, coinGolden:15, coinBoss:40,
+  clearBonus:30, starBonus:15, missionReward:25, allMissionsBonus:50, dailyBonus:70,
+  /* Cân bằng lại cùng vòng quay Big Chance (design/gdd/big-chance-gacha.md F6, design/balance/balance-check-economy-2026-11-14.md):
+     mô hình cho người chơi GIỎI ≈ 440 xu/ải → 3–4 ải đủ 1.500 xu (≈10 lượt, kỳ vọng 1 bộ Sử thi). CHƯA playtest. */
+  voiceMission:25,     /* nhiệm vụ thưởng "dùng Voice Blast 1 lần": có ở MỌI ải, ngoài 3 nhiệm vụ chính */
   voiceFirstTry:20,     /* phát âm đúng ngay lần đầu */
   voiceNudgeSec:15,     /* thanh Voice Blast đầy quá N giây thì nhắc nhẹ (không bắt buộc) */
   revivePrice:150, reviveCap:3, reviveHp:.5, reviveInvuln:2,   /* "Hồi sinh": chỗ tiêu xu dùng mãi */
@@ -802,7 +802,7 @@ document.addEventListener('mouseout',e=>{const el=e.target.closest&&e.target.clo
 applySkin();musicBtn();renderSlots();coinHud();
 buildMenu();
 buildArena(STAGES[0],0);           // dựng lại nền menu cùng bối cảnh mới
-window.WSX_API={X,save,addCoins,popup,shake,mergeGeos,glowTex,bookAdd,CFG,
+window.WSX_API={X,save,addCoins,addReview,popup,shake,mergeGeos,glowTex,bookAdd,CFG,
   /* nhịp nhạc 0..1 (1 ngay khi có nhịp, tắt dần trong ~0.26 s); nhạc tắt → nhịp giả 120 bpm */
   beat(){const n=performance.now();const age=(X.music&&lastBeat&&n-lastBeat<1200)?n-lastBeat:(n%500);return Math.max(0,1-age/260)}};
 window.__WSX={X,get R(){return R},openShop,addCoins,CONS,MODS,MIS,shake,timeFx};

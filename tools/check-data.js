@@ -236,4 +236,28 @@ const get=(ctx,name)=>{try{return vm.runInContext('typeof '+name+'==="undefined"
   const want={common:4,rare:4,epic:5,legendary:3};for(const r of RARS)if((count[r]||0)<want[r])W('ws-outfits.js: do hiem '+r+' co '+(count[r]||0)+' bo, it hon bo khoi dau ('+want[r]+')');
 })();
 
+/* ---------- 9) Word Strike 3D: data/ws-gacha.js (WS_GACHA, vong quay Big Chance) + gia mua thang trong ws-outfits.js ---------- */
+(function(){
+  let src,osrc;try{src=read('data/ws-gacha.js');osrc=read('data/ws-outfits.js')}catch(e){E('khong doc duoc data/ws-gacha.js hoac ws-outfits.js');return}
+  const win={},ow={};try{new Function('window',src)(win);new Function('window',osrc)(ow)}catch(e){E('cu phap data/ws-gacha.js',e.message);return}
+  const D=win.WS_GACHA;if(!D||typeof D!=='object'){E('ws-gacha.js: thieu window.WS_GACHA');return}
+  const R=['common','rare','epic','legendary'];tot++;
+  const num=(k,lo,hi,int)=>{const v=D[k];if(typeof v!=='number'||!isFinite(v)||v<lo||v>hi||(int&&!Number.isInteger(v)))E('ws-gacha.js: '+k+' phai '+(int?'nguyen ':'')+'trong '+lo+' - '+hi+' (dang la '+v+')')};
+  num('price',50,500,true);num('comboCount',5,10,true);num('comboDiscount',0,.3);num('dailyCap',5,50,true);num('pityAt',10,100,true);num('refundRate',0,.6);
+  num('freeSpinPerDay',0,3,true);num('restNudgeAfter',5,20,true);num('freeQuestionMinReadSec',1,10);num('directMultiplier',1.5,3);
+  if(typeof D.refundFreeSpin!=='boolean')E('ws-gacha.js: refundFreeSpin phai la true/false');
+  const rt=D.rates||{};let sum=0;for(const r of R){if(typeof rt[r]!=='number'||rt[r]<0||rt[r]>1)E('ws-gacha.js: rates.'+r+' phai trong 0-1');else sum+=rt[r]}
+  if(Math.abs(sum-1)>1e-6)E('ws-gacha.js: rates phai cong dung 1 (dang la '+sum+')');
+  if(!(rt.legendary>0))E('ws-gacha.js: rates.legendary phai > 0');
+  if(Math.round(D.refundRate*D.price)>=D.price)E('ws-gacha.js: tien hoan phai nho hon gia 1 luot (chong tao xu)');
+  if(err)return;
+  /* gia mua thang >= directMultiplier x ky vong chi de quay ra 1 bo (price / ti le hieu dung) – GDD F5 */
+  const pL=rt.legendary,pe=pL/(1-Math.pow(1-pL,D.pityAt)),sh=(1-pe)/(1-pL),eff={common:rt.common*sh,rare:rt.rare*sh,epic:rt.epic*sh,legendary:pe};
+  const O=ow.WS_OUTFITS;if(!O||!O.rarity)return;
+  for(const r of R){tot++;const need=D.directMultiplier*D.price/eff[r],pr=O.rarity[r]&&O.rarity[r].price;
+    if(pr<need-1e-9)E('ws-outfits.js: gia mua thang '+r+' = '+pr+' < '+need.toFixed(0)+' (= '+D.directMultiplier+' x ky vong quay) – vi pham quyet dinh "mua thang dat hon quay"')}
+  const cnt={};(O.sets||[]).forEach(s=>{if(!s.default)cnt[s.rarity]=(cnt[s.rarity]||0)+1});
+  for(const r of R)if(rt[r]>0&&!cnt[r])E('ws-gacha.js: do hiem '+r+' co ti le > 0 nhung khong co bo nao trong ws-outfits.js');
+})();
+
 console.log(`\n${tot} muc da kiem tra — ${err} loi, ${warn} canh bao`);process.exit(err?1:0);
