@@ -33,12 +33,12 @@ X.view=X.view==='tp'?'tp':'fp';
 const SKIN=0xf5d06b,HAIR=0x2b2230,PANTS=0x23283d,SHOE=0x151826,EYE=0x151826,GUNC=0x2f3542;
 /* điểm xoay (pivot) của từng bộ phận, trong toạ độ nhân vật (chân chạm đất tại y=0, mắt ở y=1.7) */
 const PIV={head:[0,1.45,0],torso:[0,1.1,0],armL:[-.4,1.42,0],armR:[.4,1.42,0],legL:[-.15,.78,0],legR:[.15,.78,0],back:[0,1.1,0]};
-const GUN_TIP=[0,-.66,-.64];                      /* họng súng, trong toạ độ tay phải */
+const GUN_TIP=[0,-1.16,-.02];                      /* họng súng, trong toạ độ tay phải */
 function baseBoxes(shirt){return{
   head:[{s:[.46,.46,.46],p:[0,.23,0],c:SKIN},{s:[.5,.12,.5],p:[0,.46,0],c:HAIR},{s:[.07,.07,.02],p:[-.1,.26,-.235],c:EYE},{s:[.07,.07,.02],p:[.1,.26,-.235],c:EYE}],
   torso:[{s:[.6,.7,.34],p:[0,0,0],c:shirt}],
   armL:[{s:[.2,.58,.22],p:[0,-.29,0],c:shirt},{s:[.2,.16,.22],p:[0,-.66,0],c:SKIN}],
-  armR:[{s:[.2,.58,.22],p:[0,-.29,0],c:shirt},{s:[.2,.16,.22],p:[0,-.66,0],c:SKIN},{s:[.1,.14,.5],p:[0,-.66,-.32],c:GUNC}],
+  armR:[{s:[.2,.58,.22],p:[0,-.29,0],c:shirt},{s:[.2,.16,.22],p:[0,-.66,0],c:SKIN},{s:[.11,.5,.15],p:[0,-.9,-.02],c:GUNC}],
   legL:[{s:[.26,.62,.28],p:[0,-.31,0],c:PANTS},{s:[.26,.16,.32],p:[0,-.7,-.02],c:SHOE}],
   legR:[{s:[.26,.62,.28],p:[0,-.31,0],c:PANTS},{s:[.26,.16,.32],p:[0,-.7,-.02],c:SHOE}]}}
 const _col=new THREE.Color();
@@ -131,7 +131,7 @@ function updateView(dt){
   if(air){legL=-.5;legR=.35;armL=S.vy>0?-2.3:-.3;armLz=S.vy>0?0:.7}
   parts.legL.rotation.x=legL;parts.legR.rotation.x=legR;
   parts.armL.rotation.x=armL+breath;parts.armL.rotation.z=armLz;
-  const aim=-Math.PI/2-pitchObj.rotation.x;        /* tay phải cầm súng, theo hướng nhìn lên/xuống */
+  const aim=Math.PI/2+pitchObj.rotation.x;        /* tay phải cầm súng, theo hướng nhìn lên/xuống */
   parts.armR.rotation.x=aim+kickAmt+breath*.5;
   parts.torso.scale.y=1+Math.sin(t*2)*.012;
   avatar.rotation.x=S.dashT>0?-.35:0;

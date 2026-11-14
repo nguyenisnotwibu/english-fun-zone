@@ -74,6 +74,43 @@ h3{font:800 15px Nunito;letter-spacing:.1em;color:var(--mut);margin:16px 0 8px;t
 .pick.locked{opacity:.4;cursor:not-allowed}
 .stg .n{font:800 12px Nunito;color:var(--gold)}
 .stars{color:var(--gold);letter-spacing:2px}
+.gstrip{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.gs{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-weight:800;font-size:14px}
+.gs b{font-size:20px}.gs u{text-decoration:none;color:var(--ok)}
+#guide{z-index:26;align-items:center}
+#guide .gcard{width:min(1080px,100%);max-height:calc(100vh - 32px);display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.55);overflow:hidden;margin:auto}
+.ghead{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.ghead h2{font:800 26px 'Baloo 2';flex:1;background:linear-gradient(90deg,#00d2ff,#a66bff,#ff6bd6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gx{background:none;border:1px solid var(--line);color:#fff;border-radius:10px;width:38px;height:38px;font-size:18px;cursor:pointer}
+.gbody{display:flex;min-height:0;flex:1}
+.gtabs{display:flex;flex-direction:column;gap:6px;padding:14px;border-right:1px solid var(--line);min-width:200px}
+.gtab{display:flex;align-items:center;gap:10px;text-align:left;cursor:pointer;border:1px solid transparent;border-radius:12px;padding:10px 12px;background:none;color:var(--mut);font:800 14.5px Nunito}
+.gtab .n{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.08);font-size:12px}
+.gtab.on{background:linear-gradient(90deg,rgba(124,92,255,.35),rgba(255,107,214,.18));color:#fff;border-color:rgba(166,107,255,.6)}
+.gtab.on .n{background:#7c5cff}
+.gpane{flex:1;overflow:auto;padding:18px 22px}
+.gpane h3{margin:0 0 4px;color:#fff;font:800 22px 'Baloo 2';letter-spacing:0;text-transform:none}
+.gpane .lead{color:var(--mut);font-weight:700;margin-bottom:14px}
+.gpane h4{font:800 13px Nunito;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin:16px 0 8px}
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.gc{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;font-weight:700;color:#dfe4ff;line-height:1.5}
+.gc .ic{font-size:28px;line-height:1}.gc .tt{font:800 16px Nunito;color:#fff;margin:6px 0 2px}
+.gc .tag{display:inline-block;font:800 11px Nunito;padding:2px 8px;border-radius:20px;background:rgba(255,200,61,.15);color:var(--gold);margin:2px 4px 0 0}
+.gc .tag.g{background:rgba(46,213,115,.15);color:var(--ok)}.gc .tag.r{background:rgba(255,71,87,.15);color:#ff8a95}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;counter-reset:st}
+.step{position:relative;padding:14px 14px 14px 52px;background:rgba(124,92,255,.12);border:1px solid rgba(124,92,255,.4);border-radius:14px;font-weight:700;font-size:14px;line-height:1.5}
+.step:before{counter-increment:st;content:counter(st);position:absolute;left:14px;top:14px;width:28px;height:28px;border-radius:50%;background:#7c5cff;display:grid;place-items:center;font:800 14px Nunito}
+.step b{color:#fff;display:block;font-size:15px}
+.keys{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;align-items:center;font-weight:700;font-size:14px}
+.keys .k{white-space:nowrap;text-align:right}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.stg2{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:12px;margin-bottom:8px;border:1px solid var(--line)}
+.stg2 .no{font:800 13px Nunito;padding:4px 9px;border-radius:8px;background:rgba(0,0,0,.35);white-space:nowrap}
+.gfoot{display:flex;align-items:center;gap:10px;padding:12px 20px;border-top:1px solid var(--line);flex-wrap:wrap}
+.dots{display:flex;gap:6px;flex:1}.dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}.dots i.on{background:#ff6bd6;width:22px;border-radius:6px}
+.gfoot label{font-weight:700;color:var(--mut);font-size:13px;display:flex;gap:6px;align-items:center}
+@media (max-height:540px){#guide{padding:6px}#guide .gcard{max-height:calc(100vh - 12px);border-radius:16px}.ghead{padding:6px 12px}.ghead h2{font-size:17px}.gx{width:30px;height:30px;font-size:14px}.gfoot{padding:6px 12px;gap:8px}.gfoot .btn{padding:7px 14px;font-size:14px}.gpane{padding:10px 14px}.gpane h3{font-size:18px}.gpane .lead{margin-bottom:8px;font-size:13px}.gc{padding:8px 10px;font-size:13px}.keys{font-size:13px;gap:5px 10px}}
+@media (max-width:760px),(max-height:540px){.gbody{flex-direction:column}.gtabs{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);min-width:0;padding:8px}.gtab{white-space:nowrap;padding:8px 10px}.gpane{padding:14px}.ghead h2{font-size:20px}}
 .howto{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:6px 22px;font-size:13.5px;font-weight:700;color:#d6dcff;line-height:1.6}
 kbd{background:#1d2656;border:1px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:0 6px;font:800 12px Nunito;color:#fff}
 .btn{cursor:pointer;border:0;border-radius:14px;padding:12px 24px;font:800 17px Nunito;color:#fff;background:linear-gradient(90deg,#7c5cff,#ff6bd6);box-shadow:0 8px 24px rgba(124,92,255,.45);text-decoration:none;display:inline-block}
@@ -157,14 +194,12 @@ body.touchui #banner{font-size:clamp(24px,5vw,44px)}
     <h3>2 · Chọn anh hùng</h3><div class="grid" id="heroes"></div>
     <h3>3 · Chọn ải <span id="unlockAll" style="cursor:pointer;font-size:11px;color:#8fd3ff;text-transform:none;letter-spacing:0">(🔓 giáo viên: mở tất cả)</span></h3><div class="grid" id="stages"></div>
     <h3>Cách chơi</h3>
-    <div class="howto">
-      <div>🎯 Đọc nhiệm vụ ở trên → bắn robot mang <b>đáp án đúng</b>. Bắn nhầm: mất máu + hiện giải thích.</div>
-      <div>🖱️ <kbd>WASD</kbd> đi · <kbd>Chuột</kbd> ngắm · <kbd>Click</kbd>/<kbd>F</kbd> bắn · <kbd>Shift</kbd> chạy · <kbd>Space</kbd> nhảy · <kbd>←→</kbd> xoay</div>
-      <div>🔫 Đổi súng: <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> · lăn chuột · <kbd>X</kbd>/<kbd>Tab</kbd> · bấm ô súng. Súng mở theo ải: Ải 1 Blaster + Scatter · Ải 2 Railgun · Ải 3 Nova. Railgun tốn 1 ⚡, Nova tốn 2 ⚡ (<b>Năng lượng chữ</b>: +1 mỗi câu đúng, +2 câu vàng, tối đa 5). Railgun: <b>chuột phải</b> ngắm xa.</div>
-      <div>✨ <kbd>Q</kbd> <kbd>E</kbd> kỹ năng anh hùng · <kbd>R</kbd> tuyệt chiêu <b>Voice Blast</b>: đọc to từ tiếng Anh!</div>
-      <div>📱 Điện thoại/tablet (xoay ngang): cần gạt trái đi (đẩy hết cỡ = chạy) · vuốt nửa phải để ngắm · giữ <b>BẮN</b> · ⤒ nhảy · 🔭 ngắm Railgun · chạm ô súng/kỹ năng. Có hỗ trợ ngắm tự động.</div><div>🤖 Quái: Grunt · Runner (nhanh) · Tank (3 máu, có giáp) · Sniper (bắn đạn từ xa).</div>
-      <div>👁 <b>Phím C</b> (hoặc nút 👁 trên điện thoại) đổi <b>góc nhìn thứ nhất ↔ thứ ba</b> – xem nhân vật khối của bạn chạy, nhảy, bắn.<br>🏙️ <b>Cả 6 ải là bản đồ tương tác</b> (Ải 1 Neon Plaza làm mẫu): 2 sàn cao, lên bằng <b>dốc</b> hoặc đứng lên <b>bệ nhảy</b> (đĩa sáng) rồi bấm <kbd>Space</kbd> · <b>thùng</b> 📦 bắn 2 phát vỡ, rơi xu hoặc bình máu · <b>trạm trả lời</b> 💬: đứng gần + <kbd>F</kbd> (hoặc nút 💬 trên điện thoại), đúng thì <b>trụ súng</b> tự bắn quái sai 15 giây, sai thì khoá tới wave sau · <b>nhặt chữ cái</b> rải trên bản đồ để ghép từ vựng → mở rương thưởng · mỗi wave có 1 sự kiện: <b>Mất điện</b> hoặc <b>Mưa thiên thạch</b> (vòng đỏ báo trước).<br>🔧 <b>Mỗi ải một cơ chế riêng:</b> Ải 2 Cyber Docks – <b>băng chuyền</b> đẩy bạn và quái, <b>container</b> chạy qua lại làm chỗ nấp · Ải 3 Sky Lab – <b>vùng trọng lực thấp</b> (nhảy cao) và <b>cổng dịch chuyển</b> hai đầu bản đồ · Ải 4 Frozen Archive – <b>sàn băng</b> trơn trượt, <b>bắn kệ sách</b> cho đổ chặn đường quái · Ải 5 Glitch Core – <b>ô sàn glitch</b> biến mất (rơi hố mất máu) và <b>laser quét</b> (nhảy qua) · Ải 6 Grammar Throne – <b>sàn Boss sụp từng mảng</b> khi Boss mất khiên (ô giữa luôn an toàn).</div>
-      <div>⭐ Sau mỗi đợt: <b>THỬ THÁCH KHÓ</b> 20 giây – đúng thì chọn 1 phần thưởng (sát thương, tốc bắn, máu, điểm x2…). Gặp <b>CÂU VÀNG</b> trong trận: x3 điểm!</div><div>🏆 Mỗi ải 3 đợt + Boss. Chính xác ≥70% được 2 sao, ≥90% được 3 sao, qua ải mở ải sau.</div>
+    <div class="gstrip">
+      <div class="gs"><b>🎯</b>Bắn robot mang <u>đáp án đúng</u></div>
+      <div class="gs"><b>🔫</b><kbd>1</kbd>–<kbd>4</kbd> đổi súng</div>
+      <div class="gs"><b>✨</b><kbd>Q</kbd> <kbd>E</kbd> <kbd>R</kbd> kỹ năng</div>
+      <div class="gs"><b>👁</b><kbd>C</kbd> đổi góc nhìn</div>
+      <button class="btn sec" id="guideB" type="button">📖 Hướng dẫn đầy đủ</button>
     </div>
     <div class="row" style="margin-top:16px"><button class="btn" id="startB">▶ VÀO ẢI</button>
       <label class="row" style="gap:6px;font-weight:800;color:var(--mut)">Đồ hoạ <select id="qualSel"><option value="auto">Tự động</option><option value="high">Cao</option><option value="low">Thấp (mượt)</option><option value="ultra">Siêu nhẹ (máy yếu)</option></select></label>
@@ -172,11 +207,18 @@ body.touchui #banner{font-size:clamp(24px,5vw,44px)}
   </div>
 </div>
 
+<div id="guide" class="ov hide">
+  <div class="gcard">
+    <div class="ghead"><h2>📖 HƯỚNG DẪN WORD STRIKE 3D</h2><button class="gx" id="gClose" type="button" aria-label="Đóng">✕</button></div>
+    <div class="gbody"><nav class="gtabs" id="gTabs"></nav><div class="gpane" id="gPane"></div></div>
+    <div class="gfoot"><div class="dots" id="gDots"></div><label id="gNoShowL"><input type="checkbox" id="gNoShow"> Không tự hiện lại</label><button class="btn sec" id="gPrev" type="button">◀ Trước</button><button class="btn" id="gNext" type="button">Tiếp ▶</button></div>
+  </div>
+</div>
 <div id="pause" class="ov hide" style="align-items:center">
   <div class="card" style="max-width:460px;text-align:center">
     <h1 style="font-size:40px">TẠM DỪNG</h1>
     <div class="sub">Click để tiếp tục chiến đấu</div>
-    <div class="row" style="justify-content:center;margin-top:12px"><button class="btn" id="resumeB">▶ Tiếp tục</button><button class="btn sec" id="quitB">Thoát</button></div>
+    <div class="row" style="justify-content:center;margin-top:12px"><button class="btn" id="resumeB">▶ Tiếp tục</button><button class="btn sec" id="pGuideB" type="button">📖 Hướng dẫn</button><button class="btn sec" id="quitB">Thoát</button></div>
   </div>
 </div>
 
@@ -871,7 +913,54 @@ function endStage(win){if(S.ended)return;S.ended=true;document.body.classList.re
  $('nextB').classList.toggle('hide',!(win&&S.stage+1<STAGES.length));
  $('hudAll').classList.add('hide');$('touch').classList.add('hide');$('end').classList.remove('hide')}
 $('portraitOK').onclick=()=>document.body.classList.add('portraitOK');
-$('startB').onclick=()=>startStage(STG);$('againB').onclick=()=>startStage(S.stage);$('nextB').onclick=()=>startStage(S.stage+1);$('menuB').onclick=toMenu;$('resumeB').onclick=resume;$('quitB').onclick=toMenu;
+
+/* ===================== HƯỚNG DẪN (tự hiện lần đầu, mở lại ở menu / tạm dừng) ===================== */
+const STAGE_MECH=['Bản đồ mẫu: 2 sàn cao, dốc, bệ nhảy, thùng, trạm trả lời, chữ cái.','Băng chuyền đẩy bạn và quái · container chạy qua lại làm chỗ nấp.','Vùng trọng lực thấp (nhảy cao) · cổng dịch chuyển giữa 2 đầu bản đồ.','Sàn băng trơn trượt · bắn kệ sách cho đổ, chặn đường quái.','Ô sàn glitch biến mất (rơi hố mất máu) · laser quét – nhảy qua.','Sàn Boss sụp từng mảng khi Boss mất khiên – ô giữa luôn an toàn.'];
+const K=k=>k.split(' ').map(x=>`<kbd>${x}</kbd>`).join(' ');
+function guidePages(){
+ const qt=Object.values(QTYPES).filter(t=>t.name).map(t=>`<span class="tag">${t.icon} ${esc(t.name)}</span>`).join('');
+ return [
+ {icon:'🎯',name:'Mục tiêu',html:`<h3>🎯 Bắn đúng từ – cứu thành phố Lexicon</h3><div class="lead">Mỗi câu hỏi hiện ở khung trên cùng. Robot mang các đáp án trên đầu – chỉ một con mang đáp án đúng.</div>
+ <div class="steps"><div class="step"><b>Đọc nhiệm vụ</b>Khung trên cùng: câu có chỗ trống, nghĩa tiếng Việt, câu cần xếp…</div><div class="step"><b>Tìm robot đúng</b>Nhìn nhãn chữ trên đầu robot. Radar góc phải chỉ vị trí quái.</div><div class="step"><b>Bắn!</b>Đúng: +điểm, +xu, +năng lượng. Sai: mất máu, robot nổi giận + hiện giải thích.</div></div>
+ <h4>Các dạng bài</h4><div>${qt}</div>
+ <h4>Một ải gồm</h4><div class="ggrid"><div class="gc"><div class="ic">🌊</div><div class="tt">3 đợt quái</div>Hết mỗi đợt +15 HP và một Thử thách khó.</div><div class="gc"><div class="ic">👹</div><div class="tt">Boss</div>Bắn <b>quả cầu</b> mang đáp án đúng để phá khiên – bắn thân Boss vô ích.</div><div class="gc"><div class="ic">⭐</div><div class="tt">Chấm sao</div>Qua ải 1★ · chính xác ≥70% 2★ · ≥90% 3★. Qua ải mở ải sau.</div></div>`},
+ {icon:'🎮',name:'Điều khiển',html:`<h3>🎮 Điều khiển</h3><div class="lead">Click vào màn hình để khoá chuột. Nhấn <kbd>Esc</kbd> để tạm dừng.</div>
+ <div class="cols"><div class="gc"><div class="tt">🖥️ Máy tính</div><div class="keys">
+ <span class="k">${K('W A S D')}</span><span>Di chuyển</span><span class="k"><kbd>Chuột</kbd></span><span>Ngắm</span><span class="k"><kbd>Click</kbd> / ${K('F')}</span><span>Bắn (giữ để bắn liên thanh)</span>
+ <span class="k">${K('Shift')}</span><span>Chạy nhanh</span><span class="k">${K('Space')}</span><span>Nhảy</span><span class="k">${K('← →')}</span><span>Xoay góc nhìn</span>
+ <span class="k">${K('1 2 3 4')}</span><span>Chọn súng (hoặc lăn chuột, ${K('X')})</span><span class="k"><kbd>Chuột phải</kbd></span><span>Ngắm xa (Railgun)</span>
+ <span class="k">${K('Q E')}</span><span>Kỹ năng anh hùng</span><span class="k">${K('R')}</span><span>Voice Blast</span><span class="k">${K('C')}</span><span>Góc nhìn thứ 1 ↔ thứ 3</span><span class="k">${K('F')} gần trạm</span><span>Dùng trạm trả lời</span></div></div>
+ <div class="gc"><div class="tt">📱 Điện thoại / tablet <span class="tag">xoay ngang</span></div><div class="keys">
+ <span class="k">🕹️ trái</span><span>Cần gạt đi – đẩy hết cỡ để chạy</span><span class="k">👆 nửa phải</span><span>Vuốt để ngắm</span><span class="k">🔴 BẮN</span><span>Giữ để bắn liên thanh</span>
+ <span class="k">⤒</span><span>Nhảy</span><span class="k">🔭</span><span>Ngắm xa Railgun</span><span class="k">👁</span><span>Đổi góc nhìn</span><span class="k">💬</span><span>Dùng trạm trả lời</span><span class="k">Ô dưới</span><span>Chạm để đổi súng / dùng kỹ năng</span></div>
+ <div style="margin-top:8px"><span class="tag g">🎯 Có hỗ trợ ngắm tự động</span></div></div></div>
+ <h4>Mẹo</h4><div class="gc">Nếu khung câu hỏi biến mất: trang đang bị phóng to – nhấn <kbd>Ctrl</kbd> + <kbd>0</kbd>.</div>`},
+ {icon:'🔫',name:'Vũ khí',html:`<h3>🔫 Vũ khí</h3><div class="lead">Súng mở dần theo ải. Súng mạnh tốn <b>⚡ Năng lượng chữ</b> – kiếm bằng trả lời đúng.</div>
+ <div class="ggrid">${WEPS.map((w,i)=>`<div class="gc"><div class="ic">${w.icon}</div><div class="tt">${i+1}. ${esc(w.name)}</div>${esc(String(w.desc).replace(/ · tốn \d ⚡/,''))}<div style="margin-top:6px"><span class="tag">🔓 Ải ${(w.unlock||0)+1}</span><span class="tag ${w.energy?'r':'g'}">${w.energy?'tốn '+w.energy+' ⚡':'miễn phí'}</span></div></div>`).join('')}</div>
+ <h4>⚡ Năng lượng chữ</h4><div class="ggrid"><div class="gc">✔ Câu đúng <b>+${ENERGY.perCorrect}</b> ⚡</div><div class="gc">⭐ Câu vàng <b>+${ENERGY.perGolden}</b> ⚡</div><div class="gc">🔋 Tối đa <b>${ENERGY.max}</b> ⚡</div></div>
+ <h4>Mẹo chọn súng</h4><div class="gc">Tank có giáp: dùng <b>Scatter</b> tầm gần hoặc <b>Railgun</b>. Bị vây: <b>Nova</b> đẩy lùi cả đám. Blaster cho quái thường.</div>`},
+ {icon:'🦸',name:'Anh hùng & Kỹ năng',html:`<h3>🦸 Anh hùng & Kỹ năng</h3><div class="lead">Chọn anh hùng ở menu. Mỗi người có 2 kỹ năng riêng (${K('Q')} ${K('E')}) và chung tuyệt chiêu ${K('R')}.</div>
+ <div class="ggrid">${Object.values(HEROES).map(h=>`<div class="gc" style="border-color:${h.col}"><div class="tt" style="color:${h.col}">${esc(h.name)} <span style="font-size:12px;color:var(--mut)">· ${esc(h.role)}</span></div>❤️ ${h.hp} HP · ${esc(h.passive)}<br><kbd>Q</kbd> ${h.q.icon} <b>${esc(h.q.name)}</b> – ${esc(h.q.desc)} <span class="tag">${h.q.cd}s</span><br><kbd>E</kbd> ${h.e.icon} <b>${esc(h.e.name)}</b> – ${esc(h.e.desc)} <span class="tag">${h.e.cd}s</span></div>`).join('')}</div>
+ <h4>🎤 Tuyệt chiêu Voice Blast <kbd>R</kbd></h4><div class="gc">Thanh tuyệt chiêu đầy (trả lời đúng để nạp) → nhấn <kbd>R</kbd> → <b>đọc to</b> từ tiếng Anh hiện ra. Đúng: quét sạch robot sai + hồi máu. Có link nghe phát âm chuẩn Cambridge/Oxford. Không có micro? Bấm <b>⌨️ Gõ thay vì nói</b>.</div>`},
+ {icon:'🗺️',name:'Bản đồ & Ải',html:`<h3>🗺️ Bản đồ tương tác</h3><div class="lead">Đừng đứng yên! Bản đồ có nhiều thứ để leo, phá và dùng.</div>
+ <div class="ggrid"><div class="gc"><div class="ic">🛗</div><div class="tt">Sàn cao · dốc · bệ nhảy</div>Đứng lên đĩa sáng rồi ${K('Space')} để bật lên tầng trên.</div><div class="gc"><div class="ic">📦</div><div class="tt">Thùng</div>Bắn 2 phát để phá – rơi xu hoặc bình máu.</div><div class="gc"><div class="ic">💬</div><div class="tt">Trạm trả lời</div>Đứng gần + ${K('F')}: đúng → trụ súng tự bắn quái SAI 15 giây; sai → khoá tới đợt sau.</div><div class="gc"><div class="ic">🔤</div><div class="tt">Chữ cái rơi</div>Nhặt đủ chữ để ghép từ vựng → mở rương thưởng.</div><div class="gc"><div class="ic">⚡</div><div class="tt">Sự kiện mỗi đợt</div><b>Mất điện</b> (chỉ nhãn chữ sáng) hoặc <b>Mưa thiên thạch</b> – né vòng đỏ!</div></div>
+ <h4>Cơ chế riêng từng ải</h4>${STAGES.map((st,i)=>`<div class="stg2" style="background:linear-gradient(90deg,${st.th.sky[1]}55,transparent)"><span class="no">Ải ${i+1}</span><div><b>${esc(st.name)}</b> · ${QTYPES[st.type].icon} ${esc(QTYPES[st.type].name)} · 👹 ${esc(st.boss)}<br><span style="color:#cfd6ff">${esc(STAGE_MECH[i]||'')}</span></div></div>`).join('')}`},
+ {icon:'🏆',name:'Quái & Phần thưởng',html:`<h3>🏆 Quái & Phần thưởng</h3>
+ <h4>Các loại quái</h4><div class="ggrid"><div class="gc"><div class="ic">🤖</div><div class="tt">Grunt</div>Quái thường, 1 máu.</div><div class="gc"><div class="ic">💨</div><div class="tt">Runner</div>Nhỏ, chạy rất nhanh.</div><div class="gc"><div class="ic">🛡️</div><div class="tt">Tank</div>3 máu, có giáp – dùng Scatter/Railgun.</div><div class="gc"><div class="ic">🎯</div><div class="tt">Sniper</div>Đứng xa bắn đạn đỏ – nấp sau khối.</div></div>
+ <h4>Phần thưởng</h4><div class="ggrid"><div class="gc"><div class="ic">⭐</div><div class="tt">Thử thách khó</div>Sau mỗi đợt, 20 giây. Đúng → chọn 1 phần thưởng: sát thương, tốc bắn, máu, điểm x2…</div><div class="gc"><div class="ic">🌟</div><div class="tt">Câu vàng</div>Xuất hiện ngẫu nhiên trong trận: đúng được x3 điểm + năng lượng.</div><div class="gc"><div class="ic">🔥</div><div class="tt">Combo</div>Đúng liên tiếp → nhân điểm. Bắn sai hoặc bị đánh là mất combo.</div><div class="gc"><div class="ic">🪙</div><div class="tt">Xu & Chợ</div>Kiếm xu khi trả lời đúng, hoàn thành nhiệm vụ → mua vật phẩm, nâng cấp, trang phục.</div><div class="gc"><div class="ic">📒</div><div class="tt">Sổ tay lỗi sai</div>Cuối ải xem lại mọi câu sai kèm đáp án + giải thích.</div></div>`}]}
+let gIdx=0,gThen=null,GP=[];
+function renderGuide(){GP=GP.length?GP:guidePages();$('gTabs').innerHTML=GP.map((p,i)=>`<button type="button" class="gtab ${i===gIdx?'on':''}" data-i="${i}"><span class="n">${i+1}</span>${p.icon} ${esc(p.name)}</button>`).join('');
+ document.querySelectorAll('#gTabs .gtab').forEach(b=>b.onclick=()=>{gIdx=+b.dataset.i;renderGuide()});
+ $('gPane').innerHTML=GP[gIdx].html;$('gPane').scrollTop=0;$('gDots').innerHTML=GP.map((_,i)=>`<i class="${i===gIdx?'on':''}"></i>`).join('');
+ $('gPrev').style.visibility=gIdx?'visible':'hidden';const last=gIdx===GP.length-1;$('gNext').textContent=last?(gThen?'▶ Vào ải ngay':'✔ Đã hiểu'):'Tiếp ▶'}
+function openGuide(then){gThen=then||null;gIdx=0;GP=[];$('gNoShowL').style.display=then?'flex':'none';$('gNoShow').checked=true;renderGuide();$('guide').classList.remove('hide')}
+function closeGuide(go){$('guide').classList.add('hide');if(gThen&&$('gNoShow').checked)store.set('ws_guide_v1','1');const t=gThen;gThen=null;if(go&&t)t()}
+$('gNext').onclick=()=>{if(gIdx<GP.length-1){gIdx++;renderGuide()}else closeGuide(true)};
+$('gPrev').onclick=()=>{if(gIdx>0){gIdx--;renderGuide()}};
+$('gClose').onclick=()=>closeGuide(false);
+$('guideB').onclick=()=>openGuide(null);$('pGuideB').onclick=()=>openGuide(null);
+addEventListener('keydown',e=>{if($('guide').classList.contains('hide'))return;if(e.key==='ArrowRight')$('gNext').click();if(e.key==='ArrowLeft')$('gPrev').click();if(e.key==='Escape')closeGuide(false)});
+$('startB').onclick=()=>{if(!store.get('ws_guide_v1'))openGuide(()=>startStage(STG));else startStage(STG)};$('againB').onclick=()=>startStage(S.stage);$('nextB').onclick=()=>startStage(S.stage+1);$('menuB').onclick=toMenu;$('resumeB').onclick=resume;$('quitB').onclick=toMenu;
 
 /* ===================== UPDATE ===================== */
 function movePlayer(dt){let f=0,s=0;if(keys.KeyW||keys.ArrowUp)f+=1;if(keys.KeyS||keys.ArrowDown)f-=1;if(keys.KeyD)s+=1;if(keys.KeyA)s-=1;
