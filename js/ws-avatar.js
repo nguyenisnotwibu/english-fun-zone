@@ -57,16 +57,26 @@ const mat=new THREE.MeshLambertMaterial({vertexColors:true,transparent:true,dept
 const avatar=new THREE.Group();avatar.visible=false;avatar.name='wsAvatar';scene.add(avatar);
 const parts={};                                   /* tên → Mesh (đầu, thân, tay, chân, lưng) */
 let blob=null;
+/* dựng các mesh của một nhân vật (dùng chung cho cảnh game và khung xem trước trong tủ đồ): extra = {head:[hộp],torso:[…],armL…,back:[…]} */
+function rigMeshes(extra,material,shirtHex){
+  extra=extra||{};
+  const base=baseBoxes(shirtHex!==undefined?shirtHex:_col.set((typeof HERO!=='undefined'&&HERO&&HERO.col)||'#00d2ff').getHex());
+  const names=['head','torso','armL','armR','legL','legR'],out={};
+  if(extra.back&&extra.back.length)names.push('back');
+  for(const n of names){
+    const m=new THREE.Mesh(mergeBoxes((base[n]||[]).concat(extra[n]||[])),material);
+    m.position.set(PIV[n][0],PIV[n][1],PIV[n][2]);m.frustumCulled=false;m.castShadow=false;out[n]=m}
+  return out}
+/* nhân vật độc lập (không thuộc cảnh game): trả về {group, parts, material, dispose()} */
+function createRig(extra,shirtHex){
+  const material=new THREE.MeshLambertMaterial({vertexColors:true}),group=new THREE.Group(),ms=rigMeshes(extra,material,shirtHex);
+  for(const k in ms)group.add(ms[k]);
+  return{group,parts:ms,material,dispose(){for(const k in ms)ms[k].geometry.dispose();material.dispose()}}}
 function build(extra){
   extra=extra||{};
   for(const k in parts){avatar.remove(parts[k]);parts[k].geometry.dispose();delete parts[k]}
-  const base=baseBoxes(_col.set((typeof HERO!=='undefined'&&HERO&&HERO.col)||'#00d2ff').getHex());
-  const names=['head','torso','armL','armR','legL','legR'];
-  if(extra.back&&extra.back.length)names.push('back');
-  for(const n of names){
-    const m=new THREE.Mesh(mergeBoxes((base[n]||[]).concat(extra[n]||[])),mat);
-    m.position.set(PIV[n][0],PIV[n][1],PIV[n][2]);m.frustumCulled=false;m.castShadow=false;
-    avatar.add(m);parts[n]=m}
+  const ms=rigMeshes(extra,mat);
+  for(const n in ms){avatar.add(ms[n]);parts[n]=ms[n]}
   if(!blob){const g=new THREE.CircleGeometry(.55,16);g.rotateX(-Math.PI/2);
     blob=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.38,depthWrite:false}));blob.frustumCulled=false;scene.add(blob);blob.visible=false}
 }
@@ -178,7 +188,7 @@ if(touchBox){
   b.addEventListener('click',e=>{e.stopPropagation();if(S.running&&!S.paused&&!S.modal&&!S.ended)toggle()})}
 
 /* ===================== DÙNG CHO TEST VÀ CHO TRANG PHỤC ===================== */
-window.WSAvatar={V,parts,avatar,build,setView,toggle,envFree,
+window.WSAvatar={V,parts,avatar,build,createRig,PIV,setView,toggle,envFree,
   get view(){return X.view},get blend(){return vb},get distance(){return dCam},get active(){return tpActive()},get near(){return ray.near}};
 console.log('[WS avatar] đã nạp: nhân vật khối + góc nhìn thứ 3 (phím C)');
 })();

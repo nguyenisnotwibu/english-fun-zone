@@ -6,6 +6,7 @@
 //   5) grammar.html         - Ngu Phap Master (GP_DATA)
 //   6) data/ws-questions.js - ngan hang cau hoi + sat thuong khi sai cua Word Strike 3D (WS_DATA)
 //   7) data/ws-view.js      - tham so goc nhin thu 3 cua Word Strike 3D (WS_VIEW)
+//   8) data/ws-outfits.js   - trang phuc Word Strike 3D (WS_OUTFITS): gioi han hop/khung, khong co chi so suc manh
 const fs=require('fs'),path=require('path'),vm=require('vm');
 const ROOT=path.join(__dirname,'..');
 let err=0,warn=0,tot=0;
@@ -195,6 +196,44 @@ const get=(ctx,name)=>{try{return vm.runInContext('typeof '+name+'==="undefined"
     if(typeof V[k]!=='number'||!isFinite(V[k]))E('ws-view.js: '+k+' phai la so',V[k]);
     else if(V[k]<lo||V[k]>hi)E('ws-view.js: '+k+' = '+V[k]+' ngoai khoang cho phep '+lo+' - '+hi)}
   if(typeof V.minDist==='number'&&typeof V.fadeDist==='number'&&V.fadeDist<=V.minDist)E('ws-view.js: fadeDist phai lon hon minDist');
+})();
+
+/* ---------- 8) Word Strike 3D: data/ws-outfits.js (WS_OUTFITS, trang phuc) ---------- */
+(function(){
+  let src;try{src=read('data/ws-outfits.js')}catch(e){E('khong doc duoc data/ws-outfits.js');return}
+  const win={};try{new Function('window',src)(win)}catch(e){E('cu phap data/ws-outfits.js',e.message);return}
+  const D=win.WS_OUTFITS;if(!D||typeof D!=='object'){E('ws-outfits.js: thieu window.WS_OUTFITS');return}
+  const PIV={head:[0,1.45,0],torso:[0,1.1,0],armL:[-.4,1.42,0],armR:[.4,1.42,0],legL:[-.15,.78,0],legR:[.15,.78,0],back:[0,1.1,0]};   /* giong js/ws-avatar.js */
+  const ATT={hat:['head'],body:['torso','armL','armR','legL','legR'],back:['back']},RARS=['common','rare','epic','legendary'];
+  const HEX=/^#[0-9a-f]{6}$/i,FORBID=/^(hp|maxhp|speed|spd|dmg|damage|cd|cooldown|range|armor|energy|power|stat|stats|boost|bonus)$/i;
+  const walk=(o,at)=>{if(o&&typeof o==='object')for(const k of Object.keys(o)){if(FORBID.test(k))E('ws-outfits.js: khoa chi so bi cam "'+k+'" (trang phuc chi doi ngoai hinh)',at);walk(o[k],at+'.'+k)}};walk(D,'WS_OUTFITS');
+  for(const r of RARS){tot++;const o=(D.rarity||{})[r];if(!o){E('ws-outfits.js: thieu rarity.'+r);continue}
+    if(!HEX.test(o.color||''))E('ws-outfits.js: rarity.'+r+'.color phai la #rrggbb');
+    if(!Number.isInteger(o.price)||o.price<0)E('ws-outfits.js: rarity.'+r+'.price phai la so nguyen >= 0')}
+  const sets=Array.isArray(D.sets)?D.sets:[];if(!sets.length){E('ws-outfits.js: sets rong');return}
+  const ids=new Set();let defaults=0;const count={};
+  sets.forEach((s,i)=>{tot++;const at='ws-outfits '+(s.id||'#'+i);
+    if(!/^[a-z0-9_]+$/.test(s.id||''))E('id khong hop le',at);else if(ids.has(s.id))E('trung id',at);else ids.add(s.id);
+    if(!RARS.includes(s.rarity))E('rarity la',at);else count[s.rarity]=(count[s.rarity]||0)+1;
+    if(!txt(s.name))E('thieu name',at);if(!txt(s.icon))E('thieu icon',at);
+    if(s.default){defaults++;if(s.rarity!=='common')E('bo mac dinh phai la common',at)}
+    for(const sl of ['hat','body','back']){const L=s[sl];if(L==null)continue;
+      if(!Array.isArray(L)||!L.length||L.length>14){E(sl+': can 1-14 hop',at);continue}
+      L.forEach((b,j)=>{const bt=at+'.'+sl+'['+j+']';
+        if(!Array.isArray(b)||b.length!==8){E('hop phai co 8 phan tu',bt);return}
+        const [on,w,h,d,x,y,z,c]=b;if(!ATT[sl].includes(on)){E('on="'+on+'" khong hop le cho '+sl,bt);return}
+        if(![w,h,d].every(v=>typeof v==='number'&&v>0&&v<=1.2))E('w,h,d phai trong (0,1.2]',bt);
+        if(![x,y,z].every(v=>typeof v==='number'&&isFinite(v)))E('x,y,z phai la so',bt);
+        if(!HEX.test(c||''))E('mau phai la #rrggbb',bt);
+        const p=PIV[on];if([w,h,d,x,y,z].every(v=>typeof v==='number'&&isFinite(v))){
+          if(Math.abs(p[0]+x)+w/2>1.2+1e-6||Math.abs(p[2]+z)+d/2>1.2+1e-6)E('vuot khung ngang +-1.2 m',bt);
+          if(p[1]+y+h/2>2.6+1e-6)E('vuot chieu cao 2.6 m',bt);
+          if(p[1]+y-h/2<-.05)E('chim duoi mat dat',bt)}})}
+    if(s.trail!=null){const t=s.trail;if(!t||!HEX.test(t.color||'')||!['box','star','leaf','line'].includes(t.shape)||!(t.size>=.05&&t.size<=.3))E('trail: can {color,shape box|star|leaf|line,size 0.05-0.3}',at)}
+    if(s.killfx!=null){const k=s.killfx;if(!k||!Array.isArray(k.colors)||k.colors.length<1||k.colors.length>3||!k.colors.every(c=>HEX.test(c))||!['burst','ring','rain','bolt'].includes(k.kind))E('killfx: can {colors 1-3 mau,kind burst|ring|rain|bolt}',at)}});
+  if(defaults!==1)E('ws-outfits.js: can dung 1 bo mac dinh, dang co '+defaults);
+  /* spec: 16 bo khoi dau = 4 Thuong, 4 Hiem, 5 Su thi, 3 Huyen thoai (them bo moi thi sua con so nay) */
+  const want={common:4,rare:4,epic:5,legendary:3};for(const r of RARS)if((count[r]||0)<want[r])W('ws-outfits.js: do hiem '+r+' co '+(count[r]||0)+' bo, it hon bo khoi dau ('+want[r]+')');
 })();
 
 console.log(`\n${tot} muc da kiem tra — ${err} loi, ${warn} canh bao`);process.exit(err?1:0);
