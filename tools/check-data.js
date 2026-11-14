@@ -260,4 +260,32 @@ const get=(ctx,name)=>{try{return vm.runInContext('typeof '+name+'==="undefined"
   for(const r of R)if(rt[r]>0&&!cnt[r])E('ws-gacha.js: do hiem '+r+' co ti le > 0 nhung khong co bo nao trong ws-outfits.js');
 })();
 
+/* ---------- 10) Word Strike 3D: data/ws-relay.js (WS_RELAY, che do MISSION + bo dam) ---------- */
+(function(){
+  let src;try{src=read('data/ws-relay.js')}catch(e){E('khong doc duoc data/ws-relay.js');return}
+  const win={};try{new Function('window',src)(win)}catch(e){E('cu phap data/ws-relay.js',e.message);return}
+  const D=win.WS_RELAY;if(!D||typeof D!=='object'){E('ws-relay.js: thieu window.WS_RELAY');return}
+  tot++;const isN=v=>typeof v==='number'&&isFinite(v),rng=(o,k,lo,hi,int)=>{const v=o&&o[k];if(!isN(v)||v<lo||v>hi||(int&&!Number.isInteger(v)))E('ws-relay.js: '+k+' phai '+(int?'nguyen ':'')+'trong '+lo+'-'+hi+' (dang la '+v+')')};
+  if(D.defaultMode!=='mission'&&D.defaultMode!=='holdout')E('ws-relay.js: defaultMode phai la mission hoac holdout');
+  const r=D.relay||{};rng(r,'range',1.5,6);rng(r,'holdSec',.5,10);rng(r,'lockSec',3,60);rng(r,'coins',0,200,true);rng(r,'score',0,1000,true);rng(r,'hp',0,100,true);rng(r,'revealDist',8,60);
+  if(!Array.isArray(r.counts)||r.counts.length!==6||!r.counts.every(n=>Number.isInteger(n)&&n>=2&&n<=5))E('ws-relay.js: relay.counts can 6 so nguyen 2-5');
+  const pt=p=>p&&isN(p.x)&&isN(p.z)&&Math.abs(p.x)<=29&&Math.abs(p.z)<=29;
+  if(!Array.isArray(D.spots)||D.spots.length!==6)E('ws-relay.js: spots can 6 ai');else D.spots.forEach((L,i)=>{tot++;if(!Array.isArray(L)||!L.every(pt))E('ws-relay.js: spots['+i+'] can cac diem {x,z} trong +-29');else if(Array.isArray(r.counts)&&L.length<r.counts[i])E('ws-relay.js: spots['+i+'] co '+L.length+' diem, can >= '+r.counts[i])});
+  const x=D.extract||{};rng(x,'radius',3,12);rng(x,'holdSec',5,120);rng(x,'spawnEvery',.5,20);rng(x,'maxHostile',1,12,true);rng(x,'coins',0,300,true);
+  if(!Array.isArray(x.points)||x.points.length!==6||!x.points.every(pt))E('ws-relay.js: extract.points can 6 diem trong +-29');
+  if(Array.isArray(D.spots)&&Array.isArray(x.points)&&Array.isArray(r.counts))D.spots.forEach((L,i)=>{const e=x.points[i];if(!e||!Array.isArray(L))return;L.slice(0,r.counts[i]||0).forEach((p,k)=>{if(Math.hypot(p.x-e.x,p.z-e.z)<15)E('ws-relay.js: ai '+(i+1)+': diem rut lui cach Relay '+(k+1)+' chi '+Math.round(Math.hypot(p.x-e.x,p.z-e.z))+' m (can >= 15 m)')})});
+  if(!D.alarm||!Array.isArray(D.alarm.hostiles)||D.alarm.hostiles.length!==6||!D.alarm.hostiles.every(n=>Number.isInteger(n)&&n>=1&&n<=8))E('ws-relay.js: alarm.hostiles can 6 so nguyen 1-8');
+  if(!Array.isArray(D.locations)||D.locations.length!==6||!D.locations.every(l=>l&&l.en&&l.sub&&l.vi))E('ws-relay.js: locations can 6 muc {en,sub,vi}');
+  const rd=D.radio;if(!rd){E('ws-relay.js: thieu radio');return}
+  const OKPH=new Set(['n','dir','rel','dist','near','loc','sec','lock']),ROLES=['intro','relay','hold','ok','alarm','extract','extracting','done'],avg={};
+  for(const k of ['N','NE','E','SE','S','SW','W','NW'])if(!rd.dirs||!rd.dirs[k]||!rd.dirs[k].en||!rd.dirs[k].vi)E('ws-relay.js: radio.dirs.'+k+' can en+vi');
+  for(const k of ['ahead','right','behind','left'])if(!rd.rels||!rd.rels[k]||!rd.rels[k].en||!rd.rels[k].vi)E('ws-relay.js: radio.rels.'+k+' can en+vi');
+  for(const l of ['kids','toeic','ielts'])for(const role of ROLES){tot++;const L=rd[l]&&rd[l][role];
+    if(!Array.isArray(L)||!L.length||!L.every(m=>m&&typeof m.en==='string'&&m.en&&typeof m.vi==='string'&&m.vi)){E('ws-relay.js: radio.'+l+'.'+role+' can >= 1 muc {en,vi}');continue}
+    for(const m of L)for(const t of [m.en,m.vi])for(const ph of t.matchAll(/\{(\w+)\}/g))if(!OKPH.has(ph[1]))E('ws-relay.js: radio.'+l+'.'+role+' co cho trong la {'+ph[1]+'}');
+    if(role==='relay'){for(const m of L)if(!m.en.includes('{dir}')||!m.vi.includes('{dir}'))E('ws-relay.js: radio.'+l+'.relay phai co {dir} (cau lenh phai noi huong di)');
+      avg[l]=L.reduce((a,m)=>a+m.en.length,0)/L.length}}
+  if(avg.kids&&avg.toeic&&avg.ielts&&!(avg.kids<avg.toeic&&avg.toeic<avg.ielts))E('ws-relay.js: cau lenh Relay phai dai dan KIDS < TOEIC < IELTS (dang la '+Math.round(avg.kids)+' / '+Math.round(avg.toeic)+' / '+Math.round(avg.ielts)+' ky tu)');
+})();
+
 console.log(`\n${tot} muc da kiem tra — ${err} loi, ${warn} canh bao`);process.exit(err?1:0);
