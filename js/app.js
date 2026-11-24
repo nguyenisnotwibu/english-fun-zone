@@ -162,6 +162,7 @@ function go(s){
   if(s==='games')gamesHome();
   if(s==='board'){renderBoard();renderBadges()}
   if(s!=='ielts'&&s!=='hsa'){try{_iqStop()}catch(e){}}
+  if(s!=='thpt'){try{thptExitFocus()}catch(e){}}
   if(s==='ielts'){showIELTSTab(_ieltsTab||'vocab')}
   if(s==='hsa'){showHSATab(_hsaTab||'eng1');setTimeout(addSearchBarToPassages,200)}
   if(s==='vocab'){renderVocabPanel()}
@@ -2109,6 +2110,56 @@ $('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')saveName()});
 
 /* ================= THPT QG ================= */
 let _thptTab='thpt1';
+let _thptMode=(typeof localStorage!=='undefined'&&localStorage.getItem('efz_thpt_mode'))||'practice';
+let _thptExam=null;
+
+function thptExitFocus(){
+  if(typeof document!=='undefined'){
+    document.body.classList.remove('thpt-focus-active');
+    const btn=document.getElementById('thptFocusToggleBtn');
+    if(btn)btn.innerHTML='🎯 Chế độ Focus';
+    if(document.fullscreenElement&&document.exitFullscreen){
+      try{document.exitFullscreen()}catch(e){}
+    }
+  }
+  if(_thptExam)_thptExam.isFocus=false;
+}
+
+function thptToggleFocus(){
+  if(typeof document==='undefined')return;
+  const isFocus=document.body.classList.toggle('thpt-focus-active');
+  if(_thptExam)_thptExam.isFocus=isFocus;
+  const btn=document.getElementById('thptFocusToggleBtn');
+  if(btn){
+    btn.innerHTML=isFocus?'🔲 Thu nhỏ (Thoát Focus)':'🎯 Chế độ Focus';
+  }
+  if(isFocus){
+    try{toast('🎯 Đã bật Chế độ Focus tập trung! Bấm lại nút hoặc phím ESC để thoát.')}catch(e){}
+  }
+}
+
+if(typeof window!=='undefined'){
+  window.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&document.body.classList.contains('thpt-focus-active')){
+      thptExitFocus();
+    }
+  });
+}
+
+function setTHPTMode(mode){
+  if(_thptExam&&_thptExam.timer&&!_thptExam.submitted&&Object.keys(_thptExam.ans).length>0){
+    if(!confirm('Bạn đang làm dở bài thi thử. Chuyển chế độ sẽ làm mới bài làm của đề này. Bạn có chắc muốn chuyển không?'))return;
+  }
+  _thptMode=mode;
+  try{if(typeof localStorage!=='undefined')localStorage.setItem('efz_thpt_mode',mode)}catch(e){}
+  const pBtn=document.getElementById('btnTHPTModePractice');
+  const eBtn=document.getElementById('btnTHPTModeExam');
+  if(pBtn)pBtn.classList.toggle('on',mode==='practice');
+  if(eBtn)eBtn.classList.toggle('on',mode==='exam');
+  if(mode!=='exam')thptExitFocus();
+  showTHPTTab(_thptTab||'thpt1');
+}
+
 function goTHPT(){
   document.querySelectorAll('.gpill').forEach(p=>p.classList.remove('on'));
   document.getElementById('gpillTHPT').classList.add('on');
@@ -2116,15 +2167,29 @@ function goTHPT(){
   const ti=$('tabIELTS');if(ti)ti.style.display='none';
   const th=$('tabHSA');if(th)th.style.display='none';
   const tv=$('tabVocab');if(tv)tv.style.display='none';
+  const pBtn=document.getElementById('btnTHPTModePractice');
+  const eBtn=document.getElementById('btnTHPTModeExam');
+  if(pBtn)pBtn.classList.toggle('on',_thptMode==='practice');
+  if(eBtn)eBtn.classList.toggle('on',_thptMode==='exam');
   go('thpt');
+  showTHPTTab(_thptTab||'thpt1');
 }
+
 function showTHPTTab(tab){
   _thptTab=tab;
   document.querySelectorAll('#thptSubtab button').forEach(b=>b.classList.remove('on'));
   const idx=parseInt(tab.replace('thpt',''))-1;
-  document.querySelectorAll('#thptSubtab button')[idx].classList.add('on');
+  const btnList=document.querySelectorAll('#thptSubtab button');
+  if(btnList&&btnList[idx])btnList[idx].classList.add('on');
   const dataMap=new Proxy({},{get:(_,k)=>efzData(k)});
-  efzLoad(tab).then(()=>renderTHPTQuiz(dataMap[tab]||efzData('thpt1'),tab));
+  efzLoad(tab).then(()=>{
+    const data=dataMap[tab]||efzData('thpt1');
+    if(_thptMode==='exam'){
+      renderTHPTExam(data,tab);
+    }else{
+      renderTHPTQuiz(data,tab);
+    }
+  });
 }
 
 let _thptState={};
@@ -2402,6 +2467,8 @@ function formatExplainHTML(q){
 }
 
 function renderTHPTQuiz(data,prefix){
+  thptExitFocus();
+  if(_thptExam&&_thptExam.timer){clearInterval(_thptExam.timer);_thptExam.timer=null}
   const el=$('thptContent');
   _thptState={answered:0,correct:0,total:data.reduce((s,cat)=>s+cat.questions.length,0),wrongs:[],catStats:{}};
   if(window._thptTimer)clearInterval(window._thptTimer);
@@ -2547,6 +2614,454 @@ function thptSubmit(prefix){
   if(topBtn)topBtn.style.display='none';
   if(window._thptTimer){clearInterval(window._thptTimer);window._thptTimer=null;}
   setTimeout(()=>showTHPTSummary(prefix),400);
+}
+
+/* ==========================================================
+   🎯 THPT QG — CHẾ ĐỘ THI THỬ THẬT & PHÒNG THI FOCUS
+   ========================================================== */
+function renderTHPTExam(data, prefix){
+  const el = $('thptContent');
+  if(!el) return;
+  
+  if(window._thptTimer){
+    clearInterval(window._thptTimer);
+    window._thptTimer = null;
+  }
+  if(_thptExam && _thptExam.timer){
+    clearInterval(_thptExam.timer);
+    _thptExam.timer = null;
+  }
+  
+  const activeBtn = document.querySelector('#thptSubtab button.on');
+  const examTitle = activeBtn ? activeBtn.textContent.replace('📝', '').trim() : ('Đề thi ' + prefix.toUpperCase());
+  const total = data.reduce((s, cat) => s + cat.questions.length, 0);
+  
+  const flatQs = [];
+  data.forEach(cat => {
+    cat.questions.forEach(q => {
+      flatQs.push({ q, catTitle: cat.title });
+    });
+  });
+  
+  _thptExam = {
+    prefix,
+    data,
+    flatQs,
+    title: examTitle,
+    total,
+    ans: {},
+    flagged: {},
+    secs: 3000,
+    left: 3000,
+    elapsed: 0,
+    timer: null,
+    submitted: false,
+    isFocus: document.body.classList.contains('thpt-focus-active')
+  };
+  
+  let h = `
+  <div class="thpt-exam-sticky-bar" id="thptExamStickyBar">
+    <div class="thpt-bar-left">
+      <div class="thpt-bar-badge">🎯 THI THỬ THPT</div>
+      <div class="thpt-bar-title" title="${examTitle}">${examTitle}</div>
+    </div>
+    <div class="thpt-bar-center">
+      <div class="thpt-exam-clock" id="thptExamClock" title="Thời gian còn lại">50:00</div>
+      <div class="thpt-exam-progress">Đã làm: <b id="thptExamDoneCount">0</b>/${total}</div>
+    </div>
+    <div class="thpt-bar-right">
+      <button type="button" class="thpt-bar-btn pal-toggle" onclick="thptTogglePaletteDrawer()" title="Mở danh sách 40 câu hỏi">
+        📋 Bảng câu (<span id="thptBarDone">0</span>/${total})
+      </button>
+      <button type="button" class="thpt-bar-btn focus-toggle" id="thptFocusToggleBtn" onclick="thptToggleFocus()" title="Bật/Tắt chế độ phòng thi không xao nhãng">
+        ${_thptExam.isFocus ? '🔲 Thu nhỏ (Thoát Focus)' : '🎯 Chế độ Focus'}
+      </button>
+      <button type="button" class="thpt-bar-btn submit-btn" onclick="thptExamAskSubmit('${prefix}')">
+        📩 Nộp bài
+      </button>
+    </div>
+  </div>
+  `;
+  
+  const paletteHtml = `
+  <div class="thpt-palette-panel" id="thptPalettePanel">
+    <div class="thpt-pal-head">
+      <div class="thpt-pal-title">📋 BẢNG 40 CÂU HỎI</div>
+      <div class="thpt-pal-counter">
+        <span class="pal-stat answered" id="palStatDone">0 đã làm</span>
+        <span class="pal-stat flagged" id="palStatFlag">0 cờ</span>
+      </div>
+    </div>
+    <div class="thpt-pal-grid" id="thptPalGrid">
+      ${flatQs.map(x => `
+        <button type="button" class="thpt-pal-btn" id="pal-btn-${x.q.num}" onclick="thptJumpToQ(${x.q.num})" title="Chuyển tới Câu ${x.q.num}">
+          <span class="pal-num">${x.q.num}</span>
+        </button>
+      `).join('')}
+    </div>
+    <div class="thpt-pal-legend" id="thptPalLegend">
+      <span class="leg-item"><i class="leg-dot empty"></i> Chưa làm</span>
+      <span class="leg-item"><i class="leg-dot done"></i> Đã làm</span>
+      <span class="leg-item"><i class="leg-dot flag"></i> Cờ xem lại</span>
+    </div>
+    <div class="thpt-pal-actions">
+      <button type="button" class="thpt-pal-sub-btn" id="palSubmitBtn" onclick="thptExamAskSubmit('${prefix}')">
+        📩 Nộp Bài Thi
+      </button>
+    </div>
+  </div>
+  `;
+  
+  let questionsHtml = '';
+  data.forEach(cat => {
+    questionsHtml += `<div class="thpt-cat-header">${cat.icon || '📝'} ${cat.title}</div>`;
+    const split = !!cat.passage;
+    if(split) questionsHtml += `<div class="exam-split"><div class="exam-pass thpt-passage">${cat.passage}</div><div class="exam-qs">`;
+    
+    cat.questions.forEach(q => {
+      const qid = prefix + '-' + q.num;
+      questionsHtml += `
+      <div class="thpt-q-card thpt-exam-card" id="tq-${qid}">
+        <div class="thpt-exam-qhead">
+          <div class="q-num">
+            Câu ${q.num} <span style="font-weight:400;color:#64748b">(${q.level==='NB'?'Nhận biết':q.level==='TB'?'Thông hiểu':'Vận dụng'})</span>
+            <span class="exam-status-tag" id="tag-${qid}">Chưa làm</span>
+          </div>
+          <button type="button" class="exam-flag-btn" id="flag-${qid}" onclick="thptExamToggleFlag(${q.num})" title="Đánh dấu câu này để xem lại sau">
+            🚩 <span class="flag-txt">Đánh dấu</span>
+          </button>
+        </div>
+        ${q.text ? `<div class="q-text">${fmtExamText(q.text)}</div>` : ''}
+        <div class="thpt-exam-opts">
+          ${q.opts.map((opt, i) => `
+            <button type="button" class="thpt-exam-opt" id="opt-${qid}-${i}" data-qid="${qid}" data-idx="${i}" onclick="thptExamSelectOption(${q.num}, ${i}, '${qid}', '${prefix}')">
+              <span class="exam-radio-bubble">${'ABCD'[i]}</span>
+              <span class="opt-text-wrap">${opt}</span>
+              <span class="exam-opt-badge" id="badge-${qid}-${i}"></span>
+            </button>
+          `).join('')}
+        </div>
+        <div class="thpt-explain" id="texp-${qid}" style="display:none">
+          <div class="exp-title">💡 Giải chi tiết</div>
+          <div class="exp-body">${formatExplainHTML(q)}</div>
+        </div>
+      </div>
+      `;
+    });
+    
+    if(split) questionsHtml += `</div></div>`;
+  });
+  
+  h += `
+  <div class="thpt-exam-layout">
+    <div class="thpt-exam-content">
+      ${questionsHtml}
+      <div class="thpt-exam-bottom-submit">
+        <button type="button" class="thpt-submit-btn" id="thptExamBottomSubmit" onclick="thptExamAskSubmit('${prefix}')">
+          📩 Nộp Bài Thi (Chấm điểm & xem giải thích)
+        </button>
+      </div>
+      <div class="thpt-summary" id="thpt-summary-${prefix}"></div>
+    </div>
+    <aside class="thpt-exam-sidebar" id="thptExamSidebar">
+      ${paletteHtml}
+    </aside>
+  </div>
+  <div class="thpt-drawer-backdrop" id="thptDrawerBackdrop" onclick="thptTogglePaletteDrawer()"></div>
+  `;
+  
+  el.innerHTML = h;
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  
+  _thptExam.timer = setInterval(() => {
+    if(!_thptExam || _thptExam.submitted) return;
+    _thptExam.left--;
+    _thptExam.elapsed = 3000 - _thptExam.left;
+    const m = Math.floor(Math.max(0, _thptExam.left) / 60).toString().padStart(2, '0');
+    const s = (Math.max(0, _thptExam.left) % 60).toString().padStart(2, '0');
+    const te = document.getElementById('thptExamClock');
+    if(te){
+      te.textContent = m + ':' + s;
+      if(_thptExam.left <= 300){
+        te.classList.add('low');
+      }
+    }
+    if(_thptExam.left === 300){
+      try{ toast('⚠️ Còn 5 phút! Thí sinh rà soát lại các câu phân vân.'); }catch(e){}
+    }
+    if(_thptExam.left === 60){
+      try{ toast('⚠️ Còn 1 phút! Chuẩn bị nộp bài.'); }catch(e){}
+    }
+    if(_thptExam.left <= 0){
+      clearInterval(_thptExam.timer);
+      _thptExam.timer = null;
+      try{ toast('⏰ Đã hết thời gian 50 phút! Hệ thống tự động nộp bài.'); }catch(e){}
+      thptExamDoSubmit(prefix, true);
+    }
+  }, 1000);
+}
+
+function thptExamSelectOption(qNum, idx, qid, prefix){
+  if(!_thptExam || _thptExam.submitted) return;
+  _thptExam.ans[qNum] = idx;
+  const card = document.getElementById('tq-' + qid);
+  if(card){
+    card.classList.add('is-answered');
+    card.querySelectorAll('.thpt-exam-opt').forEach((btn, i) => {
+      btn.classList.toggle('selected', i === idx);
+    });
+    const tag = document.getElementById('tag-' + qid);
+    if(tag){
+      tag.textContent = 'Đã chọn (' + 'ABCD'[idx] + ')';
+      tag.className = 'exam-status-tag done';
+    }
+  }
+  const palBtn = document.getElementById('pal-btn-' + qNum);
+  if(palBtn){
+    palBtn.classList.add('answered');
+  }
+  const doneCount = Object.keys(_thptExam.ans).length;
+  const dcEl = document.getElementById('thptExamDoneCount');
+  if(dcEl) dcEl.textContent = doneCount;
+  const barDoneEl = document.getElementById('thptBarDone');
+  if(barDoneEl) barDoneEl.textContent = doneCount;
+  const palDoneEl = document.getElementById('palStatDone');
+  if(palDoneEl) palDoneEl.textContent = doneCount + ' đã làm';
+  
+  try{ sndClick(); }catch(e){}
+}
+
+function thptExamToggleFlag(qNum){
+  if(!_thptExam || _thptExam.submitted) return;
+  _thptExam.flagged[qNum] = !_thptExam.flagged[qNum];
+  const isFlagged = _thptExam.flagged[qNum];
+  const qid = _thptExam.prefix + '-' + qNum;
+  const flagBtn = document.getElementById('flag-' + qid);
+  if(flagBtn){
+    flagBtn.classList.toggle('on', isFlagged);
+    const txt = flagBtn.querySelector('.flag-txt');
+    if(txt) txt.textContent = isFlagged ? 'Đã ghim cờ' : 'Đánh dấu';
+  }
+  const card = document.getElementById('tq-' + qid);
+  if(card){
+    card.classList.toggle('is-flagged', isFlagged);
+  }
+  const palBtn = document.getElementById('pal-btn-' + qNum);
+  if(palBtn){
+    palBtn.classList.toggle('flagged', isFlagged);
+  }
+  const flagCount = Object.keys(_thptExam.flagged).filter(k => _thptExam.flagged[k]).length;
+  const palFlagEl = document.getElementById('palStatFlag');
+  if(palFlagEl) palFlagEl.textContent = flagCount + ' cờ';
+  try{ sndClick(); }catch(e){}
+}
+
+function thptJumpToQ(qNum){
+  if(!_thptExam) return;
+  const qid = _thptExam.prefix + '-' + qNum;
+  const card = document.getElementById('tq-' + qid);
+  if(card){
+    const sidebar = document.getElementById('thptExamSidebar');
+    if(sidebar) sidebar.classList.remove('open');
+    const backdrop = document.getElementById('thptDrawerBackdrop');
+    if(backdrop) backdrop.classList.remove('show');
+    
+    jumpToQuestion('tq-' + qid);
+  }
+}
+
+function thptTogglePaletteDrawer(){
+  const sidebar = document.getElementById('thptExamSidebar');
+  const backdrop = document.getElementById('thptDrawerBackdrop');
+  if(!sidebar) return;
+  const isOpen = sidebar.classList.toggle('open');
+  if(backdrop) backdrop.classList.toggle('show', isOpen);
+}
+
+function thptExamAskSubmit(prefix){
+  if(!_thptExam || _thptExam.submitted) return;
+  const done = Object.keys(_thptExam.ans).length;
+  const total = _thptExam.total;
+  const missing = total - done;
+  const flagged = Object.keys(_thptExam.flagged).filter(k => _thptExam.flagged[k]).length;
+  
+  let msg = '';
+  if(missing > 0){
+    msg = `⚠️ Bạn mới làm ${done}/${total} câu (còn ${missing} câu chưa chọn đáp án).` +
+          (flagged > 0 ? `\n🚩 Có ${flagged} câu đang đánh dấu xem lại.` : '') +
+          `\n\nBạn có chắc chắn muốn nộp bài thi ngay không?`;
+  } else {
+    msg = `🎉 Bạn đã hoàn thành đầy đủ ${total}/${total} câu hỏi!` +
+          (flagged > 0 ? `\n🚩 Có ${flagged} câu đang đánh dấu xem lại.` : '') +
+          `\n\nBạn có chắc chắn muốn nộp bài để chấm điểm và xem lời giải chi tiết?`;
+  }
+  if(confirm(msg)){
+    thptExamDoSubmit(prefix, false);
+  }
+}
+
+function thptExamDoSubmit(prefix, isTimeUp){
+  if(!_thptExam || _thptExam.submitted) return;
+  _thptExam.submitted = true;
+  if(_thptExam.timer){
+    clearInterval(_thptExam.timer);
+    _thptExam.timer = null;
+  }
+  
+  const st = {
+    answered: 0,
+    correct: 0,
+    total: _thptExam.total,
+    wrongs: [],
+    catStats: {}
+  };
+  
+  _thptExam.data.forEach(cat => {
+    cat.questions.forEach(q => {
+      const qid = prefix + '-' + q.num;
+      const card = document.getElementById('tq-' + qid);
+      const chosen = _thptExam.ans[q.num];
+      const isCorrect = (chosen !== undefined && chosen === q.ans);
+      
+      const catTitle = cat.title;
+      if(!st.catStats[catTitle]) st.catStats[catTitle] = { total: 0, correct: 0 };
+      st.catStats[catTitle].total++;
+      
+      if(chosen !== undefined){
+        st.answered++;
+      }
+      
+      if(isCorrect){
+        st.correct++;
+        st.catStats[catTitle].correct++;
+      } else {
+        st.wrongs.push({
+          num: q.num,
+          text: q.text || '',
+          cat: catTitle,
+          chose: chosen !== undefined ? 'ABCD'[chosen] : '—',
+          correct: 'ABCD'[q.ans],
+          correctText: q.opts[q.ans],
+          level: q.level
+        });
+      }
+      
+      if(card){
+        card.classList.add('is-graded');
+        const tag = document.getElementById('tag-' + qid);
+        if(tag){
+          if(isCorrect){
+            tag.innerHTML = '✅ <b style="color:#16a34a">ĐÚNG (+0.25đ)</b>';
+            tag.className = 'exam-status-tag correct';
+          } else if(chosen !== undefined){
+            tag.innerHTML = `❌ <b style="color:#dc2626">SAI</b> · Bạn chọn <b>${'ABCD'[chosen]}</b> (Đúng: <b>${'ABCD'[q.ans]}</b>)`;
+            tag.className = 'exam-status-tag wrong';
+          } else {
+            tag.innerHTML = `⚠️ <b style="color:#b45309">CHƯA LÀM</b> · Đáp án đúng: <b>${'ABCD'[q.ans]}</b>`;
+            tag.className = 'exam-status-tag skipped';
+          }
+        }
+        
+        card.querySelectorAll('.thpt-exam-opt').forEach((btn, i) => {
+          btn.style.cursor = 'default';
+          const badge = document.getElementById(`badge-${qid}-${i}`);
+          if(i === q.ans){
+            btn.classList.add('correct');
+            if(badge) badge.innerHTML = '<span class="bdg-ok">✔ Đáp án đúng</span>';
+          } else if(i === chosen && !isCorrect){
+            btn.classList.add('wrong');
+            if(badge) badge.innerHTML = '<span class="bdg-no">✖ Bạn chọn</span>';
+          } else {
+            btn.style.opacity = '0.45';
+          }
+        });
+        
+        const exp = document.getElementById('texp-' + qid);
+        if(exp){
+          exp.style.display = 'block';
+          exp.classList.add('show');
+        }
+      }
+      
+      const palBtn = document.getElementById('pal-btn-' + q.num);
+      if(palBtn){
+        palBtn.classList.remove('answered');
+        if(isCorrect){
+          palBtn.classList.add('is-correct');
+        } else if(chosen !== undefined){
+          palBtn.classList.add('is-wrong');
+        } else {
+          palBtn.classList.add('is-skipped');
+        }
+      }
+      
+      if(chosen !== undefined){
+        try{ efzTrack('THPT', catTitle, isCorrect, q, q.ans); }catch(e){}
+      }
+    });
+  });
+  
+  _thptState = st;
+  window._thptElapsed = _thptExam.elapsed;
+  
+  if(st.correct > 0){
+    try{
+      addXP(st.correct * 5);
+      toast(`🎉 Đã nộp bài! Bạn đạt ${st.correct}/${st.total} câu (+${st.correct * 5} XP)`);
+    }catch(e){}
+  }
+  
+  try{
+    if(st.correct / st.total >= 0.7) sndWin(); else sndClick();
+  }catch(e){}
+  
+  const stickyBar = document.getElementById('thptExamStickyBar');
+  if(stickyBar){
+    const clockEl = document.getElementById('thptExamClock');
+    if(clockEl) clockEl.innerHTML = `🏆 ${(st.correct * 0.25).toFixed(2)}/10đ`;
+    const rightEl = stickyBar.querySelector('.thpt-bar-right');
+    if(rightEl){
+      rightEl.innerHTML = `
+        <button type="button" class="thpt-bar-btn pal-toggle" onclick="thptTogglePaletteDrawer()">
+          📋 Bảng 40 câu (${st.correct} đúng)
+        </button>
+        <button type="button" class="thpt-bar-btn" style="background:#16a34a;color:#fff" onclick="document.getElementById('thpt-summary-${prefix}').scrollIntoView({behavior:'smooth',block:'start'})">
+          📊 Bảng điểm & Lộ trình
+        </button>
+        <button type="button" class="thpt-bar-btn" onclick="showTHPTTab('${prefix}')">
+          🔄 Làm lại
+        </button>
+      `;
+    }
+  }
+  
+  const bottomSubmit = document.getElementById('thptExamBottomSubmit');
+  if(bottomSubmit){
+    bottomSubmit.style.display = 'none';
+  }
+  
+  const palLegend = document.getElementById('thptPalLegend');
+  if(palLegend){
+    const actualWrongs = st.wrongs.filter(w => w.chose !== '—').length;
+    const skipped = st.wrongs.filter(w => w.chose === '—').length;
+    palLegend.innerHTML = `
+      <span class="leg-item"><i class="leg-dot is-correct"></i> Đúng: <b>${st.correct}</b></span>
+      <span class="leg-item"><i class="leg-dot is-wrong"></i> Sai: <b>${actualWrongs}</b></span>
+      <span class="leg-item"><i class="leg-dot is-skipped"></i> Bỏ qua: <b>${skipped}</b></span>
+    `;
+  }
+  const palSubmit = document.getElementById('palSubmitBtn');
+  if(palSubmit){
+    palSubmit.innerHTML = '🔄 Làm Lại Đề Này';
+    palSubmit.onclick = () => showTHPTTab(prefix);
+  }
+  
+  showTHPTSummary(prefix);
+  
+  setTimeout(()=>{
+    const sumEl = document.getElementById('thpt-summary-' + prefix);
+    if(sumEl) sumEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 400);
 }
 
 

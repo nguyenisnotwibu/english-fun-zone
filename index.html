@@ -196,7 +196,20 @@
   <section id="sec-thpt">
     <div class="card">
       <h2>📚 Luyện Đề Thi Tốt Nghiệp THPT Quốc Gia</h2>
-      <p class="sub">45 Đề thi THPT QG 2025-2026 · 40 câu / 50 phút · Đáp án + Giải thích chi tiết + Lộ trình ôn tập</p>
+      <p class="sub">46 Đề thi THPT QG 2025-2026 · 40 câu / 50 phút · Đáp án + Giải thích chi tiết + Lộ trình ôn tập</p>
+      
+      <!-- Bộ chuyển đổi chế độ làm bài -->
+      <div class="thpt-mode-bar" id="thptModeBar">
+        <button type="button" class="thpt-mode-pill on" id="btnTHPTModePractice" onclick="setTHPTMode('practice')">
+          <span class="m-icon">💡</span>
+          <span class="m-text"><b>Chế độ Luyện tập</b><small>Xem đáp án & lời giải chi tiết ngay</small></span>
+        </button>
+        <button type="button" class="thpt-mode-pill" id="btnTHPTModeExam" onclick="setTHPTMode('exam')">
+          <span class="m-icon">🎯</span>
+          <span class="m-text"><b>Chế độ Thi thử thật (Focus)</b><small>50 phút · Ẩn đáp án · Bảng 40 câu · Nộp bài mới chấm</small></span>
+        </button>
+      </div>
+
       <div class="thpt-subtab" id="thptSubtab">
         <button class="on" onclick="showTHPTTab('thpt1')">📝 ĐÀO DUY TỪ</button>
         <button onclick="showTHPTTab('thpt2')">📝 TRẦN PHÚ</button>
