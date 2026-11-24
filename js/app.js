@@ -2474,7 +2474,16 @@ function renderTHPTQuiz(data,prefix){
   if(window._thptTimer)clearInterval(window._thptTimer);
   window._thptStartTime=Date.now();
   window._thptElapsed=0;
-  let h=`<div class="thpt-exam-info">📋 <b>Đề thi Tốt nghiệp THPT Quốc Gia</b> · Môn: Tiếng Anh · Thời gian: <b>50 phút</b> · Số câu: <b>40 câu trắc nghiệm</b></div>`;
+  let h=`<div class="thpt-mode-quick-switch" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#f0fdf4;border:2px solid #86efac;border-radius:14px;padding:12px 18px;margin:10px 0 14px;flex-wrap:wrap">
+    <div>
+      <div style="font-weight:800;color:#15803d;font-size:14.5px">💡 Đang ở: Chế độ Luyện tập</div>
+      <div style="color:#166534;font-size:12.5px;margin-top:2px">Xem đáp án & giải thích chi tiết ngay sau khi chọn · Tự do thời gian</div>
+    </div>
+    <button type="button" onclick="setTHPTMode('exam')" style="background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-size:13.5px;font-weight:800;cursor:pointer;box-shadow:0 3px 10px rgba(37,99,235,.35);transition:transform .15s">
+      🎯 Chuyển sang Thi thử thật (Focus 50 phút · Ẩn đáp án) →
+    </button>
+  </div>`;
+  h+=`<div class="thpt-exam-info">📋 <b>Đề thi Tốt nghiệp THPT Quốc Gia</b> · Môn: Tiếng Anh · Thời gian: <b>50 phút</b> · Số câu: <b>40 câu trắc nghiệm</b></div>`;
   h+=`<div class="thpt-score-bar" id="thpt-score-${prefix}">
     <div class="sc-item">📊 Đã làm: <b><span id="thpt-done-${prefix}">0</span>/${_thptState.total}</b></div>
     <div class="sc-item">✅ Đúng: <b><span id="thpt-right-${prefix}">0</span></b></div>
@@ -2670,6 +2679,9 @@ function renderTHPTExam(data, prefix){
       <div class="thpt-exam-progress">Đã làm: <b id="thptExamDoneCount">0</b>/${total}</div>
     </div>
     <div class="thpt-bar-right">
+      <button type="button" class="thpt-bar-btn" onclick="setTHPTMode('practice')" title="Đổi sang chế độ xem đáp án ngay" style="background:#f0fdf4;border-color:#86efac;color:#15803d;font-weight:700">
+        💡 Đổi sang Luyện tập
+      </button>
       <button type="button" class="thpt-bar-btn pal-toggle" onclick="thptTogglePaletteDrawer()" title="Mở danh sách 40 câu hỏi">
         📋 Bảng câu (<span id="thptBarDone">0</span>/${total})
       </button>

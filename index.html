@@ -18,7 +18,24 @@
 <title>English Fun Zone 🚀 Luyện Tiếng Anh lớp 4–12 · IELTS · HSA · THPT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/app.css?v=20261124c">
+<style>
+/* Đảm bảo hiển thị chuẩn 100% cho bộ chuyển đổi chế độ THPT QG ngay cả khi dính cache */
+.thpt-mode-bar{display:flex!important;gap:12px!important;margin:16px 0 18px!important;flex-wrap:wrap!important;clear:both!important;position:relative!important;z-index:5!important}
+.thpt-mode-pill{flex:1 1 280px!important;display:flex!important;align-items:center!important;gap:14px!important;padding:12px 18px!important;border-radius:14px!important;border:2px solid #cbd5e1!important;background:#ffffff!important;cursor:pointer!important;transition:all .2s ease!important;text-align:left!important;box-shadow:0 2px 8px rgba(0,0,0,0.04)!important}
+.thpt-mode-pill:hover{border-color:#3b82f6!important;background:#f8fafc!important;transform:translateY(-1px)!important}
+.thpt-mode-pill.on{border-color:#2563eb!important;background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%)!important;box-shadow:0 4px 14px rgba(37,99,235,.2)!important}
+.thpt-mode-pill .m-icon{font-size:26px!important;flex:0 0 auto!important}
+.thpt-mode-pill .m-text{display:flex!important;flex-direction:column!important;gap:2px!important}
+.thpt-mode-pill .m-text b{font-size:15px!important;color:#1e3a8a!important;font-weight:700!important}
+.thpt-mode-pill .m-text small{font-size:12px!important;color:#64748b!important;font-weight:500!important}
+.thpt-mode-pill.on .m-text b{color:#1d4ed8!important}
+[data-theme="dark"] .thpt-mode-pill{background:#1e1e38!important;border-color:#333355!important}
+[data-theme="dark"] .thpt-mode-pill:hover{background:#252545!important;border-color:#4a5578!important}
+[data-theme="dark"] .thpt-mode-pill.on{background:linear-gradient(135deg,#1e293b 0%,#1e3a8a 100%)!important;border-color:#3b82f6!important}
+[data-theme="dark"] .thpt-mode-pill .m-text b{color:#93c5fa!important}
+[data-theme="dark"] .thpt-mode-pill .m-text small{color:#94a3b8!important}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#sec-home">Bỏ qua điều hướng</a>
@@ -313,7 +330,7 @@
 <div id="toast"></div>
 
 <script src="js/data-loader.js"></script>
-<script src="js/app.js"></script>
+<script src="js/app.js?v=20261124c"></script>
 <script src="js/a11y.js"></script>
 </body>
 </html>
